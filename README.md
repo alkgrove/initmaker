@@ -1,8 +1,8 @@
 # initmaker
 This is a simplified driver set for the ATSAMD5x processor and SystemInit creator scripts
-for the Microchip (Atmel) ATSAMD5x chips. It is for those developing for the ATSAMD5x processor in C using arm-none-eabi-gcc. 
+for the Microchip (Atmel) ATSAMD5x chips. This is for those developing for the ATSAMD5x processor in C using arm-none-eabi-gcc. 
 
-For ATSAMD5x and ATSAME5x processor families, Microchip provided ASF4 for high and low level drivers, register description includes, initialization code, startup code and high level example code. The initialization was customized through the start.atmel.com website.
+For ATSAMD5x and ATSAME5x processor families, Microchip  provided ASF4 for high and low level drivers, register description includes, initialization code, startup code and high level example code. The initialization was customized through the start.atmel.com website.
 These processors have sophisticated clocking scheme, multiuse serial ports, event system, configurable logic blocks and more. Initialization of the MCU was significantly more complex than it has been in the past and start.atmel.com was Microchips answer. 
 
 start.atmel.com uses graphical interface and menu selections to customize the initialization code. This lacked the flexibility and accessibility that we needed for development. So I came up with initmaker. 
@@ -15,15 +15,15 @@ I've pulled over the ASF4 register description includes and cleaned them up a bi
 
 I have included some higher level routines for a few of the peripherals. 
 The directory structure is:
-chip -> inc  ; static inline functions severely modified from ASF4 hri includes
-chip -> inc -> component ; from ASF4
-	    -> instance ; from ASF4
-	    -> pio ; from ASF4
-chip -> src ; specific higher level drivers and startup_samd51.c from ASF4
-initmaker -> documentation -> ATSAMD5XE5X pins.xlsx ; excel spreadsheet of devices pins and functions
-initmaker -> documentation -> Initmaker.pdf ; pdf file documentation for initmaker
-initmaker -> scripts -> initmaker.sh ; this runs SystemInit creator - see documention
-initmaker -> templates ; source code with markup language for initmaker
-CMSIS -> download from https://developer.arm.com/embedded/cmsis
-FatFS -> download from http://www.elm-chan.org/fsw/ff/00index_e.html
++ chip -> inc  ; static inline functions severely modified from ASF4 hri includes
++ chip -> inc -> component ; from ASF4
++ chip -> inc -> instance ; from ASF4
++ chip -> inc -> pio ; from ASF4
++ chip -> src ; specific higher level drivers
++ initmaker -> documentation -> ATSAMD5XE5X pins.xlsx ; excel spreadsheet of devices pins and functions
++ initmaker -> documentation -> Initmaker.pdf ; pdf file documentation for initmaker
++ initmaker -> scripts -> initmaker.sh ; this runs SystemInit creator - see documention
++ initmaker -> templates ; source code with markup language for initmaker
++ CMSIS -> download from https://developer.arm.com/embedded/cmsis
++ FatFS -> download from http://www.elm-chan.org/fsw/ff/00index_e.html
 
