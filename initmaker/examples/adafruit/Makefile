@@ -5,8 +5,9 @@
 
 TARGET = blinky
 STACK_SIZE=8192
+# Selecting the board uncomment one of these to select board
 #CFG=featherm4
-CFG=metrom4
+#CFG=metrom4
 #CFG=itsym4
 INIT=${CFG}_init
 
@@ -17,13 +18,13 @@ CSRC += main.c
 os := $(shell uname -o)
 
 INC = ./inc
-INC += ../../../chip/inc
+INC += ../../../samd5x/inc
 INC += ../../../CMSIS/Include
 
 ASRC =
 
 VPATH = ./src
-VPATH += ../../../chip/src
+VPATH += ../../../samd5x/src
 
 LDSCRIPT=./samd51j19a.ld
 
