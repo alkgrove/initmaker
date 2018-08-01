@@ -1,4 +1,4 @@
-# initmaker script issue
+### initmaker script issue
 The scripts are written for unix end of line linefeed and will probably malfunction if converted to crlf.
 It looks like git has cursed autocrlf that defaults to true on Windows. It can be turned off with:
 ```
