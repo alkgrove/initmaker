@@ -1,5 +1,5 @@
 ### script issue
-The scripts are written for unix end of line to be linefeed and will probably malfunction if converted to crlf.
+The scripts are written for unix end of line to be linefeed and will malfunction if converted to crlf.
 When installing git on a Windows it will give an option to enable automatic conversion cr or lf to crlf.
 This will come back and byte you. 
 
