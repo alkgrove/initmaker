@@ -1,6 +1,9 @@
-### initmaker script issue
-The scripts are written for unix end of line linefeed and will probably malfunction if converted to crlf.
-It looks like git has cursed autocrlf that defaults to true on Windows. It can be turned off with:
+### script issue
+The scripts are written for unix end of line to be linefeed and will probably malfunction if converted to crlf.
+When installing git on a Windows it will give an option to enable automatic conversion cr or lf to crlf.
+This will come back and byte you. 
+
+It can be turned off with:
 ```
 git config core.autocrlf "false"
 ```
@@ -10,5 +13,4 @@ cd <initmaker>/initmaker/scripts
 find . -type f -not -path '*/\.*' -exec grep -Il '.' {} \; | xargs -d '\n' -L 1 dos2unix -k
 ```
 
-This seems to affect only the scripts. 
-Geez, auto crlf is worse than mosquitoes on a hot summer night.
+
