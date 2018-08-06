@@ -13,9 +13,11 @@ Then do:
 
 `make config`
 
-This generates the src/blinky_init.c and inc/blinky_init.h initialization files. 
+This generates the src/blinky_init.c and inc/blinky_init.h initialization files. Then make the project:
+
 `make`
-This generates the bin/blinky.uf2, this file can be dragged to the metrom4boot drive that the UF2 bootloader makes. Double tap reset to get into the UF2 bootloader. 
+
+This generates the bin/blinky.uf2. The file can be dragged to the metrom4boot drive that the UF2 bootloader makes. Double tap reset to get into the UF2 bootloader. 
 
 Should see a red flashing LED once a second. 
 
