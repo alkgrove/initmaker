@@ -43,10 +43,10 @@
 /**
  * @brief aes set INTEN register
  *
- * @param[in] uint8_t mask
- * AES_INTENSET_ENCCMP  Encryption Complete Interrupt Enable 
- * AES_INTENSET_GFMCMP  GF Multiplication Complete Interrupt Enable 
- */
+ * @param[in] mask uint8_t 
+ * - AES_INTENSET_ENCCMP Encryption Complete Interrupt Enable
+ * - AES_INTENSET_GFMCMP GF Multiplication Complete Interrupt Enable
+ **/
 static inline void aes_set_INTEN(uint8_t mask)
 {
 	AES->INTENSET.reg = mask;
@@ -55,11 +55,11 @@ static inline void aes_set_INTEN(uint8_t mask)
 /**
  * @brief aes get INTEN register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * AES_INTENSET_ENCCMP  Encryption Complete Interrupt Enable 
- * AES_INTENSET_GFMCMP  GF Multiplication Complete Interrupt Enable 
- */
+ * - AES_INTENSET_ENCCMP Encryption Complete Interrupt Enable
+ * - AES_INTENSET_GFMCMP GF Multiplication Complete Interrupt Enable
+ **/
 static inline uint8_t aes_get_INTEN(uint8_t mask)
 {
     return AES->INTENSET.reg & mask;
@@ -68,11 +68,10 @@ static inline uint8_t aes_get_INTEN(uint8_t mask)
 /**
  * @brief aes read INTEN register
  *
- * @param[in] void
  * @return uint8_t
- * AES_INTENSET_ENCCMP  Encryption Complete Interrupt Enable 
- * AES_INTENSET_GFMCMP  GF Multiplication Complete Interrupt Enable 
- */
+ * - AES_INTENSET_ENCCMP Encryption Complete Interrupt Enable
+ * - AES_INTENSET_GFMCMP GF Multiplication Complete Interrupt Enable
+ **/
 static inline uint8_t aes_read_INTEN(void)
 {
 	return AES->INTENSET.reg;
@@ -81,10 +80,10 @@ static inline uint8_t aes_read_INTEN(void)
 /**
  * @brief aes write INTEN register
  *
- * @param[in] uint8_t data
- * AES_INTENSET_ENCCMP  Encryption Complete Interrupt Enable 
- * AES_INTENSET_GFMCMP  GF Multiplication Complete Interrupt Enable 
- */
+ * @param[in] data uint8_t 
+ * - AES_INTENSET_ENCCMP Encryption Complete Interrupt Enable
+ * - AES_INTENSET_GFMCMP GF Multiplication Complete Interrupt Enable
+ **/
 static inline void aes_write_INTEN(uint8_t data)
 {
 	AES->INTENSET.reg = data;
@@ -94,10 +93,10 @@ static inline void aes_write_INTEN(uint8_t data)
 /**
  * @brief aes clear INTEN register
  *
- * @param[in] uint8_t mask
- * AES_INTENSET_ENCCMP  Encryption Complete Interrupt Enable 
- * AES_INTENSET_GFMCMP  GF Multiplication Complete Interrupt Enable 
- */
+ * @param[in] mask uint8_t 
+ * - AES_INTENSET_ENCCMP Encryption Complete Interrupt Enable
+ * - AES_INTENSET_GFMCMP GF Multiplication Complete Interrupt Enable
+ **/
 static inline void aes_clear_INTEN(uint8_t mask)
 {
 	AES->INTENCLR.reg = mask;
@@ -106,11 +105,11 @@ static inline void aes_clear_INTEN(uint8_t mask)
 /**
  * @brief aes get INTFLAG register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * AES_INTFLAG_ENCCMP  Encryption Complete 
- * AES_INTFLAG_GFMCMP  GF Multiplication Complete 
- */
+ * - AES_INTFLAG_ENCCMP Encryption Complete
+ * - AES_INTFLAG_GFMCMP GF Multiplication Complete
+ **/
 static inline uint8_t aes_get_INTFLAG(uint8_t mask)
 {
     return AES->INTFLAG.reg & mask;
@@ -119,11 +118,10 @@ static inline uint8_t aes_get_INTFLAG(uint8_t mask)
 /**
  * @brief aes read INTFLAG register
  *
- * @param[in] void
  * @return uint8_t
- * AES_INTFLAG_ENCCMP  Encryption Complete 
- * AES_INTFLAG_GFMCMP  GF Multiplication Complete 
- */
+ * - AES_INTFLAG_ENCCMP Encryption Complete
+ * - AES_INTFLAG_GFMCMP GF Multiplication Complete
+ **/
 static inline uint8_t aes_read_INTFLAG(void)
 {
 	return AES->INTFLAG.reg;
@@ -132,10 +130,10 @@ static inline uint8_t aes_read_INTFLAG(void)
 /**
  * @brief aes clear INTFLAG register
  *
- * @param[in] uint8_t mask
- * AES_INTFLAG_ENCCMP  Encryption Complete 
- * AES_INTFLAG_GFMCMP  GF Multiplication Complete 
- */
+ * @param[in] mask uint8_t 
+ * - AES_INTFLAG_ENCCMP Encryption Complete
+ * - AES_INTFLAG_GFMCMP GF Multiplication Complete
+ **/
 static inline void aes_clear_INTFLAG(uint8_t mask)
 {
 	AES->INTFLAG.reg = mask;
@@ -144,9 +142,9 @@ static inline void aes_clear_INTFLAG(uint8_t mask)
 /**
  * @brief aes write KEYWORD register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t data
- */
+ * @param[in] index uint8_t 
+ * @param[in] data uint32_t 
+ **/
 static inline void aes_write_KEYWORD(uint8_t index, uint32_t data)
 {
 	AES->KEYWORD[index].reg = data;
@@ -155,9 +153,9 @@ static inline void aes_write_KEYWORD(uint8_t index, uint32_t data)
 /**
  * @brief aes write INTVECTV register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t data
- */
+ * @param[in] index uint8_t 
+ * @param[in] data uint32_t 
+ **/
 static inline void aes_write_INTVECTV(uint8_t index, uint32_t data)
 {
 	AES->INTVECTV[index].reg = data;
@@ -166,44 +164,44 @@ static inline void aes_write_INTVECTV(uint8_t index, uint32_t data)
 /**
  * @brief aes set CTRLA register
  *
- * @param[in] uint32_t mask
- * AES_CTRLA_SWRST  Software Reset 
- * AES_CTRLA_ENABLE  Enable 
- * AES_CTRLA_AESMODE(value)  AES Modes of operation 
- *    AES_CTRLA_AESMODE_ECB  Electronic code book mode 
- *    AES_CTRLA_AESMODE_CBC  Cipher block chaining mode 
- *    AES_CTRLA_AESMODE_OFB  Output feedback mode 
- *    AES_CTRLA_AESMODE_CFB  Cipher feedback mode 
- *    AES_CTRLA_AESMODE_COUNTER  Counter mode 
- *    AES_CTRLA_AESMODE_CCM  CCM mode 
- *    AES_CTRLA_AESMODE_GCM  Galois counter mode 
- * AES_CTRLA_CFBS(value)  Cipher Feedback Block Size 
- *    AES_CTRLA_CFBS_128BIT  128-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_64BIT  64-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_32BIT  32-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_16BIT  16-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_8BIT  8-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- * AES_CTRLA_KEYSIZE(value)  Encryption Key Size 
- *    AES_CTRLA_KEYSIZE_128BIT  128-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_192BIT  192-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_256BIT  256-bit Key for Encryption / Decryption 
- * AES_CTRLA_CIPHER  Cipher Mode 
- *    AES_CTRLA_CIPHER_DEC  Decryption 
- *    AES_CTRLA_CIPHER_ENC  Encryption 
- * AES_CTRLA_STARTMODE  Start Mode Select 
- *    AES_CTRLA_STARTMODE_MANUAL  Start Encryption / Decryption in Manual mode 
- *    AES_CTRLA_STARTMODE_AUTO  Start Encryption / Decryption in Auto mode 
- * AES_CTRLA_LOD  Last Output Data Mode 
- *    AES_CTRLA_LOD_NONE  No effect 
- *    AES_CTRLA_LOD_LAST  Start encryption in Last Output Data mode 
- * AES_CTRLA_KEYGEN  Last Key Generation 
- *    AES_CTRLA_KEYGEN_NONE  No effect 
- *    AES_CTRLA_KEYGEN_LAST  Start Computation of the last NK words of the expanded key 
- * AES_CTRLA_XORKEY  XOR Key Operation 
- *    AES_CTRLA_XORKEY_NONE  No effect 
- *    AES_CTRLA_XORKEY_XOR  The user keyword gets XORed with the previous keyword register content. 
- * AES_CTRLA_CTYPE(value)  Counter Measure Type 
- */
+ * @param[in] mask uint32_t 
+ * - AES_CTRLA_SWRST Software Reset
+ * - AES_CTRLA_ENABLE Enable
+ * - AES_CTRLA_AESMODE(value) AES Modes of operation
+ *  +      AES_CTRLA_AESMODE_ECB Electronic code book mode
+ *  +      AES_CTRLA_AESMODE_CBC Cipher block chaining mode
+ *  +      AES_CTRLA_AESMODE_OFB Output feedback mode
+ *  +      AES_CTRLA_AESMODE_CFB Cipher feedback mode
+ *  +      AES_CTRLA_AESMODE_COUNTER Counter mode
+ *  +      AES_CTRLA_AESMODE_CCM CCM mode
+ *  +      AES_CTRLA_AESMODE_GCM Galois counter mode
+ * - AES_CTRLA_CFBS(value) Cipher Feedback Block Size
+ *  +      AES_CTRLA_CFBS_128BIT 128-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_64BIT 64-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_32BIT 32-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_16BIT 16-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_8BIT 8-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ * - AES_CTRLA_KEYSIZE(value) Encryption Key Size
+ *  +      AES_CTRLA_KEYSIZE_128BIT 128-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_192BIT 192-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_256BIT 256-bit Key for Encryption / Decryption
+ * - AES_CTRLA_CIPHER Cipher Mode
+ *  +      AES_CTRLA_CIPHER_DEC Decryption
+ *  +      AES_CTRLA_CIPHER_ENC Encryption
+ * - AES_CTRLA_STARTMODE Start Mode Select
+ *  +      AES_CTRLA_STARTMODE_MANUAL Start Encryption / Decryption in Manual mode
+ *  +      AES_CTRLA_STARTMODE_AUTO Start Encryption / Decryption in Auto mode
+ * - AES_CTRLA_LOD Last Output Data Mode
+ *  +      AES_CTRLA_LOD_NONE No effect
+ *  +      AES_CTRLA_LOD_LAST Start encryption in Last Output Data mode
+ * - AES_CTRLA_KEYGEN Last Key Generation
+ *  +      AES_CTRLA_KEYGEN_NONE No effect
+ *  +      AES_CTRLA_KEYGEN_LAST Start Computation of the last NK words of the expanded key
+ * - AES_CTRLA_XORKEY XOR Key Operation
+ *  +      AES_CTRLA_XORKEY_NONE No effect
+ *  +      AES_CTRLA_XORKEY_XOR The user keyword gets XORed with the previous keyword register content.
+ * - AES_CTRLA_CTYPE(value) Counter Measure Type
+ **/
 static inline void aes_set_CTRLA(uint32_t mask)
 {
 	AES->CTRLA.reg |= mask;
@@ -212,45 +210,45 @@ static inline void aes_set_CTRLA(uint32_t mask)
 /**
  * @brief aes get CTRLA register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * AES_CTRLA_SWRST  Software Reset 
- * AES_CTRLA_ENABLE  Enable 
- * AES_CTRLA_AESMODE(value)  AES Modes of operation 
- *    AES_CTRLA_AESMODE_ECB  Electronic code book mode 
- *    AES_CTRLA_AESMODE_CBC  Cipher block chaining mode 
- *    AES_CTRLA_AESMODE_OFB  Output feedback mode 
- *    AES_CTRLA_AESMODE_CFB  Cipher feedback mode 
- *    AES_CTRLA_AESMODE_COUNTER  Counter mode 
- *    AES_CTRLA_AESMODE_CCM  CCM mode 
- *    AES_CTRLA_AESMODE_GCM  Galois counter mode 
- * AES_CTRLA_CFBS(value)  Cipher Feedback Block Size 
- *    AES_CTRLA_CFBS_128BIT  128-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_64BIT  64-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_32BIT  32-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_16BIT  16-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_8BIT  8-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- * AES_CTRLA_KEYSIZE(value)  Encryption Key Size 
- *    AES_CTRLA_KEYSIZE_128BIT  128-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_192BIT  192-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_256BIT  256-bit Key for Encryption / Decryption 
- * AES_CTRLA_CIPHER  Cipher Mode 
- *    AES_CTRLA_CIPHER_DEC  Decryption 
- *    AES_CTRLA_CIPHER_ENC  Encryption 
- * AES_CTRLA_STARTMODE  Start Mode Select 
- *    AES_CTRLA_STARTMODE_MANUAL  Start Encryption / Decryption in Manual mode 
- *    AES_CTRLA_STARTMODE_AUTO  Start Encryption / Decryption in Auto mode 
- * AES_CTRLA_LOD  Last Output Data Mode 
- *    AES_CTRLA_LOD_NONE  No effect 
- *    AES_CTRLA_LOD_LAST  Start encryption in Last Output Data mode 
- * AES_CTRLA_KEYGEN  Last Key Generation 
- *    AES_CTRLA_KEYGEN_NONE  No effect 
- *    AES_CTRLA_KEYGEN_LAST  Start Computation of the last NK words of the expanded key 
- * AES_CTRLA_XORKEY  XOR Key Operation 
- *    AES_CTRLA_XORKEY_NONE  No effect 
- *    AES_CTRLA_XORKEY_XOR  The user keyword gets XORed with the previous keyword register content. 
- * AES_CTRLA_CTYPE(value)  Counter Measure Type 
- */
+ * - AES_CTRLA_SWRST Software Reset
+ * - AES_CTRLA_ENABLE Enable
+ * - AES_CTRLA_AESMODE(value) AES Modes of operation
+ *  +      AES_CTRLA_AESMODE_ECB Electronic code book mode
+ *  +      AES_CTRLA_AESMODE_CBC Cipher block chaining mode
+ *  +      AES_CTRLA_AESMODE_OFB Output feedback mode
+ *  +      AES_CTRLA_AESMODE_CFB Cipher feedback mode
+ *  +      AES_CTRLA_AESMODE_COUNTER Counter mode
+ *  +      AES_CTRLA_AESMODE_CCM CCM mode
+ *  +      AES_CTRLA_AESMODE_GCM Galois counter mode
+ * - AES_CTRLA_CFBS(value) Cipher Feedback Block Size
+ *  +      AES_CTRLA_CFBS_128BIT 128-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_64BIT 64-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_32BIT 32-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_16BIT 16-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_8BIT 8-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ * - AES_CTRLA_KEYSIZE(value) Encryption Key Size
+ *  +      AES_CTRLA_KEYSIZE_128BIT 128-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_192BIT 192-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_256BIT 256-bit Key for Encryption / Decryption
+ * - AES_CTRLA_CIPHER Cipher Mode
+ *  +      AES_CTRLA_CIPHER_DEC Decryption
+ *  +      AES_CTRLA_CIPHER_ENC Encryption
+ * - AES_CTRLA_STARTMODE Start Mode Select
+ *  +      AES_CTRLA_STARTMODE_MANUAL Start Encryption / Decryption in Manual mode
+ *  +      AES_CTRLA_STARTMODE_AUTO Start Encryption / Decryption in Auto mode
+ * - AES_CTRLA_LOD Last Output Data Mode
+ *  +      AES_CTRLA_LOD_NONE No effect
+ *  +      AES_CTRLA_LOD_LAST Start encryption in Last Output Data mode
+ * - AES_CTRLA_KEYGEN Last Key Generation
+ *  +      AES_CTRLA_KEYGEN_NONE No effect
+ *  +      AES_CTRLA_KEYGEN_LAST Start Computation of the last NK words of the expanded key
+ * - AES_CTRLA_XORKEY XOR Key Operation
+ *  +      AES_CTRLA_XORKEY_NONE No effect
+ *  +      AES_CTRLA_XORKEY_XOR The user keyword gets XORed with the previous keyword register content.
+ * - AES_CTRLA_CTYPE(value) Counter Measure Type
+ **/
 static inline uint32_t aes_get_CTRLA(uint32_t mask)
 {
     return AES->CTRLA.reg & mask;
@@ -259,44 +257,44 @@ static inline uint32_t aes_get_CTRLA(uint32_t mask)
 /**
  * @brief aes write CTRLA register
  *
- * @param[in] uint32_t data
- * AES_CTRLA_SWRST  Software Reset 
- * AES_CTRLA_ENABLE  Enable 
- * AES_CTRLA_AESMODE(value)  AES Modes of operation 
- *    AES_CTRLA_AESMODE_ECB  Electronic code book mode 
- *    AES_CTRLA_AESMODE_CBC  Cipher block chaining mode 
- *    AES_CTRLA_AESMODE_OFB  Output feedback mode 
- *    AES_CTRLA_AESMODE_CFB  Cipher feedback mode 
- *    AES_CTRLA_AESMODE_COUNTER  Counter mode 
- *    AES_CTRLA_AESMODE_CCM  CCM mode 
- *    AES_CTRLA_AESMODE_GCM  Galois counter mode 
- * AES_CTRLA_CFBS(value)  Cipher Feedback Block Size 
- *    AES_CTRLA_CFBS_128BIT  128-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_64BIT  64-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_32BIT  32-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_16BIT  16-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_8BIT  8-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- * AES_CTRLA_KEYSIZE(value)  Encryption Key Size 
- *    AES_CTRLA_KEYSIZE_128BIT  128-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_192BIT  192-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_256BIT  256-bit Key for Encryption / Decryption 
- * AES_CTRLA_CIPHER  Cipher Mode 
- *    AES_CTRLA_CIPHER_DEC  Decryption 
- *    AES_CTRLA_CIPHER_ENC  Encryption 
- * AES_CTRLA_STARTMODE  Start Mode Select 
- *    AES_CTRLA_STARTMODE_MANUAL  Start Encryption / Decryption in Manual mode 
- *    AES_CTRLA_STARTMODE_AUTO  Start Encryption / Decryption in Auto mode 
- * AES_CTRLA_LOD  Last Output Data Mode 
- *    AES_CTRLA_LOD_NONE  No effect 
- *    AES_CTRLA_LOD_LAST  Start encryption in Last Output Data mode 
- * AES_CTRLA_KEYGEN  Last Key Generation 
- *    AES_CTRLA_KEYGEN_NONE  No effect 
- *    AES_CTRLA_KEYGEN_LAST  Start Computation of the last NK words of the expanded key 
- * AES_CTRLA_XORKEY  XOR Key Operation 
- *    AES_CTRLA_XORKEY_NONE  No effect 
- *    AES_CTRLA_XORKEY_XOR  The user keyword gets XORed with the previous keyword register content. 
- * AES_CTRLA_CTYPE(value)  Counter Measure Type 
- */
+ * @param[in] data uint32_t 
+ * - AES_CTRLA_SWRST Software Reset
+ * - AES_CTRLA_ENABLE Enable
+ * - AES_CTRLA_AESMODE(value) AES Modes of operation
+ *  +      AES_CTRLA_AESMODE_ECB Electronic code book mode
+ *  +      AES_CTRLA_AESMODE_CBC Cipher block chaining mode
+ *  +      AES_CTRLA_AESMODE_OFB Output feedback mode
+ *  +      AES_CTRLA_AESMODE_CFB Cipher feedback mode
+ *  +      AES_CTRLA_AESMODE_COUNTER Counter mode
+ *  +      AES_CTRLA_AESMODE_CCM CCM mode
+ *  +      AES_CTRLA_AESMODE_GCM Galois counter mode
+ * - AES_CTRLA_CFBS(value) Cipher Feedback Block Size
+ *  +      AES_CTRLA_CFBS_128BIT 128-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_64BIT 64-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_32BIT 32-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_16BIT 16-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_8BIT 8-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ * - AES_CTRLA_KEYSIZE(value) Encryption Key Size
+ *  +      AES_CTRLA_KEYSIZE_128BIT 128-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_192BIT 192-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_256BIT 256-bit Key for Encryption / Decryption
+ * - AES_CTRLA_CIPHER Cipher Mode
+ *  +      AES_CTRLA_CIPHER_DEC Decryption
+ *  +      AES_CTRLA_CIPHER_ENC Encryption
+ * - AES_CTRLA_STARTMODE Start Mode Select
+ *  +      AES_CTRLA_STARTMODE_MANUAL Start Encryption / Decryption in Manual mode
+ *  +      AES_CTRLA_STARTMODE_AUTO Start Encryption / Decryption in Auto mode
+ * - AES_CTRLA_LOD Last Output Data Mode
+ *  +      AES_CTRLA_LOD_NONE No effect
+ *  +      AES_CTRLA_LOD_LAST Start encryption in Last Output Data mode
+ * - AES_CTRLA_KEYGEN Last Key Generation
+ *  +      AES_CTRLA_KEYGEN_NONE No effect
+ *  +      AES_CTRLA_KEYGEN_LAST Start Computation of the last NK words of the expanded key
+ * - AES_CTRLA_XORKEY XOR Key Operation
+ *  +      AES_CTRLA_XORKEY_NONE No effect
+ *  +      AES_CTRLA_XORKEY_XOR The user keyword gets XORed with the previous keyword register content.
+ * - AES_CTRLA_CTYPE(value) Counter Measure Type
+ **/
 static inline void aes_write_CTRLA(uint32_t data)
 {
 	AES->CTRLA.reg = data;
@@ -305,44 +303,44 @@ static inline void aes_write_CTRLA(uint32_t data)
 /**
  * @brief aes clear CTRLA register
  *
- * @param[in] uint32_t mask
- * AES_CTRLA_SWRST  Software Reset 
- * AES_CTRLA_ENABLE  Enable 
- * AES_CTRLA_AESMODE(value)  AES Modes of operation 
- *    AES_CTRLA_AESMODE_ECB  Electronic code book mode 
- *    AES_CTRLA_AESMODE_CBC  Cipher block chaining mode 
- *    AES_CTRLA_AESMODE_OFB  Output feedback mode 
- *    AES_CTRLA_AESMODE_CFB  Cipher feedback mode 
- *    AES_CTRLA_AESMODE_COUNTER  Counter mode 
- *    AES_CTRLA_AESMODE_CCM  CCM mode 
- *    AES_CTRLA_AESMODE_GCM  Galois counter mode 
- * AES_CTRLA_CFBS(value)  Cipher Feedback Block Size 
- *    AES_CTRLA_CFBS_128BIT  128-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_64BIT  64-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_32BIT  32-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_16BIT  16-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_8BIT  8-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- * AES_CTRLA_KEYSIZE(value)  Encryption Key Size 
- *    AES_CTRLA_KEYSIZE_128BIT  128-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_192BIT  192-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_256BIT  256-bit Key for Encryption / Decryption 
- * AES_CTRLA_CIPHER  Cipher Mode 
- *    AES_CTRLA_CIPHER_DEC  Decryption 
- *    AES_CTRLA_CIPHER_ENC  Encryption 
- * AES_CTRLA_STARTMODE  Start Mode Select 
- *    AES_CTRLA_STARTMODE_MANUAL  Start Encryption / Decryption in Manual mode 
- *    AES_CTRLA_STARTMODE_AUTO  Start Encryption / Decryption in Auto mode 
- * AES_CTRLA_LOD  Last Output Data Mode 
- *    AES_CTRLA_LOD_NONE  No effect 
- *    AES_CTRLA_LOD_LAST  Start encryption in Last Output Data mode 
- * AES_CTRLA_KEYGEN  Last Key Generation 
- *    AES_CTRLA_KEYGEN_NONE  No effect 
- *    AES_CTRLA_KEYGEN_LAST  Start Computation of the last NK words of the expanded key 
- * AES_CTRLA_XORKEY  XOR Key Operation 
- *    AES_CTRLA_XORKEY_NONE  No effect 
- *    AES_CTRLA_XORKEY_XOR  The user keyword gets XORed with the previous keyword register content. 
- * AES_CTRLA_CTYPE(value)  Counter Measure Type 
- */
+ * @param[in] mask uint32_t 
+ * - AES_CTRLA_SWRST Software Reset
+ * - AES_CTRLA_ENABLE Enable
+ * - AES_CTRLA_AESMODE(value) AES Modes of operation
+ *  +      AES_CTRLA_AESMODE_ECB Electronic code book mode
+ *  +      AES_CTRLA_AESMODE_CBC Cipher block chaining mode
+ *  +      AES_CTRLA_AESMODE_OFB Output feedback mode
+ *  +      AES_CTRLA_AESMODE_CFB Cipher feedback mode
+ *  +      AES_CTRLA_AESMODE_COUNTER Counter mode
+ *  +      AES_CTRLA_AESMODE_CCM CCM mode
+ *  +      AES_CTRLA_AESMODE_GCM Galois counter mode
+ * - AES_CTRLA_CFBS(value) Cipher Feedback Block Size
+ *  +      AES_CTRLA_CFBS_128BIT 128-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_64BIT 64-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_32BIT 32-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_16BIT 16-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_8BIT 8-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ * - AES_CTRLA_KEYSIZE(value) Encryption Key Size
+ *  +      AES_CTRLA_KEYSIZE_128BIT 128-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_192BIT 192-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_256BIT 256-bit Key for Encryption / Decryption
+ * - AES_CTRLA_CIPHER Cipher Mode
+ *  +      AES_CTRLA_CIPHER_DEC Decryption
+ *  +      AES_CTRLA_CIPHER_ENC Encryption
+ * - AES_CTRLA_STARTMODE Start Mode Select
+ *  +      AES_CTRLA_STARTMODE_MANUAL Start Encryption / Decryption in Manual mode
+ *  +      AES_CTRLA_STARTMODE_AUTO Start Encryption / Decryption in Auto mode
+ * - AES_CTRLA_LOD Last Output Data Mode
+ *  +      AES_CTRLA_LOD_NONE No effect
+ *  +      AES_CTRLA_LOD_LAST Start encryption in Last Output Data mode
+ * - AES_CTRLA_KEYGEN Last Key Generation
+ *  +      AES_CTRLA_KEYGEN_NONE No effect
+ *  +      AES_CTRLA_KEYGEN_LAST Start Computation of the last NK words of the expanded key
+ * - AES_CTRLA_XORKEY XOR Key Operation
+ *  +      AES_CTRLA_XORKEY_NONE No effect
+ *  +      AES_CTRLA_XORKEY_XOR The user keyword gets XORed with the previous keyword register content.
+ * - AES_CTRLA_CTYPE(value) Counter Measure Type
+ **/
 static inline void aes_clear_CTRLA(uint32_t mask)
 {
 	AES->CTRLA.reg &= ~mask;
@@ -351,45 +349,44 @@ static inline void aes_clear_CTRLA(uint32_t mask)
 /**
  * @brief aes read CTRLA register
  *
- * @param[in] void
  * @return uint32_t
- * AES_CTRLA_SWRST  Software Reset 
- * AES_CTRLA_ENABLE  Enable 
- * AES_CTRLA_AESMODE(value)  AES Modes of operation 
- *    AES_CTRLA_AESMODE_ECB  Electronic code book mode 
- *    AES_CTRLA_AESMODE_CBC  Cipher block chaining mode 
- *    AES_CTRLA_AESMODE_OFB  Output feedback mode 
- *    AES_CTRLA_AESMODE_CFB  Cipher feedback mode 
- *    AES_CTRLA_AESMODE_COUNTER  Counter mode 
- *    AES_CTRLA_AESMODE_CCM  CCM mode 
- *    AES_CTRLA_AESMODE_GCM  Galois counter mode 
- * AES_CTRLA_CFBS(value)  Cipher Feedback Block Size 
- *    AES_CTRLA_CFBS_128BIT  128-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_64BIT  64-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_32BIT  32-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_16BIT  16-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- *    AES_CTRLA_CFBS_8BIT  8-bit Input data block for Encryption/Decryption in Cipher Feedback mode 
- * AES_CTRLA_KEYSIZE(value)  Encryption Key Size 
- *    AES_CTRLA_KEYSIZE_128BIT  128-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_192BIT  192-bit Key for Encryption / Decryption 
- *    AES_CTRLA_KEYSIZE_256BIT  256-bit Key for Encryption / Decryption 
- * AES_CTRLA_CIPHER  Cipher Mode 
- *    AES_CTRLA_CIPHER_DEC  Decryption 
- *    AES_CTRLA_CIPHER_ENC  Encryption 
- * AES_CTRLA_STARTMODE  Start Mode Select 
- *    AES_CTRLA_STARTMODE_MANUAL  Start Encryption / Decryption in Manual mode 
- *    AES_CTRLA_STARTMODE_AUTO  Start Encryption / Decryption in Auto mode 
- * AES_CTRLA_LOD  Last Output Data Mode 
- *    AES_CTRLA_LOD_NONE  No effect 
- *    AES_CTRLA_LOD_LAST  Start encryption in Last Output Data mode 
- * AES_CTRLA_KEYGEN  Last Key Generation 
- *    AES_CTRLA_KEYGEN_NONE  No effect 
- *    AES_CTRLA_KEYGEN_LAST  Start Computation of the last NK words of the expanded key 
- * AES_CTRLA_XORKEY  XOR Key Operation 
- *    AES_CTRLA_XORKEY_NONE  No effect 
- *    AES_CTRLA_XORKEY_XOR  The user keyword gets XORed with the previous keyword register content. 
- * AES_CTRLA_CTYPE(value)  Counter Measure Type 
- */
+ * - AES_CTRLA_SWRST Software Reset
+ * - AES_CTRLA_ENABLE Enable
+ * - AES_CTRLA_AESMODE(value) AES Modes of operation
+ *  +      AES_CTRLA_AESMODE_ECB Electronic code book mode
+ *  +      AES_CTRLA_AESMODE_CBC Cipher block chaining mode
+ *  +      AES_CTRLA_AESMODE_OFB Output feedback mode
+ *  +      AES_CTRLA_AESMODE_CFB Cipher feedback mode
+ *  +      AES_CTRLA_AESMODE_COUNTER Counter mode
+ *  +      AES_CTRLA_AESMODE_CCM CCM mode
+ *  +      AES_CTRLA_AESMODE_GCM Galois counter mode
+ * - AES_CTRLA_CFBS(value) Cipher Feedback Block Size
+ *  +      AES_CTRLA_CFBS_128BIT 128-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_64BIT 64-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_32BIT 32-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_16BIT 16-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ *  +      AES_CTRLA_CFBS_8BIT 8-bit Input data block for Encryption/Decryption in Cipher Feedback mode
+ * - AES_CTRLA_KEYSIZE(value) Encryption Key Size
+ *  +      AES_CTRLA_KEYSIZE_128BIT 128-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_192BIT 192-bit Key for Encryption / Decryption
+ *  +      AES_CTRLA_KEYSIZE_256BIT 256-bit Key for Encryption / Decryption
+ * - AES_CTRLA_CIPHER Cipher Mode
+ *  +      AES_CTRLA_CIPHER_DEC Decryption
+ *  +      AES_CTRLA_CIPHER_ENC Encryption
+ * - AES_CTRLA_STARTMODE Start Mode Select
+ *  +      AES_CTRLA_STARTMODE_MANUAL Start Encryption / Decryption in Manual mode
+ *  +      AES_CTRLA_STARTMODE_AUTO Start Encryption / Decryption in Auto mode
+ * - AES_CTRLA_LOD Last Output Data Mode
+ *  +      AES_CTRLA_LOD_NONE No effect
+ *  +      AES_CTRLA_LOD_LAST Start encryption in Last Output Data mode
+ * - AES_CTRLA_KEYGEN Last Key Generation
+ *  +      AES_CTRLA_KEYGEN_NONE No effect
+ *  +      AES_CTRLA_KEYGEN_LAST Start Computation of the last NK words of the expanded key
+ * - AES_CTRLA_XORKEY XOR Key Operation
+ *  +      AES_CTRLA_XORKEY_NONE No effect
+ *  +      AES_CTRLA_XORKEY_XOR The user keyword gets XORed with the previous keyword register content.
+ * - AES_CTRLA_CTYPE(value) Counter Measure Type
+ **/
 static inline uint32_t aes_read_CTRLA(void)
 {
 	return AES->CTRLA.reg;
@@ -398,12 +395,12 @@ static inline uint32_t aes_read_CTRLA(void)
 /**
  * @brief aes set CTRLB register
  *
- * @param[in] uint8_t mask
- * AES_CTRLB_START  Start Encryption/Decryption 
- * AES_CTRLB_NEWMSG  New message 
- * AES_CTRLB_EOM  End of message 
- * AES_CTRLB_GFMUL  GF Multiplication 
- */
+ * @param[in] mask uint8_t 
+ * - AES_CTRLB_START Start Encryption/Decryption
+ * - AES_CTRLB_NEWMSG New message
+ * - AES_CTRLB_EOM End of message
+ * - AES_CTRLB_GFMUL GF Multiplication
+ **/
 static inline void aes_set_CTRLB(uint8_t mask)
 {
 	AES->CTRLB.reg |= mask;
@@ -412,13 +409,13 @@ static inline void aes_set_CTRLB(uint8_t mask)
 /**
  * @brief aes get CTRLB register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * AES_CTRLB_START  Start Encryption/Decryption 
- * AES_CTRLB_NEWMSG  New message 
- * AES_CTRLB_EOM  End of message 
- * AES_CTRLB_GFMUL  GF Multiplication 
- */
+ * - AES_CTRLB_START Start Encryption/Decryption
+ * - AES_CTRLB_NEWMSG New message
+ * - AES_CTRLB_EOM End of message
+ * - AES_CTRLB_GFMUL GF Multiplication
+ **/
 static inline uint8_t aes_get_CTRLB(uint8_t mask)
 {
     return AES->CTRLB.reg & mask;
@@ -427,12 +424,12 @@ static inline uint8_t aes_get_CTRLB(uint8_t mask)
 /**
  * @brief aes write CTRLB register
  *
- * @param[in] uint8_t data
- * AES_CTRLB_START  Start Encryption/Decryption 
- * AES_CTRLB_NEWMSG  New message 
- * AES_CTRLB_EOM  End of message 
- * AES_CTRLB_GFMUL  GF Multiplication 
- */
+ * @param[in] data uint8_t 
+ * - AES_CTRLB_START Start Encryption/Decryption
+ * - AES_CTRLB_NEWMSG New message
+ * - AES_CTRLB_EOM End of message
+ * - AES_CTRLB_GFMUL GF Multiplication
+ **/
 static inline void aes_write_CTRLB(uint8_t data)
 {
 	AES->CTRLB.reg = data;
@@ -441,12 +438,12 @@ static inline void aes_write_CTRLB(uint8_t data)
 /**
  * @brief aes clear CTRLB register
  *
- * @param[in] uint8_t mask
- * AES_CTRLB_START  Start Encryption/Decryption 
- * AES_CTRLB_NEWMSG  New message 
- * AES_CTRLB_EOM  End of message 
- * AES_CTRLB_GFMUL  GF Multiplication 
- */
+ * @param[in] mask uint8_t 
+ * - AES_CTRLB_START Start Encryption/Decryption
+ * - AES_CTRLB_NEWMSG New message
+ * - AES_CTRLB_EOM End of message
+ * - AES_CTRLB_GFMUL GF Multiplication
+ **/
 static inline void aes_clear_CTRLB(uint8_t mask)
 {
 	AES->CTRLB.reg &= ~mask;
@@ -455,13 +452,12 @@ static inline void aes_clear_CTRLB(uint8_t mask)
 /**
  * @brief aes read CTRLB register
  *
- * @param[in] void
  * @return uint8_t
- * AES_CTRLB_START  Start Encryption/Decryption 
- * AES_CTRLB_NEWMSG  New message 
- * AES_CTRLB_EOM  End of message 
- * AES_CTRLB_GFMUL  GF Multiplication 
- */
+ * - AES_CTRLB_START Start Encryption/Decryption
+ * - AES_CTRLB_NEWMSG New message
+ * - AES_CTRLB_EOM End of message
+ * - AES_CTRLB_GFMUL GF Multiplication
+ **/
 static inline uint8_t aes_read_CTRLB(void)
 {
 	return AES->CTRLB.reg;
@@ -470,9 +466,9 @@ static inline uint8_t aes_read_CTRLB(void)
 /**
  * @brief aes set DATABUFPTR register
  *
- * @param[in] uint8_t mask
- * AES_DATABUFPTR_INDATAPTR(value)  Input Data Pointer 
- */
+ * @param[in] mask uint8_t 
+ * - AES_DATABUFPTR_INDATAPTR(value) Input Data Pointer
+ **/
 static inline void aes_set_DATABUFPTR(uint8_t mask)
 {
 	AES->DATABUFPTR.reg |= mask;
@@ -481,10 +477,10 @@ static inline void aes_set_DATABUFPTR(uint8_t mask)
 /**
  * @brief aes get DATABUFPTR register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * AES_DATABUFPTR_INDATAPTR(value)  Input Data Pointer 
- */
+ * - AES_DATABUFPTR_INDATAPTR(value) Input Data Pointer
+ **/
 static inline uint8_t aes_get_DATABUFPTR(uint8_t mask)
 {
     return AES->DATABUFPTR.reg & mask;
@@ -493,9 +489,9 @@ static inline uint8_t aes_get_DATABUFPTR(uint8_t mask)
 /**
  * @brief aes write DATABUFPTR register
  *
- * @param[in] uint8_t data
- * AES_DATABUFPTR_INDATAPTR(value)  Input Data Pointer 
- */
+ * @param[in] data uint8_t 
+ * - AES_DATABUFPTR_INDATAPTR(value) Input Data Pointer
+ **/
 static inline void aes_write_DATABUFPTR(uint8_t data)
 {
 	AES->DATABUFPTR.reg = data;
@@ -504,9 +500,9 @@ static inline void aes_write_DATABUFPTR(uint8_t data)
 /**
  * @brief aes clear DATABUFPTR register
  *
- * @param[in] uint8_t mask
- * AES_DATABUFPTR_INDATAPTR(value)  Input Data Pointer 
- */
+ * @param[in] mask uint8_t 
+ * - AES_DATABUFPTR_INDATAPTR(value) Input Data Pointer
+ **/
 static inline void aes_clear_DATABUFPTR(uint8_t mask)
 {
 	AES->DATABUFPTR.reg &= ~mask;
@@ -515,10 +511,9 @@ static inline void aes_clear_DATABUFPTR(uint8_t mask)
 /**
  * @brief aes read DATABUFPTR register
  *
- * @param[in] void
  * @return uint8_t
- * AES_DATABUFPTR_INDATAPTR(value)  Input Data Pointer 
- */
+ * - AES_DATABUFPTR_INDATAPTR(value) Input Data Pointer
+ **/
 static inline uint8_t aes_read_DATABUFPTR(void)
 {
 	return AES->DATABUFPTR.reg;
@@ -527,9 +522,9 @@ static inline uint8_t aes_read_DATABUFPTR(void)
 /**
  * @brief aes set DBGCTRL register
  *
- * @param[in] uint8_t mask
- * AES_DBGCTRL_DBGRUN  Debug Run 
- */
+ * @param[in] mask uint8_t 
+ * - AES_DBGCTRL_DBGRUN Debug Run
+ **/
 static inline void aes_set_DBGCTRL(uint8_t mask)
 {
 	AES->DBGCTRL.reg |= mask;
@@ -538,10 +533,10 @@ static inline void aes_set_DBGCTRL(uint8_t mask)
 /**
  * @brief aes get DBGCTRL register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * AES_DBGCTRL_DBGRUN  Debug Run 
- */
+ * - AES_DBGCTRL_DBGRUN Debug Run
+ **/
 static inline uint8_t aes_get_DBGCTRL(uint8_t mask)
 {
     return AES->DBGCTRL.reg & mask;
@@ -550,9 +545,9 @@ static inline uint8_t aes_get_DBGCTRL(uint8_t mask)
 /**
  * @brief aes write DBGCTRL register
  *
- * @param[in] uint8_t data
- * AES_DBGCTRL_DBGRUN  Debug Run 
- */
+ * @param[in] data uint8_t 
+ * - AES_DBGCTRL_DBGRUN Debug Run
+ **/
 static inline void aes_write_DBGCTRL(uint8_t data)
 {
 	AES->DBGCTRL.reg = data;
@@ -561,9 +556,9 @@ static inline void aes_write_DBGCTRL(uint8_t data)
 /**
  * @brief aes clear DBGCTRL register
  *
- * @param[in] uint8_t mask
- * AES_DBGCTRL_DBGRUN  Debug Run 
- */
+ * @param[in] mask uint8_t 
+ * - AES_DBGCTRL_DBGRUN Debug Run
+ **/
 static inline void aes_clear_DBGCTRL(uint8_t mask)
 {
 	AES->DBGCTRL.reg &= ~mask;
@@ -572,10 +567,9 @@ static inline void aes_clear_DBGCTRL(uint8_t mask)
 /**
  * @brief aes read DBGCTRL register
  *
- * @param[in] void
  * @return uint8_t
- * AES_DBGCTRL_DBGRUN  Debug Run 
- */
+ * - AES_DBGCTRL_DBGRUN Debug Run
+ **/
 static inline uint8_t aes_read_DBGCTRL(void)
 {
 	return AES->DBGCTRL.reg;
@@ -584,8 +578,8 @@ static inline uint8_t aes_read_DBGCTRL(void)
 /**
  * @brief aes set INDATA register
  *
- * @param[in] uint32_t mask
- */
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_set_INDATA(uint32_t mask)
 {
 	AES->INDATA.reg |= mask;
@@ -594,9 +588,9 @@ static inline void aes_set_INDATA(uint32_t mask)
 /**
  * @brief aes get INDATA register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_get_INDATA(uint32_t mask)
 {
     return AES->INDATA.reg & mask;
@@ -605,8 +599,8 @@ static inline uint32_t aes_get_INDATA(uint32_t mask)
 /**
  * @brief aes write INDATA register
  *
- * @param[in] uint32_t data
- */
+ * @param[in] data uint32_t 
+ **/
 static inline void aes_write_INDATA(uint32_t data)
 {
 	AES->INDATA.reg = data;
@@ -615,8 +609,8 @@ static inline void aes_write_INDATA(uint32_t data)
 /**
  * @brief aes clear INDATA register
  *
- * @param[in] uint32_t mask
- */
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_clear_INDATA(uint32_t mask)
 {
 	AES->INDATA.reg &= ~mask;
@@ -625,9 +619,8 @@ static inline void aes_clear_INDATA(uint32_t mask)
 /**
  * @brief aes read INDATA register
  *
- * @param[in] void
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_read_INDATA(void)
 {
 	return AES->INDATA.reg;
@@ -636,9 +629,9 @@ static inline uint32_t aes_read_INDATA(void)
 /**
  * @brief aes set HASHKEY register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t mask
- */
+ * @param[in] index uint8_t 
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_set_HASHKEY(uint8_t index, uint32_t mask)
 {
 	AES->HASHKEY[index].reg |= mask;
@@ -647,10 +640,10 @@ static inline void aes_set_HASHKEY(uint8_t index, uint32_t mask)
 /**
  * @brief aes get HASHKEY register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t mask
+ * @param[in] index uint8_t 
+ * @param[in] mask uint32_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_get_HASHKEY(uint8_t index, uint32_t mask)
 {
     return AES->HASHKEY[index].reg & mask;
@@ -659,9 +652,9 @@ static inline uint32_t aes_get_HASHKEY(uint8_t index, uint32_t mask)
 /**
  * @brief aes write HASHKEY register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t data
- */
+ * @param[in] index uint8_t 
+ * @param[in] data uint32_t 
+ **/
 static inline void aes_write_HASHKEY(uint8_t index, uint32_t data)
 {
 	AES->HASHKEY[index].reg = data;
@@ -670,9 +663,9 @@ static inline void aes_write_HASHKEY(uint8_t index, uint32_t data)
 /**
  * @brief aes clear HASHKEY register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t mask
- */
+ * @param[in] index uint8_t 
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_clear_HASHKEY(uint8_t index, uint32_t mask)
 {
 	AES->HASHKEY[index].reg &= ~mask;
@@ -681,9 +674,9 @@ static inline void aes_clear_HASHKEY(uint8_t index, uint32_t mask)
 /**
  * @brief aes read HASHKEY register
  *
- * @param[in] uint8_t index
+ * @param[in] index uint8_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_read_HASHKEY(uint8_t index)
 {
 	return AES->HASHKEY[index].reg;
@@ -692,9 +685,9 @@ static inline uint32_t aes_read_HASHKEY(uint8_t index)
 /**
  * @brief aes set GHASH register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t mask
- */
+ * @param[in] index uint8_t 
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_set_GHASH(uint8_t index, uint32_t mask)
 {
 	AES->GHASH[index].reg |= mask;
@@ -703,10 +696,10 @@ static inline void aes_set_GHASH(uint8_t index, uint32_t mask)
 /**
  * @brief aes get GHASH register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t mask
+ * @param[in] index uint8_t 
+ * @param[in] mask uint32_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_get_GHASH(uint8_t index, uint32_t mask)
 {
     return AES->GHASH[index].reg & mask;
@@ -715,9 +708,9 @@ static inline uint32_t aes_get_GHASH(uint8_t index, uint32_t mask)
 /**
  * @brief aes write GHASH register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t data
- */
+ * @param[in] index uint8_t 
+ * @param[in] data uint32_t 
+ **/
 static inline void aes_write_GHASH(uint8_t index, uint32_t data)
 {
 	AES->GHASH[index].reg = data;
@@ -726,9 +719,9 @@ static inline void aes_write_GHASH(uint8_t index, uint32_t data)
 /**
  * @brief aes clear GHASH register
  *
- * @param[in] uint8_t index
- * @param[in] uint32_t mask
- */
+ * @param[in] index uint8_t 
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_clear_GHASH(uint8_t index, uint32_t mask)
 {
 	AES->GHASH[index].reg &= ~mask;
@@ -737,9 +730,9 @@ static inline void aes_clear_GHASH(uint8_t index, uint32_t mask)
 /**
  * @brief aes read GHASH register
  *
- * @param[in] uint8_t index
+ * @param[in] index uint8_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_read_GHASH(uint8_t index)
 {
 	return AES->GHASH[index].reg;
@@ -748,8 +741,8 @@ static inline uint32_t aes_read_GHASH(uint8_t index)
 /**
  * @brief aes set CIPLEN register
  *
- * @param[in] uint32_t mask
- */
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_set_CIPLEN(uint32_t mask)
 {
 	AES->CIPLEN.reg |= mask;
@@ -758,9 +751,9 @@ static inline void aes_set_CIPLEN(uint32_t mask)
 /**
  * @brief aes get CIPLEN register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_get_CIPLEN(uint32_t mask)
 {
     return AES->CIPLEN.reg & mask;
@@ -769,8 +762,8 @@ static inline uint32_t aes_get_CIPLEN(uint32_t mask)
 /**
  * @brief aes write CIPLEN register
  *
- * @param[in] uint32_t data
- */
+ * @param[in] data uint32_t 
+ **/
 static inline void aes_write_CIPLEN(uint32_t data)
 {
 	AES->CIPLEN.reg = data;
@@ -779,8 +772,8 @@ static inline void aes_write_CIPLEN(uint32_t data)
 /**
  * @brief aes clear CIPLEN register
  *
- * @param[in] uint32_t mask
- */
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_clear_CIPLEN(uint32_t mask)
 {
 	AES->CIPLEN.reg &= ~mask;
@@ -789,9 +782,8 @@ static inline void aes_clear_CIPLEN(uint32_t mask)
 /**
  * @brief aes read CIPLEN register
  *
- * @param[in] void
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_read_CIPLEN(void)
 {
 	return AES->CIPLEN.reg;
@@ -800,8 +792,8 @@ static inline uint32_t aes_read_CIPLEN(void)
 /**
  * @brief aes set RANDSEED register
  *
- * @param[in] uint32_t mask
- */
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_set_RANDSEED(uint32_t mask)
 {
 	AES->RANDSEED.reg |= mask;
@@ -810,9 +802,9 @@ static inline void aes_set_RANDSEED(uint32_t mask)
 /**
  * @brief aes get RANDSEED register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_get_RANDSEED(uint32_t mask)
 {
     return AES->RANDSEED.reg & mask;
@@ -821,8 +813,8 @@ static inline uint32_t aes_get_RANDSEED(uint32_t mask)
 /**
  * @brief aes write RANDSEED register
  *
- * @param[in] uint32_t data
- */
+ * @param[in] data uint32_t 
+ **/
 static inline void aes_write_RANDSEED(uint32_t data)
 {
 	AES->RANDSEED.reg = data;
@@ -831,8 +823,8 @@ static inline void aes_write_RANDSEED(uint32_t data)
 /**
  * @brief aes clear RANDSEED register
  *
- * @param[in] uint32_t mask
- */
+ * @param[in] mask uint32_t 
+ **/
 static inline void aes_clear_RANDSEED(uint32_t mask)
 {
 	AES->RANDSEED.reg &= ~mask;
@@ -841,9 +833,8 @@ static inline void aes_clear_RANDSEED(uint32_t mask)
 /**
  * @brief aes read RANDSEED register
  *
- * @param[in] void
  * @return uint32_t
- */
+ **/
 static inline uint32_t aes_read_RANDSEED(void)
 {
 	return AES->RANDSEED.reg;

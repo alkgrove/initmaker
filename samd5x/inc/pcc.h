@@ -43,10 +43,10 @@
 /**
  * @brief pcc set IMR register
  *
- * @param[in] uint32_t mask
- * PCC_IMR_DRDY  Data Ready Interrupt Mask 
- * PCC_IMR_OVRE  Overrun Error Interrupt Mask 
- */
+ * @param[in] mask uint32_t 
+ * - PCC_IMR_DRDY Data Ready Interrupt Mask
+ * - PCC_IMR_OVRE Overrun Error Interrupt Mask
+ **/
 static inline void pcc_set_IMR(uint32_t mask)
 {
 	PCC->IER.reg = mask;
@@ -55,11 +55,11 @@ static inline void pcc_set_IMR(uint32_t mask)
 /**
  * @brief pcc get IMR register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * PCC_IMR_DRDY  Data Ready Interrupt Mask 
- * PCC_IMR_OVRE  Overrun Error Interrupt Mask 
- */
+ * - PCC_IMR_DRDY Data Ready Interrupt Mask
+ * - PCC_IMR_OVRE Overrun Error Interrupt Mask
+ **/
 static inline uint32_t pcc_get_IMR(uint32_t mask)
 {
     return PCC->IMR.reg & mask;
@@ -68,11 +68,10 @@ static inline uint32_t pcc_get_IMR(uint32_t mask)
 /**
  * @brief pcc read IMR register
  *
- * @param[in] void
  * @return uint32_t
- * PCC_IMR_DRDY  Data Ready Interrupt Mask 
- * PCC_IMR_OVRE  Overrun Error Interrupt Mask 
- */
+ * - PCC_IMR_DRDY Data Ready Interrupt Mask
+ * - PCC_IMR_OVRE Overrun Error Interrupt Mask
+ **/
 static inline uint32_t pcc_read_IMR(void)
 {
 	return PCC->IMR.reg;
@@ -81,10 +80,10 @@ static inline uint32_t pcc_read_IMR(void)
 /**
  * @brief pcc write IMR register
  *
- * @param[in] uint32_t data
- * PCC_IMR_DRDY  Data Ready Interrupt Mask 
- * PCC_IMR_OVRE  Overrun Error Interrupt Mask 
- */
+ * @param[in] data uint32_t 
+ * - PCC_IMR_DRDY Data Ready Interrupt Mask
+ * - PCC_IMR_OVRE Overrun Error Interrupt Mask
+ **/
 static inline void pcc_write_IMR(uint32_t data)
 {
 	PCC->IER.reg = data;
@@ -94,10 +93,10 @@ static inline void pcc_write_IMR(uint32_t data)
 /**
  * @brief pcc clear IMR register
  *
- * @param[in] uint32_t mask
- * PCC_IMR_DRDY  Data Ready Interrupt Mask 
- * PCC_IMR_OVRE  Overrun Error Interrupt Mask 
- */
+ * @param[in] mask uint32_t 
+ * - PCC_IMR_DRDY Data Ready Interrupt Mask
+ * - PCC_IMR_OVRE Overrun Error Interrupt Mask
+ **/
 static inline void pcc_clear_IMR(uint32_t mask)
 {
 	PCC->IDR.reg = mask;
@@ -106,16 +105,16 @@ static inline void pcc_clear_IMR(uint32_t mask)
 /**
  * @brief pcc set MR register
  *
- * @param[in] uint32_t mask
- * PCC_MR_PCEN  Parallel Capture Enable 
- * PCC_MR_DSIZE(value)  Data size 
- * PCC_MR_SCALE  Scale data 
- * PCC_MR_ALWYS  Always Sampling 
- * PCC_MR_HALFS  Half Sampling 
- * PCC_MR_FRSTS  First sample 
- * PCC_MR_ISIZE(value)  Input Data Size 
- * PCC_MR_CID(value)  Clear If Disabled 
- */
+ * @param[in] mask uint32_t 
+ * - PCC_MR_PCEN Parallel Capture Enable
+ * - PCC_MR_DSIZE(value) Data size
+ * - PCC_MR_SCALE Scale data
+ * - PCC_MR_ALWYS Always Sampling
+ * - PCC_MR_HALFS Half Sampling
+ * - PCC_MR_FRSTS First sample
+ * - PCC_MR_ISIZE(value) Input Data Size
+ * - PCC_MR_CID(value) Clear If Disabled
+ **/
 static inline void pcc_set_MR(uint32_t mask)
 {
 	PCC->MR.reg |= mask;
@@ -124,17 +123,17 @@ static inline void pcc_set_MR(uint32_t mask)
 /**
  * @brief pcc get MR register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * PCC_MR_PCEN  Parallel Capture Enable 
- * PCC_MR_DSIZE(value)  Data size 
- * PCC_MR_SCALE  Scale data 
- * PCC_MR_ALWYS  Always Sampling 
- * PCC_MR_HALFS  Half Sampling 
- * PCC_MR_FRSTS  First sample 
- * PCC_MR_ISIZE(value)  Input Data Size 
- * PCC_MR_CID(value)  Clear If Disabled 
- */
+ * - PCC_MR_PCEN Parallel Capture Enable
+ * - PCC_MR_DSIZE(value) Data size
+ * - PCC_MR_SCALE Scale data
+ * - PCC_MR_ALWYS Always Sampling
+ * - PCC_MR_HALFS Half Sampling
+ * - PCC_MR_FRSTS First sample
+ * - PCC_MR_ISIZE(value) Input Data Size
+ * - PCC_MR_CID(value) Clear If Disabled
+ **/
 static inline uint32_t pcc_get_MR(uint32_t mask)
 {
     return PCC->MR.reg & mask;
@@ -143,16 +142,16 @@ static inline uint32_t pcc_get_MR(uint32_t mask)
 /**
  * @brief pcc write MR register
  *
- * @param[in] uint32_t data
- * PCC_MR_PCEN  Parallel Capture Enable 
- * PCC_MR_DSIZE(value)  Data size 
- * PCC_MR_SCALE  Scale data 
- * PCC_MR_ALWYS  Always Sampling 
- * PCC_MR_HALFS  Half Sampling 
- * PCC_MR_FRSTS  First sample 
- * PCC_MR_ISIZE(value)  Input Data Size 
- * PCC_MR_CID(value)  Clear If Disabled 
- */
+ * @param[in] data uint32_t 
+ * - PCC_MR_PCEN Parallel Capture Enable
+ * - PCC_MR_DSIZE(value) Data size
+ * - PCC_MR_SCALE Scale data
+ * - PCC_MR_ALWYS Always Sampling
+ * - PCC_MR_HALFS Half Sampling
+ * - PCC_MR_FRSTS First sample
+ * - PCC_MR_ISIZE(value) Input Data Size
+ * - PCC_MR_CID(value) Clear If Disabled
+ **/
 static inline void pcc_write_MR(uint32_t data)
 {
 	PCC->MR.reg = data;
@@ -161,16 +160,16 @@ static inline void pcc_write_MR(uint32_t data)
 /**
  * @brief pcc clear MR register
  *
- * @param[in] uint32_t mask
- * PCC_MR_PCEN  Parallel Capture Enable 
- * PCC_MR_DSIZE(value)  Data size 
- * PCC_MR_SCALE  Scale data 
- * PCC_MR_ALWYS  Always Sampling 
- * PCC_MR_HALFS  Half Sampling 
- * PCC_MR_FRSTS  First sample 
- * PCC_MR_ISIZE(value)  Input Data Size 
- * PCC_MR_CID(value)  Clear If Disabled 
- */
+ * @param[in] mask uint32_t 
+ * - PCC_MR_PCEN Parallel Capture Enable
+ * - PCC_MR_DSIZE(value) Data size
+ * - PCC_MR_SCALE Scale data
+ * - PCC_MR_ALWYS Always Sampling
+ * - PCC_MR_HALFS Half Sampling
+ * - PCC_MR_FRSTS First sample
+ * - PCC_MR_ISIZE(value) Input Data Size
+ * - PCC_MR_CID(value) Clear If Disabled
+ **/
 static inline void pcc_clear_MR(uint32_t mask)
 {
 	PCC->MR.reg &= ~mask;
@@ -179,17 +178,16 @@ static inline void pcc_clear_MR(uint32_t mask)
 /**
  * @brief pcc read MR register
  *
- * @param[in] void
  * @return uint32_t
- * PCC_MR_PCEN  Parallel Capture Enable 
- * PCC_MR_DSIZE(value)  Data size 
- * PCC_MR_SCALE  Scale data 
- * PCC_MR_ALWYS  Always Sampling 
- * PCC_MR_HALFS  Half Sampling 
- * PCC_MR_FRSTS  First sample 
- * PCC_MR_ISIZE(value)  Input Data Size 
- * PCC_MR_CID(value)  Clear If Disabled 
- */
+ * - PCC_MR_PCEN Parallel Capture Enable
+ * - PCC_MR_DSIZE(value) Data size
+ * - PCC_MR_SCALE Scale data
+ * - PCC_MR_ALWYS Always Sampling
+ * - PCC_MR_HALFS Half Sampling
+ * - PCC_MR_FRSTS First sample
+ * - PCC_MR_ISIZE(value) Input Data Size
+ * - PCC_MR_CID(value) Clear If Disabled
+ **/
 static inline uint32_t pcc_read_MR(void)
 {
 	return PCC->MR.reg;
@@ -198,10 +196,10 @@ static inline uint32_t pcc_read_MR(void)
 /**
  * @brief pcc set WPMR register
  *
- * @param[in] uint32_t mask
- * PCC_WPMR_WPEN  Write Protection Enable 
- * PCC_WPMR_WPKEY(value)  Write Protection Key 
- */
+ * @param[in] mask uint32_t 
+ * - PCC_WPMR_WPEN Write Protection Enable
+ * - PCC_WPMR_WPKEY(value) Write Protection Key
+ **/
 static inline void pcc_set_WPMR(uint32_t mask)
 {
 	PCC->WPMR.reg |= mask;
@@ -210,11 +208,11 @@ static inline void pcc_set_WPMR(uint32_t mask)
 /**
  * @brief pcc get WPMR register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * PCC_WPMR_WPEN  Write Protection Enable 
- * PCC_WPMR_WPKEY(value)  Write Protection Key 
- */
+ * - PCC_WPMR_WPEN Write Protection Enable
+ * - PCC_WPMR_WPKEY(value) Write Protection Key
+ **/
 static inline uint32_t pcc_get_WPMR(uint32_t mask)
 {
     return PCC->WPMR.reg & mask;
@@ -223,10 +221,10 @@ static inline uint32_t pcc_get_WPMR(uint32_t mask)
 /**
  * @brief pcc write WPMR register
  *
- * @param[in] uint32_t data
- * PCC_WPMR_WPEN  Write Protection Enable 
- * PCC_WPMR_WPKEY(value)  Write Protection Key 
- */
+ * @param[in] data uint32_t 
+ * - PCC_WPMR_WPEN Write Protection Enable
+ * - PCC_WPMR_WPKEY(value) Write Protection Key
+ **/
 static inline void pcc_write_WPMR(uint32_t data)
 {
 	PCC->WPMR.reg = data;
@@ -235,10 +233,10 @@ static inline void pcc_write_WPMR(uint32_t data)
 /**
  * @brief pcc clear WPMR register
  *
- * @param[in] uint32_t mask
- * PCC_WPMR_WPEN  Write Protection Enable 
- * PCC_WPMR_WPKEY(value)  Write Protection Key 
- */
+ * @param[in] mask uint32_t 
+ * - PCC_WPMR_WPEN Write Protection Enable
+ * - PCC_WPMR_WPKEY(value) Write Protection Key
+ **/
 static inline void pcc_clear_WPMR(uint32_t mask)
 {
 	PCC->WPMR.reg &= ~mask;
@@ -247,11 +245,10 @@ static inline void pcc_clear_WPMR(uint32_t mask)
 /**
  * @brief pcc read WPMR register
  *
- * @param[in] void
  * @return uint32_t
- * PCC_WPMR_WPEN  Write Protection Enable 
- * PCC_WPMR_WPKEY(value)  Write Protection Key 
- */
+ * - PCC_WPMR_WPEN Write Protection Enable
+ * - PCC_WPMR_WPKEY(value) Write Protection Key
+ **/
 static inline uint32_t pcc_read_WPMR(void)
 {
 	return PCC->WPMR.reg;
@@ -260,11 +257,11 @@ static inline uint32_t pcc_read_WPMR(void)
 /**
  * @brief pcc get ISR register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * PCC_ISR_DRDY  Data Ready Interrupt Status 
- * PCC_ISR_OVRE  Overrun Error Interrupt Status 
- */
+ * - PCC_ISR_DRDY Data Ready Interrupt Status
+ * - PCC_ISR_OVRE Overrun Error Interrupt Status
+ **/
 static inline uint32_t pcc_get_ISR(uint32_t mask)
 {
     return PCC->ISR.reg & mask;
@@ -273,11 +270,10 @@ static inline uint32_t pcc_get_ISR(uint32_t mask)
 /**
  * @brief pcc read ISR register
  *
- * @param[in] void
  * @return uint32_t
- * PCC_ISR_DRDY  Data Ready Interrupt Status 
- * PCC_ISR_OVRE  Overrun Error Interrupt Status 
- */
+ * - PCC_ISR_DRDY Data Ready Interrupt Status
+ * - PCC_ISR_OVRE Overrun Error Interrupt Status
+ **/
 static inline uint32_t pcc_read_ISR(void)
 {
 	return PCC->ISR.reg;
@@ -286,10 +282,10 @@ static inline uint32_t pcc_read_ISR(void)
 /**
  * @brief pcc get RHR register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * PCC_RHR_RDATA(value)  Reception Data 
- */
+ * - PCC_RHR_RDATA(value) Reception Data
+ **/
 static inline uint32_t pcc_get_RHR(uint32_t mask)
 {
     return PCC->RHR.reg & mask;
@@ -298,10 +294,9 @@ static inline uint32_t pcc_get_RHR(uint32_t mask)
 /**
  * @brief pcc read RHR register
  *
- * @param[in] void
  * @return uint32_t
- * PCC_RHR_RDATA(value)  Reception Data 
- */
+ * - PCC_RHR_RDATA(value) Reception Data
+ **/
 static inline uint32_t pcc_read_RHR(void)
 {
 	return PCC->RHR.reg;
@@ -310,11 +305,11 @@ static inline uint32_t pcc_read_RHR(void)
 /**
  * @brief pcc get WPSR register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * PCC_WPSR_WPVS  Write Protection Violation Source 
- * PCC_WPSR_WPVSRC(value)  Write Protection Violation Status 
- */
+ * - PCC_WPSR_WPVS Write Protection Violation Source
+ * - PCC_WPSR_WPVSRC(value) Write Protection Violation Status
+ **/
 static inline uint32_t pcc_get_WPSR(uint32_t mask)
 {
     return PCC->WPSR.reg & mask;
@@ -323,11 +318,10 @@ static inline uint32_t pcc_get_WPSR(uint32_t mask)
 /**
  * @brief pcc read WPSR register
  *
- * @param[in] void
  * @return uint32_t
- * PCC_WPSR_WPVS  Write Protection Violation Source 
- * PCC_WPSR_WPVSRC(value)  Write Protection Violation Status 
- */
+ * - PCC_WPSR_WPVS Write Protection Violation Source
+ * - PCC_WPSR_WPVSRC(value) Write Protection Violation Status
+ **/
 static inline uint32_t pcc_read_WPSR(void)
 {
 	return PCC->WPSR.reg;

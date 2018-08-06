@@ -43,9 +43,9 @@
 /**
  * @brief hmatrixb set PRAS register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t mask
- */
+ * @param[in] submodule_index uint8_t 
+ * @param[in] mask uint32_t 
+ **/
 static inline void hmatrixb_set_PRAS(uint8_t submodule_index, uint32_t mask)
 {
 	HMATRIX->Prs[submodule_index].PRAS.reg |= mask;
@@ -54,10 +54,10 @@ static inline void hmatrixb_set_PRAS(uint8_t submodule_index, uint32_t mask)
 /**
  * @brief hmatrixb get PRAS register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t mask
+ * @param[in] submodule_index uint8_t 
+ * @param[in] mask uint32_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t hmatrixb_get_PRAS(uint8_t submodule_index, uint32_t mask)
 {
     return HMATRIX->Prs[submodule_index].PRAS.reg & mask;
@@ -66,9 +66,9 @@ static inline uint32_t hmatrixb_get_PRAS(uint8_t submodule_index, uint32_t mask)
 /**
  * @brief hmatrixb write PRAS register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t data
- */
+ * @param[in] submodule_index uint8_t 
+ * @param[in] data uint32_t 
+ **/
 static inline void hmatrixb_write_PRAS(uint8_t submodule_index, uint32_t data)
 {
 	HMATRIX->Prs[submodule_index].PRAS.reg = data;
@@ -77,9 +77,9 @@ static inline void hmatrixb_write_PRAS(uint8_t submodule_index, uint32_t data)
 /**
  * @brief hmatrixb clear PRAS register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t mask
- */
+ * @param[in] submodule_index uint8_t 
+ * @param[in] mask uint32_t 
+ **/
 static inline void hmatrixb_clear_PRAS(uint8_t submodule_index, uint32_t mask)
 {
 	HMATRIX->Prs[submodule_index].PRAS.reg &= ~mask;
@@ -88,9 +88,9 @@ static inline void hmatrixb_clear_PRAS(uint8_t submodule_index, uint32_t mask)
 /**
  * @brief hmatrixb read PRAS register
  *
- * @param[in] uint8_t submodule_index
+ * @param[in] submodule_index uint8_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t hmatrixb_read_PRAS(uint8_t submodule_index)
 {
 	return HMATRIX->Prs[submodule_index].PRAS.reg;
@@ -99,9 +99,9 @@ static inline uint32_t hmatrixb_read_PRAS(uint8_t submodule_index)
 /**
  * @brief hmatrixb set PRBS register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t mask
- */
+ * @param[in] submodule_index uint8_t 
+ * @param[in] mask uint32_t 
+ **/
 static inline void hmatrixb_set_PRBS(uint8_t submodule_index, uint32_t mask)
 {
 	HMATRIX->Prs[submodule_index].PRBS.reg |= mask;
@@ -110,10 +110,10 @@ static inline void hmatrixb_set_PRBS(uint8_t submodule_index, uint32_t mask)
 /**
  * @brief hmatrixb get PRBS register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t mask
+ * @param[in] submodule_index uint8_t 
+ * @param[in] mask uint32_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t hmatrixb_get_PRBS(uint8_t submodule_index, uint32_t mask)
 {
     return HMATRIX->Prs[submodule_index].PRBS.reg & mask;
@@ -122,9 +122,9 @@ static inline uint32_t hmatrixb_get_PRBS(uint8_t submodule_index, uint32_t mask)
 /**
  * @brief hmatrixb write PRBS register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t data
- */
+ * @param[in] submodule_index uint8_t 
+ * @param[in] data uint32_t 
+ **/
 static inline void hmatrixb_write_PRBS(uint8_t submodule_index, uint32_t data)
 {
 	HMATRIX->Prs[submodule_index].PRBS.reg = data;
@@ -133,9 +133,9 @@ static inline void hmatrixb_write_PRBS(uint8_t submodule_index, uint32_t data)
 /**
  * @brief hmatrixb clear PRBS register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t mask
- */
+ * @param[in] submodule_index uint8_t 
+ * @param[in] mask uint32_t 
+ **/
 static inline void hmatrixb_clear_PRBS(uint8_t submodule_index, uint32_t mask)
 {
 	HMATRIX->Prs[submodule_index].PRBS.reg &= ~mask;
@@ -144,9 +144,9 @@ static inline void hmatrixb_clear_PRBS(uint8_t submodule_index, uint32_t mask)
 /**
  * @brief hmatrixb read PRBS register
  *
- * @param[in] uint8_t submodule_index
+ * @param[in] submodule_index uint8_t 
  * @return uint32_t
- */
+ **/
 static inline uint32_t hmatrixb_read_PRBS(uint8_t submodule_index)
 {
 	return HMATRIX->Prs[submodule_index].PRBS.reg;

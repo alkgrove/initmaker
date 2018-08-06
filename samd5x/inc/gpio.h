@@ -66,21 +66,21 @@
 #define GPIO(port, pin) ((((port)&0x7u) << 5) + ((pin)&0x1Fu))
 
 // pin function
-#define GPIO_PIN_FUNCTION_OFF 0xff
-#define GPIO_PIN_FUNCTION_A 0
-#define GPIO_PIN_FUNCTION_B 1
-#define GPIO_PIN_FUNCTION_C 2
-#define GPIO_PIN_FUNCTION_D 3
-#define GPIO_PIN_FUNCTION_E 4
-#define GPIO_PIN_FUNCTION_F 5
-#define GPIO_PIN_FUNCTION_G 6
-#define GPIO_PIN_FUNCTION_H 7
-#define GPIO_PIN_FUNCTION_I 8
-#define GPIO_PIN_FUNCTION_J 9
-#define GPIO_PIN_FUNCTION_K 10
-#define GPIO_PIN_FUNCTION_L 11
-#define GPIO_PIN_FUNCTION_M 12
-#define GPIO_PIN_FUNCTION_N 13
+#define GPIO_PIN_FUNCTION_OFF 0xff 	/**< \brief PORT Function Off (GPIO Mode) */
+#define GPIO_PIN_FUNCTION_A 0		/**< \brief PORT Function A (EIC) */
+#define GPIO_PIN_FUNCTION_B 1		/**< \brief PORT Function B (Analog) */
+#define GPIO_PIN_FUNCTION_C 2		/**< \brief PORT Function C (SERCOM) */
+#define GPIO_PIN_FUNCTION_D 3		/**< \brief PORT Function D (SERCOM) */
+#define GPIO_PIN_FUNCTION_E 4		/**< \brief PORT Function E (TC) */
+#define GPIO_PIN_FUNCTION_F 5		/**< \brief PORT Function F (TCC) */
+#define GPIO_PIN_FUNCTION_G 6		/**< \brief PORT Function G (TCC, PDEC) */
+#define GPIO_PIN_FUNCTION_H 7		/**< \brief PORT Function H (QSPI, CAN, USB, CM4) */
+#define GPIO_PIN_FUNCTION_I 8		/**< \brief PORT Function I (SDHC, CAN) */
+#define GPIO_PIN_FUNCTION_J 9		/**< \brief PORT Function J (I2S) */
+#define GPIO_PIN_FUNCTION_K 10		/**< \brief PORT Function K (PCC) */
+#define GPIO_PIN_FUNCTION_L 11		/**< \brief PORT Function L (GMAC) */
+#define GPIO_PIN_FUNCTION_M 12		/**< \brief PORT Function M (GCLK, AC) */
+#define GPIO_PIN_FUNCTION_N 13		/**< \brief PORT Function N (CCL) */
 
 #define PORT_EVCTRL_PID_Pos        0            /**< \brief (PORT_EVCTRL) PORT Event Pin Identifier 0 */
 #define PORT_EVCTRL_PID_Msk        (_U_(0x1F) << PORT_EVCTRL_PID_Pos)
@@ -126,7 +126,7 @@ typedef enum { PORTA = 0, PORTB, PORTC, PORTD, PORTE } portgroup_t;
  * @brief Set pin direction as an output for port/pin
  * it sets output drive to normal and pin function to GPIO
  * call gpio_set_high_drive() to change drive and port_set_pin_function() to change function
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  *
  */
 static inline void gpio_set_dir_out(const uint8_t portpin) 
@@ -144,7 +144,7 @@ static inline void gpio_set_dir_out(const uint8_t portpin)
 /**
  * @brief Set pin direction as an input on port/pin
  * it sets pin function to GPIO and no pullup or pulldown
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  */
 static inline void gpio_set_dir_in(const uint8_t portpin)
 {
@@ -161,7 +161,7 @@ static inline void gpio_set_dir_in(const uint8_t portpin)
 /**
  * @brief Set pin direction as an off on port/pin
  * GPIO for this port/pin is turned off and is hi-z
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  */
 static inline void gpio_set_dir_off(const uint8_t portpin)
 {
@@ -178,7 +178,7 @@ static inline void gpio_set_dir_off(const uint8_t portpin)
 /**
  * @brief Get pin direction on PORTA, PORTB
  *
- * @param[in] portgroup_t portindex Ports are grouped into groups of maximum 32 pins,
+ * @param[in] portindex - portgroup_t  Ports are grouped into groups of maximum 32 pins,
  *                      PORTA = group 0, PORTB = group 1, etc
  * @return uint32_t direction '1' is output, '0' is input
  */
@@ -191,7 +191,7 @@ static inline uint32_t gpio_read_DIR(const portgroup_t portindex)
 /**
  * @brief set port pin high drive
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  */
 static inline void gpio_set_high_drive(const uint8_t portpin)
 {
@@ -201,7 +201,7 @@ static inline void gpio_set_high_drive(const uint8_t portpin)
 /**
  * @brief set port pin to normal drive
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  */
 static inline void gpio_set_normal_drive(const uint8_t portpin)
 {
@@ -211,8 +211,8 @@ static inline void gpio_set_normal_drive(const uint8_t portpin)
 /**
  * @brief set port pin to Pull up, down or off
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
- * @param[in] gpio_pull_t pull GPIO_PULL_OFF, GPIO_PULL_UP, GPIO_PULL_DOWN
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] pull - gpio_pull_t  GPIO_PULL_OFF, GPIO_PULL_UP, GPIO_PULL_DOWN
  */
 static inline void gpio_set_pull(const uint8_t portpin, const gpio_pull_t pull)
 {
@@ -228,8 +228,8 @@ static inline void gpio_set_pull(const uint8_t portpin, const gpio_pull_t pull)
 }
 /**
  * @brief Set pin function on port/pin
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
- * @param[in] uint8_t pinfunction GPIO_PIN_FUNCTION_OFF, GPIO_PIN_FUNCTION_A to GPIO_PIN_FUNCTION_N
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] pinfunction - uint8_t  GPIO_PIN_FUNCTION_OFF, GPIO_PIN_FUNCTION_A to GPIO_PIN_FUNCTION_N
  * @note also can be from includes/pio defines ie MUX_PA04D_SERCOM0_PAD0
  */
 
@@ -270,8 +270,8 @@ static inline void port_set_pin_function(const uint8_t portpin, const uint8_t pi
 /**
  * @brief Set output gpio pin to state on port/pin
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
- * @param[in] bool state true = high, false = low
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] state - bool  true = high, false = low
  */
 
 static inline void gpio_set_out(const uint8_t portpin, bool state) 
@@ -286,7 +286,7 @@ static inline void gpio_set_out(const uint8_t portpin, bool state)
 /**
  * @brief Set output gpio pin high on portgroup PORTA, PORTB
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  *
  */
 
@@ -298,7 +298,7 @@ static inline void gpio_set_out_high(const uint8_t portpin)
 /**
  * @brief Set output gpio pin low on portpin
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  *
  */
 
@@ -310,7 +310,7 @@ static inline void gpio_set_out_low(const uint8_t portpin)
 /**
  * @brief Toggle output gpio pins port/pin
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  */
 
 static inline void gpio_toggle_out(const uint8_t portpin) 
@@ -321,10 +321,10 @@ static inline void gpio_toggle_out(const uint8_t portpin)
 /**
  * @brief set output gpio group on portgroup PORTA, PORTB masked by mask to state
  *
- * @param[in] portgroup_t portindex Ports are grouped into groups of maximum 32 pins,
+ * @param[in] portindex - portgroup_t  Ports are grouped into groups of maximum 32 pins,
  *                      PORTA = group 0, PORTB = group 1, etc
- * @param[in] uint32_t mask  for each bit in mask, '1' changes bits to corresponding bit in state; '0' doesn't change bit
- * @param[in] uint32_t state if mask bit is set, then set pin to corresponding state bit
+ * @param[in] mask - uint32_t   for each bit in mask, '1' changes bits to corresponding bit in state; '0' doesn't change bit
+ * @param[in] state - uint32_t  if mask bit is set, then set pin to corresponding state bit
  *
  */
  static inline void gpio_write_group_state(const portgroup_t portindex, const uint32_t mask, const uint32_t state) 
@@ -336,7 +336,7 @@ static inline void gpio_toggle_out(const uint8_t portpin)
 /**
  * @brief get gpio pin input on port/pin
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  * @return bool true if pin was high false if pin was low
  */
 
@@ -348,7 +348,7 @@ static inline bool gpio_get_in(const uint8_t portpin)
 /**
  * @brief get gpio pin output state on port/pin
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  * @return bool true if pin was high false if pin was low
  */
 
@@ -361,8 +361,8 @@ static inline bool gpio_get_out(const uint8_t portpin)
  * @brief Set level as a 'wired and' bus (hi-z with pullup) on port/pin
  * This uses direction bits to emulate hi-z connections with a pullup. The restriction is that
  * the voltage cannot exceed VDDIO and uses the internal pullups. 
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
- * @param[in] bool state true = hi-z pulled up; false = driven low
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] state - bool  true = hi-z pulled up; false = driven low
  */
 static inline void gpio_set_wand(const uint8_t portpin, const bool state)
 {
@@ -379,8 +379,8 @@ static inline void gpio_set_wand(const uint8_t portpin, const bool state)
  * @brief Set level as a 'wired or' bus (hi-z with pulldown) on port/pin
  * This uses direction bits to emulate hi-z connections with a pulldown. The restriction is that
  * the voltage cannot exceed VDDIO and uses the internal pulldowns. 
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
- * @param[in] bool state true = driven high; false = hi-z pulled low
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] state - bool  true = driven high; false = hi-z pulled low
  */
 static inline void gpio_set_wor(const uint8_t portpin, const bool state)
 {
@@ -396,7 +396,7 @@ static inline void gpio_set_wor(const uint8_t portpin, const bool state)
 /**
  * @brief get gpio pin input on portgroup PORTA, PORTB as group
  *
- * @param[in] portgroup_t portindex Ports are grouped into groups of maximum 32 pins,
+ * @param[in] portindex - portgroup_t  Ports are grouped into groups of maximum 32 pins,
  *                      PORTA = group 0, PORTB = group 1, etc
  * @return uint32_t 32 bits from input register
  */
@@ -409,7 +409,7 @@ static inline uint32_t gpio_read_IN(const portgroup_t portindex)
 /**
  * @brief get gpio pin output on portgroup PORTA, PORTB as group
  *
- * @param[in] portgroup_t portindex Ports are grouped into groups of maximum 32 pins,
+ * @param[in] portindex - portgroup_t  Ports are grouped into groups of maximum 32 pins,
  *                      PORTA = group 0, PORTB = group 1, etc
  * @return uint32_t 32 bits from output register
  */
@@ -422,7 +422,7 @@ static inline uint32_t gpio_read_OUT(const portgroup_t portindex)
 /**
  * @brief get gpio pincfg on portgroup PORTA, PORTB for pin index
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  * @return 32 bits from pincfg register
  */
 
@@ -434,7 +434,7 @@ static inline uint32_t gpio_get_pincfg(const uint8_t portpin)
 /**
  * @brief get gpio function on port/pin
  *
- * @param[in] uint8_t portpin Pin number is bits 0..4 and Port is bits 5..7
+ * @param[in] portpin - uint8_t  Pin number is bits 0..4 and Port is bits 5..7
  * @return uint8_t pmux register for port/pin
  */
 
@@ -452,24 +452,24 @@ static inline uint8_t port_get_pin_function(const uint8_t portpin)
 /**
  * @brief gpio set EVCTRL register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t mask
- * PORT_EVCTRL_PID0(value) (PORT_EVCTRL) PORT Event Pin Identifier 0 
- * PORT_EVCTRL_EVACT0(value) (PORT_EVCTRL) PORT Event Action 0 
- *    PORT_EVCTRL_EVACT0_OUT (PORT_EVCTRL) Event output to pin 
- *    PORT_EVCTRL_EVACT0_SET (PORT_EVCTRL) Set output register of pin on event 
- *    PORT_EVCTRL_EVACT0_CLR (PORT_EVCTRL) Clear output register of pin on event 
- *    PORT_EVCTRL_EVACT0_TGL (PORT_EVCTRL) Toggle output register of pin on event 
- * PORT_EVCTRL_PORTEI0 (PORT_EVCTRL) PORT Event Input Enable 0 
- * PORT_EVCTRL_PID1(value) (PORT_EVCTRL) PORT Event Pin Identifier 1 
- * PORT_EVCTRL_EVACT1(value) (PORT_EVCTRL) PORT Event Action 1 
- * PORT_EVCTRL_PORTEI1 (PORT_EVCTRL) PORT Event Input Enable 1 
- * PORT_EVCTRL_PID2(value) (PORT_EVCTRL) PORT Event Pin Identifier 2 
- * PORT_EVCTRL_EVACT2(value) (PORT_EVCTRL) PORT Event Action 2 
- * PORT_EVCTRL_PORTEI2 (PORT_EVCTRL) PORT Event Input Enable 2 
- * PORT_EVCTRL_PID3(value) (PORT_EVCTRL) PORT Event Pin Identifier 3 
- * PORT_EVCTRL_EVACT3(value) (PORT_EVCTRL) PORT Event Action 3 
- * PORT_EVCTRL_PORTEI3 (PORT_EVCTRL) PORT Event Input Enable 3 
+ * @param[in] portpin - uint8_t 
+ * @param[in] mask - uint32_t 
+ * - PORT_EVCTRL_PID0(value) (PORT_EVCTRL) PORT Event Pin Identifier 0 
+ * - PORT_EVCTRL_EVACT0(value) (PORT_EVCTRL) PORT Event Action 0 
+ *  +   PORT_EVCTRL_EVACT0_OUT (PORT_EVCTRL) Event output to pin 
+ *  +   PORT_EVCTRL_EVACT0_SET (PORT_EVCTRL) Set output register of pin on event 
+ *  +   PORT_EVCTRL_EVACT0_CLR (PORT_EVCTRL) Clear output register of pin on event 
+ *  +   PORT_EVCTRL_EVACT0_TGL (PORT_EVCTRL) Toggle output register of pin on event 
+ * - PORT_EVCTRL_PORTEI0 (PORT_EVCTRL) PORT Event Input Enable 0 
+ * - PORT_EVCTRL_PID1(value) (PORT_EVCTRL) PORT Event Pin Identifier 1 
+ * - PORT_EVCTRL_EVACT1(value) (PORT_EVCTRL) PORT Event Action 1 
+ * - PORT_EVCTRL_PORTEI1 (PORT_EVCTRL) PORT Event Input Enable 1 
+ * - PORT_EVCTRL_PID2(value) (PORT_EVCTRL) PORT Event Pin Identifier 2 
+ * - PORT_EVCTRL_EVACT2(value) (PORT_EVCTRL) PORT Event Action 2 
+ * - PORT_EVCTRL_PORTEI2 (PORT_EVCTRL) PORT Event Input Enable 2 
+ * - PORT_EVCTRL_PID3(value) (PORT_EVCTRL) PORT Event Pin Identifier 3 
+ * - PORT_EVCTRL_EVACT3(value) (PORT_EVCTRL) PORT Event Action 3 
+ * - PORT_EVCTRL_PORTEI3 (PORT_EVCTRL) PORT Event Input Enable 3 
  */
 static inline void gpio_set_EVCTRL(const uint8_t portpin, uint32_t mask)
 {
@@ -479,25 +479,25 @@ static inline void gpio_set_EVCTRL(const uint8_t portpin, uint32_t mask)
 /**
  * @brief gpio get EVCTRL register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t mask
+ * @param[in] portpin - uint8_t 
+ * @param[in] mask - uint32_t 
  * @return uint32_t
- * PORT_EVCTRL_PID0(value) (PORT_EVCTRL) PORT Event Pin Identifier 0 
- * PORT_EVCTRL_EVACT0(value) (PORT_EVCTRL) PORT Event Action 0 
- *    PORT_EVCTRL_EVACT0_OUT (PORT_EVCTRL) Event output to pin 
- *    PORT_EVCTRL_EVACT0_SET (PORT_EVCTRL) Set output register of pin on event 
- *    PORT_EVCTRL_EVACT0_CLR (PORT_EVCTRL) Clear output register of pin on event 
- *    PORT_EVCTRL_EVACT0_TGL (PORT_EVCTRL) Toggle output register of pin on event 
- * PORT_EVCTRL_PORTEI0 (PORT_EVCTRL) PORT Event Input Enable 0 
- * PORT_EVCTRL_PID1(value) (PORT_EVCTRL) PORT Event Pin Identifier 1 
- * PORT_EVCTRL_EVACT1(value) (PORT_EVCTRL) PORT Event Action 1 
- * PORT_EVCTRL_PORTEI1 (PORT_EVCTRL) PORT Event Input Enable 1 
- * PORT_EVCTRL_PID2(value) (PORT_EVCTRL) PORT Event Pin Identifier 2 
- * PORT_EVCTRL_EVACT2(value) (PORT_EVCTRL) PORT Event Action 2 
- * PORT_EVCTRL_PORTEI2 (PORT_EVCTRL) PORT Event Input Enable 2 
- * PORT_EVCTRL_PID3(value) (PORT_EVCTRL) PORT Event Pin Identifier 3 
- * PORT_EVCTRL_EVACT3(value) (PORT_EVCTRL) PORT Event Action 3 
- * PORT_EVCTRL_PORTEI3 (PORT_EVCTRL) PORT Event Input Enable 3 
+ * - PORT_EVCTRL_PID0(value) (PORT_EVCTRL) PORT Event Pin Identifier 0 
+ * - PORT_EVCTRL_EVACT0(value) (PORT_EVCTRL) PORT Event Action 0 
+ *  +   PORT_EVCTRL_EVACT0_OUT (PORT_EVCTRL) Event output to pin 
+ *  +   PORT_EVCTRL_EVACT0_SET (PORT_EVCTRL) Set output register of pin on event 
+ *  +   PORT_EVCTRL_EVACT0_CLR (PORT_EVCTRL) Clear output register of pin on event 
+ *  +   PORT_EVCTRL_EVACT0_TGL (PORT_EVCTRL) Toggle output register of pin on event 
+ * - PORT_EVCTRL_PORTEI0 (PORT_EVCTRL) PORT Event Input Enable 0 
+ * - PORT_EVCTRL_PID1(value) (PORT_EVCTRL) PORT Event Pin Identifier 1 
+ * - PORT_EVCTRL_EVACT1(value) (PORT_EVCTRL) PORT Event Action 1 
+ * - PORT_EVCTRL_PORTEI1 (PORT_EVCTRL) PORT Event Input Enable 1 
+ * - PORT_EVCTRL_PID2(value) (PORT_EVCTRL) PORT Event Pin Identifier 2 
+ * - PORT_EVCTRL_EVACT2(value) (PORT_EVCTRL) PORT Event Action 2 
+ * - PORT_EVCTRL_PORTEI2 (PORT_EVCTRL) PORT Event Input Enable 2 
+ * - PORT_EVCTRL_PID3(value) (PORT_EVCTRL) PORT Event Pin Identifier 3 
+ * - PORT_EVCTRL_EVACT3(value) (PORT_EVCTRL) PORT Event Action 3 
+ * - PORT_EVCTRL_PORTEI3 (PORT_EVCTRL) PORT Event Input Enable 3 
  */
 static inline uint32_t gpio_get_EVCTRL(const uint8_t portpin, uint32_t mask)
 {
@@ -507,24 +507,24 @@ static inline uint32_t gpio_get_EVCTRL(const uint8_t portpin, uint32_t mask)
 /**
  * @brief gpio write EVCTRL register
  *
- * @param[in] uint8_t submodule_index
- * @param[in] uint32_t data
- * PORT_EVCTRL_PID0(value) (PORT_EVCTRL) PORT Event Pin Identifier 0 
- * PORT_EVCTRL_EVACT0(value) (PORT_EVCTRL) PORT Event Action 0 
- *    PORT_EVCTRL_EVACT0_OUT (PORT_EVCTRL) Event output to pin 
- *    PORT_EVCTRL_EVACT0_SET (PORT_EVCTRL) Set output register of pin on event 
- *    PORT_EVCTRL_EVACT0_CLR (PORT_EVCTRL) Clear output register of pin on event 
- *    PORT_EVCTRL_EVACT0_TGL (PORT_EVCTRL) Toggle output register of pin on event 
- * PORT_EVCTRL_PORTEI0 (PORT_EVCTRL) PORT Event Input Enable 0 
- * PORT_EVCTRL_PID1(value) (PORT_EVCTRL) PORT Event Pin Identifier 1 
- * PORT_EVCTRL_EVACT1(value) (PORT_EVCTRL) PORT Event Action 1 
- * PORT_EVCTRL_PORTEI1 (PORT_EVCTRL) PORT Event Input Enable 1 
- * PORT_EVCTRL_PID2(value) (PORT_EVCTRL) PORT Event Pin Identifier 2 
- * PORT_EVCTRL_EVACT2(value) (PORT_EVCTRL) PORT Event Action 2 
- * PORT_EVCTRL_PORTEI2 (PORT_EVCTRL) PORT Event Input Enable 2 
- * PORT_EVCTRL_PID3(value) (PORT_EVCTRL) PORT Event Pin Identifier 3 
- * PORT_EVCTRL_EVACT3(value) (PORT_EVCTRL) PORT Event Action 3 
- * PORT_EVCTRL_PORTEI3 (PORT_EVCTRL) PORT Event Input Enable 3 
+ * @param[in] portpin - uint8_t 
+ * @param[in] data - uint32_t 
+ * - PORT_EVCTRL_PID0(value) (PORT_EVCTRL) PORT Event Pin Identifier 0 
+ * - PORT_EVCTRL_EVACT0(value) (PORT_EVCTRL) PORT Event Action 0 
+ *  +   PORT_EVCTRL_EVACT0_OUT (PORT_EVCTRL) Event output to pin 
+ *  +   PORT_EVCTRL_EVACT0_SET (PORT_EVCTRL) Set output register of pin on event 
+ *  +   PORT_EVCTRL_EVACT0_CLR (PORT_EVCTRL) Clear output register of pin on event 
+ *  +   PORT_EVCTRL_EVACT0_TGL (PORT_EVCTRL) Toggle output register of pin on event 
+ * - PORT_EVCTRL_PORTEI0 (PORT_EVCTRL) PORT Event Input Enable 0 
+ * - PORT_EVCTRL_PID1(value) (PORT_EVCTRL) PORT Event Pin Identifier 1 
+ * - PORT_EVCTRL_EVACT1(value) (PORT_EVCTRL) PORT Event Action 1 
+ * - PORT_EVCTRL_PORTEI1 (PORT_EVCTRL) PORT Event Input Enable 1 
+ * - PORT_EVCTRL_PID2(value) (PORT_EVCTRL) PORT Event Pin Identifier 2 
+ * - PORT_EVCTRL_EVACT2(value) (PORT_EVCTRL) PORT Event Action 2 
+ * - PORT_EVCTRL_PORTEI2 (PORT_EVCTRL) PORT Event Input Enable 2 
+ * - PORT_EVCTRL_PID3(value) (PORT_EVCTRL) PORT Event Pin Identifier 3 
+ * - PORT_EVCTRL_EVACT3(value) (PORT_EVCTRL) PORT Event Action 3 
+ * - PORT_EVCTRL_PORTEI3 (PORT_EVCTRL) PORT Event Input Enable 3 
  */
 static inline void gpio_write_EVCTRL(const uint8_t portpin, uint32_t data)
 {
@@ -534,7 +534,7 @@ static inline void gpio_write_EVCTRL(const uint8_t portpin, uint32_t data)
 /**
  * @brief gpio disable EVCTRL channel 0 register
  *
- * @param[in] uint8_t portpin
+ * @param[in] portpin - uint8_t 
  */
 static inline void gpio_disable_EVCTRL0(const uint8_t portpin)
 {
@@ -544,7 +544,7 @@ static inline void gpio_disable_EVCTRL0(const uint8_t portpin)
 /**
  * @brief gpio disable EVCTRL channel 1 register
  *
- * @param[in] uint8_t portpin
+ * @param[in] portpin - uint8_t 
  */
 static inline void gpio_disable_EVCTRL1(const uint8_t portpin)
 {
@@ -553,7 +553,7 @@ static inline void gpio_disable_EVCTRL1(const uint8_t portpin)
 /**
  * @brief gpio disable EVCTRL channel 2 register
  *
- * @param[in] uint8_t portpin
+ * @param[in] portpin - uint8_t 
  */
 static inline void gpio_disable_EVCTRL2(const uint8_t portpin)
 {
@@ -563,7 +563,7 @@ static inline void gpio_disable_EVCTRL2(const uint8_t portpin)
 /**
  * @brief gpio disable EVCTRL channel 3 register
  *
- * @param[in] uint8_t portpin
+ * @param[in] portpin - uint8_t 
  */
 static inline void gpio_disable_EVCTRL3(const uint8_t portpin)
 {
@@ -573,7 +573,7 @@ static inline void gpio_disable_EVCTRL3(const uint8_t portpin)
 /**
  * @brief gpio enable EVCTRL channel 0 register
  *
- * @param[in] uint8_t portpin
+ * @param[in] portpin - uint8_t 
  */
 static inline void gpio_enable_EVCTRL0(const uint8_t portpin)
 {
@@ -582,7 +582,7 @@ static inline void gpio_enable_EVCTRL0(const uint8_t portpin)
 /**
  * @brief gpio enable EVCTRL channel 0 register
  *
- * @param[in] uint8_t portpin
+ * @param[in] portpin - uint8_t 
  */
 static inline void gpio_enable_EVCTRL1(const uint8_t portpin)
 {
@@ -591,7 +591,7 @@ static inline void gpio_enable_EVCTRL1(const uint8_t portpin)
 /**
  * @brief gpio enable EVCTRL channel 2 register
  *
- * @param[in] uint8_t portpin
+ * @param[in] portpin - uint8_t 
  */
 static inline void gpio_enable_EVCTRL2(const uint8_t portpin)
 {
@@ -600,7 +600,7 @@ static inline void gpio_enable_EVCTRL2(const uint8_t portpin)
 /**
  * @brief gpio enable EVCTRL channel 3 register
  *
- * @param[in] uint8_t portpin
+ * @param[in] portpin - uint8_t 
  */
 static inline void gpio_enable_EVCTRL3(const uint8_t portpin)
 {
@@ -609,13 +609,13 @@ static inline void gpio_enable_EVCTRL3(const uint8_t portpin)
 /**
  * @brief gpio set EVCTRL channel 0 register
  *
- * @param[in] uint8_t portpin
- * @param[in] uint32_t data
- *   PORT_EVCTRL_EVACT_OUT
- *   PORT_EVCTRL_EVACT_SET
- *   PORT_EVCTRL_EVACT_CLR
- *   PORT_EVCTRL_EVACT_TGL
- *   PORT_EVCTRL_PORTEI 
+ * @param[in] portpin - uint8_t 
+ * @param[in] data - uint32_t 
+ * - PORT_EVCTRL_EVACT_OUT
+ * - PORT_EVCTRL_EVACT_SET
+ * - PORT_EVCTRL_EVACT_CLR
+ * - PORT_EVCTRL_EVACT_TGL
+ * - PORT_EVCTRL_PORTEI 
  */
 static inline void gpio_set_EVCTRL0(const uint8_t portpin, uint32_t data)
 {
@@ -627,13 +627,13 @@ static inline void gpio_set_EVCTRL0(const uint8_t portpin, uint32_t data)
 /**
  * @brief gpio set EVCTRL channel 1 register
  *
- * @param[in] uint8_t portpin
- * @param[in] uint32_t data
- *   PORT_EVCTRL_EVACT_OUT
- *   PORT_EVCTRL_EVACT_SET
- *   PORT_EVCTRL_EVACT_CLR
- *   PORT_EVCTRL_EVACT_TGL
- *   PORT_EVCTRL_PORTEI 
+ * @param[in] portpin - uint8_t 
+ * @param[in] data - uint32_t 
+ * - PORT_EVCTRL_EVACT_OUT
+ * - PORT_EVCTRL_EVACT_SET
+ * - PORT_EVCTRL_EVACT_CLR
+ * - PORT_EVCTRL_EVACT_TGL
+ * - PORT_EVCTRL_PORTEI 
  */
 static inline void gpio_set_EVCTRL1(const uint8_t portpin, uint32_t data)
 {
@@ -644,13 +644,13 @@ static inline void gpio_set_EVCTRL1(const uint8_t portpin, uint32_t data)
 /**
  * @brief gpio set EVCTRL channel 2 register
  *
- * @param[in] uint8_t portpin
- * @param[in] uint32_t data
- *   PORT_EVCTRL_EVACT_OUT
- *   PORT_EVCTRL_EVACT_SET
- *   PORT_EVCTRL_EVACT_CLR
- *   PORT_EVCTRL_EVACT_TGL
- *   PORT_EVCTRL_PORTEI 
+ * @param[in] portpin - uint8_t 
+ * @param[in] data - uint32_t 
+ * - PORT_EVCTRL_EVACT_OUT
+ * - PORT_EVCTRL_EVACT_SET
+ * - PORT_EVCTRL_EVACT_CLR
+ * - PORT_EVCTRL_EVACT_TGL
+ * - PORT_EVCTRL_PORTEI 
  */
 static inline void gpio_set_EVCTRL2(const uint8_t portpin, uint32_t data)
 {
@@ -661,13 +661,13 @@ static inline void gpio_set_EVCTRL2(const uint8_t portpin, uint32_t data)
 /**
  * @brief gpio set EVCTRL channel 3 register
  *
- * @param[in] uint8_t portpin
- * @param[in] uint32_t data
- *   PORT_EVCTRL_EVACT_OUT
- *   PORT_EVCTRL_EVACT_SET
- *   PORT_EVCTRL_EVACT_CLR
- *   PORT_EVCTRL_EVACT_TGL
- *   PORT_EVCTRL_PORTEI 
+ * @param[in] portpin - uint8_t 
+ * @param[in] data - uint32_t 
+ * - PORT_EVCTRL_EVACT_OUT
+ * - PORT_EVCTRL_EVACT_SET
+ * - PORT_EVCTRL_EVACT_CLR
+ * - PORT_EVCTRL_EVACT_TGL
+ * - PORT_EVCTRL_PORTEI 
  */
 static inline void gpio_set_EVCTRL3(const uint8_t portpin, uint32_t data)
 {
@@ -679,24 +679,24 @@ static inline void gpio_set_EVCTRL3(const uint8_t portpin, uint32_t data)
 /**
  * @brief gpio read EVCTRL register
  *
- * @param[in] uint8_t submodule_index
+ * @param[in] portpin - uint8_t 
  * @return uint32_t
- * PORT_EVCTRL_PID0(value) (PORT_EVCTRL) PORT Event Pin Identifier 0 
- * PORT_EVCTRL_EVACT0(value) (PORT_EVCTRL) PORT Event Action 0 
- *    PORT_EVCTRL_EVACT0_OUT (PORT_EVCTRL) Event output to pin 
- *    PORT_EVCTRL_EVACT0_SET (PORT_EVCTRL) Set output register of pin on event 
- *    PORT_EVCTRL_EVACT0_CLR (PORT_EVCTRL) Clear output register of pin on event 
- *    PORT_EVCTRL_EVACT0_TGL (PORT_EVCTRL) Toggle output register of pin on event 
- * PORT_EVCTRL_PORTEI0 (PORT_EVCTRL) PORT Event Input Enable 0 
- * PORT_EVCTRL_PID1(value) (PORT_EVCTRL) PORT Event Pin Identifier 1 
- * PORT_EVCTRL_EVACT1(value) (PORT_EVCTRL) PORT Event Action 1 
- * PORT_EVCTRL_PORTEI1 (PORT_EVCTRL) PORT Event Input Enable 1 
- * PORT_EVCTRL_PID2(value) (PORT_EVCTRL) PORT Event Pin Identifier 2 
- * PORT_EVCTRL_EVACT2(value) (PORT_EVCTRL) PORT Event Action 2 
- * PORT_EVCTRL_PORTEI2 (PORT_EVCTRL) PORT Event Input Enable 2 
- * PORT_EVCTRL_PID3(value) (PORT_EVCTRL) PORT Event Pin Identifier 3 
- * PORT_EVCTRL_EVACT3(value) (PORT_EVCTRL) PORT Event Action 3 
- * PORT_EVCTRL_PORTEI3 (PORT_EVCTRL) PORT Event Input Enable 3 
+ * - PORT_EVCTRL_PID0(value) (PORT_EVCTRL) PORT Event Pin Identifier 0 
+ * - PORT_EVCTRL_EVACT0(value) (PORT_EVCTRL) PORT Event Action 0 
+ *  +   PORT_EVCTRL_EVACT0_OUT (PORT_EVCTRL) Event output to pin 
+ *  +   PORT_EVCTRL_EVACT0_SET (PORT_EVCTRL) Set output register of pin on event 
+ *  +   PORT_EVCTRL_EVACT0_CLR (PORT_EVCTRL) Clear output register of pin on event 
+ *  +   PORT_EVCTRL_EVACT0_TGL (PORT_EVCTRL) Toggle output register of pin on event 
+ * - PORT_EVCTRL_PORTEI0 (PORT_EVCTRL) PORT Event Input Enable 0 
+ * - PORT_EVCTRL_PID1(value) (PORT_EVCTRL) PORT Event Pin Identifier 1 
+ * - PORT_EVCTRL_EVACT1(value) (PORT_EVCTRL) PORT Event Action 1 
+ * - PORT_EVCTRL_PORTEI1 (PORT_EVCTRL) PORT Event Input Enable 1 
+ * - PORT_EVCTRL_PID2(value) (PORT_EVCTRL) PORT Event Pin Identifier 2 
+ * - PORT_EVCTRL_EVACT2(value) (PORT_EVCTRL) PORT Event Action 2 
+ * - PORT_EVCTRL_PORTEI2 (PORT_EVCTRL) PORT Event Input Enable 2 
+ * - PORT_EVCTRL_PID3(value) (PORT_EVCTRL) PORT Event Pin Identifier 3 
+ * - PORT_EVCTRL_EVACT3(value) (PORT_EVCTRL) PORT Event Action 3 
+ * - PORT_EVCTRL_PORTEI3 (PORT_EVCTRL) PORT Event Input Enable 3 
  */
 static inline uint32_t gpio_read_EVCTRL(const uint8_t portpin)
 {

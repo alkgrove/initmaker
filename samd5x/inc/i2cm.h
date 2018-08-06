@@ -1,6 +1,6 @@
 /*
  * @file i2cm.h
- * @brief include file for I2C drivers SAMD51
+ * @brief SAM I2CM
  * 
  * @note Copyright © Alkgrove 2018
  * @author Robert Alkire 
@@ -48,7 +48,7 @@ typedef struct {
 /**
  * @brief enable i2c
  * msg->dev must be set before using this
- * @param[in] i2cm_msg_t *msg pointer to message packet
+ * @param[in] msg - i2cm_msg_t * pointer to message packet
  * @return I2CM_OK if ok, non-zero if error
  */
  i2cm_err_t i2cm_enable(i2cm_msg_t *msg);
@@ -58,8 +58,7 @@ typedef struct {
  * pointer to receive buffer and length expected
  * if write only, then leave rxlen to zero and pointer to NULL
  * 
- * @param[in] uint8_t device index to SERCOMn
- * @param[in] i2cm_msg_t *msg pointer to i2cm message structure
+ * @param[in] msg - i2cm_msg_t * pointer to i2cm message structure
  * @return bool false if busy and cant start, true if transfer starts
  */
 i2cm_err_t i2cm_transfer(i2cm_msg_t *msg);
@@ -67,7 +66,7 @@ i2cm_err_t i2cm_transfer(i2cm_msg_t *msg);
 /**
  * @brief ISR for master on bus 
  *
- * @param[in] i2cm_msg_t *msg pointer to I2C Master structure
+ * @param[in] msg - i2cm_msg_t * pointer to I2C Master structure
  */
 
 static inline void i2cm_mb_isr(i2cm_msg_t *msg)
@@ -115,7 +114,7 @@ static inline void i2cm_mb_isr(i2cm_msg_t *msg)
 /**
  * @brief ISR for slave on bus 
  *
- * @param[in] i2cm_msg_t *msg pointer to I2C Master structure
+ * @param[in] msg - i2cm_msg_t * pointer to I2C Master structure
  */
 
 static inline void i2cm_sb_isr(i2cm_msg_t *msg)
@@ -138,7 +137,7 @@ static inline void i2cm_sb_isr(i2cm_msg_t *msg)
 /**
  * @brief This is error interrupt for I2C
  *
- * @param[in] i2cm_msg_t *msg pointer to I2C Master structure
+ * @param[in] msg - i2cm_msg_t * pointer to I2C Master structure
  */
 static inline void i2cm_error_isr(i2cm_msg_t *msg)
 {

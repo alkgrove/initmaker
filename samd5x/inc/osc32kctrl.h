@@ -43,10 +43,10 @@
 /**
  * @brief osc32kctrl set INTEN register
  *
- * @param[in] uint32_t mask
- * OSC32KCTRL_INTENSET_XOSC32KRDY  XOSC32K Ready Interrupt Enable 
- * OSC32KCTRL_INTENSET_XOSC32KFAIL  XOSC32K Clock Failure Detector Interrupt Enable 
- */
+ * @param[in] mask uint32_t 
+ * - OSC32KCTRL_INTENSET_XOSC32KRDY XOSC32K Ready Interrupt Enable
+ * - OSC32KCTRL_INTENSET_XOSC32KFAIL XOSC32K Clock Failure Detector Interrupt Enable
+ **/
 static inline void osc32kctrl_set_INTEN(uint32_t mask)
 {
 	OSC32KCTRL->INTENSET.reg = mask;
@@ -55,11 +55,11 @@ static inline void osc32kctrl_set_INTEN(uint32_t mask)
 /**
  * @brief osc32kctrl get INTEN register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * OSC32KCTRL_INTENSET_XOSC32KRDY  XOSC32K Ready Interrupt Enable 
- * OSC32KCTRL_INTENSET_XOSC32KFAIL  XOSC32K Clock Failure Detector Interrupt Enable 
- */
+ * - OSC32KCTRL_INTENSET_XOSC32KRDY XOSC32K Ready Interrupt Enable
+ * - OSC32KCTRL_INTENSET_XOSC32KFAIL XOSC32K Clock Failure Detector Interrupt Enable
+ **/
 static inline uint32_t osc32kctrl_get_INTEN(uint32_t mask)
 {
     return OSC32KCTRL->INTENSET.reg & mask;
@@ -68,11 +68,10 @@ static inline uint32_t osc32kctrl_get_INTEN(uint32_t mask)
 /**
  * @brief osc32kctrl read INTEN register
  *
- * @param[in] void
  * @return uint32_t
- * OSC32KCTRL_INTENSET_XOSC32KRDY  XOSC32K Ready Interrupt Enable 
- * OSC32KCTRL_INTENSET_XOSC32KFAIL  XOSC32K Clock Failure Detector Interrupt Enable 
- */
+ * - OSC32KCTRL_INTENSET_XOSC32KRDY XOSC32K Ready Interrupt Enable
+ * - OSC32KCTRL_INTENSET_XOSC32KFAIL XOSC32K Clock Failure Detector Interrupt Enable
+ **/
 static inline uint32_t osc32kctrl_read_INTEN(void)
 {
 	return OSC32KCTRL->INTENSET.reg;
@@ -81,10 +80,10 @@ static inline uint32_t osc32kctrl_read_INTEN(void)
 /**
  * @brief osc32kctrl write INTEN register
  *
- * @param[in] uint32_t data
- * OSC32KCTRL_INTENSET_XOSC32KRDY  XOSC32K Ready Interrupt Enable 
- * OSC32KCTRL_INTENSET_XOSC32KFAIL  XOSC32K Clock Failure Detector Interrupt Enable 
- */
+ * @param[in] data uint32_t 
+ * - OSC32KCTRL_INTENSET_XOSC32KRDY XOSC32K Ready Interrupt Enable
+ * - OSC32KCTRL_INTENSET_XOSC32KFAIL XOSC32K Clock Failure Detector Interrupt Enable
+ **/
 static inline void osc32kctrl_write_INTEN(uint32_t data)
 {
 	OSC32KCTRL->INTENSET.reg = data;
@@ -94,10 +93,10 @@ static inline void osc32kctrl_write_INTEN(uint32_t data)
 /**
  * @brief osc32kctrl clear INTEN register
  *
- * @param[in] uint32_t mask
- * OSC32KCTRL_INTENSET_XOSC32KRDY  XOSC32K Ready Interrupt Enable 
- * OSC32KCTRL_INTENSET_XOSC32KFAIL  XOSC32K Clock Failure Detector Interrupt Enable 
- */
+ * @param[in] mask uint32_t 
+ * - OSC32KCTRL_INTENSET_XOSC32KRDY XOSC32K Ready Interrupt Enable
+ * - OSC32KCTRL_INTENSET_XOSC32KFAIL XOSC32K Clock Failure Detector Interrupt Enable
+ **/
 static inline void osc32kctrl_clear_INTEN(uint32_t mask)
 {
 	OSC32KCTRL->INTENCLR.reg = mask;
@@ -106,11 +105,11 @@ static inline void osc32kctrl_clear_INTEN(uint32_t mask)
 /**
  * @brief osc32kctrl get INTFLAG register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * OSC32KCTRL_INTFLAG_XOSC32KRDY  XOSC32K Ready 
- * OSC32KCTRL_INTFLAG_XOSC32KFAIL  XOSC32K Clock Failure Detector 
- */
+ * - OSC32KCTRL_INTFLAG_XOSC32KRDY XOSC32K Ready
+ * - OSC32KCTRL_INTFLAG_XOSC32KFAIL XOSC32K Clock Failure Detector
+ **/
 static inline uint32_t osc32kctrl_get_INTFLAG(uint32_t mask)
 {
     return OSC32KCTRL->INTFLAG.reg & mask;
@@ -119,11 +118,10 @@ static inline uint32_t osc32kctrl_get_INTFLAG(uint32_t mask)
 /**
  * @brief osc32kctrl read INTFLAG register
  *
- * @param[in] void
  * @return uint32_t
- * OSC32KCTRL_INTFLAG_XOSC32KRDY  XOSC32K Ready 
- * OSC32KCTRL_INTFLAG_XOSC32KFAIL  XOSC32K Clock Failure Detector 
- */
+ * - OSC32KCTRL_INTFLAG_XOSC32KRDY XOSC32K Ready
+ * - OSC32KCTRL_INTFLAG_XOSC32KFAIL XOSC32K Clock Failure Detector
+ **/
 static inline uint32_t osc32kctrl_read_INTFLAG(void)
 {
 	return OSC32KCTRL->INTFLAG.reg;
@@ -132,10 +130,10 @@ static inline uint32_t osc32kctrl_read_INTFLAG(void)
 /**
  * @brief osc32kctrl clear INTFLAG register
  *
- * @param[in] uint32_t mask
- * OSC32KCTRL_INTFLAG_XOSC32KRDY  XOSC32K Ready 
- * OSC32KCTRL_INTFLAG_XOSC32KFAIL  XOSC32K Clock Failure Detector 
- */
+ * @param[in] mask uint32_t 
+ * - OSC32KCTRL_INTFLAG_XOSC32KRDY XOSC32K Ready
+ * - OSC32KCTRL_INTFLAG_XOSC32KFAIL XOSC32K Clock Failure Detector
+ **/
 static inline void osc32kctrl_clear_INTFLAG(uint32_t mask)
 {
 	OSC32KCTRL->INTFLAG.reg = mask;
@@ -144,13 +142,13 @@ static inline void osc32kctrl_clear_INTFLAG(uint32_t mask)
 /**
  * @brief osc32kctrl set RTCCTRL register
  *
- * @param[in] uint8_t mask
- * OSC32KCTRL_RTCCTRL_RTCSEL(value)  RTC Clock Selection 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K  1.024kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K  32.768kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K  1.024kHz from 32.768kHz internal oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K  32.768kHz from 32.768kHz external crystal oscillator 
- */
+ * @param[in] mask uint8_t 
+ * - OSC32KCTRL_RTCCTRL_RTCSEL(value) RTC Clock Selection
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K 1.024kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K 32.768kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K 1.024kHz from 32.768kHz internal oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K 32.768kHz from 32.768kHz external crystal oscillator
+ **/
 static inline void osc32kctrl_set_RTCCTRL(uint8_t mask)
 {
 	OSC32KCTRL->RTCCTRL.reg |= mask;
@@ -159,14 +157,14 @@ static inline void osc32kctrl_set_RTCCTRL(uint8_t mask)
 /**
  * @brief osc32kctrl get RTCCTRL register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * OSC32KCTRL_RTCCTRL_RTCSEL(value)  RTC Clock Selection 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K  1.024kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K  32.768kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K  1.024kHz from 32.768kHz internal oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K  32.768kHz from 32.768kHz external crystal oscillator 
- */
+ * - OSC32KCTRL_RTCCTRL_RTCSEL(value) RTC Clock Selection
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K 1.024kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K 32.768kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K 1.024kHz from 32.768kHz internal oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K 32.768kHz from 32.768kHz external crystal oscillator
+ **/
 static inline uint8_t osc32kctrl_get_RTCCTRL(uint8_t mask)
 {
     return OSC32KCTRL->RTCCTRL.reg & mask;
@@ -175,13 +173,13 @@ static inline uint8_t osc32kctrl_get_RTCCTRL(uint8_t mask)
 /**
  * @brief osc32kctrl write RTCCTRL register
  *
- * @param[in] uint8_t data
- * OSC32KCTRL_RTCCTRL_RTCSEL(value)  RTC Clock Selection 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K  1.024kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K  32.768kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K  1.024kHz from 32.768kHz internal oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K  32.768kHz from 32.768kHz external crystal oscillator 
- */
+ * @param[in] data uint8_t 
+ * - OSC32KCTRL_RTCCTRL_RTCSEL(value) RTC Clock Selection
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K 1.024kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K 32.768kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K 1.024kHz from 32.768kHz internal oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K 32.768kHz from 32.768kHz external crystal oscillator
+ **/
 static inline void osc32kctrl_write_RTCCTRL(uint8_t data)
 {
 	OSC32KCTRL->RTCCTRL.reg = data;
@@ -190,13 +188,13 @@ static inline void osc32kctrl_write_RTCCTRL(uint8_t data)
 /**
  * @brief osc32kctrl clear RTCCTRL register
  *
- * @param[in] uint8_t mask
- * OSC32KCTRL_RTCCTRL_RTCSEL(value)  RTC Clock Selection 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K  1.024kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K  32.768kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K  1.024kHz from 32.768kHz internal oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K  32.768kHz from 32.768kHz external crystal oscillator 
- */
+ * @param[in] mask uint8_t 
+ * - OSC32KCTRL_RTCCTRL_RTCSEL(value) RTC Clock Selection
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K 1.024kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K 32.768kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K 1.024kHz from 32.768kHz internal oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K 32.768kHz from 32.768kHz external crystal oscillator
+ **/
 static inline void osc32kctrl_clear_RTCCTRL(uint8_t mask)
 {
 	OSC32KCTRL->RTCCTRL.reg &= ~mask;
@@ -205,14 +203,13 @@ static inline void osc32kctrl_clear_RTCCTRL(uint8_t mask)
 /**
  * @brief osc32kctrl read RTCCTRL register
  *
- * @param[in] void
  * @return uint8_t
- * OSC32KCTRL_RTCCTRL_RTCSEL(value)  RTC Clock Selection 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K  1.024kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K  32.768kHz from 32kHz internal ULP oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K  1.024kHz from 32.768kHz internal oscillator 
- *    OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K  32.768kHz from 32.768kHz external crystal oscillator 
- */
+ * - OSC32KCTRL_RTCCTRL_RTCSEL(value) RTC Clock Selection
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP1K 1.024kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_ULP32K 32.768kHz from 32kHz internal ULP oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC1K 1.024kHz from 32.768kHz internal oscillator
+ *  +      OSC32KCTRL_RTCCTRL_RTCSEL_XOSC32K 32.768kHz from 32.768kHz external crystal oscillator
+ **/
 static inline uint8_t osc32kctrl_read_RTCCTRL(void)
 {
 	return OSC32KCTRL->RTCCTRL.reg;
@@ -221,19 +218,19 @@ static inline uint8_t osc32kctrl_read_RTCCTRL(void)
 /**
  * @brief osc32kctrl set XOSC32K register
  *
- * @param[in] uint16_t mask
- * OSC32KCTRL_XOSC32K_ENABLE  Oscillator Enable 
- * OSC32KCTRL_XOSC32K_XTALEN  Crystal Oscillator Enable 
- * OSC32KCTRL_XOSC32K_EN32K  32kHz Output Enable 
- * OSC32KCTRL_XOSC32K_EN1K  1kHz Output Enable 
- * OSC32KCTRL_XOSC32K_RUNSTDBY  Run in Standby 
- * OSC32KCTRL_XOSC32K_ONDEMAND  On Demand Control 
- * OSC32KCTRL_XOSC32K_STARTUP(value)  Oscillator Start-Up Time 
- * OSC32KCTRL_XOSC32K_WRTLOCK  Write Lock 
- * OSC32KCTRL_XOSC32K_CGM(value)  Control Gain Mode 
- *    OSC32KCTRL_XOSC32K_CGM_XT  Standard mode 
- *    OSC32KCTRL_XOSC32K_CGM_HS  High Speed mode 
- */
+ * @param[in] mask uint16_t 
+ * - OSC32KCTRL_XOSC32K_ENABLE Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_XTALEN Crystal Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_EN32K 32kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_EN1K 1kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_RUNSTDBY Run in Standby
+ * - OSC32KCTRL_XOSC32K_ONDEMAND On Demand Control
+ * - OSC32KCTRL_XOSC32K_STARTUP(value) Oscillator Start-Up Time
+ * - OSC32KCTRL_XOSC32K_WRTLOCK Write Lock
+ * - OSC32KCTRL_XOSC32K_CGM(value) Control Gain Mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_XT Standard mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_HS High Speed mode
+ **/
 static inline void osc32kctrl_set_XOSC32K(uint16_t mask)
 {
 	OSC32KCTRL->XOSC32K.reg |= mask;
@@ -242,20 +239,20 @@ static inline void osc32kctrl_set_XOSC32K(uint16_t mask)
 /**
  * @brief osc32kctrl get XOSC32K register
  *
- * @param[in] uint16_t mask
+ * @param[in] mask uint16_t 
  * @return uint16_t
- * OSC32KCTRL_XOSC32K_ENABLE  Oscillator Enable 
- * OSC32KCTRL_XOSC32K_XTALEN  Crystal Oscillator Enable 
- * OSC32KCTRL_XOSC32K_EN32K  32kHz Output Enable 
- * OSC32KCTRL_XOSC32K_EN1K  1kHz Output Enable 
- * OSC32KCTRL_XOSC32K_RUNSTDBY  Run in Standby 
- * OSC32KCTRL_XOSC32K_ONDEMAND  On Demand Control 
- * OSC32KCTRL_XOSC32K_STARTUP(value)  Oscillator Start-Up Time 
- * OSC32KCTRL_XOSC32K_WRTLOCK  Write Lock 
- * OSC32KCTRL_XOSC32K_CGM(value)  Control Gain Mode 
- *    OSC32KCTRL_XOSC32K_CGM_XT  Standard mode 
- *    OSC32KCTRL_XOSC32K_CGM_HS  High Speed mode 
- */
+ * - OSC32KCTRL_XOSC32K_ENABLE Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_XTALEN Crystal Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_EN32K 32kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_EN1K 1kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_RUNSTDBY Run in Standby
+ * - OSC32KCTRL_XOSC32K_ONDEMAND On Demand Control
+ * - OSC32KCTRL_XOSC32K_STARTUP(value) Oscillator Start-Up Time
+ * - OSC32KCTRL_XOSC32K_WRTLOCK Write Lock
+ * - OSC32KCTRL_XOSC32K_CGM(value) Control Gain Mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_XT Standard mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_HS High Speed mode
+ **/
 static inline uint16_t osc32kctrl_get_XOSC32K(uint16_t mask)
 {
     return OSC32KCTRL->XOSC32K.reg & mask;
@@ -264,19 +261,19 @@ static inline uint16_t osc32kctrl_get_XOSC32K(uint16_t mask)
 /**
  * @brief osc32kctrl write XOSC32K register
  *
- * @param[in] uint16_t data
- * OSC32KCTRL_XOSC32K_ENABLE  Oscillator Enable 
- * OSC32KCTRL_XOSC32K_XTALEN  Crystal Oscillator Enable 
- * OSC32KCTRL_XOSC32K_EN32K  32kHz Output Enable 
- * OSC32KCTRL_XOSC32K_EN1K  1kHz Output Enable 
- * OSC32KCTRL_XOSC32K_RUNSTDBY  Run in Standby 
- * OSC32KCTRL_XOSC32K_ONDEMAND  On Demand Control 
- * OSC32KCTRL_XOSC32K_STARTUP(value)  Oscillator Start-Up Time 
- * OSC32KCTRL_XOSC32K_WRTLOCK  Write Lock 
- * OSC32KCTRL_XOSC32K_CGM(value)  Control Gain Mode 
- *    OSC32KCTRL_XOSC32K_CGM_XT  Standard mode 
- *    OSC32KCTRL_XOSC32K_CGM_HS  High Speed mode 
- */
+ * @param[in] data uint16_t 
+ * - OSC32KCTRL_XOSC32K_ENABLE Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_XTALEN Crystal Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_EN32K 32kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_EN1K 1kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_RUNSTDBY Run in Standby
+ * - OSC32KCTRL_XOSC32K_ONDEMAND On Demand Control
+ * - OSC32KCTRL_XOSC32K_STARTUP(value) Oscillator Start-Up Time
+ * - OSC32KCTRL_XOSC32K_WRTLOCK Write Lock
+ * - OSC32KCTRL_XOSC32K_CGM(value) Control Gain Mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_XT Standard mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_HS High Speed mode
+ **/
 static inline void osc32kctrl_write_XOSC32K(uint16_t data)
 {
 	OSC32KCTRL->XOSC32K.reg = data;
@@ -285,19 +282,19 @@ static inline void osc32kctrl_write_XOSC32K(uint16_t data)
 /**
  * @brief osc32kctrl clear XOSC32K register
  *
- * @param[in] uint16_t mask
- * OSC32KCTRL_XOSC32K_ENABLE  Oscillator Enable 
- * OSC32KCTRL_XOSC32K_XTALEN  Crystal Oscillator Enable 
- * OSC32KCTRL_XOSC32K_EN32K  32kHz Output Enable 
- * OSC32KCTRL_XOSC32K_EN1K  1kHz Output Enable 
- * OSC32KCTRL_XOSC32K_RUNSTDBY  Run in Standby 
- * OSC32KCTRL_XOSC32K_ONDEMAND  On Demand Control 
- * OSC32KCTRL_XOSC32K_STARTUP(value)  Oscillator Start-Up Time 
- * OSC32KCTRL_XOSC32K_WRTLOCK  Write Lock 
- * OSC32KCTRL_XOSC32K_CGM(value)  Control Gain Mode 
- *    OSC32KCTRL_XOSC32K_CGM_XT  Standard mode 
- *    OSC32KCTRL_XOSC32K_CGM_HS  High Speed mode 
- */
+ * @param[in] mask uint16_t 
+ * - OSC32KCTRL_XOSC32K_ENABLE Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_XTALEN Crystal Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_EN32K 32kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_EN1K 1kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_RUNSTDBY Run in Standby
+ * - OSC32KCTRL_XOSC32K_ONDEMAND On Demand Control
+ * - OSC32KCTRL_XOSC32K_STARTUP(value) Oscillator Start-Up Time
+ * - OSC32KCTRL_XOSC32K_WRTLOCK Write Lock
+ * - OSC32KCTRL_XOSC32K_CGM(value) Control Gain Mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_XT Standard mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_HS High Speed mode
+ **/
 static inline void osc32kctrl_clear_XOSC32K(uint16_t mask)
 {
 	OSC32KCTRL->XOSC32K.reg &= ~mask;
@@ -306,20 +303,19 @@ static inline void osc32kctrl_clear_XOSC32K(uint16_t mask)
 /**
  * @brief osc32kctrl read XOSC32K register
  *
- * @param[in] void
  * @return uint16_t
- * OSC32KCTRL_XOSC32K_ENABLE  Oscillator Enable 
- * OSC32KCTRL_XOSC32K_XTALEN  Crystal Oscillator Enable 
- * OSC32KCTRL_XOSC32K_EN32K  32kHz Output Enable 
- * OSC32KCTRL_XOSC32K_EN1K  1kHz Output Enable 
- * OSC32KCTRL_XOSC32K_RUNSTDBY  Run in Standby 
- * OSC32KCTRL_XOSC32K_ONDEMAND  On Demand Control 
- * OSC32KCTRL_XOSC32K_STARTUP(value)  Oscillator Start-Up Time 
- * OSC32KCTRL_XOSC32K_WRTLOCK  Write Lock 
- * OSC32KCTRL_XOSC32K_CGM(value)  Control Gain Mode 
- *    OSC32KCTRL_XOSC32K_CGM_XT  Standard mode 
- *    OSC32KCTRL_XOSC32K_CGM_HS  High Speed mode 
- */
+ * - OSC32KCTRL_XOSC32K_ENABLE Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_XTALEN Crystal Oscillator Enable
+ * - OSC32KCTRL_XOSC32K_EN32K 32kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_EN1K 1kHz Output Enable
+ * - OSC32KCTRL_XOSC32K_RUNSTDBY Run in Standby
+ * - OSC32KCTRL_XOSC32K_ONDEMAND On Demand Control
+ * - OSC32KCTRL_XOSC32K_STARTUP(value) Oscillator Start-Up Time
+ * - OSC32KCTRL_XOSC32K_WRTLOCK Write Lock
+ * - OSC32KCTRL_XOSC32K_CGM(value) Control Gain Mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_XT Standard mode
+ *  +      OSC32KCTRL_XOSC32K_CGM_HS High Speed mode
+ **/
 static inline uint16_t osc32kctrl_read_XOSC32K(void)
 {
 	return OSC32KCTRL->XOSC32K.reg;
@@ -328,11 +324,11 @@ static inline uint16_t osc32kctrl_read_XOSC32K(void)
 /**
  * @brief osc32kctrl set CFDCTRL register
  *
- * @param[in] uint8_t mask
- * OSC32KCTRL_CFDCTRL_CFDEN  Clock Failure Detector Enable 
- * OSC32KCTRL_CFDCTRL_SWBACK  Clock Switch Back 
- * OSC32KCTRL_CFDCTRL_CFDPRESC  Clock Failure Detector Prescaler 
- */
+ * @param[in] mask uint8_t 
+ * - OSC32KCTRL_CFDCTRL_CFDEN Clock Failure Detector Enable
+ * - OSC32KCTRL_CFDCTRL_SWBACK Clock Switch Back
+ * - OSC32KCTRL_CFDCTRL_CFDPRESC Clock Failure Detector Prescaler
+ **/
 static inline void osc32kctrl_set_CFDCTRL(uint8_t mask)
 {
 	OSC32KCTRL->CFDCTRL.reg |= mask;
@@ -341,12 +337,12 @@ static inline void osc32kctrl_set_CFDCTRL(uint8_t mask)
 /**
  * @brief osc32kctrl get CFDCTRL register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * OSC32KCTRL_CFDCTRL_CFDEN  Clock Failure Detector Enable 
- * OSC32KCTRL_CFDCTRL_SWBACK  Clock Switch Back 
- * OSC32KCTRL_CFDCTRL_CFDPRESC  Clock Failure Detector Prescaler 
- */
+ * - OSC32KCTRL_CFDCTRL_CFDEN Clock Failure Detector Enable
+ * - OSC32KCTRL_CFDCTRL_SWBACK Clock Switch Back
+ * - OSC32KCTRL_CFDCTRL_CFDPRESC Clock Failure Detector Prescaler
+ **/
 static inline uint8_t osc32kctrl_get_CFDCTRL(uint8_t mask)
 {
     return OSC32KCTRL->CFDCTRL.reg & mask;
@@ -355,11 +351,11 @@ static inline uint8_t osc32kctrl_get_CFDCTRL(uint8_t mask)
 /**
  * @brief osc32kctrl write CFDCTRL register
  *
- * @param[in] uint8_t data
- * OSC32KCTRL_CFDCTRL_CFDEN  Clock Failure Detector Enable 
- * OSC32KCTRL_CFDCTRL_SWBACK  Clock Switch Back 
- * OSC32KCTRL_CFDCTRL_CFDPRESC  Clock Failure Detector Prescaler 
- */
+ * @param[in] data uint8_t 
+ * - OSC32KCTRL_CFDCTRL_CFDEN Clock Failure Detector Enable
+ * - OSC32KCTRL_CFDCTRL_SWBACK Clock Switch Back
+ * - OSC32KCTRL_CFDCTRL_CFDPRESC Clock Failure Detector Prescaler
+ **/
 static inline void osc32kctrl_write_CFDCTRL(uint8_t data)
 {
 	OSC32KCTRL->CFDCTRL.reg = data;
@@ -368,11 +364,11 @@ static inline void osc32kctrl_write_CFDCTRL(uint8_t data)
 /**
  * @brief osc32kctrl clear CFDCTRL register
  *
- * @param[in] uint8_t mask
- * OSC32KCTRL_CFDCTRL_CFDEN  Clock Failure Detector Enable 
- * OSC32KCTRL_CFDCTRL_SWBACK  Clock Switch Back 
- * OSC32KCTRL_CFDCTRL_CFDPRESC  Clock Failure Detector Prescaler 
- */
+ * @param[in] mask uint8_t 
+ * - OSC32KCTRL_CFDCTRL_CFDEN Clock Failure Detector Enable
+ * - OSC32KCTRL_CFDCTRL_SWBACK Clock Switch Back
+ * - OSC32KCTRL_CFDCTRL_CFDPRESC Clock Failure Detector Prescaler
+ **/
 static inline void osc32kctrl_clear_CFDCTRL(uint8_t mask)
 {
 	OSC32KCTRL->CFDCTRL.reg &= ~mask;
@@ -381,12 +377,11 @@ static inline void osc32kctrl_clear_CFDCTRL(uint8_t mask)
 /**
  * @brief osc32kctrl read CFDCTRL register
  *
- * @param[in] void
  * @return uint8_t
- * OSC32KCTRL_CFDCTRL_CFDEN  Clock Failure Detector Enable 
- * OSC32KCTRL_CFDCTRL_SWBACK  Clock Switch Back 
- * OSC32KCTRL_CFDCTRL_CFDPRESC  Clock Failure Detector Prescaler 
- */
+ * - OSC32KCTRL_CFDCTRL_CFDEN Clock Failure Detector Enable
+ * - OSC32KCTRL_CFDCTRL_SWBACK Clock Switch Back
+ * - OSC32KCTRL_CFDCTRL_CFDPRESC Clock Failure Detector Prescaler
+ **/
 static inline uint8_t osc32kctrl_read_CFDCTRL(void)
 {
 	return OSC32KCTRL->CFDCTRL.reg;
@@ -395,9 +390,9 @@ static inline uint8_t osc32kctrl_read_CFDCTRL(void)
 /**
  * @brief osc32kctrl set EVCTRL register
  *
- * @param[in] uint8_t mask
- * OSC32KCTRL_EVCTRL_CFDEO  Clock Failure Detector Event Output Enable 
- */
+ * @param[in] mask uint8_t 
+ * - OSC32KCTRL_EVCTRL_CFDEO Clock Failure Detector Event Output Enable
+ **/
 static inline void osc32kctrl_set_EVCTRL(uint8_t mask)
 {
 	OSC32KCTRL->EVCTRL.reg |= mask;
@@ -406,10 +401,10 @@ static inline void osc32kctrl_set_EVCTRL(uint8_t mask)
 /**
  * @brief osc32kctrl get EVCTRL register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * OSC32KCTRL_EVCTRL_CFDEO  Clock Failure Detector Event Output Enable 
- */
+ * - OSC32KCTRL_EVCTRL_CFDEO Clock Failure Detector Event Output Enable
+ **/
 static inline uint8_t osc32kctrl_get_EVCTRL(uint8_t mask)
 {
     return OSC32KCTRL->EVCTRL.reg & mask;
@@ -418,9 +413,9 @@ static inline uint8_t osc32kctrl_get_EVCTRL(uint8_t mask)
 /**
  * @brief osc32kctrl write EVCTRL register
  *
- * @param[in] uint8_t data
- * OSC32KCTRL_EVCTRL_CFDEO  Clock Failure Detector Event Output Enable 
- */
+ * @param[in] data uint8_t 
+ * - OSC32KCTRL_EVCTRL_CFDEO Clock Failure Detector Event Output Enable
+ **/
 static inline void osc32kctrl_write_EVCTRL(uint8_t data)
 {
 	OSC32KCTRL->EVCTRL.reg = data;
@@ -429,9 +424,9 @@ static inline void osc32kctrl_write_EVCTRL(uint8_t data)
 /**
  * @brief osc32kctrl clear EVCTRL register
  *
- * @param[in] uint8_t mask
- * OSC32KCTRL_EVCTRL_CFDEO  Clock Failure Detector Event Output Enable 
- */
+ * @param[in] mask uint8_t 
+ * - OSC32KCTRL_EVCTRL_CFDEO Clock Failure Detector Event Output Enable
+ **/
 static inline void osc32kctrl_clear_EVCTRL(uint8_t mask)
 {
 	OSC32KCTRL->EVCTRL.reg &= ~mask;
@@ -440,10 +435,9 @@ static inline void osc32kctrl_clear_EVCTRL(uint8_t mask)
 /**
  * @brief osc32kctrl read EVCTRL register
  *
- * @param[in] void
  * @return uint8_t
- * OSC32KCTRL_EVCTRL_CFDEO  Clock Failure Detector Event Output Enable 
- */
+ * - OSC32KCTRL_EVCTRL_CFDEO Clock Failure Detector Event Output Enable
+ **/
 static inline uint8_t osc32kctrl_read_EVCTRL(void)
 {
 	return OSC32KCTRL->EVCTRL.reg;
@@ -452,12 +446,12 @@ static inline uint8_t osc32kctrl_read_EVCTRL(void)
 /**
  * @brief osc32kctrl set OSCULP32K register
  *
- * @param[in] uint32_t mask
- * OSC32KCTRL_OSCULP32K_EN32K  Enable Out 32k 
- * OSC32KCTRL_OSCULP32K_EN1K  Enable Out 1k 
- * OSC32KCTRL_OSCULP32K_CALIB(value)  Oscillator Calibration 
- * OSC32KCTRL_OSCULP32K_WRTLOCK  Write Lock 
- */
+ * @param[in] mask uint32_t 
+ * - OSC32KCTRL_OSCULP32K_EN32K Enable Out 32k
+ * - OSC32KCTRL_OSCULP32K_EN1K Enable Out 1k
+ * - OSC32KCTRL_OSCULP32K_CALIB(value) Oscillator Calibration
+ * - OSC32KCTRL_OSCULP32K_WRTLOCK Write Lock
+ **/
 static inline void osc32kctrl_set_OSCULP32K(uint32_t mask)
 {
 	OSC32KCTRL->OSCULP32K.reg |= mask;
@@ -466,13 +460,13 @@ static inline void osc32kctrl_set_OSCULP32K(uint32_t mask)
 /**
  * @brief osc32kctrl get OSCULP32K register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * OSC32KCTRL_OSCULP32K_EN32K  Enable Out 32k 
- * OSC32KCTRL_OSCULP32K_EN1K  Enable Out 1k 
- * OSC32KCTRL_OSCULP32K_CALIB(value)  Oscillator Calibration 
- * OSC32KCTRL_OSCULP32K_WRTLOCK  Write Lock 
- */
+ * - OSC32KCTRL_OSCULP32K_EN32K Enable Out 32k
+ * - OSC32KCTRL_OSCULP32K_EN1K Enable Out 1k
+ * - OSC32KCTRL_OSCULP32K_CALIB(value) Oscillator Calibration
+ * - OSC32KCTRL_OSCULP32K_WRTLOCK Write Lock
+ **/
 static inline uint32_t osc32kctrl_get_OSCULP32K(uint32_t mask)
 {
     return OSC32KCTRL->OSCULP32K.reg & mask;
@@ -481,12 +475,12 @@ static inline uint32_t osc32kctrl_get_OSCULP32K(uint32_t mask)
 /**
  * @brief osc32kctrl write OSCULP32K register
  *
- * @param[in] uint32_t data
- * OSC32KCTRL_OSCULP32K_EN32K  Enable Out 32k 
- * OSC32KCTRL_OSCULP32K_EN1K  Enable Out 1k 
- * OSC32KCTRL_OSCULP32K_CALIB(value)  Oscillator Calibration 
- * OSC32KCTRL_OSCULP32K_WRTLOCK  Write Lock 
- */
+ * @param[in] data uint32_t 
+ * - OSC32KCTRL_OSCULP32K_EN32K Enable Out 32k
+ * - OSC32KCTRL_OSCULP32K_EN1K Enable Out 1k
+ * - OSC32KCTRL_OSCULP32K_CALIB(value) Oscillator Calibration
+ * - OSC32KCTRL_OSCULP32K_WRTLOCK Write Lock
+ **/
 static inline void osc32kctrl_write_OSCULP32K(uint32_t data)
 {
 	OSC32KCTRL->OSCULP32K.reg = data;
@@ -495,12 +489,12 @@ static inline void osc32kctrl_write_OSCULP32K(uint32_t data)
 /**
  * @brief osc32kctrl clear OSCULP32K register
  *
- * @param[in] uint32_t mask
- * OSC32KCTRL_OSCULP32K_EN32K  Enable Out 32k 
- * OSC32KCTRL_OSCULP32K_EN1K  Enable Out 1k 
- * OSC32KCTRL_OSCULP32K_CALIB(value)  Oscillator Calibration 
- * OSC32KCTRL_OSCULP32K_WRTLOCK  Write Lock 
- */
+ * @param[in] mask uint32_t 
+ * - OSC32KCTRL_OSCULP32K_EN32K Enable Out 32k
+ * - OSC32KCTRL_OSCULP32K_EN1K Enable Out 1k
+ * - OSC32KCTRL_OSCULP32K_CALIB(value) Oscillator Calibration
+ * - OSC32KCTRL_OSCULP32K_WRTLOCK Write Lock
+ **/
 static inline void osc32kctrl_clear_OSCULP32K(uint32_t mask)
 {
 	OSC32KCTRL->OSCULP32K.reg &= ~mask;
@@ -509,13 +503,12 @@ static inline void osc32kctrl_clear_OSCULP32K(uint32_t mask)
 /**
  * @brief osc32kctrl read OSCULP32K register
  *
- * @param[in] void
  * @return uint32_t
- * OSC32KCTRL_OSCULP32K_EN32K  Enable Out 32k 
- * OSC32KCTRL_OSCULP32K_EN1K  Enable Out 1k 
- * OSC32KCTRL_OSCULP32K_CALIB(value)  Oscillator Calibration 
- * OSC32KCTRL_OSCULP32K_WRTLOCK  Write Lock 
- */
+ * - OSC32KCTRL_OSCULP32K_EN32K Enable Out 32k
+ * - OSC32KCTRL_OSCULP32K_EN1K Enable Out 1k
+ * - OSC32KCTRL_OSCULP32K_CALIB(value) Oscillator Calibration
+ * - OSC32KCTRL_OSCULP32K_WRTLOCK Write Lock
+ **/
 static inline uint32_t osc32kctrl_read_OSCULP32K(void)
 {
 	return OSC32KCTRL->OSCULP32K.reg;
@@ -524,12 +517,12 @@ static inline uint32_t osc32kctrl_read_OSCULP32K(void)
 /**
  * @brief osc32kctrl get STATUS register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * OSC32KCTRL_STATUS_XOSC32KRDY  XOSC32K Ready 
- * OSC32KCTRL_STATUS_XOSC32KFAIL  XOSC32K Clock Failure Detector 
- * OSC32KCTRL_STATUS_XOSC32KSW  XOSC32K Clock switch 
- */
+ * - OSC32KCTRL_STATUS_XOSC32KRDY XOSC32K Ready
+ * - OSC32KCTRL_STATUS_XOSC32KFAIL XOSC32K Clock Failure Detector
+ * - OSC32KCTRL_STATUS_XOSC32KSW XOSC32K Clock switch
+ **/
 static inline uint32_t osc32kctrl_get_STATUS(uint32_t mask)
 {
     return OSC32KCTRL->STATUS.reg & mask;
@@ -538,12 +531,11 @@ static inline uint32_t osc32kctrl_get_STATUS(uint32_t mask)
 /**
  * @brief osc32kctrl read STATUS register
  *
- * @param[in] void
  * @return uint32_t
- * OSC32KCTRL_STATUS_XOSC32KRDY  XOSC32K Ready 
- * OSC32KCTRL_STATUS_XOSC32KFAIL  XOSC32K Clock Failure Detector 
- * OSC32KCTRL_STATUS_XOSC32KSW  XOSC32K Clock switch 
- */
+ * - OSC32KCTRL_STATUS_XOSC32KRDY XOSC32K Ready
+ * - OSC32KCTRL_STATUS_XOSC32KFAIL XOSC32K Clock Failure Detector
+ * - OSC32KCTRL_STATUS_XOSC32KSW XOSC32K Clock switch
+ **/
 static inline uint32_t osc32kctrl_read_STATUS(void)
 {
 	return OSC32KCTRL->STATUS.reg;

@@ -43,9 +43,9 @@
 /**
  * @brief pm set INTEN register
  *
- * @param[in] uint8_t mask
- * PM_INTENSET_SLEEPRDY  Sleep Mode Entry Ready Enable 
- */
+ * @param[in] mask uint8_t 
+ * - PM_INTENSET_SLEEPRDY Sleep Mode Entry Ready Enable
+ **/
 static inline void pm_set_INTEN(uint8_t mask)
 {
 	PM->INTENSET.reg = mask;
@@ -54,10 +54,10 @@ static inline void pm_set_INTEN(uint8_t mask)
 /**
  * @brief pm get INTEN register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * PM_INTENSET_SLEEPRDY  Sleep Mode Entry Ready Enable 
- */
+ * - PM_INTENSET_SLEEPRDY Sleep Mode Entry Ready Enable
+ **/
 static inline uint8_t pm_get_INTEN(uint8_t mask)
 {
     return PM->INTENSET.reg & mask;
@@ -66,10 +66,9 @@ static inline uint8_t pm_get_INTEN(uint8_t mask)
 /**
  * @brief pm read INTEN register
  *
- * @param[in] void
  * @return uint8_t
- * PM_INTENSET_SLEEPRDY  Sleep Mode Entry Ready Enable 
- */
+ * - PM_INTENSET_SLEEPRDY Sleep Mode Entry Ready Enable
+ **/
 static inline uint8_t pm_read_INTEN(void)
 {
 	return PM->INTENSET.reg;
@@ -78,9 +77,9 @@ static inline uint8_t pm_read_INTEN(void)
 /**
  * @brief pm write INTEN register
  *
- * @param[in] uint8_t data
- * PM_INTENSET_SLEEPRDY  Sleep Mode Entry Ready Enable 
- */
+ * @param[in] data uint8_t 
+ * - PM_INTENSET_SLEEPRDY Sleep Mode Entry Ready Enable
+ **/
 static inline void pm_write_INTEN(uint8_t data)
 {
 	PM->INTENSET.reg = data;
@@ -90,9 +89,9 @@ static inline void pm_write_INTEN(uint8_t data)
 /**
  * @brief pm clear INTEN register
  *
- * @param[in] uint8_t mask
- * PM_INTENSET_SLEEPRDY  Sleep Mode Entry Ready Enable 
- */
+ * @param[in] mask uint8_t 
+ * - PM_INTENSET_SLEEPRDY Sleep Mode Entry Ready Enable
+ **/
 static inline void pm_clear_INTEN(uint8_t mask)
 {
 	PM->INTENCLR.reg = mask;
@@ -101,10 +100,10 @@ static inline void pm_clear_INTEN(uint8_t mask)
 /**
  * @brief pm get INTFLAG register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * PM_INTFLAG_SLEEPRDY  Sleep Mode Entry Ready 
- */
+ * - PM_INTFLAG_SLEEPRDY Sleep Mode Entry Ready
+ **/
 static inline uint8_t pm_get_INTFLAG(uint8_t mask)
 {
     return PM->INTFLAG.reg & mask;
@@ -113,10 +112,9 @@ static inline uint8_t pm_get_INTFLAG(uint8_t mask)
 /**
  * @brief pm read INTFLAG register
  *
- * @param[in] void
  * @return uint8_t
- * PM_INTFLAG_SLEEPRDY  Sleep Mode Entry Ready 
- */
+ * - PM_INTFLAG_SLEEPRDY Sleep Mode Entry Ready
+ **/
 static inline uint8_t pm_read_INTFLAG(void)
 {
 	return PM->INTFLAG.reg;
@@ -125,9 +123,9 @@ static inline uint8_t pm_read_INTFLAG(void)
 /**
  * @brief pm clear INTFLAG register
  *
- * @param[in] uint8_t mask
- * PM_INTFLAG_SLEEPRDY  Sleep Mode Entry Ready 
- */
+ * @param[in] mask uint8_t 
+ * - PM_INTFLAG_SLEEPRDY Sleep Mode Entry Ready
+ **/
 static inline void pm_clear_INTFLAG(uint8_t mask)
 {
 	PM->INTFLAG.reg = mask;
@@ -136,9 +134,9 @@ static inline void pm_clear_INTFLAG(uint8_t mask)
 /**
  * @brief pm set CTRLA register
  *
- * @param[in] uint8_t mask
- * PM_CTRLA_IORET  I/O Retention 
- */
+ * @param[in] mask uint8_t 
+ * - PM_CTRLA_IORET I/O Retention
+ **/
 static inline void pm_set_CTRLA(uint8_t mask)
 {
 	PM->CTRLA.reg |= mask;
@@ -147,10 +145,10 @@ static inline void pm_set_CTRLA(uint8_t mask)
 /**
  * @brief pm get CTRLA register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * PM_CTRLA_IORET  I/O Retention 
- */
+ * - PM_CTRLA_IORET I/O Retention
+ **/
 static inline uint8_t pm_get_CTRLA(uint8_t mask)
 {
     return PM->CTRLA.reg & mask;
@@ -159,9 +157,9 @@ static inline uint8_t pm_get_CTRLA(uint8_t mask)
 /**
  * @brief pm write CTRLA register
  *
- * @param[in] uint8_t data
- * PM_CTRLA_IORET  I/O Retention 
- */
+ * @param[in] data uint8_t 
+ * - PM_CTRLA_IORET I/O Retention
+ **/
 static inline void pm_write_CTRLA(uint8_t data)
 {
 	PM->CTRLA.reg = data;
@@ -170,9 +168,9 @@ static inline void pm_write_CTRLA(uint8_t data)
 /**
  * @brief pm clear CTRLA register
  *
- * @param[in] uint8_t mask
- * PM_CTRLA_IORET  I/O Retention 
- */
+ * @param[in] mask uint8_t 
+ * - PM_CTRLA_IORET I/O Retention
+ **/
 static inline void pm_clear_CTRLA(uint8_t mask)
 {
 	PM->CTRLA.reg &= ~mask;
@@ -181,10 +179,9 @@ static inline void pm_clear_CTRLA(uint8_t mask)
 /**
  * @brief pm read CTRLA register
  *
- * @param[in] void
  * @return uint8_t
- * PM_CTRLA_IORET  I/O Retention 
- */
+ * - PM_CTRLA_IORET I/O Retention
+ **/
 static inline uint8_t pm_read_CTRLA(void)
 {
 	return PM->CTRLA.reg;
@@ -193,16 +190,16 @@ static inline uint8_t pm_read_CTRLA(void)
 /**
  * @brief pm set SLEEPCFG register
  *
- * @param[in] uint8_t mask
- * PM_SLEEPCFG_SLEEPMODE(value)  Sleep Mode 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE0  CPU clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE1  AHB clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE2  APB clock are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_STANDBY  All Clocks are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_HIBERNATE  Backup domain is ON as well as some PDRAMs 
- *    PM_SLEEPCFG_SLEEPMODE_BACKUP  Only Backup domain is powered ON 
- *    PM_SLEEPCFG_SLEEPMODE_OFF  All power domains are powered OFF 
- */
+ * @param[in] mask uint8_t 
+ * - PM_SLEEPCFG_SLEEPMODE(value) Sleep Mode
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE0 CPU clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE1 AHB clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE2 APB clock are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_STANDBY All Clocks are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_HIBERNATE Backup domain is ON as well as some PDRAMs
+ *  +      PM_SLEEPCFG_SLEEPMODE_BACKUP Only Backup domain is powered ON
+ *  +      PM_SLEEPCFG_SLEEPMODE_OFF All power domains are powered OFF
+ **/
 static inline void pm_set_SLEEPCFG(uint8_t mask)
 {
 	PM->SLEEPCFG.reg |= mask;
@@ -211,17 +208,17 @@ static inline void pm_set_SLEEPCFG(uint8_t mask)
 /**
  * @brief pm get SLEEPCFG register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * PM_SLEEPCFG_SLEEPMODE(value)  Sleep Mode 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE0  CPU clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE1  AHB clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE2  APB clock are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_STANDBY  All Clocks are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_HIBERNATE  Backup domain is ON as well as some PDRAMs 
- *    PM_SLEEPCFG_SLEEPMODE_BACKUP  Only Backup domain is powered ON 
- *    PM_SLEEPCFG_SLEEPMODE_OFF  All power domains are powered OFF 
- */
+ * - PM_SLEEPCFG_SLEEPMODE(value) Sleep Mode
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE0 CPU clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE1 AHB clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE2 APB clock are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_STANDBY All Clocks are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_HIBERNATE Backup domain is ON as well as some PDRAMs
+ *  +      PM_SLEEPCFG_SLEEPMODE_BACKUP Only Backup domain is powered ON
+ *  +      PM_SLEEPCFG_SLEEPMODE_OFF All power domains are powered OFF
+ **/
 static inline uint8_t pm_get_SLEEPCFG(uint8_t mask)
 {
     return PM->SLEEPCFG.reg & mask;
@@ -230,16 +227,16 @@ static inline uint8_t pm_get_SLEEPCFG(uint8_t mask)
 /**
  * @brief pm write SLEEPCFG register
  *
- * @param[in] uint8_t data
- * PM_SLEEPCFG_SLEEPMODE(value)  Sleep Mode 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE0  CPU clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE1  AHB clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE2  APB clock are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_STANDBY  All Clocks are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_HIBERNATE  Backup domain is ON as well as some PDRAMs 
- *    PM_SLEEPCFG_SLEEPMODE_BACKUP  Only Backup domain is powered ON 
- *    PM_SLEEPCFG_SLEEPMODE_OFF  All power domains are powered OFF 
- */
+ * @param[in] data uint8_t 
+ * - PM_SLEEPCFG_SLEEPMODE(value) Sleep Mode
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE0 CPU clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE1 AHB clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE2 APB clock are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_STANDBY All Clocks are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_HIBERNATE Backup domain is ON as well as some PDRAMs
+ *  +      PM_SLEEPCFG_SLEEPMODE_BACKUP Only Backup domain is powered ON
+ *  +      PM_SLEEPCFG_SLEEPMODE_OFF All power domains are powered OFF
+ **/
 static inline void pm_write_SLEEPCFG(uint8_t data)
 {
 	PM->SLEEPCFG.reg = data;
@@ -248,16 +245,16 @@ static inline void pm_write_SLEEPCFG(uint8_t data)
 /**
  * @brief pm clear SLEEPCFG register
  *
- * @param[in] uint8_t mask
- * PM_SLEEPCFG_SLEEPMODE(value)  Sleep Mode 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE0  CPU clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE1  AHB clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE2  APB clock are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_STANDBY  All Clocks are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_HIBERNATE  Backup domain is ON as well as some PDRAMs 
- *    PM_SLEEPCFG_SLEEPMODE_BACKUP  Only Backup domain is powered ON 
- *    PM_SLEEPCFG_SLEEPMODE_OFF  All power domains are powered OFF 
- */
+ * @param[in] mask uint8_t 
+ * - PM_SLEEPCFG_SLEEPMODE(value) Sleep Mode
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE0 CPU clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE1 AHB clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE2 APB clock are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_STANDBY All Clocks are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_HIBERNATE Backup domain is ON as well as some PDRAMs
+ *  +      PM_SLEEPCFG_SLEEPMODE_BACKUP Only Backup domain is powered ON
+ *  +      PM_SLEEPCFG_SLEEPMODE_OFF All power domains are powered OFF
+ **/
 static inline void pm_clear_SLEEPCFG(uint8_t mask)
 {
 	PM->SLEEPCFG.reg &= ~mask;
@@ -266,17 +263,16 @@ static inline void pm_clear_SLEEPCFG(uint8_t mask)
 /**
  * @brief pm read SLEEPCFG register
  *
- * @param[in] void
  * @return uint8_t
- * PM_SLEEPCFG_SLEEPMODE(value)  Sleep Mode 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE0  CPU clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE1  AHB clock is OFF 
- *    PM_SLEEPCFG_SLEEPMODE_IDLE2  APB clock are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_STANDBY  All Clocks are OFF 
- *    PM_SLEEPCFG_SLEEPMODE_HIBERNATE  Backup domain is ON as well as some PDRAMs 
- *    PM_SLEEPCFG_SLEEPMODE_BACKUP  Only Backup domain is powered ON 
- *    PM_SLEEPCFG_SLEEPMODE_OFF  All power domains are powered OFF 
- */
+ * - PM_SLEEPCFG_SLEEPMODE(value) Sleep Mode
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE0 CPU clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE1 AHB clock is OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_IDLE2 APB clock are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_STANDBY All Clocks are OFF
+ *  +      PM_SLEEPCFG_SLEEPMODE_HIBERNATE Backup domain is ON as well as some PDRAMs
+ *  +      PM_SLEEPCFG_SLEEPMODE_BACKUP Only Backup domain is powered ON
+ *  +      PM_SLEEPCFG_SLEEPMODE_OFF All power domains are powered OFF
+ **/
 static inline uint8_t pm_read_SLEEPCFG(void)
 {
 	return PM->SLEEPCFG.reg;
@@ -285,13 +281,13 @@ static inline uint8_t pm_read_SLEEPCFG(void)
 /**
  * @brief pm set STDBYCFG register
  *
- * @param[in] uint8_t mask
- * PM_STDBYCFG_RAMCFG(value)  Ram Configuration 
- *    PM_STDBYCFG_RAMCFG_RET  All the RAMs are retained 
- *    PM_STDBYCFG_RAMCFG_PARTIAL  Only the first 32K bytes are retained 
- *    PM_STDBYCFG_RAMCFG_OFF  All the RAMs are OFF 
- * PM_STDBYCFG_FASTWKUP(value)  Fast Wakeup 
- */
+ * @param[in] mask uint8_t 
+ * - PM_STDBYCFG_RAMCFG(value) Ram Configuration
+ *  +      PM_STDBYCFG_RAMCFG_RET All the RAMs are retained
+ *  +      PM_STDBYCFG_RAMCFG_PARTIAL Only the first 32K bytes are retained
+ *  +      PM_STDBYCFG_RAMCFG_OFF All the RAMs are OFF
+ * - PM_STDBYCFG_FASTWKUP(value) Fast Wakeup
+ **/
 static inline void pm_set_STDBYCFG(uint8_t mask)
 {
 	PM->STDBYCFG.reg |= mask;
@@ -300,14 +296,14 @@ static inline void pm_set_STDBYCFG(uint8_t mask)
 /**
  * @brief pm get STDBYCFG register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * PM_STDBYCFG_RAMCFG(value)  Ram Configuration 
- *    PM_STDBYCFG_RAMCFG_RET  All the RAMs are retained 
- *    PM_STDBYCFG_RAMCFG_PARTIAL  Only the first 32K bytes are retained 
- *    PM_STDBYCFG_RAMCFG_OFF  All the RAMs are OFF 
- * PM_STDBYCFG_FASTWKUP(value)  Fast Wakeup 
- */
+ * - PM_STDBYCFG_RAMCFG(value) Ram Configuration
+ *  +      PM_STDBYCFG_RAMCFG_RET All the RAMs are retained
+ *  +      PM_STDBYCFG_RAMCFG_PARTIAL Only the first 32K bytes are retained
+ *  +      PM_STDBYCFG_RAMCFG_OFF All the RAMs are OFF
+ * - PM_STDBYCFG_FASTWKUP(value) Fast Wakeup
+ **/
 static inline uint8_t pm_get_STDBYCFG(uint8_t mask)
 {
     return PM->STDBYCFG.reg & mask;
@@ -316,13 +312,13 @@ static inline uint8_t pm_get_STDBYCFG(uint8_t mask)
 /**
  * @brief pm write STDBYCFG register
  *
- * @param[in] uint8_t data
- * PM_STDBYCFG_RAMCFG(value)  Ram Configuration 
- *    PM_STDBYCFG_RAMCFG_RET  All the RAMs are retained 
- *    PM_STDBYCFG_RAMCFG_PARTIAL  Only the first 32K bytes are retained 
- *    PM_STDBYCFG_RAMCFG_OFF  All the RAMs are OFF 
- * PM_STDBYCFG_FASTWKUP(value)  Fast Wakeup 
- */
+ * @param[in] data uint8_t 
+ * - PM_STDBYCFG_RAMCFG(value) Ram Configuration
+ *  +      PM_STDBYCFG_RAMCFG_RET All the RAMs are retained
+ *  +      PM_STDBYCFG_RAMCFG_PARTIAL Only the first 32K bytes are retained
+ *  +      PM_STDBYCFG_RAMCFG_OFF All the RAMs are OFF
+ * - PM_STDBYCFG_FASTWKUP(value) Fast Wakeup
+ **/
 static inline void pm_write_STDBYCFG(uint8_t data)
 {
 	PM->STDBYCFG.reg = data;
@@ -331,13 +327,13 @@ static inline void pm_write_STDBYCFG(uint8_t data)
 /**
  * @brief pm clear STDBYCFG register
  *
- * @param[in] uint8_t mask
- * PM_STDBYCFG_RAMCFG(value)  Ram Configuration 
- *    PM_STDBYCFG_RAMCFG_RET  All the RAMs are retained 
- *    PM_STDBYCFG_RAMCFG_PARTIAL  Only the first 32K bytes are retained 
- *    PM_STDBYCFG_RAMCFG_OFF  All the RAMs are OFF 
- * PM_STDBYCFG_FASTWKUP(value)  Fast Wakeup 
- */
+ * @param[in] mask uint8_t 
+ * - PM_STDBYCFG_RAMCFG(value) Ram Configuration
+ *  +      PM_STDBYCFG_RAMCFG_RET All the RAMs are retained
+ *  +      PM_STDBYCFG_RAMCFG_PARTIAL Only the first 32K bytes are retained
+ *  +      PM_STDBYCFG_RAMCFG_OFF All the RAMs are OFF
+ * - PM_STDBYCFG_FASTWKUP(value) Fast Wakeup
+ **/
 static inline void pm_clear_STDBYCFG(uint8_t mask)
 {
 	PM->STDBYCFG.reg &= ~mask;
@@ -346,14 +342,13 @@ static inline void pm_clear_STDBYCFG(uint8_t mask)
 /**
  * @brief pm read STDBYCFG register
  *
- * @param[in] void
  * @return uint8_t
- * PM_STDBYCFG_RAMCFG(value)  Ram Configuration 
- *    PM_STDBYCFG_RAMCFG_RET  All the RAMs are retained 
- *    PM_STDBYCFG_RAMCFG_PARTIAL  Only the first 32K bytes are retained 
- *    PM_STDBYCFG_RAMCFG_OFF  All the RAMs are OFF 
- * PM_STDBYCFG_FASTWKUP(value)  Fast Wakeup 
- */
+ * - PM_STDBYCFG_RAMCFG(value) Ram Configuration
+ *  +      PM_STDBYCFG_RAMCFG_RET All the RAMs are retained
+ *  +      PM_STDBYCFG_RAMCFG_PARTIAL Only the first 32K bytes are retained
+ *  +      PM_STDBYCFG_RAMCFG_OFF All the RAMs are OFF
+ * - PM_STDBYCFG_FASTWKUP(value) Fast Wakeup
+ **/
 static inline uint8_t pm_read_STDBYCFG(void)
 {
 	return PM->STDBYCFG.reg;
@@ -362,10 +357,10 @@ static inline uint8_t pm_read_STDBYCFG(void)
 /**
  * @brief pm set HIBCFG register
  *
- * @param[in] uint8_t mask
- * PM_HIBCFG_RAMCFG(value)  Ram Configuration 
- * PM_HIBCFG_BRAMCFG(value)  Backup Ram Configuration 
- */
+ * @param[in] mask uint8_t 
+ * - PM_HIBCFG_RAMCFG(value) Ram Configuration
+ * - PM_HIBCFG_BRAMCFG(value) Backup Ram Configuration
+ **/
 static inline void pm_set_HIBCFG(uint8_t mask)
 {
 	PM->HIBCFG.reg |= mask;
@@ -374,11 +369,11 @@ static inline void pm_set_HIBCFG(uint8_t mask)
 /**
  * @brief pm get HIBCFG register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * PM_HIBCFG_RAMCFG(value)  Ram Configuration 
- * PM_HIBCFG_BRAMCFG(value)  Backup Ram Configuration 
- */
+ * - PM_HIBCFG_RAMCFG(value) Ram Configuration
+ * - PM_HIBCFG_BRAMCFG(value) Backup Ram Configuration
+ **/
 static inline uint8_t pm_get_HIBCFG(uint8_t mask)
 {
     return PM->HIBCFG.reg & mask;
@@ -387,10 +382,10 @@ static inline uint8_t pm_get_HIBCFG(uint8_t mask)
 /**
  * @brief pm write HIBCFG register
  *
- * @param[in] uint8_t data
- * PM_HIBCFG_RAMCFG(value)  Ram Configuration 
- * PM_HIBCFG_BRAMCFG(value)  Backup Ram Configuration 
- */
+ * @param[in] data uint8_t 
+ * - PM_HIBCFG_RAMCFG(value) Ram Configuration
+ * - PM_HIBCFG_BRAMCFG(value) Backup Ram Configuration
+ **/
 static inline void pm_write_HIBCFG(uint8_t data)
 {
 	PM->HIBCFG.reg = data;
@@ -399,10 +394,10 @@ static inline void pm_write_HIBCFG(uint8_t data)
 /**
  * @brief pm clear HIBCFG register
  *
- * @param[in] uint8_t mask
- * PM_HIBCFG_RAMCFG(value)  Ram Configuration 
- * PM_HIBCFG_BRAMCFG(value)  Backup Ram Configuration 
- */
+ * @param[in] mask uint8_t 
+ * - PM_HIBCFG_RAMCFG(value) Ram Configuration
+ * - PM_HIBCFG_BRAMCFG(value) Backup Ram Configuration
+ **/
 static inline void pm_clear_HIBCFG(uint8_t mask)
 {
 	PM->HIBCFG.reg &= ~mask;
@@ -411,11 +406,10 @@ static inline void pm_clear_HIBCFG(uint8_t mask)
 /**
  * @brief pm read HIBCFG register
  *
- * @param[in] void
  * @return uint8_t
- * PM_HIBCFG_RAMCFG(value)  Ram Configuration 
- * PM_HIBCFG_BRAMCFG(value)  Backup Ram Configuration 
- */
+ * - PM_HIBCFG_RAMCFG(value) Ram Configuration
+ * - PM_HIBCFG_BRAMCFG(value) Backup Ram Configuration
+ **/
 static inline uint8_t pm_read_HIBCFG(void)
 {
 	return PM->HIBCFG.reg;
@@ -424,9 +418,9 @@ static inline uint8_t pm_read_HIBCFG(void)
 /**
  * @brief pm set BKUPCFG register
  *
- * @param[in] uint8_t mask
- * PM_BKUPCFG_BRAMCFG(value)  Ram Configuration 
- */
+ * @param[in] mask uint8_t 
+ * - PM_BKUPCFG_BRAMCFG(value) Ram Configuration
+ **/
 static inline void pm_set_BKUPCFG(uint8_t mask)
 {
 	PM->BKUPCFG.reg |= mask;
@@ -435,10 +429,10 @@ static inline void pm_set_BKUPCFG(uint8_t mask)
 /**
  * @brief pm get BKUPCFG register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * PM_BKUPCFG_BRAMCFG(value)  Ram Configuration 
- */
+ * - PM_BKUPCFG_BRAMCFG(value) Ram Configuration
+ **/
 static inline uint8_t pm_get_BKUPCFG(uint8_t mask)
 {
     return PM->BKUPCFG.reg & mask;
@@ -447,9 +441,9 @@ static inline uint8_t pm_get_BKUPCFG(uint8_t mask)
 /**
  * @brief pm write BKUPCFG register
  *
- * @param[in] uint8_t data
- * PM_BKUPCFG_BRAMCFG(value)  Ram Configuration 
- */
+ * @param[in] data uint8_t 
+ * - PM_BKUPCFG_BRAMCFG(value) Ram Configuration
+ **/
 static inline void pm_write_BKUPCFG(uint8_t data)
 {
 	PM->BKUPCFG.reg = data;
@@ -458,9 +452,9 @@ static inline void pm_write_BKUPCFG(uint8_t data)
 /**
  * @brief pm clear BKUPCFG register
  *
- * @param[in] uint8_t mask
- * PM_BKUPCFG_BRAMCFG(value)  Ram Configuration 
- */
+ * @param[in] mask uint8_t 
+ * - PM_BKUPCFG_BRAMCFG(value) Ram Configuration
+ **/
 static inline void pm_clear_BKUPCFG(uint8_t mask)
 {
 	PM->BKUPCFG.reg &= ~mask;
@@ -469,10 +463,9 @@ static inline void pm_clear_BKUPCFG(uint8_t mask)
 /**
  * @brief pm read BKUPCFG register
  *
- * @param[in] void
  * @return uint8_t
- * PM_BKUPCFG_BRAMCFG(value)  Ram Configuration 
- */
+ * - PM_BKUPCFG_BRAMCFG(value) Ram Configuration
+ **/
 static inline uint8_t pm_read_BKUPCFG(void)
 {
 	return PM->BKUPCFG.reg;
@@ -481,10 +474,10 @@ static inline uint8_t pm_read_BKUPCFG(void)
 /**
  * @brief pm set PWSAKDLY register
  *
- * @param[in] uint8_t mask
- * PM_PWSAKDLY_DLYVAL(value)  Delay Value 
- * PM_PWSAKDLY_IGNACK  Ignore Acknowledge 
- */
+ * @param[in] mask uint8_t 
+ * - PM_PWSAKDLY_DLYVAL(value) Delay Value
+ * - PM_PWSAKDLY_IGNACK Ignore Acknowledge
+ **/
 static inline void pm_set_PWSAKDLY(uint8_t mask)
 {
 	PM->PWSAKDLY.reg |= mask;
@@ -493,11 +486,11 @@ static inline void pm_set_PWSAKDLY(uint8_t mask)
 /**
  * @brief pm get PWSAKDLY register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * PM_PWSAKDLY_DLYVAL(value)  Delay Value 
- * PM_PWSAKDLY_IGNACK  Ignore Acknowledge 
- */
+ * - PM_PWSAKDLY_DLYVAL(value) Delay Value
+ * - PM_PWSAKDLY_IGNACK Ignore Acknowledge
+ **/
 static inline uint8_t pm_get_PWSAKDLY(uint8_t mask)
 {
     return PM->PWSAKDLY.reg & mask;
@@ -506,10 +499,10 @@ static inline uint8_t pm_get_PWSAKDLY(uint8_t mask)
 /**
  * @brief pm write PWSAKDLY register
  *
- * @param[in] uint8_t data
- * PM_PWSAKDLY_DLYVAL(value)  Delay Value 
- * PM_PWSAKDLY_IGNACK  Ignore Acknowledge 
- */
+ * @param[in] data uint8_t 
+ * - PM_PWSAKDLY_DLYVAL(value) Delay Value
+ * - PM_PWSAKDLY_IGNACK Ignore Acknowledge
+ **/
 static inline void pm_write_PWSAKDLY(uint8_t data)
 {
 	PM->PWSAKDLY.reg = data;
@@ -518,10 +511,10 @@ static inline void pm_write_PWSAKDLY(uint8_t data)
 /**
  * @brief pm clear PWSAKDLY register
  *
- * @param[in] uint8_t mask
- * PM_PWSAKDLY_DLYVAL(value)  Delay Value 
- * PM_PWSAKDLY_IGNACK  Ignore Acknowledge 
- */
+ * @param[in] mask uint8_t 
+ * - PM_PWSAKDLY_DLYVAL(value) Delay Value
+ * - PM_PWSAKDLY_IGNACK Ignore Acknowledge
+ **/
 static inline void pm_clear_PWSAKDLY(uint8_t mask)
 {
 	PM->PWSAKDLY.reg &= ~mask;
@@ -530,11 +523,10 @@ static inline void pm_clear_PWSAKDLY(uint8_t mask)
 /**
  * @brief pm read PWSAKDLY register
  *
- * @param[in] void
  * @return uint8_t
- * PM_PWSAKDLY_DLYVAL(value)  Delay Value 
- * PM_PWSAKDLY_IGNACK  Ignore Acknowledge 
- */
+ * - PM_PWSAKDLY_DLYVAL(value) Delay Value
+ * - PM_PWSAKDLY_IGNACK Ignore Acknowledge
+ **/
 static inline uint8_t pm_read_PWSAKDLY(void)
 {
 	return PM->PWSAKDLY.reg;

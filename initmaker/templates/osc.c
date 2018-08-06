@@ -161,10 +161,7 @@
 
 	/* DFLL */
 	/* DFLL is used on reset as default source, make the source 32K temporarily */
-	gclk_set_GENCTRL_SRC(GCLK0, GCLK_GENCTRL_GENEN
- 						| GCLK_GENCTRL_SRC_OSCULP32K
- 						| GCLK_GENCTRL_DIV(1));
- 						
+	gclk_set_GENCTRL_SRC(GCLK0, GCLK_GENCTRL_SRC_OSCULP32K); 						
  	gclk_wait_for_sync(GCLK_SYNCBUSY_GENCTRL0);
  	/* Disable DFLL */
 	oscctrl_write_DFLLCTRLA(0);

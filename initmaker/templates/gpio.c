@@ -77,14 +77,18 @@
 #fi
 	eic_write_EVCTRL(<<<
 #foreach gen_event
-                   | EIC%eicnumber%
+                   | EIC_%pinname%
 #endfor
 >>>); 
-	eic_write_ASYNCH(0); 
+	eic_write_ASYNCH(<<<
+#foreach eic_async
+                    | EIC_%eicasync%
+#endfor
+>>>); 
 #ifdefined eic_debounce
 	eic_write_DEBOUNCEN(<<<
 #foreach eic_debounce
-					| EIC%eicnumber%
+					| EIC_%pinname%
 #endfor
 >>>);
 	eic_write_DPRESCALER(<<<
@@ -106,7 +110,7 @@
 >>>);
 #fi
 #foreach eic_sense
-	eic_set_CONFIG(EIC%eicnumber%_Pos, EIC_CONFIG_SENSE_%eicsense%);
+	eic_set_CONFIG(EIC_%pinname%_Pos, EIC_CONFIG_SENSE_%eicsense%);
 #endfor
 	eic_set_ENABLE();
 	eic_wait_for_sync(EIC_SYNCBUSY_ENABLE);

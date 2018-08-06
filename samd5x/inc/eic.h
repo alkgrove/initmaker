@@ -1,7 +1,7 @@
 /**
- * @note This file is modified from the Atmel ASF4 hri include
+ * @note This file is modified from the Atmel ASF4 hri includes
  * by Alkgrove 2018
- * @version beta
+ * @version alpha
 **/
 /**
  * \file
@@ -39,7 +39,6 @@
 #define _EIC_H_
 
 #include <stdbool.h>
-
 #define EIC_CONFIG_FILTEN		0x8
 #define EIC_CONFIG_SENSE_Msk	0x7
 #define EIC_CONFIG_SENSE(value) ((value) & 0x7)
@@ -82,130 +81,6 @@
 #define EIC14	(1 << EIC14_Pos)	/* EIC/EXTINT[14] */
 #define EIC15_Pos	15	/* EIC/EXTINT[15] */
 #define EIC15	(1 << EIC15_Pos)	/* EIC/EXTINT[15] */
-
-/**
- * @brief spin until sync busy bit is cleared
- *
- * @param[in] uint32_t
- * EIC_SYNCBUSY_SWRST	Software Reset Synchronization Busy Status 
- * EIC_SYNCBUSY_ENABLE	Enable Synchronization Busy Status 
- */
-static inline void eic_wait_for_sync(uint32_t reg)
-{
-	while (EIC->SYNCBUSY.reg & reg) {};
-}
-
-/**
- * @brief get Sync Busy register masked
- *
- * @param[in] uint32_t
- * EIC_SYNCBUSY_SWRST	Software Reset Synchronization Busy Status 
- * EIC_SYNCBUSY_ENABLE	Enable Synchronization Busy Status 
- */
-static inline bool eic_is_syncing(uint32_t reg)
-{
-	return EIC->SYNCBUSY.reg & reg;
-}
-
-/**
- * @brief set Interrupt Enable '1'=enable interrupt, '0'= do nothing
- *
- * @param[in] uint32_t mask
- * EIC_INTENSET_EXTINT(EICn)
- */
-static inline void eic_set_INTEN(uint32_t mask)
-{
-	EIC->INTENSET.reg = mask;
-}
-
-/**
- * @brief get Interrupt Enable masked
- *
- * @param[in] uint32_t mask
- * EIC_INTENSET_EXTINT(EICn)
- */
-static inline uint32_t eic_get_INTEN(uint32_t mask)
-{
-	return EIC->INTENSET.reg & mask;
-}
-/**
- * @brief read EIC Interrupt Enable Register
- *
- * @return uint32_t 16 bit 
- * EIC_INTENSET_EXTINT(EICn) 
- */
-static inline uint32_t eic_read_INTEN(void)
-{
-	return EIC->INTENSET.reg;
-}
-
-/**
- * @brief write EIC Interrupt Enable Register
- *
- * @param[in] uint32_t 16 bit '1'=enable interrupt, '0'=disable interrupt
- * EIC_INTENSET_EXTINT(EICn) 
- */
-static inline void eic_write_INTEN(uint32_t data)
-{
-	EIC->INTENSET.reg = data;
-	EIC->INTENCLR.reg = ~data;
-}
-
-/**
- * @brief write EIC Interrupt Enable Register
- *
- * @param[in] uint32_t 16 bit '1'=disable interrupt, '0'=do nothing
- * EIC_INTENCLR_EXTINT(EICn) 
- */
-static inline void eic_clear_INTEN(uint32_t mask)
-{
-	EIC->INTENCLR.reg = mask;
-}
-
-/**
- * @brief read NMI Interrupt flag 
- *
- * @return bool true if set; false if cleared
- * EIC_NMIFLAG_NMI
- */
-static inline bool eic_get_NMIFLAG(void)
-{
-	return (bool) (EIC->NMIFLAG.reg & EIC_NMIFLAG_NMI) >> EIC_NMIFLAG_NMI_Pos;
-}
-
-/**
- * @brief clear NMI Interrupt flag 
- *
- */
-static inline void eic_clear_NMIFLAG(void)
-{
-	EIC->NMIFLAG.reg = EIC_NMIFLAG_NMI;
-}
-
-/**
- * @brief read NMI Interrupt flag 
- *
- * @return uint16_t
- * EIC_NMIFLAG_NMI
- */
-static inline uint16_t eic_read_NMIFLAG(void)
-{
-	return EIC->NMIFLAG.reg;
-}
-
-static inline uint32_t eic_read_INTFLAG(void)
-{
-	return EIC->INTFLAG.reg;
-}
-/**
- * @brief reset the interrupt flag
- *
- * @param[in] uint32_t mask
- */
-static inline void eic_clear_INTFLAG(uint32_t mask)
-{
-	EIC->INTFLAG.reg = mask;
-}
 
 /**
  * @brief do software reset on EIC module
@@ -258,154 +133,421 @@ static inline bool eic_get_CKSEL(void)
 }
 
 /**
- * @brief set control A register bits with mask
+ * @brief eic wait for sync
  *
- * @param[in] uint8_t mask
- * EIC_CTRLA_SWRST	Software Reset 
- * EIC_CTRLA_ENABLE	Enable 
- * EIC_CTRLA_CKSEL	Clock Selection 0 = GCLK, 1 = ULP 32K clock
- * @param[in]
- * @return
- */
+ * @param[in] reg uint32_t 
+ **/
+static inline void eic_wait_for_sync(uint32_t reg)
+{
+	while (EIC->SYNCBUSY.reg & reg) {
+	};
+}
+
+/**
+ * @brief eic is syncing
+ *
+ * @param[in] reg uint32_t 
+ * @return bool
+ **/
+static inline bool eic_is_syncing(uint32_t reg)
+{
+	return EIC->SYNCBUSY.reg & reg;
+}
+
+/**
+ * @brief eic set INTEN register
+ *
+ * @param[in] mask uint32_t 
+ * - EIC_INTENSET_EXTINT(value) External Interrupt Enable
+ **/
+static inline void eic_set_INTEN(uint32_t mask)
+{
+	EIC->INTENSET.reg = mask;
+}
+
+/**
+ * @brief eic get INTEN register
+ *
+ * @param[in] mask uint32_t 
+ * @return uint32_t
+ * - EIC_INTENSET_EXTINT(value) External Interrupt Enable
+ **/
+static inline uint32_t eic_get_INTEN(uint32_t mask)
+{
+    return EIC->INTENSET.reg & mask;
+}
+
+/**
+ * @brief eic read INTEN register
+ *
+ * @return uint32_t
+ * - EIC_INTENSET_EXTINT(value) External Interrupt Enable
+ **/
+static inline uint32_t eic_read_INTEN(void)
+{
+	return EIC->INTENSET.reg;
+}
+
+/**
+ * @brief eic write INTEN register
+ *
+ * @param[in] data uint32_t 
+ * - EIC_INTENSET_EXTINT(value) External Interrupt Enable
+ **/
+static inline void eic_write_INTEN(uint32_t data)
+{
+	EIC->INTENSET.reg = data;
+	EIC->INTENCLR.reg = ~data;
+}
+
+/**
+ * @brief eic clear INTEN register
+ *
+ * @param[in] mask uint32_t 
+ * - EIC_INTENSET_EXTINT(value) External Interrupt Enable
+ **/
+static inline void eic_clear_INTEN(uint32_t mask)
+{
+	EIC->INTENCLR.reg = mask;
+}
+
+/**
+ * @brief eic get NMIFLAG register
+ *
+ * @param[in] mask uint16_t 
+ * @return uint16_t
+ * - EIC_NMIFLAG_NMI Non-Maskable Interrupt
+ **/
+static inline uint16_t eic_get_NMIFLAG(uint16_t mask)
+{
+    return EIC->NMIFLAG.reg & mask;
+}
+
+/**
+ * @brief eic read NMIFLAG register
+ *
+ * @return uint16_t
+ * - EIC_NMIFLAG_NMI Non-Maskable Interrupt
+ **/
+static inline uint16_t eic_read_NMIFLAG(void)
+{
+	return EIC->NMIFLAG.reg;
+}
+
+/**
+ * @brief eic clear NMIFLAG register
+ *
+ * @param[in] mask uint16_t 
+ * - EIC_NMIFLAG_NMI Non-Maskable Interrupt
+ **/
+static inline void eic_clear_NMIFLAG(uint16_t mask)
+{
+	EIC->NMIFLAG.reg = mask;
+}
+
+/**
+ * @brief eic get INTFLAG register
+ *
+ * @param[in] mask uint32_t 
+ * @return uint32_t
+ * - EIC_INTFLAG_EXTINT(value) External Interrupt
+ **/
+static inline uint32_t eic_get_INTFLAG(uint32_t mask)
+{
+    return EIC->INTFLAG.reg & mask;
+}
+
+/**
+ * @brief eic read INTFLAG register
+ *
+ * @return uint32_t
+ * - EIC_INTFLAG_EXTINT(value) External Interrupt
+ **/
+static inline uint32_t eic_read_INTFLAG(void)
+{
+	return EIC->INTFLAG.reg;
+}
+
+/**
+ * @brief eic clear INTFLAG register
+ *
+ * @param[in] mask uint32_t 
+ * - EIC_INTFLAG_EXTINT(value) External Interrupt
+ **/
+static inline void eic_clear_INTFLAG(uint32_t mask)
+{
+	EIC->INTFLAG.reg = mask;
+}
+
+/**
+ * @brief eic set CTRLA register
+ *
+ * @param[in] mask uint8_t 
+ * - EIC_CTRLA_SWRST Software Reset
+ * - EIC_CTRLA_ENABLE Enable
+ * - EIC_CTRLA_CKSEL Clock Selection
+ **/
 static inline void eic_set_CTRLA(uint8_t mask)
 {
 	EIC->CTRLA.reg |= mask;
 }
 
 /**
- * @brief get control A register masked
+ * @brief eic get CTRLA register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- */
+ * - EIC_CTRLA_SWRST Software Reset
+ * - EIC_CTRLA_ENABLE Enable
+ * - EIC_CTRLA_CKSEL Clock Selection
+ **/
 static inline uint8_t eic_get_CTRLA(uint8_t mask)
 {
-	return (EIC->CTRLA.reg & mask);
+    return EIC->CTRLA.reg & mask;
 }
 
 /**
- * @brief write CTRLA 
- * @note ENABLE and SWRST require write synchronization
- * if SWRST is set, all other bits are ignored
- * @param[in] uint8_t data
- */
+ * @brief eic write CTRLA register
+ *
+ * @param[in] data uint8_t 
+ * - EIC_CTRLA_SWRST Software Reset
+ * - EIC_CTRLA_ENABLE Enable
+ * - EIC_CTRLA_CKSEL Clock Selection
+ **/
 static inline void eic_write_CTRLA(uint8_t data)
 {
 	EIC->CTRLA.reg = data;
 }
 
 /**
- * @brief read CTRLA 
- * @return uint8_t data
- */
+ * @brief eic clear CTRLA register
+ *
+ * @param[in] mask uint8_t 
+ * - EIC_CTRLA_SWRST Software Reset
+ * - EIC_CTRLA_ENABLE Enable
+ * - EIC_CTRLA_CKSEL Clock Selection
+ **/
+static inline void eic_clear_CTRLA(uint8_t mask)
+{
+	EIC->CTRLA.reg &= ~mask;
+}
+
+/**
+ * @brief eic read CTRLA register
+ *
+ * @return uint8_t
+ * - EIC_CTRLA_SWRST Software Reset
+ * - EIC_CTRLA_ENABLE Enable
+ * - EIC_CTRLA_CKSEL Clock Selection
+ **/
 static inline uint8_t eic_read_CTRLA(void)
 {
 	return EIC->CTRLA.reg;
 }
 
 /**
- * @brief write NMI control register
+ * @brief eic set NMICTRL register
  *
- * @param[in] uint8_t data
- * EIC_NMICTRL_NMISENSE		Non-Maskable Interrupt Sense Configuration 
- *   EIC_NMICTRL_NMISENSE_NONE    No detection       
- *   EIC_NMICTRL_NMISENSE_RISE    Rising-edge detection 
- *   EIC_NMICTRL_NMISENSE_FALL    Falling-edge detection
- *   EIC_NMICTRL_NMISENSE_BOTH    Both-edges detection
- *   EIC_NMICTRL_NMISENSE_HIGH    High-level detection
- *   EIC_NMICTRL_NMISENSE_LOW     Low-level detection
- * EIC_NMICTRL_NMIFILTEN	Non-Maskable Interrupt Filter Enable 
- * EIC_NMICTRL_NMIASYNCH	Asynchronous Edge Detection Mode (1=async, 0=sync)
- */
+ * @param[in] mask uint8_t 
+ * - EIC_NMICTRL_NMISENSE(value) Non-Maskable Interrupt Sense Configuration
+ *  +      EIC_NMICTRL_NMISENSE_NONE No detection
+ *  +      EIC_NMICTRL_NMISENSE_RISE Rising-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_FALL Falling-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_BOTH Both-edges detection
+ *  +      EIC_NMICTRL_NMISENSE_HIGH High-level detection
+ *  +      EIC_NMICTRL_NMISENSE_LOW Low-level detection
+ * - EIC_NMICTRL_NMIFILTEN Non-Maskable Interrupt Filter Enable
+ * - EIC_NMICTRL_NMIASYNCH Asynchronous Edge Detection Mode
+ **/
+static inline void eic_set_NMICTRL(uint8_t mask)
+{
+	EIC->NMICTRL.reg |= mask;
+}
+
+/**
+ * @brief eic get NMICTRL register
+ *
+ * @param[in] mask uint8_t 
+ * @return uint8_t
+ * - EIC_NMICTRL_NMISENSE(value) Non-Maskable Interrupt Sense Configuration
+ *  +      EIC_NMICTRL_NMISENSE_NONE No detection
+ *  +      EIC_NMICTRL_NMISENSE_RISE Rising-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_FALL Falling-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_BOTH Both-edges detection
+ *  +      EIC_NMICTRL_NMISENSE_HIGH High-level detection
+ *  +      EIC_NMICTRL_NMISENSE_LOW Low-level detection
+ * - EIC_NMICTRL_NMIFILTEN Non-Maskable Interrupt Filter Enable
+ * - EIC_NMICTRL_NMIASYNCH Asynchronous Edge Detection Mode
+ **/
+static inline uint8_t eic_get_NMICTRL(uint8_t mask)
+{
+    return EIC->NMICTRL.reg & mask;
+}
+
+/**
+ * @brief eic write NMICTRL register
+ *
+ * @param[in] data uint8_t 
+ * - EIC_NMICTRL_NMISENSE(value) Non-Maskable Interrupt Sense Configuration
+ *  +      EIC_NMICTRL_NMISENSE_NONE No detection
+ *  +      EIC_NMICTRL_NMISENSE_RISE Rising-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_FALL Falling-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_BOTH Both-edges detection
+ *  +      EIC_NMICTRL_NMISENSE_HIGH High-level detection
+ *  +      EIC_NMICTRL_NMISENSE_LOW Low-level detection
+ * - EIC_NMICTRL_NMIFILTEN Non-Maskable Interrupt Filter Enable
+ * - EIC_NMICTRL_NMIASYNCH Asynchronous Edge Detection Mode
+ **/
 static inline void eic_write_NMICTRL(uint8_t data)
 {
 	EIC->NMICTRL.reg = data;
 }
 
 /**
- * @brief read NMI control register
+ * @brief eic clear NMICTRL register
  *
- * @return uint8_t data
- * EIC_NMICTRL_NMISENSE		Non-Maskable Interrupt Sense Configuration 
- *   EIC_NMICTRL_NMISENSE_NONE    No detection       
- *   EIC_NMICTRL_NMISENSE_RISE    Rising-edge detection 
- *   EIC_NMICTRL_NMISENSE_FALL    Falling-edge detection
- *   EIC_NMICTRL_NMISENSE_BOTH    Both-edges detection
- *   EIC_NMICTRL_NMISENSE_HIGH    High-level detection
- *   EIC_NMICTRL_NMISENSE_LOW     Low-level detection
- * EIC_NMICTRL_NMIFILTEN	Non-Maskable Interrupt Filter Enable 
- * EIC_NMICTRL_NMIASYNCH	Asynchronous Edge Detection Mode (1=async, 0=sync)
- */
+ * @param[in] mask uint8_t 
+ * - EIC_NMICTRL_NMISENSE(value) Non-Maskable Interrupt Sense Configuration
+ *  +      EIC_NMICTRL_NMISENSE_NONE No detection
+ *  +      EIC_NMICTRL_NMISENSE_RISE Rising-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_FALL Falling-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_BOTH Both-edges detection
+ *  +      EIC_NMICTRL_NMISENSE_HIGH High-level detection
+ *  +      EIC_NMICTRL_NMISENSE_LOW Low-level detection
+ * - EIC_NMICTRL_NMIFILTEN Non-Maskable Interrupt Filter Enable
+ * - EIC_NMICTRL_NMIASYNCH Asynchronous Edge Detection Mode
+ **/
+static inline void eic_clear_NMICTRL(uint8_t mask)
+{
+	EIC->NMICTRL.reg &= ~mask;
+}
+
+/**
+ * @brief eic read NMICTRL register
+ *
+ * @return uint8_t
+ * - EIC_NMICTRL_NMISENSE(value) Non-Maskable Interrupt Sense Configuration
+ *  +      EIC_NMICTRL_NMISENSE_NONE No detection
+ *  +      EIC_NMICTRL_NMISENSE_RISE Rising-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_FALL Falling-edge detection
+ *  +      EIC_NMICTRL_NMISENSE_BOTH Both-edges detection
+ *  +      EIC_NMICTRL_NMISENSE_HIGH High-level detection
+ *  +      EIC_NMICTRL_NMISENSE_LOW Low-level detection
+ * - EIC_NMICTRL_NMIFILTEN Non-Maskable Interrupt Filter Enable
+ * - EIC_NMICTRL_NMIASYNCH Asynchronous Edge Detection Mode
+ **/
 static inline uint8_t eic_read_NMICTRL(void)
 {
 	return EIC->NMICTRL.reg;
 }
 
 /**
- * @brief set event control register with mask
- * Enable protected
- * @param[in] uint32_t mask
- * EIC_EVCTRL_EXTINTEO(EICn)  External Interrupt Event Output Enable
- */
+ * @brief eic set EVCTRL register
+ *
+ * @param[in] mask uint32_t 
+ * - EIC_EVCTRL_EXTINTEO(value) External Interrupt Event Output Enable
+ **/
 static inline void eic_set_EVCTRL(uint32_t mask)
 {
 	EIC->EVCTRL.reg |= mask;
 }
 
 /**
- * @brief write event control register
- * Enable protected
- * @param[in] uint32_t mask
- * EIC_EVCTRL_EXTINTEO(EICn)  External Interrupt Event Output Enable
- */
+ * @brief eic get EVCTRL register
+ *
+ * @param[in] mask uint32_t 
+ * @return uint32_t
+ * - EIC_EVCTRL_EXTINTEO(value) External Interrupt Event Output Enable
+ **/
+static inline uint32_t eic_get_EVCTRL(uint32_t mask)
+{
+    return EIC->EVCTRL.reg & mask;
+}
+
+/**
+ * @brief eic write EVCTRL register
+ *
+ * @param[in] data uint32_t 
+ * - EIC_EVCTRL_EXTINTEO(value) External Interrupt Event Output Enable
+ **/
 static inline void eic_write_EVCTRL(uint32_t data)
 {
 	EIC->EVCTRL.reg = data;
 }
 
 /**
- * @brief clear event control register with mask
- * Enable protected
- * @param[in] uint32_t mask
- * EIC_EVCTRL_EXTINTEO(EICn)  External Interrupt Event Output Enable
- */
+ * @brief eic clear EVCTRL register
+ *
+ * @param[in] mask uint32_t 
+ * - EIC_EVCTRL_EXTINTEO(value) External Interrupt Event Output Enable
+ **/
 static inline void eic_clear_EVCTRL(uint32_t mask)
 {
 	EIC->EVCTRL.reg &= ~mask;
 }
 
 /**
- * @brief read event control register
+ * @brief eic read EVCTRL register
  *
- * @return uint32_t 
- * EIC_EVCTRL_EXTINTEO(EICn)  External Interrupt Event Output Enable
- */
+ * @return uint32_t
+ * - EIC_EVCTRL_EXTINTEO(value) External Interrupt Event Output Enable
+ **/
 static inline uint32_t eic_read_EVCTRL(void)
 {
 	return EIC->EVCTRL.reg;
 }
 
 /**
- * @brief write async/sync control register
- * Enable Protected
- * @param[in] uint32_t data
- * EIC_ASYNCH_ASYNCH(EICn) Asynchronous Edge Detection Mode
- * '1' is edge detection is asynchronously operated.
- * '0' is edge detection is synchronously operated.
- */
+ * @brief eic set ASYNCH register
+ *
+ * @param[in] mask uint32_t 
+ * - EIC_ASYNCH_ASYNCH(value) Asynchronous Edge Detection Mode
+ **/
+static inline void eic_set_ASYNCH(uint32_t mask)
+{
+	EIC->ASYNCH.reg |= mask;
+}
+
+/**
+ * @brief eic get ASYNCH register
+ *
+ * @param[in] mask uint32_t 
+ * @return uint32_t
+ * - EIC_ASYNCH_ASYNCH(value) Asynchronous Edge Detection Mode
+ **/
+static inline uint32_t eic_get_ASYNCH(uint32_t mask)
+{
+    return EIC->ASYNCH.reg & mask;
+}
+
+/**
+ * @brief eic write ASYNCH register
+ *
+ * @param[in] data uint32_t 
+ * - EIC_ASYNCH_ASYNCH(value) Asynchronous Edge Detection Mode
+ **/
 static inline void eic_write_ASYNCH(uint32_t data)
 {
 	EIC->ASYNCH.reg = data;
 }
 
 /**
- * @brief read async/sync control register
+ * @brief eic clear ASYNCH register
+ *
+ * @param[in] mask uint32_t 
+ * - EIC_ASYNCH_ASYNCH(value) Asynchronous Edge Detection Mode
+ **/
+static inline void eic_clear_ASYNCH(uint32_t mask)
+{
+	EIC->ASYNCH.reg &= ~mask;
+}
+
+/**
+ * @brief eic read ASYNCH register
  *
  * @return uint32_t
- * EIC_ASYNCH_ASYNCH(EICn) Asynchronous Edge Detection Mode
- * '1' is edge detection is asynchronously operated.
- * '0' is edge detection is synchronously operated.
- */
+ * - EIC_ASYNCH_ASYNCH(value) Asynchronous Edge Detection Mode
+ **/
 static inline uint32_t eic_read_ASYNCH(void)
 {
 	return EIC->ASYNCH.reg;
@@ -414,16 +556,16 @@ static inline uint32_t eic_read_ASYNCH(void)
 /**
  * @brief set an individual config entry indexed by EICn
  * Enable Protected
- * @param[in] uint8_t index (EICn)
- * @param[in] config for EICn
- * EIC_CONFIG_FILTEN 		Filter Enable
- * EIC_CONFIG_SENSE(value)
- *  EIC_CONFIG_SENSE_NONE   No detection      
- *  EIC_CONFIG_SENSE_RISE   Rising edge detection 
- *  EIC_CONFIG_SENSE_FALL   Falling edge detection
- *  EIC_CONFIG_SENSE_BOTH   Both edges detection
- *  EIC_CONFIG_SENSE_HIGH   High level detection
- *  EIC_CONFIG_SENSE_LOW    Low level detection
+ * @param[in] eicn uint8_t 
+ * @param[in] mask config for EICn
+ * - EIC_CONFIG_FILTEN 		Filter Enable
+ * - EIC_CONFIG_SENSE(value)
+ *  +      EIC_CONFIG_SENSE_NONE   No detection      
+ *  +      EIC_CONFIG_SENSE_RISE   Rising edge detection 
+ *  +      EIC_CONFIG_SENSE_FALL   Falling edge detection
+ *  +      EIC_CONFIG_SENSE_BOTH   Both edges detection
+ *  +      EIC_CONFIG_SENSE_HIGH   High level detection
+ *  +      EIC_CONFIG_SENSE_LOW    Low level detection
  */
 static inline void eic_set_CONFIG(uint8_t eicn, uint8_t mask)
 {
@@ -437,10 +579,16 @@ static inline void eic_set_CONFIG(uint8_t eicn, uint8_t mask)
 /**
  * @brief get an individual config entry indexed by EICn
  *
- * @param[in] uint8_t index (EICn)
- * @param[in] uint8_t mask
- * EIC_CONFIG_SENSE_Msk
- * EIC_CONFIG_FILTEN 		Filter Enable
+ * @param[in] eicn uint8_t 
+ * @param[in] mask uint32_t 
+ * - EIC_CONFIG_SENSE(value) Input Sense Configuration
+ *  +      EIC_CONFIG_SENSE_NONE No detection
+ *  +      EIC_CONFIG_SENSE_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE_LOW Low level detection
+ * - EIC_CONFIG_FILTEN 		Filter Enable
  */
 static inline uint8_t eic_get_CONFIG(uint8_t eicn, uint8_t mask)
 {
@@ -449,210 +597,411 @@ static inline uint8_t eic_get_CONFIG(uint8_t eicn, uint8_t mask)
 	return (uint8_t) ((EIC->CONFIG[index].reg >> pos) & mask);
 }
 
+
+
 /**
- * @brief write config register indexed
- * Enable Protected
- * @param[in] uint8_t index for Config0 and Config1
- * @param[in] uint32_t data
- * EIC_CONFIG_SENSE0	Input Sense Configuration 0 
- * EIC_CONFIG_FILTEN0	Filter Enable 0 
- * EIC_CONFIG_SENSE1	Input Sense Configuration 1 
- * EIC_CONFIG_FILTEN1	Filter Enable 1 
- * EIC_CONFIG_SENSE2	Input Sense Configuration 2 
- * EIC_CONFIG_FILTEN2	Filter Enable 2 
- * EIC_CONFIG_SENSE3	Input Sense Configuration 3 
- * EIC_CONFIG_FILTEN3	Filter Enable 3 
- * EIC_CONFIG_SENSE4	Input Sense Configuration 4 
- * EIC_CONFIG_FILTEN4	Filter Enable 4 
- * EIC_CONFIG_SENSE5	Input Sense Configuration 5 
- * EIC_CONFIG_FILTEN5	Filter Enable 5 
- * EIC_CONFIG_SENSE6	Input Sense Configuration 6 
- * EIC_CONFIG_FILTEN6	Filter Enable 6 
- * EIC_CONFIG_SENSE7	Input Sense Configuration 7 
- * EIC_CONFIG_FILTEN7	Filter Enable 7 
- * Sense Configuration for SENSEn is
- *  EIC_CONFIG_SENSEn_NONE   No detection      
- *  EIC_CONFIG_SENSEn_RISE   Rising edge detection 
- *  EIC_CONFIG_SENSEn_FALL   Falling edge detection
- *  EIC_CONFIG_SENSEn_BOTH   Both edges detection
- *  EIC_CONFIG_SENSEn_HIGH   High level detection
- *  EIC_CONFIG_SENSEn_LOW    Low level detection
- */
+ * @brief eic write CONFIG register
+ *
+ * @param[in] index uint8_t 
+ * @param[in] data uint32_t 
+ * - EIC_CONFIG_SENSE0(value) Input Sense Configuration 0
+ *  +      EIC_CONFIG_SENSE0_NONE No detection
+ *  +      EIC_CONFIG_SENSE0_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE0_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE0_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE0_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE0_LOW Low level detection
+ * - EIC_CONFIG_FILTEN0 Filter Enable 0
+ * - EIC_CONFIG_SENSE1(value) Input Sense Configuration 1
+ *  +      EIC_CONFIG_SENSE1_NONE No detection
+ *  +      EIC_CONFIG_SENSE1_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE1_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE1_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE1_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE1_LOW Low level detection
+ * - EIC_CONFIG_FILTEN1 Filter Enable 1
+ * - EIC_CONFIG_SENSE2(value) Input Sense Configuration 2
+ *  +      EIC_CONFIG_SENSE2_NONE No detection
+ *  +      EIC_CONFIG_SENSE2_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE2_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE2_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE2_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE2_LOW Low level detection
+ * - EIC_CONFIG_FILTEN2 Filter Enable 2
+ * - EIC_CONFIG_SENSE3(value) Input Sense Configuration 3
+ *  +      EIC_CONFIG_SENSE3_NONE No detection
+ *  +      EIC_CONFIG_SENSE3_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE3_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE3_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE3_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE3_LOW Low level detection
+ * - EIC_CONFIG_FILTEN3 Filter Enable 3
+ * - EIC_CONFIG_SENSE4(value) Input Sense Configuration 4
+ *  +      EIC_CONFIG_SENSE4_NONE No detection
+ *  +      EIC_CONFIG_SENSE4_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE4_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE4_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE4_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE4_LOW Low level detection
+ * - EIC_CONFIG_FILTEN4 Filter Enable 4
+ * - EIC_CONFIG_SENSE5(value) Input Sense Configuration 5
+ *  +      EIC_CONFIG_SENSE5_NONE No detection
+ *  +      EIC_CONFIG_SENSE5_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE5_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE5_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE5_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE5_LOW Low level detection
+ * - EIC_CONFIG_FILTEN5 Filter Enable 5
+ * - EIC_CONFIG_SENSE6(value) Input Sense Configuration 6
+ *  +      EIC_CONFIG_SENSE6_NONE No detection
+ *  +      EIC_CONFIG_SENSE6_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE6_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE6_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE6_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE6_LOW Low level detection
+ * - EIC_CONFIG_FILTEN6 Filter Enable 6
+ * - EIC_CONFIG_SENSE7(value) Input Sense Configuration 7
+ *  +      EIC_CONFIG_SENSE7_NONE No detection
+ *  +      EIC_CONFIG_SENSE7_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE7_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE7_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE7_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE7_LOW Low level detection
+ * - EIC_CONFIG_FILTEN7 Filter Enable 7
+ **/
 static inline void eic_write_CONFIG(uint8_t index, uint32_t data)
 {
 	EIC->CONFIG[index].reg = data;
 }
 
 /**
- * @brief read config register indexed
- * Enable Protected
- * @param[in] uint8_t index for Config0 and Config1
- * @param[in] uint32_t data
- * EIC_CONFIG_SENSE0	Input Sense Configuration 0 
- * EIC_CONFIG_FILTEN0	Filter Enable 0 
- * EIC_CONFIG_SENSE1	Input Sense Configuration 1 
- * EIC_CONFIG_FILTEN1	Filter Enable 1 
- * EIC_CONFIG_SENSE2	Input Sense Configuration 2 
- * EIC_CONFIG_FILTEN2	Filter Enable 2 
- * EIC_CONFIG_SENSE3	Input Sense Configuration 3 
- * EIC_CONFIG_FILTEN3	Filter Enable 3 
- * EIC_CONFIG_SENSE4	Input Sense Configuration 4 
- * EIC_CONFIG_FILTEN4	Filter Enable 4 
- * EIC_CONFIG_SENSE5	Input Sense Configuration 5 
- * EIC_CONFIG_FILTEN5	Filter Enable 5 
- * EIC_CONFIG_SENSE6	Input Sense Configuration 6 
- * EIC_CONFIG_FILTEN6	Filter Enable 6 
- * EIC_CONFIG_SENSE7	Input Sense Configuration 7 
- * EIC_CONFIG_FILTEN7	Filter Enable 7 
- * Sense Configuration for SENSEn is
- *  EIC_CONFIG_SENSEn_NONE   No detection      
- *  EIC_CONFIG_SENSEn_RISE   Rising edge detection 
- *  EIC_CONFIG_SENSEn_FALL   Falling edge detection
- *  EIC_CONFIG_SENSEn_BOTH   Both edges detection
- *  EIC_CONFIG_SENSEn_HIGH   High level detection
- *  EIC_CONFIG_SENSEn_LOW    Low level detection
- */
- 
+ * @brief eic clear CONFIG register
+ *
+ * @param[in] index uint8_t 
+ * @param[in] mask uint32_t 
+ * - EIC_CONFIG_SENSE0(value) Input Sense Configuration 0
+ *  +      EIC_CONFIG_SENSE0_NONE No detection
+ *  +      EIC_CONFIG_SENSE0_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE0_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE0_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE0_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE0_LOW Low level detection
+ * - EIC_CONFIG_FILTEN0 Filter Enable 0
+ * - EIC_CONFIG_SENSE1(value) Input Sense Configuration 1
+ *  +      EIC_CONFIG_SENSE1_NONE No detection
+ *  +      EIC_CONFIG_SENSE1_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE1_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE1_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE1_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE1_LOW Low level detection
+ * - EIC_CONFIG_FILTEN1 Filter Enable 1
+ * - EIC_CONFIG_SENSE2(value) Input Sense Configuration 2
+ *  +      EIC_CONFIG_SENSE2_NONE No detection
+ *  +      EIC_CONFIG_SENSE2_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE2_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE2_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE2_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE2_LOW Low level detection
+ * - EIC_CONFIG_FILTEN2 Filter Enable 2
+ * - EIC_CONFIG_SENSE3(value) Input Sense Configuration 3
+ *  +      EIC_CONFIG_SENSE3_NONE No detection
+ *  +      EIC_CONFIG_SENSE3_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE3_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE3_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE3_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE3_LOW Low level detection
+ * - EIC_CONFIG_FILTEN3 Filter Enable 3
+ * - EIC_CONFIG_SENSE4(value) Input Sense Configuration 4
+ *  +      EIC_CONFIG_SENSE4_NONE No detection
+ *  +      EIC_CONFIG_SENSE4_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE4_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE4_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE4_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE4_LOW Low level detection
+ * - EIC_CONFIG_FILTEN4 Filter Enable 4
+ * - EIC_CONFIG_SENSE5(value) Input Sense Configuration 5
+ *  +      EIC_CONFIG_SENSE5_NONE No detection
+ *  +      EIC_CONFIG_SENSE5_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE5_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE5_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE5_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE5_LOW Low level detection
+ * - EIC_CONFIG_FILTEN5 Filter Enable 5
+ * - EIC_CONFIG_SENSE6(value) Input Sense Configuration 6
+ *  +      EIC_CONFIG_SENSE6_NONE No detection
+ *  +      EIC_CONFIG_SENSE6_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE6_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE6_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE6_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE6_LOW Low level detection
+ * - EIC_CONFIG_FILTEN6 Filter Enable 6
+ * - EIC_CONFIG_SENSE7(value) Input Sense Configuration 7
+ *  +      EIC_CONFIG_SENSE7_NONE No detection
+ *  +      EIC_CONFIG_SENSE7_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE7_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE7_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE7_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE7_LOW Low level detection
+ * - EIC_CONFIG_FILTEN7 Filter Enable 7
+ **/
+static inline void eic_clear_CONFIG(uint8_t index, uint32_t mask)
+{
+	EIC->CONFIG[index].reg &= ~mask;
+}
+
+/**
+ * @brief eic read CONFIG register
+ *
+ * @param[in] index uint8_t 
+ * @return uint32_t
+ * - EIC_CONFIG_SENSE0(value) Input Sense Configuration 0
+ *  +      EIC_CONFIG_SENSE0_NONE No detection
+ *  +      EIC_CONFIG_SENSE0_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE0_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE0_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE0_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE0_LOW Low level detection
+ * - EIC_CONFIG_FILTEN0 Filter Enable 0
+ * - EIC_CONFIG_SENSE1(value) Input Sense Configuration 1
+ *  +      EIC_CONFIG_SENSE1_NONE No detection
+ *  +      EIC_CONFIG_SENSE1_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE1_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE1_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE1_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE1_LOW Low level detection
+ * - EIC_CONFIG_FILTEN1 Filter Enable 1
+ * - EIC_CONFIG_SENSE2(value) Input Sense Configuration 2
+ *  +      EIC_CONFIG_SENSE2_NONE No detection
+ *  +      EIC_CONFIG_SENSE2_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE2_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE2_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE2_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE2_LOW Low level detection
+ * - EIC_CONFIG_FILTEN2 Filter Enable 2
+ * - EIC_CONFIG_SENSE3(value) Input Sense Configuration 3
+ *  +      EIC_CONFIG_SENSE3_NONE No detection
+ *  +      EIC_CONFIG_SENSE3_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE3_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE3_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE3_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE3_LOW Low level detection
+ * - EIC_CONFIG_FILTEN3 Filter Enable 3
+ * - EIC_CONFIG_SENSE4(value) Input Sense Configuration 4
+ *  +      EIC_CONFIG_SENSE4_NONE No detection
+ *  +      EIC_CONFIG_SENSE4_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE4_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE4_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE4_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE4_LOW Low level detection
+ * - EIC_CONFIG_FILTEN4 Filter Enable 4
+ * - EIC_CONFIG_SENSE5(value) Input Sense Configuration 5
+ *  +      EIC_CONFIG_SENSE5_NONE No detection
+ *  +      EIC_CONFIG_SENSE5_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE5_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE5_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE5_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE5_LOW Low level detection
+ * - EIC_CONFIG_FILTEN5 Filter Enable 5
+ * - EIC_CONFIG_SENSE6(value) Input Sense Configuration 6
+ *  +      EIC_CONFIG_SENSE6_NONE No detection
+ *  +      EIC_CONFIG_SENSE6_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE6_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE6_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE6_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE6_LOW Low level detection
+ * - EIC_CONFIG_FILTEN6 Filter Enable 6
+ * - EIC_CONFIG_SENSE7(value) Input Sense Configuration 7
+ *  +      EIC_CONFIG_SENSE7_NONE No detection
+ *  +      EIC_CONFIG_SENSE7_RISE Rising edge detection
+ *  +      EIC_CONFIG_SENSE7_FALL Falling edge detection
+ *  +      EIC_CONFIG_SENSE7_BOTH Both edges detection
+ *  +      EIC_CONFIG_SENSE7_HIGH High level detection
+ *  +      EIC_CONFIG_SENSE7_LOW Low level detection
+ * - EIC_CONFIG_FILTEN7 Filter Enable 7
+ **/
 static inline uint32_t eic_read_CONFIG(uint8_t index)
 {
 	return EIC->CONFIG[index].reg;
 }
 
 /**
- * @brief set Debounce Enable
- * Enable Protected
- * @param[in] uint32_t mask (1 << EICn) '1'=enables debounce, '0'=do nothing
- */
+ * @brief eic set DEBOUNCEN register
+ *
+ * @param[in] mask uint32_t 
+ * - EIC_DEBOUNCEN_DEBOUNCEN(value) Debouncer Enable
+ **/
 static inline void eic_set_DEBOUNCEN(uint32_t mask)
 {
 	EIC->DEBOUNCEN.reg |= mask;
 }
 
 /**
- * @brief write Debounce Enable Register
+ * @brief eic get DEBOUNCEN register
  *
- * @param[in] uint32_t
- * EIC_DEBOUNCEN_DEBOUNCEN(EICn) Debouncer Enable
- */
+ * @param[in] mask uint32_t 
+ * @return uint32_t
+ * - EIC_DEBOUNCEN_DEBOUNCEN(value) Debouncer Enable
+ **/
+static inline uint32_t eic_get_DEBOUNCEN(uint32_t mask)
+{
+    return EIC->DEBOUNCEN.reg & mask;
+}
+
+/**
+ * @brief eic write DEBOUNCEN register
+ *
+ * @param[in] data uint32_t 
+ * - EIC_DEBOUNCEN_DEBOUNCEN(value) Debouncer Enable
+ **/
 static inline void eic_write_DEBOUNCEN(uint32_t data)
 {
 	EIC->DEBOUNCEN.reg = data;
 }
+
 /**
- * @brief clear Debounce Enable Register bits
+ * @brief eic clear DEBOUNCEN register
  *
- * @param[in] uint32_t mask (1 << EICn) '1'=disable debounce, '0'=do nothing
- * @param[in]
- * @return
- */
+ * @param[in] mask uint32_t 
+ * - EIC_DEBOUNCEN_DEBOUNCEN(value) Debouncer Enable
+ **/
 static inline void eic_clear_DEBOUNCEN(uint32_t mask)
 {
 	EIC->DEBOUNCEN.reg &= ~mask;
 }
 
 /**
- * @brief clear Control A Register bits
- *
- * @param[in] uint8_t mask
- * EIC_CTRLA_SWRST	Software Reset 
- * EIC_CTRLA_ENABLE	Enable 
- * EIC_CTRLA_CKSEL	Clock Selection 
- * @return
- */
-static inline void eic_clear_CTRLA(uint32_t mask)
-{
-	EIC->CTRLA.reg &= ~mask;
-}
-
-/**
- * @brief read Debounce Enable Register
+ * @brief eic read DEBOUNCEN register
  *
  * @return uint32_t
- * EIC_DEBOUNCEN_DEBOUNCEN(EICn) Debouncer Enable
- */
+ * - EIC_DEBOUNCEN_DEBOUNCEN(value) Debouncer Enable
+ **/
 static inline uint32_t eic_read_DEBOUNCEN(void)
 {
 	return EIC->DEBOUNCEN.reg;
 }
 
 /**
- * @brief write Debounce Prescaler Register
- * Enable Protected
- * @param[in] uint32_t data
- * EIC_DPRESCALER_PRESCALER0(value)	Debouncer Prescaler for EIC0-EIC7
- * EIC_DPRESCALER_STATES0		Debouncer number of states '1'=7 samples,'0'=3 samples
- * EIC_DPRESCALER_PRESCALER1(value)	Debouncer Prescaler for EIC8-EIC15
- * EIC_DPRESCALER_STATES1		Debouncer number of states '1'=7 samples,'0'=3 samples
- * EIC_DPRESCALER_TICKON		Pin Sampler frequency selection '1'=low freq, '0'=GCLK
- * Prescaler
- * 0x0 = clock/2
- * 0x1 = clock/4
- * 0x2 = clock/8
- * 0x3 = clock/16
- * 0x4 = clock/32
- * 0x5 = clock/64
- * 0x6 = clock/128
- * 0x7 = clock/256
- */
+ * @brief eic set DPRESCALER register
+ *
+ * @param[in] mask uint32_t 
+ * - EIC_DPRESCALER_PRESCALER0(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES0 Debouncer number of states
+ * - EIC_DPRESCALER_PRESCALER1(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES1 Debouncer number of states
+ * - EIC_DPRESCALER_TICKON Pin Sampler frequency selection
+ **/
+static inline void eic_set_DPRESCALER(uint32_t mask)
+{
+	EIC->DPRESCALER.reg |= mask;
+}
+
+/**
+ * @brief eic get DPRESCALER register
+ *
+ * @param[in] mask uint32_t 
+ * @return uint32_t
+ * - EIC_DPRESCALER_PRESCALER0(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES0 Debouncer number of states
+ * - EIC_DPRESCALER_PRESCALER1(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES1 Debouncer number of states
+ * - EIC_DPRESCALER_TICKON Pin Sampler frequency selection
+ **/
+static inline uint32_t eic_get_DPRESCALER(uint32_t mask)
+{
+    return EIC->DPRESCALER.reg & mask;
+}
+
+/**
+ * @brief eic write DPRESCALER register
+ *
+ * @param[in] data uint32_t 
+ * - EIC_DPRESCALER_PRESCALER0(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES0 Debouncer number of states
+ * - EIC_DPRESCALER_PRESCALER1(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES1 Debouncer number of states
+ * - EIC_DPRESCALER_TICKON Pin Sampler frequency selection
+ **/
 static inline void eic_write_DPRESCALER(uint32_t data)
 {
 	EIC->DPRESCALER.reg = data;
 }
 
 /**
- * @brief read Debounce Prescaler Register
+ * @brief eic clear DPRESCALER register
  *
- * @return uint32_t data
- * EIC_DPRESCALER_PRESCALER0(value)	Debouncer Prescaler for EIC0-EIC7
- * EIC_DPRESCALER_STATES0		Debouncer number of states '1'=7 samples,'0'=3 samples
- * EIC_DPRESCALER_PRESCALER1(value)	Debouncer Prescaler for EIC8-EIC15
- * EIC_DPRESCALER_STATES1		Debouncer number of states '1'=7 samples,'0'=3 samples
- * EIC_DPRESCALER_TICKON		Pin Sampler frequency selection '1'=low freq, '0'=GCLK
- * Prescaler
- * 0x0 = clock/2
- * 0x1 = clock/4
- * 0x2 = clock/8
- * 0x3 = clock/16
- * 0x4 = clock/32
- * 0x5 = clock/64
- * 0x6 = clock/128
- * 0x7 = clock/256
- */
+ * @param[in] mask uint32_t 
+ * - EIC_DPRESCALER_PRESCALER0(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES0 Debouncer number of states
+ * - EIC_DPRESCALER_PRESCALER1(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES1 Debouncer number of states
+ * - EIC_DPRESCALER_TICKON Pin Sampler frequency selection
+ **/
+static inline void eic_clear_DPRESCALER(uint32_t mask)
+{
+	EIC->DPRESCALER.reg &= ~mask;
+}
+
+/**
+ * @brief eic read DPRESCALER register
+ *
+ * @return uint32_t
+ * - EIC_DPRESCALER_PRESCALER0(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES0 Debouncer number of states
+ * - EIC_DPRESCALER_PRESCALER1(value) Debouncer Prescaler
+ * - EIC_DPRESCALER_STATES1 Debouncer number of states
+ * - EIC_DPRESCALER_TICKON Pin Sampler frequency selection
+ **/
 static inline uint32_t eic_read_DPRESCALER(void)
 {
 	return EIC->DPRESCALER.reg;
 }
 
 /**
- * @brief read Sync Busy Register
+ * @brief eic get SYNCBUSY register
+ *
+ * @param[in] mask uint32_t 
+ * @return uint32_t
+ * - EIC_SYNCBUSY_SWRST Software Reset Synchronization Busy Status
+ * - EIC_SYNCBUSY_ENABLE Enable Synchronization Busy Status
+ **/
+static inline uint32_t eic_get_SYNCBUSY(uint32_t mask)
+{
+    return EIC->SYNCBUSY.reg & mask;
+}
+
+/**
+ * @brief eic read SYNCBUSY register
  *
  * @return uint32_t
- * EIC_SYNCBUSY_SWRST	Software Reset Synchronization Busy Status 
- * EIC_SYNCBUSY_ENABLE	Enable Synchronization Busy Status 
- */
+ * - EIC_SYNCBUSY_SWRST Software Reset Synchronization Busy Status
+ * - EIC_SYNCBUSY_ENABLE Enable Synchronization Busy Status
+ **/
 static inline uint32_t eic_read_SYNCBUSY(void)
 {
 	return EIC->SYNCBUSY.reg;
 }
 
 /**
- * @brief get Pinstate Register masked
+ * @brief eic get PINSTATE register
  *
- * @return uint32_t (1 << EICn)
- */
-
+ * @param[in] mask uint32_t 
+ * @return uint32_t
+ * - EIC_PINSTATE_PINSTATE(value) Pin State
+ **/
 static inline uint32_t eic_get_PINSTATE(uint32_t mask)
 {
-	return EIC->PINSTATE.reg & mask;
+    return EIC->PINSTATE.reg & mask;
 }
+
 /**
- * @brief read Pinstate Register 
+ * @brief eic read PINSTATE register
  *
- * @return uint32_t (1 << EICn)
- */
+ * @return uint32_t
+ * - EIC_PINSTATE_PINSTATE(value) Pin State
+ **/
 static inline uint32_t eic_read_PINSTATE(void)
 {
 	return EIC->PINSTATE.reg;
 }
 
-#endif /* _EIC_H_ */
+#endif /* _EIC_H */

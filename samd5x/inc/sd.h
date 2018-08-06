@@ -97,31 +97,31 @@ typedef struct {
 /**
  * @brief
  *
- * @param[in] sdhc_state_t *state
- * @return int return error code
+ * @param[in] state - sdhc_state_t *
+ * @return return error code
  */
 int sdhc_init(sdhc_state_t *state);
 
 /**
  * @brief
  *
- * @param[in] uint32_t cmd
- * @param[in] uint32_t arg
- * @return bool true if success, false if failed 
+ * @param[in] cmd - uint32_t 
+ * @param[in] arg - uint32_t 
+ * @return true if success, false if failed 
  */
 bool sdhc_send_cmd(uint32_t cmd, uint32_t arg);
 
 /**
  * @brief
  *
- * @param[in] uint32_t fsdhc
+ * @param[in] fsdhc - uint32_t 
  */
 void sdhc_set_speed(uint32_t fsdhc);
 
 /**
  * @brief
  *
- * @param[in] sdhc_state_t *state
+ * @param[in] state - sdhc_state_t *
  */
 void sdhc_set_hc(sdhc_state_t *state);
 
@@ -129,11 +129,10 @@ void sdhc_set_hc(sdhc_state_t *state);
  * @brief sdhc_read_blocks
  * read 512 byte blocks for block_count blocks from SD/MMC card with address
  * to filebuffer pointed to by dst
- * @param[in] sdhc_state_t *state
- * @param[in] uint32_t address
- * @param[in] uint8_t *dst
- * @param[in] uint16_t block_count
- * @return bool true if success, false if failed 
+ * @param[in] state - sdhc_state_t *
+ * @param[in] address - uint32_t 
+ * @param[in] dst - uint8_t *
+ * @return true if success, false if failed 
  */
 int sdhc_read_block(sdhc_state_t *state, uint32_t address, uint8_t *dst);
 
@@ -141,11 +140,10 @@ int sdhc_read_block(sdhc_state_t *state, uint32_t address, uint8_t *dst);
  * @brief sdhc_write_blocks 
  * writes a 512 byte block file buffer pointed to by src to SD/MMC card with address
  * for block_count blocks
- * @param[in] sdhc_state_t *state
- * @param[in] uint32_t address disc byte (or sector) address
- * @param[in] uint8_t *src pointer to memory to write
- * @param[in] uint16_t block_count
- * @return bool true if success, false if failed 
+ * @param[in] state - sdhc_state_t *
+ * @param[in] address - uint32_t  disc byte (or sector) address
+ * @param[in] src - uint8_t * pointer to memory to write
+ * @return true if success, false if failed 
  */
 int sdhc_write_block(sdhc_state_t *state, uint32_t address, uint8_t *src);
 
@@ -156,8 +154,8 @@ void sdhc_print_cardstate(sdhc_state_t *state);
 /**
  * @brief
  *
- * @param[in] sdhc_state_t *state
- * @return bool true if success, false if failed 
+ * @param[in] state - sdhc_state_t *
+ * @return true if success, false if failed 
  */
 bool sdhc_test_card_detect(sdhc_state_t *state);
 

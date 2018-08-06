@@ -43,10 +43,10 @@
 /**
  * @brief ramecc set INTEN register
  *
- * @param[in] uint8_t mask
- * RAMECC_INTENSET_SINGLEE  Single Bit ECC Error Interrupt Enable Set 
- * RAMECC_INTENSET_DUALE  Dual Bit ECC Error Interrupt Enable Set 
- */
+ * @param[in] mask uint8_t 
+ * - RAMECC_INTENSET_SINGLEE Single Bit ECC Error Interrupt Enable Set
+ * - RAMECC_INTENSET_DUALE Dual Bit ECC Error Interrupt Enable Set
+ **/
 static inline void ramecc_set_INTEN(uint8_t mask)
 {
 	RAMECC->INTENSET.reg = mask;
@@ -55,11 +55,11 @@ static inline void ramecc_set_INTEN(uint8_t mask)
 /**
  * @brief ramecc get INTEN register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * RAMECC_INTENSET_SINGLEE  Single Bit ECC Error Interrupt Enable Set 
- * RAMECC_INTENSET_DUALE  Dual Bit ECC Error Interrupt Enable Set 
- */
+ * - RAMECC_INTENSET_SINGLEE Single Bit ECC Error Interrupt Enable Set
+ * - RAMECC_INTENSET_DUALE Dual Bit ECC Error Interrupt Enable Set
+ **/
 static inline uint8_t ramecc_get_INTEN(uint8_t mask)
 {
     return RAMECC->INTENSET.reg & mask;
@@ -68,11 +68,10 @@ static inline uint8_t ramecc_get_INTEN(uint8_t mask)
 /**
  * @brief ramecc read INTEN register
  *
- * @param[in] void
  * @return uint8_t
- * RAMECC_INTENSET_SINGLEE  Single Bit ECC Error Interrupt Enable Set 
- * RAMECC_INTENSET_DUALE  Dual Bit ECC Error Interrupt Enable Set 
- */
+ * - RAMECC_INTENSET_SINGLEE Single Bit ECC Error Interrupt Enable Set
+ * - RAMECC_INTENSET_DUALE Dual Bit ECC Error Interrupt Enable Set
+ **/
 static inline uint8_t ramecc_read_INTEN(void)
 {
 	return RAMECC->INTENSET.reg;
@@ -81,10 +80,10 @@ static inline uint8_t ramecc_read_INTEN(void)
 /**
  * @brief ramecc write INTEN register
  *
- * @param[in] uint8_t data
- * RAMECC_INTENSET_SINGLEE  Single Bit ECC Error Interrupt Enable Set 
- * RAMECC_INTENSET_DUALE  Dual Bit ECC Error Interrupt Enable Set 
- */
+ * @param[in] data uint8_t 
+ * - RAMECC_INTENSET_SINGLEE Single Bit ECC Error Interrupt Enable Set
+ * - RAMECC_INTENSET_DUALE Dual Bit ECC Error Interrupt Enable Set
+ **/
 static inline void ramecc_write_INTEN(uint8_t data)
 {
 	RAMECC->INTENSET.reg = data;
@@ -94,10 +93,10 @@ static inline void ramecc_write_INTEN(uint8_t data)
 /**
  * @brief ramecc clear INTEN register
  *
- * @param[in] uint8_t mask
- * RAMECC_INTENSET_SINGLEE  Single Bit ECC Error Interrupt Enable Set 
- * RAMECC_INTENSET_DUALE  Dual Bit ECC Error Interrupt Enable Set 
- */
+ * @param[in] mask uint8_t 
+ * - RAMECC_INTENSET_SINGLEE Single Bit ECC Error Interrupt Enable Set
+ * - RAMECC_INTENSET_DUALE Dual Bit ECC Error Interrupt Enable Set
+ **/
 static inline void ramecc_clear_INTEN(uint8_t mask)
 {
 	RAMECC->INTENCLR.reg = mask;
@@ -106,11 +105,11 @@ static inline void ramecc_clear_INTEN(uint8_t mask)
 /**
  * @brief ramecc get INTFLAG register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * RAMECC_INTFLAG_SINGLEE  Single Bit ECC Error Interrupt 
- * RAMECC_INTFLAG_DUALE  Dual Bit ECC Error Interrupt 
- */
+ * - RAMECC_INTFLAG_SINGLEE Single Bit ECC Error Interrupt
+ * - RAMECC_INTFLAG_DUALE Dual Bit ECC Error Interrupt
+ **/
 static inline uint8_t ramecc_get_INTFLAG(uint8_t mask)
 {
     return RAMECC->INTFLAG.reg & mask;
@@ -119,11 +118,10 @@ static inline uint8_t ramecc_get_INTFLAG(uint8_t mask)
 /**
  * @brief ramecc read INTFLAG register
  *
- * @param[in] void
  * @return uint8_t
- * RAMECC_INTFLAG_SINGLEE  Single Bit ECC Error Interrupt 
- * RAMECC_INTFLAG_DUALE  Dual Bit ECC Error Interrupt 
- */
+ * - RAMECC_INTFLAG_SINGLEE Single Bit ECC Error Interrupt
+ * - RAMECC_INTFLAG_DUALE Dual Bit ECC Error Interrupt
+ **/
 static inline uint8_t ramecc_read_INTFLAG(void)
 {
 	return RAMECC->INTFLAG.reg;
@@ -132,10 +130,10 @@ static inline uint8_t ramecc_read_INTFLAG(void)
 /**
  * @brief ramecc clear INTFLAG register
  *
- * @param[in] uint8_t mask
- * RAMECC_INTFLAG_SINGLEE  Single Bit ECC Error Interrupt 
- * RAMECC_INTFLAG_DUALE  Dual Bit ECC Error Interrupt 
- */
+ * @param[in] mask uint8_t 
+ * - RAMECC_INTFLAG_SINGLEE Single Bit ECC Error Interrupt
+ * - RAMECC_INTFLAG_DUALE Dual Bit ECC Error Interrupt
+ **/
 static inline void ramecc_clear_INTFLAG(uint8_t mask)
 {
 	RAMECC->INTFLAG.reg = mask;
@@ -144,10 +142,10 @@ static inline void ramecc_clear_INTFLAG(uint8_t mask)
 /**
  * @brief ramecc set DBGCTRL register
  *
- * @param[in] uint8_t mask
- * RAMECC_DBGCTRL_ECCDIS  ECC Disable 
- * RAMECC_DBGCTRL_ECCELOG  ECC Error Log 
- */
+ * @param[in] mask uint8_t 
+ * - RAMECC_DBGCTRL_ECCDIS ECC Disable
+ * - RAMECC_DBGCTRL_ECCELOG ECC Error Log
+ **/
 static inline void ramecc_set_DBGCTRL(uint8_t mask)
 {
 	RAMECC->DBGCTRL.reg |= mask;
@@ -156,11 +154,11 @@ static inline void ramecc_set_DBGCTRL(uint8_t mask)
 /**
  * @brief ramecc get DBGCTRL register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * RAMECC_DBGCTRL_ECCDIS  ECC Disable 
- * RAMECC_DBGCTRL_ECCELOG  ECC Error Log 
- */
+ * - RAMECC_DBGCTRL_ECCDIS ECC Disable
+ * - RAMECC_DBGCTRL_ECCELOG ECC Error Log
+ **/
 static inline uint8_t ramecc_get_DBGCTRL(uint8_t mask)
 {
     return RAMECC->DBGCTRL.reg & mask;
@@ -169,10 +167,10 @@ static inline uint8_t ramecc_get_DBGCTRL(uint8_t mask)
 /**
  * @brief ramecc write DBGCTRL register
  *
- * @param[in] uint8_t data
- * RAMECC_DBGCTRL_ECCDIS  ECC Disable 
- * RAMECC_DBGCTRL_ECCELOG  ECC Error Log 
- */
+ * @param[in] data uint8_t 
+ * - RAMECC_DBGCTRL_ECCDIS ECC Disable
+ * - RAMECC_DBGCTRL_ECCELOG ECC Error Log
+ **/
 static inline void ramecc_write_DBGCTRL(uint8_t data)
 {
 	RAMECC->DBGCTRL.reg = data;
@@ -181,10 +179,10 @@ static inline void ramecc_write_DBGCTRL(uint8_t data)
 /**
  * @brief ramecc clear DBGCTRL register
  *
- * @param[in] uint8_t mask
- * RAMECC_DBGCTRL_ECCDIS  ECC Disable 
- * RAMECC_DBGCTRL_ECCELOG  ECC Error Log 
- */
+ * @param[in] mask uint8_t 
+ * - RAMECC_DBGCTRL_ECCDIS ECC Disable
+ * - RAMECC_DBGCTRL_ECCELOG ECC Error Log
+ **/
 static inline void ramecc_clear_DBGCTRL(uint8_t mask)
 {
 	RAMECC->DBGCTRL.reg &= ~mask;
@@ -193,11 +191,10 @@ static inline void ramecc_clear_DBGCTRL(uint8_t mask)
 /**
  * @brief ramecc read DBGCTRL register
  *
- * @param[in] void
  * @return uint8_t
- * RAMECC_DBGCTRL_ECCDIS  ECC Disable 
- * RAMECC_DBGCTRL_ECCELOG  ECC Error Log 
- */
+ * - RAMECC_DBGCTRL_ECCDIS ECC Disable
+ * - RAMECC_DBGCTRL_ECCELOG ECC Error Log
+ **/
 static inline uint8_t ramecc_read_DBGCTRL(void)
 {
 	return RAMECC->DBGCTRL.reg;
@@ -206,10 +203,10 @@ static inline uint8_t ramecc_read_DBGCTRL(void)
 /**
  * @brief ramecc get STATUS register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * RAMECC_STATUS_ECCDIS  ECC Disable 
- */
+ * - RAMECC_STATUS_ECCDIS ECC Disable
+ **/
 static inline uint8_t ramecc_get_STATUS(uint8_t mask)
 {
     return RAMECC->STATUS.reg & mask;
@@ -218,10 +215,9 @@ static inline uint8_t ramecc_get_STATUS(uint8_t mask)
 /**
  * @brief ramecc read STATUS register
  *
- * @param[in] void
  * @return uint8_t
- * RAMECC_STATUS_ECCDIS  ECC Disable 
- */
+ * - RAMECC_STATUS_ECCDIS ECC Disable
+ **/
 static inline uint8_t ramecc_read_STATUS(void)
 {
 	return RAMECC->STATUS.reg;
@@ -230,10 +226,10 @@ static inline uint8_t ramecc_read_STATUS(void)
 /**
  * @brief ramecc get ERRADDR register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * RAMECC_ERRADDR_ERRADDR(value)  Error Address 
- */
+ * - RAMECC_ERRADDR_ERRADDR(value) Error Address
+ **/
 static inline uint32_t ramecc_get_ERRADDR(uint32_t mask)
 {
     return RAMECC->ERRADDR.reg & mask;
@@ -242,10 +238,9 @@ static inline uint32_t ramecc_get_ERRADDR(uint32_t mask)
 /**
  * @brief ramecc read ERRADDR register
  *
- * @param[in] void
  * @return uint32_t
- * RAMECC_ERRADDR_ERRADDR(value)  Error Address 
- */
+ * - RAMECC_ERRADDR_ERRADDR(value) Error Address
+ **/
 static inline uint32_t ramecc_read_ERRADDR(void)
 {
 	return RAMECC->ERRADDR.reg;

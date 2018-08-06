@@ -35,16 +35,16 @@
 #include "sam.h"
 
 __attribute__((__aligned__(16))) 
-DmacDescriptor base_dma_descriptor[DMAC_BASE_COUNT] = {0};
+DmacDescriptor_t base_dma_descriptor[DMAC_BASE_COUNT] = {0};
 __attribute__((__aligned__(16)))
-DmacDescriptor base_dma_write_back[DMAC_BASE_COUNT] = {0};
+DmacDescriptor_t base_dma_write_back[DMAC_BASE_COUNT] = {0};
 
-DmacDescriptor *get_base_DMA_descriptor(uint8_t channel)
+DmacDescriptor_t *get_base_DMA_descriptor(uint8_t channel)
 {
 	return &base_dma_descriptor[channel];
 }
 
-DmacDescriptor *get_base_DMA_writeback_descriptor(uint8_t channel)
+DmacDescriptor_t *get_base_DMA_writeback_descriptor(uint8_t channel)
 {
 	return &base_dma_write_back[channel];
 }
@@ -56,16 +56,16 @@ DmacDescriptor *get_base_DMA_writeback_descriptor(uint8_t channel)
  * ep is provided to stop printing a circular list
  */
 
-void print_descriptor(DmacDescriptor *p, DmacDescriptor *ep)
+void print_descriptor(DmacDescriptor_t *p, DmacDescriptor_t *ep)
 {
-    DmacDescriptor *next;
+    DmacDescriptor_t *next;
     int i = 1;
     const char *beat[] = {"Byte", "Halfword", "Word", "Invalid"};
     const char *blockact[] = {"NOACT", "INT", "SUSPEND", "BOTH"};
     const char *evosel[] = {"Disable", "Block", "Invalid", "Beat"};
     unsigned int btctrl;
     do {
-        next = (DmacDescriptor *) p->DESCADDR.reg;
+        next = (DmacDescriptor_t *) p->DESCADDR.reg;
         printf("Descriptor #%d\r\n", i++);
     	printf(" SRC %08X\r\n", (unsigned int) p->SRCADDR.reg);
     	printf(" DST %08X\r\n",  (unsigned int) p->DSTADDR.reg);

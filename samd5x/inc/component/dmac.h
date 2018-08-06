@@ -1402,7 +1402,7 @@ typedef struct {
   __IO DMAC_SRCADDR_Type         SRCADDR;     /**< \brief Offset: 0x04 (R/W 32) Block Transfer Source Address */
   __IO DMAC_DSTADDR_Type         DSTADDR;     /**< \brief Offset: 0x08 (R/W 32) Block Transfer Destination Address */
   __IO DMAC_DESCADDR_Type        DESCADDR;    /**< \brief Offset: 0x0C (R/W 32) Next Descriptor Address */
-} DmacDescriptor
+} DmacDescriptor_t
 #ifdef __GNUC__
   __attribute__ ((aligned (8)))
 #endif

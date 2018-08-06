@@ -1,4 +1,21 @@
-### script issue
+### Building SAMD51 Documentation
+
+The SAMD51 low level drivers has doxygen tags and I've included a basic config file, samd5xdocs` to build documentation.
+Atmel has some doxygen tags and you can expand the documentation to include those by change the line in samd5xdocs:
+
+`INPUT   =..\..\samd5x\inc`
+
+to 
+
+`INPUT   =..\..\samd5x\inc ..\..\samd5x\inc\component ..\..\samd5x\inc\instance`
+
+Run 
+
+`doxygen samd5xdocs` 
+
+documentation should be in ./samd5x/html. 
+
+### auto CRLF
 The scripts are written for unix end of line to be linefeed and will malfunction if converted to crlf.
 When installing git on a Windows it will give an option to enable automatic conversion cr or lf to crlf.
 This will come back and byte you. 

@@ -43,17 +43,17 @@
 /**
  * @brief rstc get RCAUSE register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * RSTC_RCAUSE_POR  Power On Reset 
- * RSTC_RCAUSE_BODCORE  Brown Out CORE Detector Reset 
- * RSTC_RCAUSE_BODVDD  Brown Out VDD Detector Reset 
- * RSTC_RCAUSE_NVM  NVM Reset 
- * RSTC_RCAUSE_EXT  External Reset 
- * RSTC_RCAUSE_WDT  Watchdog Reset 
- * RSTC_RCAUSE_SYST  System Reset Request 
- * RSTC_RCAUSE_BACKUP  Backup Reset 
- */
+ * - RSTC_RCAUSE_POR Power On Reset
+ * - RSTC_RCAUSE_BODCORE Brown Out CORE Detector Reset
+ * - RSTC_RCAUSE_BODVDD Brown Out VDD Detector Reset
+ * - RSTC_RCAUSE_NVM NVM Reset
+ * - RSTC_RCAUSE_EXT External Reset
+ * - RSTC_RCAUSE_WDT Watchdog Reset
+ * - RSTC_RCAUSE_SYST System Reset Request
+ * - RSTC_RCAUSE_BACKUP Backup Reset
+ **/
 static inline uint8_t rstc_get_RCAUSE(uint8_t mask)
 {
     return RSTC->RCAUSE.reg & mask;
@@ -62,17 +62,16 @@ static inline uint8_t rstc_get_RCAUSE(uint8_t mask)
 /**
  * @brief rstc read RCAUSE register
  *
- * @param[in] void
  * @return uint8_t
- * RSTC_RCAUSE_POR  Power On Reset 
- * RSTC_RCAUSE_BODCORE  Brown Out CORE Detector Reset 
- * RSTC_RCAUSE_BODVDD  Brown Out VDD Detector Reset 
- * RSTC_RCAUSE_NVM  NVM Reset 
- * RSTC_RCAUSE_EXT  External Reset 
- * RSTC_RCAUSE_WDT  Watchdog Reset 
- * RSTC_RCAUSE_SYST  System Reset Request 
- * RSTC_RCAUSE_BACKUP  Backup Reset 
- */
+ * - RSTC_RCAUSE_POR Power On Reset
+ * - RSTC_RCAUSE_BODCORE Brown Out CORE Detector Reset
+ * - RSTC_RCAUSE_BODVDD Brown Out VDD Detector Reset
+ * - RSTC_RCAUSE_NVM NVM Reset
+ * - RSTC_RCAUSE_EXT External Reset
+ * - RSTC_RCAUSE_WDT Watchdog Reset
+ * - RSTC_RCAUSE_SYST System Reset Request
+ * - RSTC_RCAUSE_BACKUP Backup Reset
+ **/
 static inline uint8_t rstc_read_RCAUSE(void)
 {
 	return RSTC->RCAUSE.reg;
@@ -81,12 +80,12 @@ static inline uint8_t rstc_read_RCAUSE(void)
 /**
  * @brief rstc get BKUPEXIT register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * RSTC_BKUPEXIT_RTC  Real Timer Counter Interrupt 
- * RSTC_BKUPEXIT_BBPS  Battery Backup Power Switch 
- * RSTC_BKUPEXIT_HIB  Hibernate 
- */
+ * - RSTC_BKUPEXIT_RTC Real Timer Counter Interrupt
+ * - RSTC_BKUPEXIT_BBPS Battery Backup Power Switch
+ * - RSTC_BKUPEXIT_HIB Hibernate
+ **/
 static inline uint8_t rstc_get_BKUPEXIT(uint8_t mask)
 {
     return RSTC->BKUPEXIT.reg & mask;
@@ -95,12 +94,11 @@ static inline uint8_t rstc_get_BKUPEXIT(uint8_t mask)
 /**
  * @brief rstc read BKUPEXIT register
  *
- * @param[in] void
  * @return uint8_t
- * RSTC_BKUPEXIT_RTC  Real Timer Counter Interrupt 
- * RSTC_BKUPEXIT_BBPS  Battery Backup Power Switch 
- * RSTC_BKUPEXIT_HIB  Hibernate 
- */
+ * - RSTC_BKUPEXIT_RTC Real Timer Counter Interrupt
+ * - RSTC_BKUPEXIT_BBPS Battery Backup Power Switch
+ * - RSTC_BKUPEXIT_HIB Hibernate
+ **/
 static inline uint8_t rstc_read_BKUPEXIT(void)
 {
 	return RSTC->BKUPEXIT.reg;

@@ -1,6 +1,6 @@
 /*
  * @file spi.h
- * @brief spi interface for SAMD51
+ * @brief SAM SPI Master
  * 
  * @note Copyright © Alkgrove 2018
  * @author Robert Alkire 
@@ -40,7 +40,7 @@ typedef struct {
  * @brief SPI master transfer
  * write only then rxbuf = NULL
  * write and read buffers same length
- * @param[in] spim_msg_t *msg
+ * @param[in] msg - spim_msg_t *
  * @return 0 ok, 1 not so ok
  */
 spi_err_t spim_transfer(spim_msg_t *msg);

@@ -43,9 +43,9 @@
 /**
  * @brief trng set INTEN register
  *
- * @param[in] uint8_t mask
- * TRNG_INTENSET_DATARDY  Data Ready Interrupt Enable 
- */
+ * @param[in] mask uint8_t 
+ * - TRNG_INTENSET_DATARDY Data Ready Interrupt Enable
+ **/
 static inline void trng_set_INTEN(uint8_t mask)
 {
 	TRNG->INTENSET.reg = mask;
@@ -54,10 +54,10 @@ static inline void trng_set_INTEN(uint8_t mask)
 /**
  * @brief trng get INTEN register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * TRNG_INTENSET_DATARDY  Data Ready Interrupt Enable 
- */
+ * - TRNG_INTENSET_DATARDY Data Ready Interrupt Enable
+ **/
 static inline uint8_t trng_get_INTEN(uint8_t mask)
 {
     return TRNG->INTENSET.reg & mask;
@@ -66,10 +66,9 @@ static inline uint8_t trng_get_INTEN(uint8_t mask)
 /**
  * @brief trng read INTEN register
  *
- * @param[in] void
  * @return uint8_t
- * TRNG_INTENSET_DATARDY  Data Ready Interrupt Enable 
- */
+ * - TRNG_INTENSET_DATARDY Data Ready Interrupt Enable
+ **/
 static inline uint8_t trng_read_INTEN(void)
 {
 	return TRNG->INTENSET.reg;
@@ -78,9 +77,9 @@ static inline uint8_t trng_read_INTEN(void)
 /**
  * @brief trng write INTEN register
  *
- * @param[in] uint8_t data
- * TRNG_INTENSET_DATARDY  Data Ready Interrupt Enable 
- */
+ * @param[in] data uint8_t 
+ * - TRNG_INTENSET_DATARDY Data Ready Interrupt Enable
+ **/
 static inline void trng_write_INTEN(uint8_t data)
 {
 	TRNG->INTENSET.reg = data;
@@ -90,9 +89,9 @@ static inline void trng_write_INTEN(uint8_t data)
 /**
  * @brief trng clear INTEN register
  *
- * @param[in] uint8_t mask
- * TRNG_INTENSET_DATARDY  Data Ready Interrupt Enable 
- */
+ * @param[in] mask uint8_t 
+ * - TRNG_INTENSET_DATARDY Data Ready Interrupt Enable
+ **/
 static inline void trng_clear_INTEN(uint8_t mask)
 {
 	TRNG->INTENCLR.reg = mask;
@@ -101,10 +100,10 @@ static inline void trng_clear_INTEN(uint8_t mask)
 /**
  * @brief trng get INTFLAG register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * TRNG_INTFLAG_DATARDY  Data Ready Interrupt Flag 
- */
+ * - TRNG_INTFLAG_DATARDY Data Ready Interrupt Flag
+ **/
 static inline uint8_t trng_get_INTFLAG(uint8_t mask)
 {
     return TRNG->INTFLAG.reg & mask;
@@ -113,10 +112,9 @@ static inline uint8_t trng_get_INTFLAG(uint8_t mask)
 /**
  * @brief trng read INTFLAG register
  *
- * @param[in] void
  * @return uint8_t
- * TRNG_INTFLAG_DATARDY  Data Ready Interrupt Flag 
- */
+ * - TRNG_INTFLAG_DATARDY Data Ready Interrupt Flag
+ **/
 static inline uint8_t trng_read_INTFLAG(void)
 {
 	return TRNG->INTFLAG.reg;
@@ -125,9 +123,9 @@ static inline uint8_t trng_read_INTFLAG(void)
 /**
  * @brief trng clear INTFLAG register
  *
- * @param[in] uint8_t mask
- * TRNG_INTFLAG_DATARDY  Data Ready Interrupt Flag 
- */
+ * @param[in] mask uint8_t 
+ * - TRNG_INTFLAG_DATARDY Data Ready Interrupt Flag
+ **/
 static inline void trng_clear_INTFLAG(uint8_t mask)
 {
 	TRNG->INTFLAG.reg = mask;
@@ -136,10 +134,10 @@ static inline void trng_clear_INTFLAG(uint8_t mask)
 /**
  * @brief trng set CTRLA register
  *
- * @param[in] uint8_t mask
- * TRNG_CTRLA_ENABLE  Enable 
- * TRNG_CTRLA_RUNSTDBY  Run in Standby 
- */
+ * @param[in] mask uint8_t 
+ * - TRNG_CTRLA_ENABLE Enable
+ * - TRNG_CTRLA_RUNSTDBY Run in Standby
+ **/
 static inline void trng_set_CTRLA(uint8_t mask)
 {
 	TRNG->CTRLA.reg |= mask;
@@ -148,11 +146,11 @@ static inline void trng_set_CTRLA(uint8_t mask)
 /**
  * @brief trng get CTRLA register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * TRNG_CTRLA_ENABLE  Enable 
- * TRNG_CTRLA_RUNSTDBY  Run in Standby 
- */
+ * - TRNG_CTRLA_ENABLE Enable
+ * - TRNG_CTRLA_RUNSTDBY Run in Standby
+ **/
 static inline uint8_t trng_get_CTRLA(uint8_t mask)
 {
     return TRNG->CTRLA.reg & mask;
@@ -161,10 +159,10 @@ static inline uint8_t trng_get_CTRLA(uint8_t mask)
 /**
  * @brief trng write CTRLA register
  *
- * @param[in] uint8_t data
- * TRNG_CTRLA_ENABLE  Enable 
- * TRNG_CTRLA_RUNSTDBY  Run in Standby 
- */
+ * @param[in] data uint8_t 
+ * - TRNG_CTRLA_ENABLE Enable
+ * - TRNG_CTRLA_RUNSTDBY Run in Standby
+ **/
 static inline void trng_write_CTRLA(uint8_t data)
 {
 	TRNG->CTRLA.reg = data;
@@ -173,10 +171,10 @@ static inline void trng_write_CTRLA(uint8_t data)
 /**
  * @brief trng clear CTRLA register
  *
- * @param[in] uint8_t mask
- * TRNG_CTRLA_ENABLE  Enable 
- * TRNG_CTRLA_RUNSTDBY  Run in Standby 
- */
+ * @param[in] mask uint8_t 
+ * - TRNG_CTRLA_ENABLE Enable
+ * - TRNG_CTRLA_RUNSTDBY Run in Standby
+ **/
 static inline void trng_clear_CTRLA(uint8_t mask)
 {
 	TRNG->CTRLA.reg &= ~mask;
@@ -185,11 +183,10 @@ static inline void trng_clear_CTRLA(uint8_t mask)
 /**
  * @brief trng read CTRLA register
  *
- * @param[in] void
  * @return uint8_t
- * TRNG_CTRLA_ENABLE  Enable 
- * TRNG_CTRLA_RUNSTDBY  Run in Standby 
- */
+ * - TRNG_CTRLA_ENABLE Enable
+ * - TRNG_CTRLA_RUNSTDBY Run in Standby
+ **/
 static inline uint8_t trng_read_CTRLA(void)
 {
 	return TRNG->CTRLA.reg;
@@ -198,9 +195,9 @@ static inline uint8_t trng_read_CTRLA(void)
 /**
  * @brief trng set EVCTRL register
  *
- * @param[in] uint8_t mask
- * TRNG_EVCTRL_DATARDYEO  Data Ready Event Output 
- */
+ * @param[in] mask uint8_t 
+ * - TRNG_EVCTRL_DATARDYEO Data Ready Event Output
+ **/
 static inline void trng_set_EVCTRL(uint8_t mask)
 {
 	TRNG->EVCTRL.reg |= mask;
@@ -209,10 +206,10 @@ static inline void trng_set_EVCTRL(uint8_t mask)
 /**
  * @brief trng get EVCTRL register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * TRNG_EVCTRL_DATARDYEO  Data Ready Event Output 
- */
+ * - TRNG_EVCTRL_DATARDYEO Data Ready Event Output
+ **/
 static inline uint8_t trng_get_EVCTRL(uint8_t mask)
 {
     return TRNG->EVCTRL.reg & mask;
@@ -221,9 +218,9 @@ static inline uint8_t trng_get_EVCTRL(uint8_t mask)
 /**
  * @brief trng write EVCTRL register
  *
- * @param[in] uint8_t data
- * TRNG_EVCTRL_DATARDYEO  Data Ready Event Output 
- */
+ * @param[in] data uint8_t 
+ * - TRNG_EVCTRL_DATARDYEO Data Ready Event Output
+ **/
 static inline void trng_write_EVCTRL(uint8_t data)
 {
 	TRNG->EVCTRL.reg = data;
@@ -232,9 +229,9 @@ static inline void trng_write_EVCTRL(uint8_t data)
 /**
  * @brief trng clear EVCTRL register
  *
- * @param[in] uint8_t mask
- * TRNG_EVCTRL_DATARDYEO  Data Ready Event Output 
- */
+ * @param[in] mask uint8_t 
+ * - TRNG_EVCTRL_DATARDYEO Data Ready Event Output
+ **/
 static inline void trng_clear_EVCTRL(uint8_t mask)
 {
 	TRNG->EVCTRL.reg &= ~mask;
@@ -243,10 +240,9 @@ static inline void trng_clear_EVCTRL(uint8_t mask)
 /**
  * @brief trng read EVCTRL register
  *
- * @param[in] void
  * @return uint8_t
- * TRNG_EVCTRL_DATARDYEO  Data Ready Event Output 
- */
+ * - TRNG_EVCTRL_DATARDYEO Data Ready Event Output
+ **/
 static inline uint8_t trng_read_EVCTRL(void)
 {
 	return TRNG->EVCTRL.reg;
@@ -255,10 +251,10 @@ static inline uint8_t trng_read_EVCTRL(void)
 /**
  * @brief trng get DATA register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * TRNG_DATA_DATA(value)  Output Data 
- */
+ * - TRNG_DATA_DATA(value) Output Data
+ **/
 static inline uint32_t trng_get_DATA(uint32_t mask)
 {
     return TRNG->DATA.reg & mask;
@@ -267,10 +263,9 @@ static inline uint32_t trng_get_DATA(uint32_t mask)
 /**
  * @brief trng read DATA register
  *
- * @param[in] void
  * @return uint32_t
- * TRNG_DATA_DATA(value)  Output Data 
- */
+ * - TRNG_DATA_DATA(value) Output Data
+ **/
 static inline uint32_t trng_read_DATA(void)
 {
 	return TRNG->DATA.reg;

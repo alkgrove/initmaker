@@ -7,7 +7,7 @@ TARGET = blinky
 STACK_SIZE=8192
 # Selecting the board uncomment one of these to select board
 #CFG=featherm4
-#CFG=metrom4
+CFG=metrom4
 #CFG=itsym4
 INIT=${CFG}_init
 

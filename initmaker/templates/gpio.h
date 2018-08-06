@@ -1,21 +1,16 @@
 #defmacro pins
 /* Pin Definitions */
 #foreach pins
-#define %pinname%	    GPIO(PORT%groupof(portname)%, %unitof(portname)%)		/** %portname% */
+#define %pinname%			GPIO(PORT%groupof(portname)%, %unitof(portname)%)		/** %portname% */
 #endfor
 #endmacro
 
 #defmacro eic
-#ifdefined eic_interrupt
+#ifdefined eic_pin
 /* External Interrupt Definitions */
-#foreach eic_interrupt
-#define	EIC_%pinname%_IRQ    EIC%eicnumber%
-#endfor
-#fi
-#ifdefined gen_event
-/* External Event Definitions */
-#foreach gen_event
-#define	EIC_%pinname%_EVT    EIC%eicnumber%
+#foreach eic_pin
+#define EIC_%pinname%_Pos	EIC%eicnumber%_Pos
+#define	EIC_%pinname%		(1UL << EIC_%pinname%_Pos)
 #endfor
 #fi
 #endmacro

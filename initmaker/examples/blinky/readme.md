@@ -1,4 +1,4 @@
-# Blinky example for Adafruit SAMD51 boards
+### Blinky example for Adafruit SAMD51 boards
 
 Prerequisites:  
 adafruit itsybitsym4, featherm4 or metrom4 dev board  
@@ -8,7 +8,7 @@ Gnu awk
 initmaker with samd5x   
 cmsis -> from https://developer.arm.com/embedded/cmsis and follow the github link  
 
-Edit Makefile - uncomment board you want to build for  
+Edit makefile - uncomment/comment the line CFG=featherm4, CFG=metrom4 or CFG=itsym4 to customize to your board.
 Then do:  
 `make config`  
 This generates the src/blinky_init.c and inc/blinky_init.h initialization files.  

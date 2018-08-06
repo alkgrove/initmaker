@@ -11,7 +11,7 @@
 #ifdefined users
 #foreach users
 	/* Event Channel %username% to user ID %userid% */
-	evsys_set_USER(EVSYS_ID_USER_%userid%, %username%);
+	evsys_enable_USER(EVSYS_ID_USER_%userid%, %username%);
 #endfor
 #fi
 #foreach generators

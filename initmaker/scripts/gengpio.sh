@@ -178,13 +178,14 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
 						if ((num in eicinterrupt) ||(num in genevent)) {
 							errprint("EIC" num " is assigned more than once");
 						} else {
-							dkey = instance ":debounce";
 							intkey = instance ":interrupt";
-							evtkey = instance ":generator";
 							if (intkey in prop) {
 								eicinterrupt[num] = sig;
+								eicpin[num] = sig;
 								prop["eic:eic_interrupt"] = 1;
+								prop["eic:eic_pin"] = 1;
 							}
+							dkey = instance ":debounce";
 							if (dkey in prop) {
 								eicdebounce[num] = sig;
 								prop["eic:eic_debounce"] = 1;
@@ -197,8 +198,12 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
 									prop[key] = 5;
 								}
 							}
+							evtkey = instance ":generator";
 							if (evtkey in prop) {
 								genevent[num] = sig;
+								prop["eic:gen_event"] = 1;
+								eicpin[num] = sig;
+								prop["eic:eic_pin"] = 1;
 							}
   							edgekey = instance ":edge";
   							if (!(edgekey in prop)) {
@@ -212,7 +217,12 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
   							if (!(synckey in prop)) {
   								prop[synckey] = "NONE";
   							}
-							eicsense[num] = wordtranslate("high low rising falling both", "HIGH LOW RISE FALL BOTH", prop[sensekey], "NONE");
+  							asynckey = instance ":async";
+  							if (asynckey in prop) {
+  								eicasync[num] = sig;
+  								prop["eic:eic_async"] = 1;
+  							}
+							eicsense[sig] = wordtranslate("high low rising falling both", "HIGH LOW RISE FALL BOTH", prop[sensekey], "NONE");
 						}
 					}
 					delete a;
@@ -252,7 +262,15 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
     						break;
     						case /eic_sense/:
     							for (j in eicsense) { keys[idx] = j; values[idx++] = eicsense[j]; }
-    							keyname = "eicnumber"; valuename = "eicsense";    							
+    							keyname = "pinname"; valuename = "eicsense";    							
+    						break;
+    						case /eic_async/:
+    							for (j in eicasync) { keys[idx] = j; values[idx++] = eicasync[j]; }
+    							keyname = "eicnumber"; valuename = "eicasync";    							
+    						break;
+    						case /eic_pin/:
+    							for (j in eicpin) { keys[idx] = j; values[idx++] = eicpin[j]; }
+    							keyname = "eicnumber"; valuename = "pinname";    							
     						break;
   							default: errprint("Bad argument " a[1] " for foreach statement"); break;
   						}

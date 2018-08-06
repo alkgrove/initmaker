@@ -43,8 +43,8 @@
 /**
  * @brief freqm wait for sync
  *
- * @param[in] uint32_t reg
- */
+ * @param[in] reg uint32_t 
+ **/
 static inline void freqm_wait_for_sync(uint32_t reg)
 {
 	while (FREQM->SYNCBUSY.reg & reg) {
@@ -54,9 +54,9 @@ static inline void freqm_wait_for_sync(uint32_t reg)
 /**
  * @brief freqm is syncing
  *
- * @param[in] uint32_t reg
+ * @param[in] reg uint32_t 
  * @return bool
- */
+ **/
 static inline bool freqm_is_syncing(uint32_t reg)
 {
 	return FREQM->SYNCBUSY.reg & reg;
@@ -65,9 +65,9 @@ static inline bool freqm_is_syncing(uint32_t reg)
 /**
  * @brief freqm set INTEN register
  *
- * @param[in] uint8_t mask
- * FREQM_INTENSET_DONE  Measurement Done Interrupt Enable 
- */
+ * @param[in] mask uint8_t 
+ * - FREQM_INTENSET_DONE Measurement Done Interrupt Enable
+ **/
 static inline void freqm_set_INTEN(uint8_t mask)
 {
 	FREQM->INTENSET.reg = mask;
@@ -76,10 +76,10 @@ static inline void freqm_set_INTEN(uint8_t mask)
 /**
  * @brief freqm get INTEN register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * FREQM_INTENSET_DONE  Measurement Done Interrupt Enable 
- */
+ * - FREQM_INTENSET_DONE Measurement Done Interrupt Enable
+ **/
 static inline uint8_t freqm_get_INTEN(uint8_t mask)
 {
     return FREQM->INTENSET.reg & mask;
@@ -88,10 +88,9 @@ static inline uint8_t freqm_get_INTEN(uint8_t mask)
 /**
  * @brief freqm read INTEN register
  *
- * @param[in] void
  * @return uint8_t
- * FREQM_INTENSET_DONE  Measurement Done Interrupt Enable 
- */
+ * - FREQM_INTENSET_DONE Measurement Done Interrupt Enable
+ **/
 static inline uint8_t freqm_read_INTEN(void)
 {
 	return FREQM->INTENSET.reg;
@@ -100,9 +99,9 @@ static inline uint8_t freqm_read_INTEN(void)
 /**
  * @brief freqm write INTEN register
  *
- * @param[in] uint8_t data
- * FREQM_INTENSET_DONE  Measurement Done Interrupt Enable 
- */
+ * @param[in] data uint8_t 
+ * - FREQM_INTENSET_DONE Measurement Done Interrupt Enable
+ **/
 static inline void freqm_write_INTEN(uint8_t data)
 {
 	FREQM->INTENSET.reg = data;
@@ -112,9 +111,9 @@ static inline void freqm_write_INTEN(uint8_t data)
 /**
  * @brief freqm clear INTEN register
  *
- * @param[in] uint8_t mask
- * FREQM_INTENSET_DONE  Measurement Done Interrupt Enable 
- */
+ * @param[in] mask uint8_t 
+ * - FREQM_INTENSET_DONE Measurement Done Interrupt Enable
+ **/
 static inline void freqm_clear_INTEN(uint8_t mask)
 {
 	FREQM->INTENCLR.reg = mask;
@@ -123,10 +122,10 @@ static inline void freqm_clear_INTEN(uint8_t mask)
 /**
  * @brief freqm get INTFLAG register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * FREQM_INTFLAG_DONE  Measurement Done 
- */
+ * - FREQM_INTFLAG_DONE Measurement Done
+ **/
 static inline uint8_t freqm_get_INTFLAG(uint8_t mask)
 {
     return FREQM->INTFLAG.reg & mask;
@@ -135,10 +134,9 @@ static inline uint8_t freqm_get_INTFLAG(uint8_t mask)
 /**
  * @brief freqm read INTFLAG register
  *
- * @param[in] void
  * @return uint8_t
- * FREQM_INTFLAG_DONE  Measurement Done 
- */
+ * - FREQM_INTFLAG_DONE Measurement Done
+ **/
 static inline uint8_t freqm_read_INTFLAG(void)
 {
 	return FREQM->INTFLAG.reg;
@@ -147,9 +145,9 @@ static inline uint8_t freqm_read_INTFLAG(void)
 /**
  * @brief freqm clear INTFLAG register
  *
- * @param[in] uint8_t mask
- * FREQM_INTFLAG_DONE  Measurement Done 
- */
+ * @param[in] mask uint8_t 
+ * - FREQM_INTFLAG_DONE Measurement Done
+ **/
 static inline void freqm_clear_INTFLAG(uint8_t mask)
 {
 	FREQM->INTFLAG.reg = mask;
@@ -158,9 +156,9 @@ static inline void freqm_clear_INTFLAG(uint8_t mask)
 /**
  * @brief freqm write CTRLB register
  *
- * @param[in] uint8_t data
- * FREQM_CTRLB_START  Start Measurement 
- */
+ * @param[in] data uint8_t 
+ * - FREQM_CTRLB_START Start Measurement
+ **/
 static inline void freqm_write_CTRLB(uint8_t data)
 {
 	FREQM->CTRLB.reg = data;
@@ -169,10 +167,10 @@ static inline void freqm_write_CTRLB(uint8_t data)
 /**
  * @brief freqm set CTRLA register
  *
- * @param[in] uint8_t mask
- * FREQM_CTRLA_SWRST  Software Reset 
- * FREQM_CTRLA_ENABLE  Enable 
- */
+ * @param[in] mask uint8_t 
+ * - FREQM_CTRLA_SWRST Software Reset
+ * - FREQM_CTRLA_ENABLE Enable
+ **/
 static inline void freqm_set_CTRLA(uint8_t mask)
 {
 	FREQM->CTRLA.reg |= mask;
@@ -181,11 +179,11 @@ static inline void freqm_set_CTRLA(uint8_t mask)
 /**
  * @brief freqm get CTRLA register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * FREQM_CTRLA_SWRST  Software Reset 
- * FREQM_CTRLA_ENABLE  Enable 
- */
+ * - FREQM_CTRLA_SWRST Software Reset
+ * - FREQM_CTRLA_ENABLE Enable
+ **/
 static inline uint8_t freqm_get_CTRLA(uint8_t mask)
 {
     return FREQM->CTRLA.reg & mask;
@@ -194,10 +192,10 @@ static inline uint8_t freqm_get_CTRLA(uint8_t mask)
 /**
  * @brief freqm write CTRLA register
  *
- * @param[in] uint8_t data
- * FREQM_CTRLA_SWRST  Software Reset 
- * FREQM_CTRLA_ENABLE  Enable 
- */
+ * @param[in] data uint8_t 
+ * - FREQM_CTRLA_SWRST Software Reset
+ * - FREQM_CTRLA_ENABLE Enable
+ **/
 static inline void freqm_write_CTRLA(uint8_t data)
 {
 	FREQM->CTRLA.reg = data;
@@ -206,10 +204,10 @@ static inline void freqm_write_CTRLA(uint8_t data)
 /**
  * @brief freqm clear CTRLA register
  *
- * @param[in] uint8_t mask
- * FREQM_CTRLA_SWRST  Software Reset 
- * FREQM_CTRLA_ENABLE  Enable 
- */
+ * @param[in] mask uint8_t 
+ * - FREQM_CTRLA_SWRST Software Reset
+ * - FREQM_CTRLA_ENABLE Enable
+ **/
 static inline void freqm_clear_CTRLA(uint8_t mask)
 {
 	FREQM->CTRLA.reg &= ~mask;
@@ -218,11 +216,10 @@ static inline void freqm_clear_CTRLA(uint8_t mask)
 /**
  * @brief freqm read CTRLA register
  *
- * @param[in] void
  * @return uint8_t
- * FREQM_CTRLA_SWRST  Software Reset 
- * FREQM_CTRLA_ENABLE  Enable 
- */
+ * - FREQM_CTRLA_SWRST Software Reset
+ * - FREQM_CTRLA_ENABLE Enable
+ **/
 static inline uint8_t freqm_read_CTRLA(void)
 {
 	return FREQM->CTRLA.reg;
@@ -231,9 +228,9 @@ static inline uint8_t freqm_read_CTRLA(void)
 /**
  * @brief freqm set CFGA register
  *
- * @param[in] uint16_t mask
- * FREQM_CFGA_REFNUM(value)  Number of Reference Clock Cycles 
- */
+ * @param[in] mask uint16_t 
+ * - FREQM_CFGA_REFNUM(value) Number of Reference Clock Cycles
+ **/
 static inline void freqm_set_CFGA(uint16_t mask)
 {
 	FREQM->CFGA.reg |= mask;
@@ -242,10 +239,10 @@ static inline void freqm_set_CFGA(uint16_t mask)
 /**
  * @brief freqm get CFGA register
  *
- * @param[in] uint16_t mask
+ * @param[in] mask uint16_t 
  * @return uint16_t
- * FREQM_CFGA_REFNUM(value)  Number of Reference Clock Cycles 
- */
+ * - FREQM_CFGA_REFNUM(value) Number of Reference Clock Cycles
+ **/
 static inline uint16_t freqm_get_CFGA(uint16_t mask)
 {
     return FREQM->CFGA.reg & mask;
@@ -254,9 +251,9 @@ static inline uint16_t freqm_get_CFGA(uint16_t mask)
 /**
  * @brief freqm write CFGA register
  *
- * @param[in] uint16_t data
- * FREQM_CFGA_REFNUM(value)  Number of Reference Clock Cycles 
- */
+ * @param[in] data uint16_t 
+ * - FREQM_CFGA_REFNUM(value) Number of Reference Clock Cycles
+ **/
 static inline void freqm_write_CFGA(uint16_t data)
 {
 	FREQM->CFGA.reg = data;
@@ -265,9 +262,9 @@ static inline void freqm_write_CFGA(uint16_t data)
 /**
  * @brief freqm clear CFGA register
  *
- * @param[in] uint16_t mask
- * FREQM_CFGA_REFNUM(value)  Number of Reference Clock Cycles 
- */
+ * @param[in] mask uint16_t 
+ * - FREQM_CFGA_REFNUM(value) Number of Reference Clock Cycles
+ **/
 static inline void freqm_clear_CFGA(uint16_t mask)
 {
 	FREQM->CFGA.reg &= ~mask;
@@ -276,10 +273,9 @@ static inline void freqm_clear_CFGA(uint16_t mask)
 /**
  * @brief freqm read CFGA register
  *
- * @param[in] void
  * @return uint16_t
- * FREQM_CFGA_REFNUM(value)  Number of Reference Clock Cycles 
- */
+ * - FREQM_CFGA_REFNUM(value) Number of Reference Clock Cycles
+ **/
 static inline uint16_t freqm_read_CFGA(void)
 {
 	return FREQM->CFGA.reg;
@@ -288,11 +284,11 @@ static inline uint16_t freqm_read_CFGA(void)
 /**
  * @brief freqm get SYNCBUSY register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * FREQM_SYNCBUSY_SWRST  Software Reset 
- * FREQM_SYNCBUSY_ENABLE  Enable 
- */
+ * - FREQM_SYNCBUSY_SWRST Software Reset
+ * - FREQM_SYNCBUSY_ENABLE Enable
+ **/
 static inline uint32_t freqm_get_SYNCBUSY(uint32_t mask)
 {
     return FREQM->SYNCBUSY.reg & mask;
@@ -301,11 +297,10 @@ static inline uint32_t freqm_get_SYNCBUSY(uint32_t mask)
 /**
  * @brief freqm read SYNCBUSY register
  *
- * @param[in] void
  * @return uint32_t
- * FREQM_SYNCBUSY_SWRST  Software Reset 
- * FREQM_SYNCBUSY_ENABLE  Enable 
- */
+ * - FREQM_SYNCBUSY_SWRST Software Reset
+ * - FREQM_SYNCBUSY_ENABLE Enable
+ **/
 static inline uint32_t freqm_read_SYNCBUSY(void)
 {
 	return FREQM->SYNCBUSY.reg;
@@ -314,10 +309,10 @@ static inline uint32_t freqm_read_SYNCBUSY(void)
 /**
  * @brief freqm get VALUE register
  *
- * @param[in] uint32_t mask
+ * @param[in] mask uint32_t 
  * @return uint32_t
- * FREQM_VALUE_VALUE(value)  Measurement Value 
- */
+ * - FREQM_VALUE_VALUE(value) Measurement Value
+ **/
 static inline uint32_t freqm_get_VALUE(uint32_t mask)
 {
     return FREQM->VALUE.reg & mask;
@@ -326,10 +321,9 @@ static inline uint32_t freqm_get_VALUE(uint32_t mask)
 /**
  * @brief freqm read VALUE register
  *
- * @param[in] void
  * @return uint32_t
- * FREQM_VALUE_VALUE(value)  Measurement Value 
- */
+ * - FREQM_VALUE_VALUE(value) Measurement Value
+ **/
 static inline uint32_t freqm_read_VALUE(void)
 {
 	return FREQM->VALUE.reg;
@@ -338,11 +332,11 @@ static inline uint32_t freqm_read_VALUE(void)
 /**
  * @brief freqm get STATUS register
  *
- * @param[in] uint8_t mask
+ * @param[in] mask uint8_t 
  * @return uint8_t
- * FREQM_STATUS_BUSY  FREQM Status 
- * FREQM_STATUS_OVF  Sticky Count Value Overflow 
- */
+ * - FREQM_STATUS_BUSY FREQM Status
+ * - FREQM_STATUS_OVF Sticky Count Value Overflow
+ **/
 static inline uint8_t freqm_get_STATUS(uint8_t mask)
 {
     return FREQM->STATUS.reg & mask;
@@ -351,10 +345,10 @@ static inline uint8_t freqm_get_STATUS(uint8_t mask)
 /**
  * @brief freqm clear STATUS register
  *
- * @param[in] uint8_t mask
- * FREQM_STATUS_BUSY  FREQM Status 
- * FREQM_STATUS_OVF  Sticky Count Value Overflow 
- */
+ * @param[in] mask uint8_t 
+ * - FREQM_STATUS_BUSY FREQM Status
+ * - FREQM_STATUS_OVF Sticky Count Value Overflow
+ **/
 static inline void freqm_clear_STATUS(uint8_t mask)
 {
 	FREQM->STATUS.reg = mask;
@@ -363,11 +357,10 @@ static inline void freqm_clear_STATUS(uint8_t mask)
 /**
  * @brief freqm read STATUS register
  *
- * @param[in] void
  * @return uint8_t
- * FREQM_STATUS_BUSY  FREQM Status 
- * FREQM_STATUS_OVF  Sticky Count Value Overflow 
- */
+ * - FREQM_STATUS_BUSY FREQM Status
+ * - FREQM_STATUS_OVF Sticky Count Value Overflow
+ **/
 static inline uint8_t freqm_read_STATUS(void)
 {
 	return FREQM->STATUS.reg;
