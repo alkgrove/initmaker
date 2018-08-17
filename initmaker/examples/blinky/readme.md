@@ -6,8 +6,9 @@ arm-none-eabi-gcc tool chain
 make utility  
 Gnu awk  
 initmaker with samd5x   
-cmsis -> from https://developer.arm.com/embedded/cmsis and follow the github link
-for this example, CMSIS folder is at the same level as initmaker and samd5x
+cmsis -> from https://developer.arm.com/embedded/cmsis and follow the github link.
+
+For this example, CMSIS folder is located at the same level as initmaker and samd5x
 
 Edit makefile - uncomment/comment the line CFG=featherm4, CFG=metrom4 or CFG=itsym4 to customize to your board.
 Then do:  
