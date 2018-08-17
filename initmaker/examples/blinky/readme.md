@@ -2,11 +2,12 @@
 
 Prerequisites:  
 adafruit itsybitsym4, featherm4 or metrom4 dev board  
-arm-none-eabi-gcc tool chain  
+arm-none-eabi-gcc tool chain 
 make utility  
 Gnu awk  
 initmaker with samd5x   
-cmsis -> from https://developer.arm.com/embedded/cmsis and follow the github link  
+cmsis -> from https://developer.arm.com/embedded/cmsis and follow the github link
+for this example, CMSIS folder is at the same level as initmaker and samd5x
 
 Edit makefile - uncomment/comment the line CFG=featherm4, CFG=metrom4 or CFG=itsym4 to customize to your board.
 Then do:  
