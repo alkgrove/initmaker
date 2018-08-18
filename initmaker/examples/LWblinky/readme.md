@@ -1,12 +1,6 @@
 ### Blinky example for Adafruit SAMD51 boards
 
-Prerequisites:
-arm-none-eabi-gcc tool chain
-make utility
-gnu awk
-initmaker
-samd51 drivers provided with initmaker
-cmsis -> from https://github.com/ARM-software/CMSIS_5
+Prerequisites: Same as the blinky example. 
 
 Edit makefile - uncomment the line CFG=featherm4, CFG=metrom4 or CFG=itsym4 to customize to your board.
 Then do:
