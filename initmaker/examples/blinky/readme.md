@@ -2,7 +2,7 @@
 
 Prerequisites:  
 adafruit itsybitsym4, featherm4 or metrom4 dev board  
-arm-none-eabi-gcc tool chain 
+arm-none-eabi-gcc tool chain -> from https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
 make utility  
 Gnu awk  
 initmaker with samd5x   
