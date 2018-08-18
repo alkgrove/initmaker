@@ -7,8 +7,8 @@ make utility
 Gnu awk  
 initmaker with samd5x   
 cmsis -> from https://developer.arm.com/embedded/cmsis and follow the github link.
+cmsis is very large and you only need one folder. Make a directory CMSIS at the same level as initmaker and samd5x, unzip the CMSIS-5.x.x and copy the folder CMSIS-5.x.x/CMSIS-5.x.x/CMSIS/Core/Include into the CMSIS folder you just created. You should have CMSIS/Include/core_cm4.h now. 
 
-For this example, CMSIS folder is located at the same level as initmaker and samd5x
 
 Edit makefile - uncomment/comment the line CFG=featherm4, CFG=metrom4 or CFG=itsym4 to customize to your board.
 Then do:  
