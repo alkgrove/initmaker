@@ -3,7 +3,7 @@
 	/** GPIO Input Interrupt %eic% (%port%) */
 	port_set_pin_function(%eic%, MUX_%port%%eic_mux%_%eic_pin%);
 #ifdefined generator
-#evt gen %generator% EIC_EXTINT_%unitof(eic_pin)% %toupper(path)% %edge% %sync_source%
+#evt gen %generator% EIC_EXTINT_%unitof(eic_pin)% %toupper(path)% %edge% %sync_source% %evint%
 #fi
 #fi
 #ifdefined pullup

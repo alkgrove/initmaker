@@ -5,7 +5,7 @@
 	/* Clock SERCOM%unit% slow with %toupper(slow_source)% (%frequency(slow_source)%) */
 	gclk_write_PCHCTRL(SERCOM%unit%_GCLK_ID_SLOW, GCLK_PCHCTRL_GEN_%toupper(slow_source)% | GCLK_PCHCTRL_CHEN);
 	// enable APB Clock SERCOM%unit%
-	mclk_set_%apb%MASK(MCLK_%apb%MASK_SERCOM%unit%);
+	mclk_set_%apbmask%(%apb%);
 #iftrue type == "uart"
 
 	// Initialize SERCOM%unit% as UART

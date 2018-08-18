@@ -52,12 +52,9 @@ if [[ -f "${errfile}" ]]; then
    rm -f "${errfile}"
 fi
 processor="${scriptpath}/`${scriptpath}/getprocessor.sh ${cfg} -n`.awk"
-if [ "${processor}" == "unknown.awk" ]; then
+
+if [ "$(basename ${processor})" == "unknown.awk" ] || [ ! -f ${processor} ]; then
 	echo "processor is not defined or correct in ${cfg}"
-	exit
-fi
-if [[ ! -f ${processor} ]]; then
-	echo "Script ${processor} does not exist"
 	exit
 fi
 
@@ -84,8 +81,8 @@ ${scriptpath}/gengpio.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" 
 ${scriptpath}/gensercom.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/gentc.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/gendma.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
-${scriptpath}/gennvic.sh "${boardsrc}" "${processor}" "${verbose}"
 ${scriptpath}/genevent.sh "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
+${scriptpath}/gennvic.sh "${boardsrc}" "${processor}" "${verbose}"
 ${scriptpath}/genvar.sh "${boardsrc}" "${verbose}"
 
 rm -f ${extctmp} ${exthtmp}

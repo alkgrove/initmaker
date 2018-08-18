@@ -159,6 +159,11 @@ static inline bool eic_is_syncing(uint32_t reg)
  *
  * @param[in] mask uint32_t 
  * - EIC_INTENSET_EXTINT(value) External Interrupt Enable
+ *
+ * Example:
+ * @code
+ *     eic_set_INTEN(EIC2 | EIC4);
+ * @endcode
  **/
 static inline void eic_set_INTEN(uint32_t mask)
 {
@@ -273,6 +278,11 @@ static inline uint32_t eic_read_INTFLAG(void)
  *
  * @param[in] mask uint32_t 
  * - EIC_INTFLAG_EXTINT(value) External Interrupt
+ *
+ * Example:
+ * @code
+ *     eic_clear_INTFLAG(EIC2 | EIC4);
+ * @endcode
  **/
 static inline void eic_clear_INTFLAG(uint32_t mask)
 {

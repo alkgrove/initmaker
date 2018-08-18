@@ -1,5 +1,5 @@
-/*
- * @file spi.h
+/**
+ * @file spim.h
  * @brief SAM SPI Master
  * 
  * @note Copyright © Alkgrove 2018
@@ -20,7 +20,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ **/
+
  
 #ifndef __SPIM_H__
 #define __SPIM_H__
@@ -28,12 +29,11 @@
 typedef enum {SPIM_OK = 0, SPIM_ERROR} spi_err_t;
 	
 typedef struct {
-	SERCOM_t *dev;
-	uint8_t cs;
-	uint8_t dc;
-	uint8_t *txbuf;
-	uint8_t *rxbuf;
-	uint8_t len;
+	SERCOM_t *dev; /**< Pointer to serial port module registers ie SERCOM0 */
+	uint8_t cs; /**< PINPORT of chip select pin */
+	uint8_t *txbuf; /**< Pointer to allocated transmit buffer */
+	uint8_t *rxbuf; /**< Pointer to allocated receive buffer */
+	uint8_t len; /**< Number of bytes to send and receive */
 } spim_msg_t;
 
 /**

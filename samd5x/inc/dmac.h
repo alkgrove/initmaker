@@ -186,11 +186,11 @@ DmacDescriptor_t *get_base_DMA_writeback_descriptor(uint8_t channel);
 #ifdef DEBUG
 /**
  * @brief a debug print of descriptor
- * @param[in] p DmacDescriptor_t * pointer to Descriptor
- * @param[in] ep DmacDescriptor_t * pointer to last descriptor in link list or null
+ * @param[in] channel DMA Channel number 
+ * @param[in] length number of descriptors to print or 0 to rely on NULL
  *
  */
-void print_descriptor(DmacDescriptor_t *p, DmacDescriptor_t *ep);
+void print_descriptor(int channel, int length);
 #endif
 /**
  * @brief set DBG control Debug Run bit

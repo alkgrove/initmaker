@@ -49,22 +49,16 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
     	in_section=0;
 		tc_count = 1;
 		tcc_count = 100;
-    	apbtcstring = "APBA APBA APBB APBB APBC APBC APBD APBD";
-		apbtccstring = "APBB APBB APBC APBC APBD APBD";
-    	split(apbtcstring, apbtclist, " ");
-    	for (i = 0; i < length(apbtclist); i++) {
-    		prop["tc" i ":apb"] = apbtclist[i+1];
-    	}
-    	split(apbtccstring, apbtcclist, " ");
-    	for (i = 0; i < length(apbtcclist); i++) {
-    		prop["tcc" i ":apb"] = apbtcclist[i+1];
-    	}
      	initpins();
+     	initmclk();
      	for (i = 0; i < unitmax["tc"]; i++) {
 			prop["tc" i ":count"] = 0;
 			prop["tc" i ":prescaler"] = 1;
 			prop["tc" i ":prescsync"] = "GCLK";
 			prop["tc" i ":wavegen"] = "MFRQ";
+			prop["tc" i ":evint_ovf"] = 0;
+			prop["tc" i ":evint_mc0"] = 0;
+			prop["tc" i ":evint_mc1"] = 0;
 		}
 		for (i = 0; i < unitmax["tcc"]; i++) {
 			prop["tcc" i ":count"] = 0;
@@ -73,6 +67,15 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 			prop["tcc" i ":resolution"] = "NONE";
 			prop["tcc" i ":faulta_src"] = "DISABLE";
 			prop["tcc" i ":faultb_src"] = "DISABLE";
+			prop["tcc" i ":evint_ovf"] = 0;
+			prop["tcc" i ":evint_trg"] = 0;
+			prop["tcc" i ":evint_cnt"] = 0;
+			prop["tcc" i ":evint_mc0"] = 0;
+			prop["tcc" i ":evint_mc1"] = 0;
+			prop["tcc" i ":evint_mc2"] = 0;
+			prop["tcc" i ":evint_mc3"] = 0;
+			prop["tcc" i ":evint_mc4"] = 0;
+			prop["tcc" i ":evint_mc5"] = 0;
 		}
 	}
 	(NR == FNR) && /^[#;]/ {
@@ -122,9 +125,9 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
        	next;
 	}
 	(NR == FNR) && (in_section) {
-		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)[\r\n]+$/, arr)) {
+		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)$/, arr)) {
 			key = section ":" tolower(arr[1]);
-			value = arr[2];
+			value = gensub(/[\r\n]+/,"", "g", arr[2]);
 			prop[key] = value;
 		}
  	   	next;
@@ -167,8 +170,19 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 			if (modekey in prop) {
 				if ((prop[modekey] != 32) && (prop[modekey] != 16) && (prop[modekey] != 8)) {
 					errprint("Mode must be 32, 16 or 8 and is " prop[modekey]);
-				} else if ((prop[modekey] == 32) && ((i % 2) == 1)) {
+				} else if (prop[modekey] == 32) {
+					if ((i % 2) == 0) {
+						apbmaster = "tc" i;
+						apbslave = "tc" (i + 1);
+						if (apbslave in mclk) {
+							prop[apbmaster ":apbslave"] = mclk[apbslave];
+							match(mclk[apbslave], /^MCLK_([^_]+)/, arr);
+							prop[apbmaster ":apbslavemask"] = arr[1];
+							delete arr;
+						}
+					} else {
 					errprint("32 bit mode must be even for TC" i);
+					}
 				}
 			}
 		}
@@ -176,6 +190,12 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 		stack[++sp] = 1; 
 		for (widx in devices) {
 			instance = devices[widx];
+			if (instance in mclk) {
+				prop[instance ":apb"] = mclk[instance];
+				match(mclk[instance], /^MCLK_([^_]+)/, arr);
+				prop[instance ":apbmask"] = arr[1];
+				delete arr;
+			}
 			key = instance ":macroname";
 			name = prop[instance ":macroname"];
   			olp = 1;

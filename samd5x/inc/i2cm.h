@@ -1,5 +1,6 @@
-/*
+/**
  * @file i2cm.h
+ *
  * @brief SAM I2CM
  * 
  * @note Copyright © Alkgrove 2018
@@ -21,7 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ **/
  
 #ifndef __I2CM_H__
 #define __I2CM_H__
@@ -36,13 +37,13 @@
 typedef enum {I2CM_OK = 0, I2CM_BUSBUSY, I2CM_BUSFAULT, I2CM_ARBLOST, I2CM_NO_ACK} i2cm_err_t;
 	
 typedef struct {
-	SERCOM_t *dev;
-	uint8_t *txbuf;
-	uint8_t *rxbuf;
-	uint8_t txlen;
-	volatile uint8_t rxlen;
-	volatile uint8_t address;
-	volatile uint8_t status;
+	SERCOM_t *dev;   /**< Pointer to serial port module registers ie SERCOM0 */
+	uint8_t *txbuf;  /**< Pointer to allocated transmit buffer */
+	uint8_t *rxbuf;  /**< Pointer to allocated receive buffer */
+	uint8_t txlen;   /**< Number of bytes to transmit */
+	volatile uint8_t rxlen; /**< Number of bytes expected to receive */
+	volatile uint8_t address; /**< I2C Address to send */
+	volatile uint8_t status; /**< Status of transfer: I2CM_BUSY, I2CM_FAIL or I2CM_NACK */
 } i2cm_msg_t;
 
 /**

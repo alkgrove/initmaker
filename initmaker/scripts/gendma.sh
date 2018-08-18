@@ -79,9 +79,9 @@ awk -v script="${script}" -i "${processor}" -v isrtmp="${isrtmp}" -v evttmp="${e
        	next;
 	}
 	(NR == FNR) && (in_section) {
-		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)[\r\n]+$/, arr)) {
+		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)$/, arr)) {
 			key = section ":" tolower(arr[1]);
-			value = arr[2];
+			value = gensub(/[\r\n]+/,"", "g", arr[2]);
 			prop[key] = value;
 		}
  	   	next;
@@ -168,6 +168,10 @@ awk -v script="${script}" -i "${processor}" -v isrtmp="${isrtmp}" -v evttmp="${e
 				if (prop[instance ":unit"] > 3) {
 					errprint("DMA Event Generators must bon on channels 0 throgh 3 only");
 				}
+				evintkey = instance ":evint";
+  				if (!(evintkey in prop)) {
+  					prop[evintkey] = "0";
+  				}
 			}
 		}
 		sp = 0;

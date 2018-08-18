@@ -90,9 +90,9 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
 		next;
 	}
 	(NR == FNR) && (in_section) {
-		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)[\r\n]+$/, arr)) {
+		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)$/, arr)) {
 			key = section ":" tolower(arr[1]);
-			value = arr[2];
+			value = gensub(/[\r\n]+/,"", "g", arr[2]);
 			prop[key] =  value;
 		}
  	   	next;
@@ -208,6 +208,10 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
   							edgekey = instance ":edge";
   							if (!(edgekey in prop)) {
   								prop[edgekey] = "NONE";
+  							}
+  							evintkey = instance ":evint";
+  							if (!(evintkey in prop)) {
+  								prop[evintkey] = "0";
   							}
   							pathkey = instance ":path";
   							if (!(pathkey in prop)) {

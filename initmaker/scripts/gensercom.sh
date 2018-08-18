@@ -22,6 +22,7 @@ boardsrc="$2"
 boardinc="$3"
 processor="$4"
 verbose="$5"
+#"APBA APBA APBB APBB APBD APBD APBD APBD";
 
 errfile="02.000"
 boardtmp="${boardsrc%.c}"
@@ -48,13 +49,11 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${v
     	in_section=0;
     	sercom_start = 1;
     	sercom_count = sercom_start;
-    	apbstring = "APBA APBA APBB APBB APBD APBD APBD APBD";
-    	split(apbstring, apblist, " ");
     	for (i = 0; i < 8; i++) {
-    		prop["sercom" i ":apb"] = apblist[i+1];
     		prop["sercom" i ":interrupt"] = 0;
     	}
     	initpins();
+    	initmclk();
 	}
 	(NR == FNR) && /^[#;]/ {
 		next;
@@ -93,9 +92,9 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${v
 		}
 	}
 	(NR == FNR) && (in_section) {
-		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)[\r\n]+$/, arr)) {
+		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)$/, arr)) {
 			key = section ":" tolower(arr[1]);
-			value = arr[2];
+			value = gensub(/[\r\n]+/,"", "g", arr[2]);
 			prop[key] = value;
 		}
  	   	next;
@@ -272,6 +271,13 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${v
 		stack[++sp] = 1; 
 		for (widx in devices) {
 			instance = devices[widx];
+			if (instance in mclk) {
+				prop[instance ":apb"] = mclk[instance];
+				match(mclk[instance], /^MCLK_([^_]+)/, arr);
+				prop[instance ":apbmask"] = arr[1];
+				delete arr;
+			}
+
 			key = instance ":macroname";
 			name = prop[instance ":macroname"];
   			olp = 1;

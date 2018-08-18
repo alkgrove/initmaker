@@ -25,6 +25,7 @@ verbose="$4"
 errfile="02.000"
 boardtmp="${boardsrc%.c}"
 evttmp="${boardtmp}_evt.tmp"
+isrtmp="${boardtmp}_isr.tmp"
 dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
@@ -40,7 +41,7 @@ newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
  
 if [[ -f ${evttmp} ]]; then
-awk -v script="${script}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
+awk -v script="${script}" -v evttmp="${evttmp}" -v isrtmp="${isrtmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -75,6 +76,7 @@ awk -v script="${script}" -v evttmp="${evttmp}" -i "${processor}" '@include "fun
 				pathlist[sync_count] = $4;
 				edgelist[sync_count] = $5;
 				clocklist[sync_count] = $6;
+				evintlist[sync_count] = $7;
 				prop["evsys:clocks"] = 1;
 				eventname[sync_count++] = $2;
 				if (sync_count >= async_start) {
@@ -118,12 +120,12 @@ awk -v script="${script}" -v evttmp="${evttmp}" -i "${processor}" '@include "fun
 			if (name in eventlist) {
 				eventlist[name] = 1;
 			} else {
-				errprint("Event driver " name " without generator");
+				warnprint("Event driver " name " without generator");
 			}
 		}
 		for (name in eventlist) {
 			if (eventlist[name] == 0) {
-				errprint("Event generator " name " without driver");
+				warnprint("Event generator " name " without driver");
 			}
 		}
         sp = 0;
@@ -161,6 +163,7 @@ awk -v script="${script}" -v evttmp="${evttmp}" -i "${processor}" '@include "fun
     							values[idx] = genidlist[j]; 
     							path[idx] = pathlist[j];
     							edge[idx] = wordtranslate("rising falling both", "RISING_EDGE FALLING_EDGE BOTH_EDGES", edgelist[j], "NO_EVT_OUTPUT");
+								evint[idx] = evintlist[j];
     							evtname[idx++] = eventname[j];
     						}
     						keyname = "channel"; valuename = "genid";
@@ -180,6 +183,7 @@ awk -v script="${script}" -v evttmp="${evttmp}" -i "${processor}" '@include "fun
           			prop[name ":path"] = path[idx];
           			prop[name ":edge"] = edge[idx];
           			prop[name ":eventname"] = evtname[idx];
+           			prop[name ":evint"] = evint[idx];
           			line = macro[i];
           			loopstart = i;
           		} else if (line ~ /#endfor/) {
@@ -190,6 +194,7 @@ awk -v script="${script}" -v evttmp="${evttmp}" -i "${processor}" '@include "fun
           				prop[name ":path"] = path[idx];
           				prop[name ":edge"] = edge[idx];
           				prop[name ":eventname"] = evtname[idx];
+           				prop[name ":evint"] = evint[idx];
           			} else {
    						--sp;
         				delete keys;
@@ -251,9 +256,11 @@ awk -v script="${script}" -v evttmp="${evttmp}" -i "${processor}" '@include "fun
           		}
           	}
           	for (i in outline) {
-        	    if (outline[i] ~ /^#var/) {
-        			print gensub(/^#var/,"",1,outline[i]) >> evttmp;
-        	    } else {
+			    if(outline[i] ~ /^#isr/) {
+					print gensub(/^#isr\s+/,"",1,outline[i]) >> isrtmp;
+			    } else if (outline[i] ~ /^#var/) {
+					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
+			    } else {
           			print outline[i];
         	    }
           	}

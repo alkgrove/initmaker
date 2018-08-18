@@ -52,13 +52,15 @@ DmacDescriptor_t *get_base_DMA_writeback_descriptor(uint8_t channel)
 #ifdef DEBUG
 /* 
  * Print descriptor
- * Print descriptors in link list until null pointer or ep (end pointer is reached)
- * ep is provided to stop printing a circular list
+ * Print descriptors in link list until null pointer or count of descriptors has passed
+ * count of <= 0, disables count and relies on null descriptor
  */
 
-void print_descriptor(DmacDescriptor_t *p, DmacDescriptor_t *ep)
+void print_descriptor(int channel, int length)
 {
+	DmacDescriptor_t *p = &base_dma_descriptor[channel];
     DmacDescriptor_t *next;
+	uint32_t count = (uint32_t) length;
     int i = 1;
     const char *beat[] = {"Byte", "Halfword", "Word", "Invalid"};
     const char *blockact[] = {"NOACT", "INT", "SUSPEND", "BOTH"};
@@ -66,7 +68,7 @@ void print_descriptor(DmacDescriptor_t *p, DmacDescriptor_t *ep)
     unsigned int btctrl;
     do {
         next = (DmacDescriptor_t *) p->DESCADDR.reg;
-        printf("Descriptor #%d\r\n", i++);
+        printf("Channel %d Descriptor #%d\r\n", channel, i++);
     	printf(" SRC %08X\r\n", (unsigned int) p->SRCADDR.reg);
     	printf(" DST %08X\r\n",  (unsigned int) p->DSTADDR.reg);
     	printf(" DESC %08X\r\n", (unsigned int) next);
@@ -82,7 +84,7 @@ void print_descriptor(DmacDescriptor_t *p, DmacDescriptor_t *ep)
     	printf("   Event Out Select %s\r\n", evosel[((btctrl & DMAC_BTCTRL_EVOSEL_Msk) >> DMAC_BTCTRL_EVOSEL_Pos)]);
     	printf("   Descriptor %s\r\n", (btctrl & DMAC_BTCTRL_VALID) ? "Valid" : "Invalid");    	
     	p = next;
-    } while ((next != ep) && (next != 0));
+    } while ((--count > 0) && (next != 0));
 	
 }	
 #endif

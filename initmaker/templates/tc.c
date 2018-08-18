@@ -1,7 +1,7 @@
 #defmacro tc
-	mclk_set_%apb%MASK(MCLK_%apb%MASK_TC%unit%);
-#iftrue (mode == 32)
-	mclk_set_%apb%MASK(MCLK_%apb%MASK_TC%toodd(unit)%);
+	mclk_set_%apbmask%(%apb%);
+#ifdefined apbslave
+	mclk_set_%apbslavemask%(%apbslave%);
 #fi
 	/* Clock TC%unit% with %toupper(ref_source)% (%frequency(ref_source)%) */
 	gclk_write_PCHCTRL(TC%unit%_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
@@ -114,13 +114,13 @@
 #isr TC%unit%_MC1 TC%unit%_IRQn TC%unit%_Handler
 #fi
 #ifdefined gen_ovf
-#evt gen %gen_ovf% TC%unit%_OVF %toupper(path_ovf)% %edge_ovf% %touppper(sync_source_ovf)%
+#evt gen %gen_ovf% TC%unit%_OVF %toupper(path_ovf)% %edge_ovf% %touppper(sync_source_ovf)% %evint_ovf%
 #fi
 #ifdefined gen_mc0
-#evt gen %gen_mc0% TC%unit%_MCX_0 %toupper(path_mc0)% %edge_mc0% %touppper(sync_source_mc0)%
+#evt gen %gen_mc0% TC%unit%_MCX_0 %toupper(path_mc0)% %edge_mc0% %touppper(sync_source_mc0)% %evint_mc0%
 #fi
 #ifdefined gen_mc1
-#evt gen %gen_mc1% TC%unit%_MCX_1 %toupper(path_mc1)% %edge_mc1% %touppper(sync_source_mc1)%
+#evt gen %gen_mc1% TC%unit%_MCX_1 %toupper(path_mc1)% %edge_mc1% %touppper(sync_source_mc1)% %evint_mc1%
 #fi
 #ifdefined event
 #evt event %event% TC%unit%_EVU
@@ -134,7 +134,7 @@
 
 #defmacro tcc
 
-	mclk_set_%apb%MASK(MCLK_%apb%MASK_TCC%unit%);
+	mclk_set_%apbmask%(%apb%);
 	/* Clock TCC%unit% with %toupper(ref_source)% (%frequency(ref_source)%) */
 	gclk_write_PCHCTRL(TCC%unit%_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
 	/* Reset TCC%unit% */
@@ -196,6 +196,8 @@
 #fi
 #ifdefined faulta_capture
 	                  | TCC_FCTRLA_CAPTURE_%toupper(faulta_capture)%
+#otherwise
+	                  | TCC_FCTRLA_CAPTURE_DISABLE
 #fi
 #ifdefined faulta_blankpresc
 				      | TCC_FCTRLA_BLANKPRESC
@@ -229,6 +231,8 @@
 #fi
 #ifdefined faultb_capture
 	                  | TCC_FCTRLB_CAPTURE_%toupper(faultb_capture)%
+#otherwise
+	                  | TCC_FCTRLA_CAPTURE_DISABLE
 #fi
 #ifdefined faultb_blankpresc
 				      | TCC_FCTRLB_BLANKPRESC
@@ -639,31 +643,31 @@
 #evt event %event_mc5% TCC%unit%_MC_5
 #fi
 #ifdefined gen_ovf
-#evt gen %gen_ovf% TCC%unit%_OVF %toupper(path_ovf)% %toupper(edge_ovf)% %touppper(sync_source_ovf)%
+#evt gen %gen_ovf% TCC%unit%_OVF %toupper(path_ovf)% %toupper(edge_ovf)% %touppper(sync_source_ovf)% %evint_ovf%
 #fi
 #ifdefined gen_trg
-#evt gen %gen_trg% TCC%unit%_TRG %toupper(path_trg)% %toupper(edge_trg)% %touppper(sync_source_trg)%
+#evt gen %gen_trg% TCC%unit%_TRG %toupper(path_trg)% %toupper(edge_trg)% %touppper(sync_source_trg)% %evint_trg%
 #fi
 #ifdefined gen_cnt
-#evt gen %gen_cnt% TCC%unit%_CNT %toupper(path_cnt)% %toupper(edge_cnt)% %touppper(sync_source_cnt)%
+#evt gen %gen_cnt% TCC%unit%_CNT %toupper(path_cnt)% %toupper(edge_cnt)% %touppper(sync_source_cnt)% %evint_cnt%
 #fi
 #ifdefined gen_mc0
-#evt gen %gen_mc0% TCC%unit%_MCX_0 %toupper(path_mc0)% %toupper(edge_mc0)% %touppper(sync_source_mc0)%
+#evt gen %gen_mc0% TCC%unit%_MCX_0 %toupper(path_mc0)% %toupper(edge_mc0)% %touppper(sync_source_mc0)% %evint_mc0%
 #fi
 #ifdefined gen_mc1
-#evt gen %gen_mc1% TCC%unit%_MCX_1 %toupper(path_mc1)% %toupper(edge_mc1)% %touppper(sync_source_mc1)%
+#evt gen %gen_mc1% TCC%unit%_MCX_1 %toupper(path_mc1)% %toupper(edge_mc1)% %touppper(sync_source_mc1)% %evint_mc1%
 #fi
 #ifdefined gen_mc2
-#evt gen %gen_mc2% TCC%unit%_MCX_2 %toupper(path_mc2)% %toupper(edge_mc2)% %touppper(sync_source_mc2)%
+#evt gen %gen_mc2% TCC%unit%_MCX_2 %toupper(path_mc2)% %toupper(edge_mc2)% %touppper(sync_source_mc2)% %evint_mc2%
 #fi
 #ifdefined gen_mc3
-#evt gen %gen_mc3% TCC%unit%_MCX_3 %toupper(path_mc3)% %toupper(edge_mc3)% %touppper(sync_source_mc3)%
+#evt gen %gen_mc3% TCC%unit%_MCX_3 %toupper(path_mc3)% %toupper(edge_mc3)% %touppper(sync_source_mc3)% %evint_mc3%
 #fi
 #ifdefined gen_mc4
-#evt gen %gen_mc4% TCC%unit%_MCX_4 %toupper(path_mc4)% %toupper(edge_mc4)% %touppper(sync_source_mc4)%
+#evt gen %gen_mc4% TCC%unit%_MCX_4 %toupper(path_mc4)% %toupper(edge_mc4)% %touppper(sync_source_mc4)% %evint_mc4%
 #fi
 #ifdefined gen_mc5
-#evt gen %gen_mc5% TCC%unit%_MCX_5 %toupper(path_mc5)% %toupper(edge_mc5)% %touppper(sync_source_mc5)%
+#evt gen %gen_mc5% TCC%unit%_MCX_5 %toupper(path_mc5)% %toupper(edge_mc5)% %touppper(sync_source_mc5)% %evint_mc5%
 #fi
 #ifdefined swgen
 #evt swgen %swgen%

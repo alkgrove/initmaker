@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# getlicense.sh <config file>.ini
+# getprocessor.sh <config file>.ini
 # returns name of processor found in config file
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
 if [[ $# -lt 1 ]]; then
-	echo "Usage: getlicense.sh <config file>.ini"
+	echo "Usage: getprocessor.sh <config file>.ini"
 	exit 1
 fi
 if [[ ! -f $1 ]]; then
@@ -32,9 +32,9 @@ awk -v dir="$dir" -v variant="${removevariant}" 'BEGIN {
            next;
 	}
 	in_section {
-		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)[\r\n]+$/, arr)) {
+		if (match($0, /([a-zA-Z][a-zA-Z0-9_]*)\s*=\s*(.*)$/, arr)) {
 	   		if (tolower(arr[1]) ~ /processor/) {
-	      		processor = arr[2];
+	      		processor = gensub(/\s+$/,"", 1, arr[2]);
 	      		in_section = 0;
 	   		}
 		}

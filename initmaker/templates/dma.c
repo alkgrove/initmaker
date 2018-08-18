@@ -58,7 +58,7 @@
 #fi
 #fi
 #ifdefined generator
-#evt gen %generator% DMAC_CH_%unit% %toupper(path)% %edge% %touppper(sync_source)%
+#evt gen %generator% DMAC_CH_%unit% %toupper(path)% %edge% %touppper(sync_source)% %evint%
 #fi
 #ifdefined event
 #evt event %event% DMAC_CH_%unit%

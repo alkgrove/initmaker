@@ -4,7 +4,7 @@
  * @version alpha
 **/
 /**
- * \file
+ * \file ac.h
  *
  * \brief SAM AC
  *
