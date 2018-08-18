@@ -2,7 +2,8 @@
 
 Prerequisites:  
 adafruit itsybitsym4, featherm4 or metrom4 dev board  
-arm-none-eabi-gcc tool chain -> from https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
+arm-none-eabi-gcc tool chain -> from https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads  
+(we verified that there were issues with older arm-none-eabi-gcc)  
 make utility  
 Gnu awk  
 initmaker with samd5x   
@@ -16,7 +17,7 @@ Then do:
 This generates the src/blinky_init.c and inc/blinky_init.h initialization files.  
 
 `make`  
-This generates the bin/blinky.uf2, this file can be dragged to the <board>m4boot drive that the UF2 bootloader makes. Double tap reset to get into the UF2 bootloader. 
+This generates the bin/blinky.uf2, this file can be dragged to the <board>m4boot drive that the UF2 bootloader makes. Double tap reset to get into the UF2 bootloader, then drag the blinky.UF2 into the drive folder. Once it downloads, push the reset button once to run the program. 
 
 Should see a red flashing LED. 
 
@@ -33,4 +34,5 @@ period=50
 Since the period is a change to Systick Configuration and is called inside SystemInit(),
 you will need to `make config; make`.
 
+Note that even though the itsy uses a ATSAMD51G19A, the link scrhipt for the ATSAMD51J19A will work. They both have the same memory allocation just different package. 
 
