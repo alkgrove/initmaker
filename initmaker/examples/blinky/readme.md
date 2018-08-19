@@ -13,9 +13,8 @@ You can make a simple build environment with:
 ```
 sudo apt-get install gcc-arm-none-eabi
 sudo apt-get install python3
-git clone https://github.com/alkgrove/initmaker.git
+git clone https://github.com/alkgrove/initmaker.git build
 git clone https://github.com/ARM-software/CMSIS_5.git
-mv initmaker build
 mv CMSIS_5/CMSIS build/
 mv CMSIS_5/LICENSE.txt build/CMSIS/
 rm -r CMSIS_5
