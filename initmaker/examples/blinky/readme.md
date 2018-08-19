@@ -1,15 +1,26 @@
 ### Blinky example for Adafruit SAMD51 boards
 
 Prerequisites:  
+initmaker with samd5x   
 adafruit itsybitsym4, featherm4 or metrom4 dev board  
 arm-none-eabi-gcc tool chain -> from https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads  
-(we verified that there were issues with older arm-none-eabi-gcc)  
 make utility  
-Gnu awk  
-initmaker with samd5x   
-cmsis -> from https://developer.arm.com/embedded/cmsis and follow the github link.
-cmsis is very large and you only need one folder. Make a directory CMSIS at the same level as initmaker and samd5x, unzip the CMSIS-5.x.x and copy the folder CMSIS-5.x.x/CMSIS-5.x.x/CMSIS/Core/Include into the CMSIS folder you just created. You should have CMSIS/Include/core_cm4.h now. 
+gawk - Gnu AWK to run initmaker scripts.   
+python3 - you need python3 to run the uf2conv.py script.  
 
+cmsis -> from https://developer.arm.com/embedded/cmsis and follow the github link.   
+You can make a simple build environment with:   
+```
+sudo apt-get install gcc-arm-none-eabi
+sudo apt-get install python3
+git clone https://github.com/alkgrove/initmaker.git
+git clone https://github.com/ARM-software/CMSIS_5.git
+mv initmaker build
+mv CMSIS_5/CMSIS build/
+mv CMSIS_5/LICENSE.txt build/CMSIS/
+rm -r CMSIS_5
+```
+This has been tested to work under Msys, cygwin and Linux Mint Sonya. ARM doesn't seem to have a release of Linux 32 bit and the version that can be apt-get on raspbian is an old one (5.4.1) and didn't work for us.  
 
 Edit makefile - uncomment/comment the line CFG=featherm4, CFG=metrom4 or CFG=itsym4 to customize to your board.
 Then do:  
