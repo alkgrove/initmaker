@@ -58,7 +58,7 @@ OBJCOPY=arm-none-eabi-objcopy
 SIZE=arm-none-eabi-size
 RM=rm -rf
 IM=../../scripts/initmaker.sh
-UF2=./uf2conv.py
+UF2=../../scripts/uf2conv.py
 
 LIB+=${shell ${CC} ${CFLAGS} -print-file-name=libc.a}
 LIB+=${shell ${CC} ${CFLAGS} -print-file-name=libgcc.a}
