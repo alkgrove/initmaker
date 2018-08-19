@@ -19,7 +19,7 @@ os := $(shell uname -o)
 
 INC = ./inc
 INC += ../../../samd5x/inc
-INC += ../../../CMSIS/Include
+INC += ../../../CMSIS/Core/Include
 
 ASRC =
 
