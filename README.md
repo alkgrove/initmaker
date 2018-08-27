@@ -1,7 +1,12 @@
+
 # initmaker
 This is a simplified driver set for the ATSAMD5x processor and SystemInit creator scripts for the Microchip (Atmel) ATSAMD5x chips. 
 This is intended for developers of the Microchip ATSAMD5x processor programming in C using arm-none-eabi-gcc. For more information, see www.alkgrove.com. It needs a bash shell environment and Gnu awk. 
-
+## Updates
+Added ADC support  
+Changed usart to support stdio.h (added alternate sys/custom_file.h.)  
+Added frequency check of modules.  
+## Description
 For ATSAMD5x and ATSAME5x processor families, Microchip  provided ASF4 for high and low level drivers, register description includes, initialization code, startup code and high level example code. The initialization was customized through the start.atmel.com website.
 These processors have sophisticated clocking scheme, multiuse serial ports, event system, configurable logic blocks and more. Initialization of the MCU was significantly more complex than it has been in the past and start.atmel.com was Microchips answer. 
 
