@@ -15,6 +15,7 @@ function initpins()
    unitmax["dpll"] = 2;
    unitmax["tcc"] = 2;
    unitmax["adc0"] = 16;
+   unitmax["adc"] = 2;
 
    pins["PA02:EIC"] = "0 EIC_EXTINT2";
    pins["PA03:EIC"] = "0 EIC_EXTINT3";

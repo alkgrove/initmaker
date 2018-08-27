@@ -30,6 +30,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "sam.h"
+#include "spim.h"
 
 spi_err_t spim_transfer(spim_msg_t *msg)
 {

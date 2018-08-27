@@ -8,7 +8,7 @@
 
 
 if [[ $# -lt 1 ]]; then
-	echo "Usage: getlicense.sh <config file>.ini"
+	echo "Usage: getlicense.sh <config file>.cfg"
 	exit 1
 fi
 if [[ ! -f $1 ]]; then

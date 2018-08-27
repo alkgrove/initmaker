@@ -45,6 +45,19 @@
  *
  * @param[in] pADC ADC_t *
  * @param[in] reg uint32_t 
+ * - ADC_SYNCBUSY_SWRST SWRST Synchronization Busy
+ * - ADC_SYNCBUSY_ENABLE ENABLE Synchronization Busy
+ * - ADC_SYNCBUSY_INPUTCTRL Input Control Synchronization Busy
+ * - ADC_SYNCBUSY_CTRLB Control B Synchronization Busy
+ * - ADC_SYNCBUSY_REFCTRL Reference Control Synchronization Busy
+ * - ADC_SYNCBUSY_AVGCTRL Average Control Synchronization Busy
+ * - ADC_SYNCBUSY_SAMPCTRL Sampling Time Control Synchronization Busy
+ * - ADC_SYNCBUSY_WINLT Window Monitor Lower Threshold Synchronization Busy
+ * - ADC_SYNCBUSY_WINUT Window Monitor Upper Threshold Synchronization Busy
+ * - ADC_SYNCBUSY_GAINCORR Gain Correction Synchronization Busy
+ * - ADC_SYNCBUSY_OFFSETCORR Offset Correction Synchronization Busy
+ * - ADC_SYNCBUSY_SWTRIG Software Trigger Synchronization Busy
+ *
  **/
 static inline void adc_wait_for_sync(ADC_t *pADC, uint32_t reg)
 {
@@ -57,6 +70,18 @@ static inline void adc_wait_for_sync(ADC_t *pADC, uint32_t reg)
  *
  * @param[in] pADC ADC_t *
  * @param[in] reg uint32_t 
+ * - ADC_SYNCBUSY_SWRST SWRST Synchronization Busy
+ * - ADC_SYNCBUSY_ENABLE ENABLE Synchronization Busy
+ * - ADC_SYNCBUSY_INPUTCTRL Input Control Synchronization Busy
+ * - ADC_SYNCBUSY_CTRLB Control B Synchronization Busy
+ * - ADC_SYNCBUSY_REFCTRL Reference Control Synchronization Busy
+ * - ADC_SYNCBUSY_AVGCTRL Average Control Synchronization Busy
+ * - ADC_SYNCBUSY_SAMPCTRL Sampling Time Control Synchronization Busy
+ * - ADC_SYNCBUSY_WINLT Window Monitor Lower Threshold Synchronization Busy
+ * - ADC_SYNCBUSY_WINUT Window Monitor Upper Threshold Synchronization Busy
+ * - ADC_SYNCBUSY_GAINCORR Gain Correction Synchronization Busy
+ * - ADC_SYNCBUSY_OFFSETCORR Offset Correction Synchronization Busy
+ * - ADC_SYNCBUSY_SWTRIG Software Trigger Synchronization Busy
  * @return bool
  **/
 static inline bool adc_is_syncing(ADC_t *pADC, uint32_t reg)
@@ -993,30 +1018,6 @@ static inline uint8_t adc_read_REFCTRL(ADC_t *pADC)
 }
 
 /**
- * @brief adc set AVGCTRL register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint8_t 
- * - ADC_AVGCTRL_SAMPLENUM(value) Number of Samples to be Collected
- *  +      ADC_AVGCTRL_SAMPLENUM_1 1 sample
- *  +      ADC_AVGCTRL_SAMPLENUM_2 2 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_4 4 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_8 8 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_16 16 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_32 32 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_64 64 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_128 128 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_256 256 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_512 512 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_1024 1024 samples
- * - ADC_AVGCTRL_ADJRES(value) Adjusting Result / Division Coefficient
- **/
-static inline void adc_set_AVGCTRL(ADC_t *pADC, uint8_t mask)
-{
-	pADC->AVGCTRL.reg |= mask;
-}
-
-/**
  * @brief adc get AVGCTRL register
  *
  * @param[in] pADC ADC_t *
@@ -1063,30 +1064,6 @@ static inline uint8_t adc_get_AVGCTRL(ADC_t *pADC, uint8_t mask)
 static inline void adc_write_AVGCTRL(ADC_t *pADC, uint8_t data)
 {
 	pADC->AVGCTRL.reg = data;
-}
-
-/**
- * @brief adc clear AVGCTRL register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint8_t 
- * - ADC_AVGCTRL_SAMPLENUM(value) Number of Samples to be Collected
- *  +      ADC_AVGCTRL_SAMPLENUM_1 1 sample
- *  +      ADC_AVGCTRL_SAMPLENUM_2 2 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_4 4 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_8 8 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_16 16 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_32 32 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_64 64 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_128 128 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_256 256 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_512 512 samples
- *  +      ADC_AVGCTRL_SAMPLENUM_1024 1024 samples
- * - ADC_AVGCTRL_ADJRES(value) Adjusting Result / Division Coefficient
- **/
-static inline void adc_clear_AVGCTRL(ADC_t *pADC, uint8_t mask)
-{
-	pADC->AVGCTRL.reg &= ~mask;
 }
 
 /**
@@ -1146,6 +1123,7 @@ static inline uint8_t adc_get_SAMPCTRL(ADC_t *pADC, uint8_t mask)
  * @param[in] pADC ADC_t *
  * @param[in] data uint8_t 
  * - ADC_SAMPCTRL_SAMPLEN(value) Sampling Time Length
+ * @note Sampling Time = (SAMPLEN + 1) * ADC_CLK (after prescale)
  * - ADC_SAMPCTRL_OFFCOMP Comparator Offset Compensation Enable
  **/
 static inline void adc_write_SAMPCTRL(ADC_t *pADC, uint8_t data)
@@ -1180,31 +1158,6 @@ static inline uint8_t adc_read_SAMPCTRL(ADC_t *pADC)
 }
 
 /**
- * @brief adc set WINLT register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_WINLT_WINLT(value) Window Lower Threshold
- **/
-static inline void adc_set_WINLT(ADC_t *pADC, uint16_t mask)
-{
-	pADC->WINLT.reg |= mask;
-}
-
-/**
- * @brief adc get WINLT register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * @return uint16_t
- * - ADC_WINLT_WINLT(value) Window Lower Threshold
- **/
-static inline uint16_t adc_get_WINLT(ADC_t *pADC, uint16_t mask)
-{
-    return pADC->WINLT.reg & mask;
-}
-
-/**
  * @brief adc write WINLT register
  *
  * @param[in] pADC ADC_t *
@@ -1214,18 +1167,6 @@ static inline uint16_t adc_get_WINLT(ADC_t *pADC, uint16_t mask)
 static inline void adc_write_WINLT(ADC_t *pADC, uint16_t data)
 {
 	pADC->WINLT.reg = data;
-}
-
-/**
- * @brief adc clear WINLT register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_WINLT_WINLT(value) Window Lower Threshold
- **/
-static inline void adc_clear_WINLT(ADC_t *pADC, uint16_t mask)
-{
-	pADC->WINLT.reg &= ~mask;
 }
 
 /**
@@ -1241,31 +1182,6 @@ static inline uint16_t adc_read_WINLT(ADC_t *pADC)
 }
 
 /**
- * @brief adc set WINUT register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_WINUT_WINUT(value) Window Upper Threshold
- **/
-static inline void adc_set_WINUT(ADC_t *pADC, uint16_t mask)
-{
-	pADC->WINUT.reg |= mask;
-}
-
-/**
- * @brief adc get WINUT register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * @return uint16_t
- * - ADC_WINUT_WINUT(value) Window Upper Threshold
- **/
-static inline uint16_t adc_get_WINUT(ADC_t *pADC, uint16_t mask)
-{
-    return pADC->WINUT.reg & mask;
-}
-
-/**
  * @brief adc write WINUT register
  *
  * @param[in] pADC ADC_t *
@@ -1275,18 +1191,6 @@ static inline uint16_t adc_get_WINUT(ADC_t *pADC, uint16_t mask)
 static inline void adc_write_WINUT(ADC_t *pADC, uint16_t data)
 {
 	pADC->WINUT.reg = data;
-}
-
-/**
- * @brief adc clear WINUT register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_WINUT_WINUT(value) Window Upper Threshold
- **/
-static inline void adc_clear_WINUT(ADC_t *pADC, uint16_t mask)
-{
-	pADC->WINUT.reg &= ~mask;
 }
 
 /**
@@ -1302,31 +1206,6 @@ static inline uint16_t adc_read_WINUT(ADC_t *pADC)
 }
 
 /**
- * @brief adc set GAINCORR register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_GAINCORR_GAINCORR(value) Gain Correction Value
- **/
-static inline void adc_set_GAINCORR(ADC_t *pADC, uint16_t mask)
-{
-	pADC->GAINCORR.reg |= mask;
-}
-
-/**
- * @brief adc get GAINCORR register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * @return uint16_t
- * - ADC_GAINCORR_GAINCORR(value) Gain Correction Value
- **/
-static inline uint16_t adc_get_GAINCORR(ADC_t *pADC, uint16_t mask)
-{
-    return pADC->GAINCORR.reg & mask;
-}
-
-/**
  * @brief adc write GAINCORR register
  *
  * @param[in] pADC ADC_t *
@@ -1336,18 +1215,6 @@ static inline uint16_t adc_get_GAINCORR(ADC_t *pADC, uint16_t mask)
 static inline void adc_write_GAINCORR(ADC_t *pADC, uint16_t data)
 {
 	pADC->GAINCORR.reg = data;
-}
-
-/**
- * @brief adc clear GAINCORR register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_GAINCORR_GAINCORR(value) Gain Correction Value
- **/
-static inline void adc_clear_GAINCORR(ADC_t *pADC, uint16_t mask)
-{
-	pADC->GAINCORR.reg &= ~mask;
 }
 
 /**
@@ -1363,31 +1230,6 @@ static inline uint16_t adc_read_GAINCORR(ADC_t *pADC)
 }
 
 /**
- * @brief adc set OFFSETCORR register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_OFFSETCORR_OFFSETCORR(value) Offset Correction Value
- **/
-static inline void adc_set_OFFSETCORR(ADC_t *pADC, uint16_t mask)
-{
-	pADC->OFFSETCORR.reg |= mask;
-}
-
-/**
- * @brief adc get OFFSETCORR register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * @return uint16_t
- * - ADC_OFFSETCORR_OFFSETCORR(value) Offset Correction Value
- **/
-static inline uint16_t adc_get_OFFSETCORR(ADC_t *pADC, uint16_t mask)
-{
-    return pADC->OFFSETCORR.reg & mask;
-}
-
-/**
  * @brief adc write OFFSETCORR register
  *
  * @param[in] pADC ADC_t *
@@ -1397,18 +1239,6 @@ static inline uint16_t adc_get_OFFSETCORR(ADC_t *pADC, uint16_t mask)
 static inline void adc_write_OFFSETCORR(ADC_t *pADC, uint16_t data)
 {
 	pADC->OFFSETCORR.reg = data;
-}
-
-/**
- * @brief adc clear OFFSETCORR register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_OFFSETCORR_OFFSETCORR(value) Offset Correction Value
- **/
-static inline void adc_clear_OFFSETCORR(ADC_t *pADC, uint16_t mask)
-{
-	pADC->OFFSETCORR.reg &= ~mask;
 }
 
 /**
@@ -1596,20 +1426,6 @@ static inline uint32_t adc_read_DSEQCTRL(ADC_t *pADC)
 }
 
 /**
- * @brief adc set CALIB register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_CALIB_BIASCOMP(value) Bias Comparator Scaling
- * - ADC_CALIB_BIASR2R(value) Bias R2R Ampli scaling
- * - ADC_CALIB_BIASREFBUF(value) Bias  Reference Buffer Scaling
- **/
-static inline void adc_set_CALIB(ADC_t *pADC, uint16_t mask)
-{
-	pADC->CALIB.reg |= mask;
-}
-
-/**
  * @brief adc get CALIB register
  *
  * @param[in] pADC ADC_t *
@@ -1636,20 +1452,6 @@ static inline uint16_t adc_get_CALIB(ADC_t *pADC, uint16_t mask)
 static inline void adc_write_CALIB(ADC_t *pADC, uint16_t data)
 {
 	pADC->CALIB.reg = data;
-}
-
-/**
- * @brief adc clear CALIB register
- *
- * @param[in] pADC ADC_t *
- * @param[in] mask uint16_t 
- * - ADC_CALIB_BIASCOMP(value) Bias Comparator Scaling
- * - ADC_CALIB_BIASR2R(value) Bias R2R Ampli scaling
- * - ADC_CALIB_BIASREFBUF(value) Bias  Reference Buffer Scaling
- **/
-static inline void adc_clear_CALIB(ADC_t *pADC, uint16_t mask)
-{
-	pADC->CALIB.reg &= ~mask;
 }
 
 /**

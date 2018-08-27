@@ -1,16 +1,31 @@
 #defmacro board
 /**
+#ifdefined project
  * @defgroup %project%
+#fi
  * @file %filename%
  * %processor%
- * @brief %description%
+#ifdefined description
+ * @brief Source file for SystemInit Function
+ * %description%
+#fi
  * 
+#ifdefined copyright
  * @copyright %copyright%
  * All Rights Reserved
+#fi
+#ifdefined company
+ * %company%
+#fi
+#ifdefined author
  * @author %author%
+#fi
+
  * @date %date%
  *
+#ifdefined legal
 %legal%
+#fi
  **/
 #ifndef __%tag%__
 #define __%tag%__

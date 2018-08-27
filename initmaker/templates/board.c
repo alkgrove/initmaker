@@ -13,6 +13,12 @@
  * %copyright%
  * All Rights Reserved
 #fi
+#ifdefined comment
+ * %comment%
+#fi
+#ifdefined company
+ * %company%
+#fi
 #ifdefined author
  * %author%
 #fi
@@ -45,6 +51,10 @@ void SystemInit(void)
  *  @{ **/
 /** @} **/
 /** @addtogroup TC
+ *  @ingroup SystemInit
+ *  @{ **/
+/** @} **/
+/** @addtogroup Analog
  *  @ingroup SystemInit
  *  @{ **/
 /** @} **/

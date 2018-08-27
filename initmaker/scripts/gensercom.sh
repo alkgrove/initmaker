@@ -128,6 +128,9 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${v
 	END {
     	for (j = sercom_start; j < sercom_count; j++) {
     		instance = devices[j];
+    		if (instance ~ /sercom[0-9]+/) {
+    			checkfreq(instance, 100000000);
+    		}
     		key = instance ":type";
     		if (key in prop) {
 				type = prop[instance ":type"];

@@ -241,6 +241,9 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
 			instance = devices[widx];
 			name = prop[instance ":macroname"];
   			olp = 1;
+  			if (instance ~ /eic/) {
+  				checkfreq(instance, 100000000);
+  			}
   			for (i = beginmacro[name]; i < endmacro[name]; i++) {
   				line = macro[i];
    				if (line ~ /#foreach/) {

@@ -28,63 +28,129 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
+#include "usart.h"
 #include "sam.h"
 
-static SERCOM_t *USART_PORTS[] = SERCOM_INSTS;
-// blocking put character
-void UART_putc(uint8_t port, char ch)
+const FILE __COM[] = {
+	{.type=SERIAL_COM, .dev=SERCOM0},
+    {.type=SERIAL_COM, .dev=SERCOM1},
+    {.type=SERIAL_COM, .dev=SERCOM2},
+    {.type=SERIAL_COM, .dev=SERCOM3},
+    {.type=SERIAL_COM, .dev=SERCOM4},
+    {.type=SERIAL_COM, .dev=SERCOM5},
+    {0},
+    {0},
+    {.type=SWO_COM, .io=0},
+    {.type=SWO_COM, .io=1},
+    {.type=SWO_COM, .io=2},
+    {.type=SWO_COM, .io=3},
+    {.type=SWO_COM, .io=4},
+    {.type=SWO_COM, .io=5},
+    {.type=SWO_COM, .io=6},
+    {.type=SWO_COM, .io=7}
+};
+
+
+/*
+ * Wrapper for putc
+ * requires to be linked with the option -Wl,wrap=putc
+ */
+
+int __wrap_putc(int c, FILE *fp)
 {
-	SERCOM_t *io = USART_PORTS[port];
-	while((usart_read_INTFLAG(io) & SERCOM_USART_INTFLAG_DRE) == 0); // while TX full
-	usart_write_DATA(io, ch);
-}
-// return true if receive buffer in UART has a character to read
-bool UART_haschar(uint8_t port)
-{
-	SERCOM_t *io = USART_PORTS[port];
-	return (usart_read_INTFLAG(io) & SERCOM_USART_INTFLAG_RXC) != 0;
-}
-// blocking get character from UART
-uint32_t UART_getc(uint8_t port)
-{
-	SERCOM_t *io = USART_PORTS[port];
-	while((usart_read_INTFLAG(io) & SERCOM_USART_INTFLAG_RXC) == 0); // wait for character
-	return usart_read_DATA(io);
+	if (fp == NULL) return EOF;
+	if (fp->type == SERIAL_COM) {
+		UART_putc(c, fp->dev);
+	} else if (fp->type == SWO_COM) {
+		SWO_putc(c, fp->io);
+	}
+	return c;
 }
 
-// blocking get string from UART
-// handles carraige return and backspace
-// local echo of characters
-void UART_gets(uint8_t port, char *buffer, size_t len)
+/*
+ * Wrapper for putc
+ * requires to be linked with the option -Wl,wrap=putc
+ */
+
+int __wrap_putchar(int c)
+{
+	return __wrap_putc(c, stdout);
+}
+/*
+ * Wrapper for fputs
+ * requires to be linked with the option -Wl,wrap=fputs
+ */
+
+int __wrap_fputs (const char* str, FILE *fp) 
+{
+	while(*str != '\0') {
+		__wrap_putc(*str++, fp);
+	}
+	__wrap_putc('\r', fp);
+	__wrap_putc('\n', fp);
+	return 1;
+}
+
+/*
+ * Wrapper for puts
+ * requires to be linked with the option -Wl,wrap=puts
+ */
+
+int __wrap_puts(const char* str) 
+{
+	return __wrap_fputs(str, stdout);
+}
+/*
+ * Wrapper for getc
+ * requires to be linked with the option -Wl,wrap=getc
+ */
+ 
+int __wrap_getc(FILE *fp)
+{
+	if ((fp != NULL) && (fp->type == SERIAL_COM)) {
+		return UART_getc(fp->dev);
+	} 
+	return EOF;
+}
+
+/*
+ * Wrapper for fgets
+ * requires to be linked with the option -Wl,wrap=fgets
+ * note because of potential buffer overflow, gets is not implemented
+ */
+ 
+char *__wrap_fgets(char* str, size_t len, FILE *fp) 
 {
 	int ch;
 	int i = 0;
-
 	while(i < len) {
-		ch = UART_getc(port);
+		ch = __wrap_getc(fp);
 		if (ch >= 0) {
-			UART_putc(port, ch);
+#ifdef UART_ECHO
+			__wrap_putc(ch, fp);
+#endif
 			if (ch == '\r') {
-			    UART_putc(port, '\n');
+#ifdef UART_ECHO
+#ifdef UART_CRLF
+				__wrap_putc('\n', fp);
+#endif
+#endif
 			    break;
 			}
             if (i > 0 && ch == '\b') {
 				i--;
-				UART_putc(port, '\b');
-				UART_putc(port, ' ');
-				UART_putc(port, '\b');				
+#ifdef UART_ECHO
+				__wrap_putc('\b', fp);
+				__wrap_putc(' ', fp);
+				__wrap_putc('\b', fp);
+#endif
 			} else {
-				buffer[i++] = ch;
+				str[i++] = ch;
 			}
 		}
 	}
-	buffer[i] = '\0';
-}
-// blocking put string to UART
-void UART_puts(uint8_t port, const char *src)
-{
-    while(*src != '\0') {
-        UART_putc(port, *src++);
-    }
+	str[i] = '\0';
+	return str;
 }
 

@@ -98,14 +98,14 @@
 #include "eic.h"
 #include "evsys.h"
 #include "freqm.h"
-#include "gclk.h" /* modified */
+#include "gclk.h"
 #include "hmatrixb.h"
 #include "i2s.h"
 #include "icm.h"
-#include "mclk.h" /* modified */
-#include "nvmctrl.h" /* modified */
-#include "osc32kctrl.h" /* modified */
-#include "oscctrl.h" /* modified */
+#include "mclk.h"
+#include "nvmctrl.h"
+#include "osc32kctrl.h"
+#include "oscctrl.h" 
 #include "pac.h"
 #include "pcc.h"
 #include "pdec.h"
@@ -115,16 +115,13 @@
 #include "rstc.h"
 #include "rtc.h"
 #include "sdhc.h"
-#include "sercom.h" /* modified */
+#include "sercom.h"
 #include "supc.h"
 #include "tc.h"
 #include "tcc.h"
 #include "trng.h"
 #include "usb.h"
 #include "wdt.h"
-#include "gpio.h" /* new in place of port */
-#include "usart.h" /* new */
-#include "i2cm.h" /* new */
-#include "spim.h" /* new */
+#include "gpio.h" /* renamed from port */
 
 #endif /* _SAM_ */

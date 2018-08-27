@@ -30,6 +30,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "sam.h"
+#include "i2cm.h"
 
 
 i2cm_err_t i2cm_enable(i2cm_msg_t *msg)

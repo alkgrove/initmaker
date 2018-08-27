@@ -26,50 +26,99 @@
 #ifndef __USART_H__
 #define __USART_H__
 
-#define CONSOLE_PORT 0
-#define DEFAULT_FD CONSOLE_PORT
+#define UART_CRLF
+#define UART_ECHO
+
+#include "sam.h"
+#include <stdio.h>
+#include "core_cm4.h"
+
+extern const FILE __COM[];
+#define COM0 ((FILE * const)&__COM[0])
+#define COM1 ((FILE * const)&__COM[1])
+#define COM2 ((FILE * const)&__COM[2])
+#define COM3 ((FILE * const)&__COM[3])
+#define COM4 ((FILE * const)&__COM[4])
+#define COM5 ((FILE * const)&__COM[5])
+#define COM6 ((FILE * const)&__COM[6])
+#define COM7 ((FILE * const)&__COM[7])
+#define SWO0 ((FILE * const)&__COM[8])
+#define SWO1 ((FILE * const)&__COM[9])
+#define SWO2 ((FILE * const)&__COM[10])
+#define SWO3 ((FILE * const)&__COM[11])
+#define SWO4 ((FILE * const)&__COM[12])
+#define SWO5 ((FILE * const)&__COM[13])
+#define SWO6 ((FILE * const)&__COM[14])
+#define SWO7 ((FILE * const)&__COM[15])
+
+/**
+ * initSerial() sets stdin, stdout, and stderr to default FILE stream 
+ *
+ */
+static inline void initSerial(void)
+{
+	stdin = (FILE *) COM0;
+	stdout = (FILE *) COM0;
+	stderr = (FILE *) COM0;
+}
 
 /**
  * @brief UART_putc
  * blocking send of a single character over the UART identified by port
  *
- * @param[in] port - int 	id number of serial communications module 0 - 5 for SERCOM0 to SERCOM5
  * @param[in] ch - char 	character to send over serial
+ * @param[in] SERCOM_t *dev 	pointer to SERCOM ie SERCOM0, SErCOM1
  */
-void UART_putc(uint8_t port, char ch);
+static inline void UART_putc(int ch, SERCOM_t *dev)
+{
+	while((usart_read_INTFLAG(dev) & SERCOM_USART_INTFLAG_DRE) == 0); // while TX full
+	usart_write_DATA(dev, (uint8_t) ch);
+}
+
 /**
- * @brief UART_haschar
+ * @brief SWO_putc
+ * blocking send of a single character over the UART identified by port
  *
- * @param[in] port - int 	id number of serial communications module 0 - 5 for SERCOM0 to SERCOM5
- * @return boolean true if receive buffer has character, false if receive buffer empty
+ * @param[in] ch - char 	character to send over serial
+ * @param[in] int channel	SWO Channel - must be enabled
  */
-bool UART_haschar(uint8_t port);
+#pragma push_macro("PORT")
+#undef PORT
+static inline int SWO_putc(int ch, int channel)
+{
+  if (((ITM->TCR & ITM_TCR_ITMENA_Msk) != 0UL) &&  /* ITM enabled */
+      ((ITM->TER & (1UL  << channel)) != 0UL)) {   /* ITM Port enabled */
+		while (ITM->PORT[channel].u32 == 0UL) {
+      		__NOP();
+    	}
+    	ITM->PORT[channel].u8 = (uint8_t) ch;
+  }
+  return (ch);
+}
+#pragma pop_macro("PORT")
 /**
  * @brief UART_getc
- * blocks for character to be received from UART and returns it
- * @param[in] port - int 	id number of serial communications module 0 - 5 for SERCOM0 to SERCOM5
- * @return uint32_t ch	character read from serial port
- */
-uint32_t UART_getc(uint8_t port);
-/**
- * @brief UART_gets
- * blocks for a line of characters received from UART and returns with characters written 
- * to null terminated string in buffer. It echos  characters and recognizes back space.
- * it will truncate lines longer than the buffer size
+ * blocking receive of a single character over the UART identified by port
  *
- * @param[in] port - int 	id number of serial communications module 0 - 5 for SERCOM0 to SERCOM5
- * @param[in] buffer - char *	pointer to array of characters to hold line
- * @param[in] len - size_t 	number of bytes in above buffer
+ * @param[in] SERCOM_t *dev 	pointer to SERCOM ie SERCOM0, SErCOM1
  */
-void UART_gets(uint8_t port, char *buffer, size_t len);
-/**
- * @brief UART_puts
- * blocking send of null terminated c string to UART
- *
- * @param[in] port - int 	id number of serial communications module 0 - 5 for SERCOM0 to SERCOM5
- * @param[in] src - char *	pointer to null terminate c string 
- */
-void UART_puts(uint8_t port, const char *src);
+ 
+static inline uint32_t UART_getc(SERCOM_t *dev)
+{
+	while((usart_read_INTFLAG(dev) & SERCOM_USART_INTFLAG_RXC) == 0); // wait for character
+	return usart_read_DATA(dev);
+}
 
+/**
+ * @brief getc_ready
+ * returns true if serial has received a character
+ *
+ * @param[in] FILE *fp 	FILE Pointer to get device
+ */
+ 
+static inline bool getc_ready(FILE *fp)
+{
+	return (usart_read_INTFLAG(fp->dev) & SERCOM_USART_INTFLAG_RXC) != 0;
+}
 
 #endif /* __USART_H__ */

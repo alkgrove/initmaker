@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# gentc.sh <config file>.cfg <target>.c <target>.h {-v}
-# modifies timer/counter section
+# genana.sh <config file>.cfg <target>.c <target>.h {-v}
+# modifies analog section
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
@@ -31,10 +31,10 @@ newdstarr=("${boardtmp}.000" "${boardtmp}.001")
 isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 evttmp="${boardtmp}_evt.tmp"
-templatearr=("${INITMAKER}/templates/tc.c" "${INITMAKER}/templates/tc.h")
+templatearr=("${INITMAKER}/templates/analog.c" "${INITMAKER}/templates/analog.h")
 today=`date +%D`
 
-for i in 0 1
+for i in 0
 do
 dst="${dstarr[i]}"
 tmp="${tmparr[i]}"
@@ -51,31 +51,11 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 		tcc_count = 100;
      	initpins();
      	initmclk();
-     	for (i = 0; i < unitmax["tc"]; i++) {
-			prop["tc" i ":count"] = 0;
-			prop["tc" i ":prescaler"] = 1;
-			prop["tc" i ":prescsync"] = "GCLK";
-			prop["tc" i ":wavegen"] = "MFRQ";
-			prop["tc" i ":evint_ovf"] = 0;
-			prop["tc" i ":evint_mc0"] = 0;
-			prop["tc" i ":evint_mc1"] = 0;
-		}
-		for (i = 0; i < unitmax["tcc"]; i++) {
-			prop["tcc" i ":count"] = 0;
-			prop["tcc" i ":prescaler"] = 1;
-			prop["tcc" i ":prescsync"] = "GCLK";
-			prop["tcc" i ":resolution"] = "NONE";
-			prop["tcc" i ":faulta_src"] = "DISABLE";
-			prop["tcc" i ":faultb_src"] = "DISABLE";
-			prop["tcc" i ":evint_ovf"] = 0;
-			prop["tcc" i ":evint_trg"] = 0;
-			prop["tcc" i ":evint_cnt"] = 0;
-			prop["tcc" i ":evint_mc0"] = 0;
-			prop["tcc" i ":evint_mc1"] = 0;
-			prop["tcc" i ":evint_mc2"] = 0;
-			prop["tcc" i ":evint_mc3"] = 0;
-			prop["tcc" i ":evint_mc4"] = 0;
-			prop["tcc" i ":evint_mc5"] = 0;
+     	for (i = 0; i < unitmax["adc"]; i++) {
+			prop["adc" i ":samplenum"] = 1;
+			prop["adc" i ":adjres"] = 0;
+			prop["adc" i ":samplen"] = 0;			
+			prop["adc" i ":prescaler"] = "div2";
 		}
 	}
 	(NR == FNR) && /^[#;]/ {
@@ -85,7 +65,7 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 		gsub(/[\[\]\r\n\ \t]/,"");
 		key = tolower($0);
 		in_section = 0;
-		if (key ~ /tcc[0-9]+/) {
+		if (key ~ /adc[0-9]+/) {
   			in_section = 1;
   			section = key;
  			if (match(section, /([0-9]{1,2}$)/, a)) {
@@ -97,27 +77,8 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 				}
 			}
 			delete a;
- 			devices[tcc_count++] = section;
-  			prop[section ":macroname"] = "tcc";
-  		} else if (key ~ /tc[0-9]+/) {
-  			in_section = 1;
-  			section = key;
-			if (match(section, /([0-9]{1,2}$)/, a)) {
- 				key = section ":unit";
- 				if (key in prop) {
- 					errprint(toupper(section) " defined more than once");
- 				} else {
-					prop[key] = a[1];
-				}
-			}
-			delete a;
-  			devices[tc_count++] = section;
-  			prop[section ":macroname"] = "tc";
-  		} else if (key ~ /systick/) {
-  			in_section = 1;
-  			section = key;
-  			devices[900] = section;
-  			prop[section ":macroname"] = "systick";
+ 			devices[adc_count++] = section;
+  			prop[section ":macroname"] = "adc";
   		}  else if (key ~ /freq/) {
   			in_section = 1;
   			section = key;
@@ -159,33 +120,6 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 		linecount++;
 	}		
 	END {
-		for (i = 0; i < unitmax["tc"]; i++) {
-			key = "tc" i ":prescaler";
-			if (key in prop) {
-				if ((bitcount(prop[key]) > 1) || (int(prop[key]) > 1024)) {
-					errprint("Prescale value " prop[key] " for TC" i " must be power of 2 and <= 1024");
-				}
-			}
-			modekey = "tc" i ":mode";
-			if (modekey in prop) {
-				if ((prop[modekey] != 32) && (prop[modekey] != 16) && (prop[modekey] != 8)) {
-					errprint("Mode must be 32, 16 or 8 and is " prop[modekey]);
-				} else if (prop[modekey] == 32) {
-					if ((i % 2) == 0) {
-						apbmaster = "tc" i;
-						apbslave = "tc" (i + 1);
-						if (apbslave in mclk) {
-							prop[apbmaster ":apbslave"] = mclk[apbslave];
-							match(mclk[apbslave], /^MCLK_([^_]+)/, arr);
-							prop[apbmaster ":apbslavemask"] = arr[1];
-							delete arr;
-						}
-					} else {
-					errprint("32 bit mode must be even for TC" i);
-					}
-				}
-			}
-		}
 		sp = 0;
 		stack[++sp] = 1; 
 		for (widx in devices) {
@@ -196,15 +130,7 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 				prop[instance ":apbmask"] = arr[1];
 				delete arr;
 			}
-			if (instance ~ /tc[0-3]/) {
-				checkfreq(instance, 200000000);
-			}
-			if (instance ~ /tc[4-7]/) {
-				checkfreq(instance, 100000000);
-			}
-			if (instance ~ /tcc[0-9]+/) {
-				checkfreq(instance, 200000000);
-			}			
+			checkfreq(instance, 100000000);
 			key = instance ":macroname";
 			name = prop[instance ":macroname"];
   			olp = 1;
@@ -310,8 +236,8 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
-	/\/\**\s*@addtogroup TC/ {
-           print "/** @addtogroup TC";
+	/\/\**\s*@addtogroup Analog/ {
+           print "/** @addtogroup Analog";
            print " *  @ingroup SystemInit";
            print " *  Updated: " date;
            print " *  @{ **/";
@@ -334,12 +260,12 @@ rm -f $tmp
 if [[ -f "${errfile}" ]]; then
    rm -f "${errfile}"
    if [[ ${verbose} == 1 ]]; then
-   	   echo "${dst} timer/counter failed"
+   	   echo "${dst} analog failed"
    fi
 else
    mv -f $newdst $dst
 	if [[ ${verbose} == 1 ]]; then
-   		echo "${dst} timer/counter done"
+   		echo "${dst} analog done"
 	fi
 fi
 done

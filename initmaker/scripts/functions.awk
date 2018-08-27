@@ -9,6 +9,16 @@ function wordtranslate(fromlist, tolist, x, def)
 	return def;
 }
 
+function tofreq(frequency)
+{
+      	if (frequency >= 1000000) {
+      		return (frequency/1000000.0) "MHz"; 
+      	} else if (frequency >= 1000) {
+      		return (frequency/1000.0) "KHz";
+      	}
+      	return frequency "Hz";
+}
+
 function unitof(refdes) 
 {
 	match(refdes, /([0-9]+)$/, az);
@@ -49,13 +59,7 @@ function dofunction(text)
       						break;
       					}
       				}
-      				if (value >= 1000000) {
-      					value = (value/1000000.0) "MHz"; 
-      				} else if (value >= 1000) {
-      					value = (value/1000.0) "KHz";
-      				} else {
-      					value = value "Hz";
-      				}
+				value = tofreq(value);
       			break;
       			case /groupof/: value = match(value, /P([a-eA-E])([0-9]+)/, az); value = az[1]; delete az; ; break;
       			case /unitof/: value = unitof(value); break;
@@ -261,4 +265,18 @@ function warnprint(string)
 function errprint(string)
 {	
 	print "ERROR: " string " File: " gensub(/.*\//,"", 1, script) | "cat 1>&2";
+}
+
+function checkfreq(instance, max_freq)
+{
+	keyclk = instance ":ref_source";
+	if (keyclk in prop) {
+		keyfreq = "freq:" prop[keyclk];
+		if (keyfreq in prop) {
+			value = int(prop[keyfreq]);
+			if (value > int(max_freq)) {
+				errprint(prop[keyclk] " (" tofreq(value) ") exceeds maximum " tofreq(max_freq));
+			}
+		}
+	}
 }
