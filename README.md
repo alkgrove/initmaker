@@ -3,6 +3,7 @@
 This is a simplified driver set for the ATSAMD5x processor and SystemInit creator scripts for the Microchip (Atmel) ATSAMD5x chips. 
 This is intended for developers of the Microchip ATSAMD5x processor programming in C using arm-none-eabi-gcc. For more information, see www.alkgrove.com. It needs a bash shell environment and Gnu awk. 
 ## Updates
+Added DAC and SUPC (VREF) support  
 Added ADC support  
 Changed usart to support stdio.h (added alternate sys/custom_file.h.)  
 Added frequency check of modules.  
