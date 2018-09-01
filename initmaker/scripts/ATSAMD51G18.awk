@@ -76,6 +76,8 @@ function initpins()
    pins["PA05:AC"] = "1 AC_AIN1";
    pins["PA06:AC"] = "1 AC_AIN2";
    pins["PA07:AC"] = "1 AC_AIN3";
+   pins["PA02:DAC"] = "1 DAC_VOUT0";
+   pins["PA05:DAC"] = "1 DAC_VOUT1";
    pins["PA03:PTC"] = "1 ADC0_PTCX0Y0";
    pins["PB08:PTC"] = "1 ADC0_PTCX1Y1";
    pins["PB09:PTC"] = "1 ADC0_PTCX2Y2";

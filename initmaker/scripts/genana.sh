@@ -47,8 +47,9 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
     	linecount=1;
     	in_macro=0;
     	in_section=0;
-		tc_count = 1;
-		tcc_count = 100;
+    	supc_count = 10;
+		adc_count = 20;
+		dac_count = 100;
      	initpins();
      	initmclk();
      	for (i = 0; i < unitmax["adc"]; i++) {
@@ -57,6 +58,8 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 			prop["adc" i ":samplen"] = 0;			
 			prop["adc" i ":prescaler"] = "div2";
 		}
+		prop["dac:dacctrl0_osr"] = 1;
+		prop["dacctrl0_refresh"] = 0;
 	}
 	(NR == FNR) && /^[#;]/ {
 		next;
@@ -79,6 +82,16 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 			delete a;
  			devices[adc_count++] = section;
   			prop[section ":macroname"] = "adc";
+  		} else if (key ~ /dac/) {
+  			in_section = 1;
+  			section = key;
+  			devices[dac_count] = section;
+  			prop[section ":macroname"] = "dac";
+  		} else if (key ~ /supc/) {
+  			in_section = 1;
+  			section = key;
+  			devices[supc_count] = section;
+  			prop[section ":macroname"] = "supc";
   		}  else if (key ~ /freq/) {
   			in_section = 1;
   			section = key;
@@ -131,6 +144,26 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
 				delete arr;
 			}
 			checkfreq(instance, 100000000);
+			if (!("dac:cctrl" in prop)) {
+				keyclk = "dac:ref_source";
+				if (keyclk in prop) {
+					keyfreq = "freq:" prop[keyclk];
+					if (keyfreq in prop) {
+						value = int(prop[keyfreq]);
+						if (value <= 1200000) {
+							prop["dac:cctrl"] = "CC100K";
+						} else if (value <= 6000000) {
+							prop["dac:cctrl"] = "CC1M";
+						} else {
+							prop["dac:cctrl"] = "CC12M";
+						} 						
+					}
+				}
+			}
+			refselkey = instance ":refsel";
+			if (refselkey in prop) {
+				prop[refselkey] = wordtranslate("vrefau vddana vrefab intref", "VREFPU VDDANA VREFPB INTREF", prop[refselkey], toupper(prop[refselkey]));
+			}
 			key = instance ":macroname";
 			name = prop[instance ":macroname"];
   			olp = 1;

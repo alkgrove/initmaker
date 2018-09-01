@@ -44,6 +44,14 @@
  * @brief dac wait for sync
  *
  * @param[in] reg uint32_t 
+ * - DAC_SYNCBUSY_SWRST Software Reset
+ * - DAC_SYNCBUSY_ENABLE DAC Enable Status
+ * - DAC_SYNCBUSY_DATA0 Data DAC 0
+ * - DAC_SYNCBUSY_DATA1 Data DAC 1
+ * - DAC_SYNCBUSY_DATA(value) Data DAC x
+ * - DAC_SYNCBUSY_DATABUF0 Data Buffer DAC 0
+ * - DAC_SYNCBUSY_DATABUF1 Data Buffer DAC 1
+ * - DAC_SYNCBUSY_DATABUF(value) Data Buffer DAC x
  **/
 static inline void dac_wait_for_sync(uint32_t reg)
 {
@@ -630,14 +638,12 @@ static inline uint16_t dac_read_DACCTRL(uint8_t index)
 }
 
 /**
- * @brief dac set DBGCTRL register
+ * @brief dac set DBGRUN in DBGCTRL register
  *
- * @param[in] mask uint8_t 
- * - DAC_DBGCTRL_DBGRUN Debug Run
  **/
-static inline void dac_set_DBGCTRL(uint8_t mask)
+static inline void dac_set_DBGRUN(void)
 {
-	DAC->DBGCTRL.reg |= mask;
+	DAC->DBGCTRL.reg |= DAC_DBGCTRL_DBGRUN;
 }
 
 /**
@@ -664,14 +670,12 @@ static inline void dac_write_DBGCTRL(uint8_t data)
 }
 
 /**
- * @brief dac clear DBGCTRL register
+ * @brief dac clear DBGRUN in DBGCTRL register
  *
- * @param[in] mask uint8_t 
- * - DAC_DBGCTRL_DBGRUN Debug Run
  **/
-static inline void dac_clear_DBGCTRL(uint8_t mask)
+static inline void dac_clear_DBGRUN(void)
 {
-	DAC->DBGCTRL.reg &= ~mask;
+	DAC->DBGCTRL.reg &= ~DAC_DBGCTRL_DBGRUN;
 }
 
 /**

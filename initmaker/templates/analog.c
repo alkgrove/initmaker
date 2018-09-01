@@ -153,3 +153,134 @@
 #fi
 
 #endmacro
+
+#defmacro dac
+    mclk_set_%apbmask%(%apb%);
+    /* Clock DAC with %toupper(ref_source)% (%frequency(ref_source)%) */
+    gclk_write_PCHCTRL(DAC_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
+
+	dac_write_CTRLA(DAC_CTRLA_SWRST);
+	dac_wait_for_sync(DAC_SYNCBUSY_SWRST);
+#iftrue (refsel == "vddana") || (refsel == "VDDANA")
+#warning ERRATA NOTICE: DAC does not work with VDDANA
+#fi
+	dac_write_CTRLB(<<<
+				    | DAC_CTRLB_REFSEL_%refsel%
+#ifdefined diff
+				    | DAC_CTRLB_DIFF
+#fi
+>>>);
+	dac_write_EVCTRL(<<<
+#ifdefined startei0
+				    | DAC_EVCTRL_STARTEI0
+#fi
+#ifdefined startei1
+				    | DAC_EVCTRL_STARTEI1
+#fi
+#ifdefined emptyeo0
+				    | DAC_EVCTRL_EMPTYEO0
+#fi
+#ifdefined emptyeo1
+				    | DAC_EVCTRL_EMPTYEO1
+#fi
+#ifdefined invei0
+				    | DAC_EVCTRL_INVEI0
+#fi
+#ifdefined invei1
+				    | DAC_EVCTRL_INVEI1
+#fi
+#ifdefined resrdyeo0
+				    | DAC_EVCTRL_RESRDYEO0
+#fi
+#ifdefined resrdyeo1
+				    | DAC_EVCTRL_RESRDYEO1
+#fi
+>>>);
+	dac_write_DACCTRL(0, <<<
+#ifdefined dacctrl0_enable
+	                   | DAC_DACCTRL_ENABLE
+#fi
+#ifdefined dacctrl0_osr
+				       | DAC_DACCTRL_OSR_%dacctrl0_osr%
+#fi
+#iftrue dacctrl0_osr == 1
+#ifdefined dacctrl0_refresh
+			           | DAC_DACCTRL_REFRESH(%dacctrl0_refresh%)
+#fi
+#fi
+#ifdefined dacctrl0_dither
+                       | DAC_DACCTRL_DITHER
+#fi
+#ifdefined dacctrl0_runstdby
+                       | DAC_DACCTRL_RUNSTDBY
+#fi
+#ifdefined dacctrl0_fext
+                       | DAC_DACCTRL_FEXT
+#fi
+#ifdefined cctrl
+			           | DAC_DACCTRL_CCTRL_%toupper(cctrl)%
+#fi
+#ifdefined dacctrl0_leftadj
+					   | DAC_DACCTRL_LEFTADJ
+#fi
+>>>);
+	dac_write_DACCTRL(1, <<<
+#ifdefined dacctrl1_enable
+	                   | DAC_DACCTRL_ENABLE
+#fi
+#ifdefined dacctrl1_osr
+				       | DAC_DACCTRL_OSR_%dacctrl1_osr%
+#fi
+#iftrue dacctrl1_osr == 1
+#ifdefined dacctrl1_refresh
+			           | DAC_DACCTRL_REFRESH(%dacctrl1_refresh%)
+#fi
+#fi
+#ifdefined dacctrl1_dither
+                       | DAC_DACCTRL_DITHER
+#fi
+#ifdefined dacctrl1_runstdby
+                       | DAC_DACCTRL_RUNSTDBY
+#fi
+#ifdefined dacctrl1_fext
+                       | DAC_DACCTRL_FEXT
+#fi
+#ifdefined cctrl
+			           | DAC_DACCTRL_CCTRL_%toupper(cctrl)%
+#fi
+#ifdefined dacctrl1_leftadj
+					   | DAC_DACCTRL_LEFTADJ
+#fi
+>>>);
+#ifdefined dbgrun
+	dac_set_DBGRUN();
+#otherwise
+	dac_clear_DBGRUN();
+#fi
+	dac_write_CTRLA(DAC_CTRLA_ENABLE);
+	dac_wait_for_sync(DAC_SYNCBUSY_ENABLE);
+
+#endmacro
+
+#defmacro supc
+	supc_write_VREF(<<<
+#ifdefined sel
+                   | SUPC_VREF_SEL_%toupper(sel)%
+#fi
+#ifdefined ondemand
+                   | SUPC_VREF_ONDEMAND
+#fi
+#ifdefined runstdby
+                   | SUPC_VREF_RUNSTDBY
+#fi
+#ifdefined tssel
+                   | SUPC_VREF_TSSEL
+#fi
+#ifdefined vrefoe
+                   | SUPC_VREF_VREFOE
+#fi
+#ifdefined tsen
+                   | SUPC_VREF_TSEN
+#fi
+>>>);
+#endmacro

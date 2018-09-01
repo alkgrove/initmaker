@@ -448,6 +448,12 @@ typedef union {
 #define DAC_DACCTRL_OSR_Pos         13           /**< \brief (DAC_DACCTRL) Sampling Rate */
 #define DAC_DACCTRL_OSR_Msk         (_U_(0x7) << DAC_DACCTRL_OSR_Pos)
 #define DAC_DACCTRL_OSR(value)      (DAC_DACCTRL_OSR_Msk & ((value) << DAC_DACCTRL_OSR_Pos))
+#define DAC_DACCTRL_OSR_1    		(_U_(0) << DAC_DACCTRL_OSR_Pos)
+#define DAC_DACCTRL_OSR_2   		(_U_(1) << DAC_DACCTRL_OSR_Pos)
+#define DAC_DACCTRL_OSR_4   		(_U_(2) << DAC_DACCTRL_OSR_Pos)
+#define DAC_DACCTRL_OSR_8    		(_U_(3) << DAC_DACCTRL_OSR_Pos)
+#define DAC_DACCTRL_OSR_16    		(_U_(4) << DAC_DACCTRL_OSR_Pos)
+#define DAC_DACCTRL_OSR_32   		(_U_(5) << DAC_DACCTRL_OSR_Pos)
 #define DAC_DACCTRL_MASK            _U_(0xEFEF)  /**< \brief (DAC_DACCTRL) MASK Register */
 
 /* -------- DAC_DATA : (DAC Offset: 0x10) ( /W 16) DAC n Data -------- */
