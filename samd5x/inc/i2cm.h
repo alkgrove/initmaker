@@ -65,6 +65,74 @@ typedef struct {
 i2cm_err_t i2cm_transfer(i2cm_msg_t *msg);
 
 /**
+ * @brief write i2c operation
+ * pointer to transmit buffer with transmit length in bytes to send
+ * 
+ * @param[in] msg - i2cm_msg_t * pointer to i2cm message structure
+ * @param[in] wrbuf - pointer to byte array to send over i2c
+ * @param[in] wrlen - number of bytes in wrbuf
+ * @return error if transfer not successful
+ */
+i2cm_err_t writeI2C(i2cm_msg_t *msg, uint8_t *wrbuf, uint8_t wrlen);
+
+/**
+ * @brief write then read i2c operation
+ * pointer to transmit buffer with transmit length in bytes to send
+ * pointer to receive buffer and length expected
+ * 
+ * @param[in] msg - i2cm_msg_t * pointer to i2cm message structure
+ * @param[in] wrbuf - pointer to byte array to send over i2c
+ * @param[in] wrlen - number of bytes in wrbuf
+ * @param[in] rdbuf - pointer to byte array to receive from i2c
+ * @param[in] rdlen = number of bytes to receive into rdbuf
+ * @return error if transfer not successful
+ */
+ i2cm_err_t readI2C(i2cm_msg_t *msg, uint8_t *wrbuf, uint8_t wrlen, uint8_t *rdbuf, uint8_t rdlen);
+
+
+/**
+ * @brief query if i2c device responds at address slave_address
+ *
+ * @param[in] msg - i2cm_msg_t * pointer to i2cm message structure
+ * @param[in] address - address to be probed
+ * @return bool false no device detected, true if device is at address
+ */
+bool probeI2C(i2cm_msg_t *msg, uint8_t address);
+
+/**
+ * @brief set slave address for i2cm routines
+ * This must be set prior to transfers
+ * @param[in] msg - i2cm_msg_t * pointer to i2cm message structure
+ * @param[in] slave_address - slave address for message
+ */
+static inline uint8_t getI2C_slave_address(i2cm_msg_t *msg) 
+{
+	return msg->address;
+}
+
+/**
+ * @brief set slave address for i2cm routines
+ * This must be set prior to transfers
+ * @param[in] msg - i2cm_msg_t * pointer to i2cm message structure
+ * @param[in] slave_address - slave address for message
+ */
+static inline void setI2C_slave_address(i2cm_msg_t *msg, uint8_t slave_address) 
+{
+	msg->address = slave_address;
+}
+
+/**
+ * @brief set device for i2cm routines
+ * This must be set prior to transfers
+ * @param[in] msg - i2cm_msg_t * pointer to i2cm message structure
+ * @param[in] device - pointer to SERCOM
+ */
+static inline void setI2C_device(i2cm_msg_t *msg, SERCOM_t *device) 
+{
+	msg->dev = device;
+}
+
+/**
  * @brief ISR for master on bus 
  *
  * @param[in] msg - i2cm_msg_t * pointer to I2C Master structure

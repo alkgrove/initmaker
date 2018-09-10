@@ -68,9 +68,50 @@ i2cm_err_t i2cm_transfer(i2cm_msg_t *msg)
  	return I2CM_OK;
 }
 
+i2cm_err_t writeI2C(i2cm_msg_t *msg, uint8_t *wrbuf, uint8_t wrlen)
+{
+	i2cm_err_t stat;
+	msg->status = I2CM_BUSY;
+	msg->txbuf = wrbuf;
+	msg->rxbuf = NULL;
+	msg->txlen = wrlen;
+	msg->rxlen = 0;
+	stat = i2cm_transfer(msg);
+	if(stat != I2CM_OK) return stat;
+	while(msg->status & I2CM_BUSY);
+	if (msg->status & I2CM_FAIL) return I2CM_BUSFAULT;
+	if (msg->status & I2CM_NACK) return I2CM_NO_ACK;
+	return I2CM_OK;
+}
 
+i2cm_err_t readI2C(i2cm_msg_t *msg, uint8_t *wrbuf, uint8_t wrlen, uint8_t *rdbuf, uint8_t rdlen)
+{
+	i2cm_err_t stat;
+	msg->status = I2CM_BUSY;
+	msg->txbuf = wrbuf;
+	msg->rxbuf = rdbuf;
+	msg->txlen = wrlen;
+	msg->rxlen = rdlen;
+	
+	stat = i2cm_transfer(msg);
+	if(stat != I2CM_OK) return stat;
+	while(msg->status & I2CM_BUSY);
+	if (msg->status & I2CM_FAIL) return I2CM_BUSFAULT;
+	if (msg->status & I2CM_NACK) return I2CM_NO_ACK;
+	return I2CM_OK;
+}
 
-
-
-
+bool probeI2C(i2cm_msg_t *msg, uint8_t address)
+{
+	msg->txbuf = NULL;
+	msg->rxbuf = NULL;
+	msg->txlen = 0;
+	msg->rxlen = 0;
+	msg->address = address;
+	msg->status = I2CM_BUSY;
+	i2cm_transfer(msg);
+	while(msg->status & I2CM_BUSY);
+	if (msg->status & I2CM_NACK) return false;
+	return true;
+}
 

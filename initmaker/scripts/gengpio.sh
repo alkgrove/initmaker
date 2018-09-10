@@ -175,8 +175,10 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
 						match(a[2], /([0-9]+)$/, arr);
 						num = arr[1];
 						delete arr;
-						if ((num in eicinterrupt) ||(num in genevent)) {
-							errprint("EIC" num " is assigned more than once");
+						if (num in eicinterrupt) {
+							errprint("EIC" num " (" sig ") is assigned to " eicinterrupt[num]);
+						} else if (num in genevent) {
+							errprint("EIC" num " (" sig ") is assigned to " genevent[num]);
 						} else {
 							intkey = instance ":interrupt";
 							if (intkey in prop) {
