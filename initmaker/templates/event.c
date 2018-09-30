@@ -23,9 +23,9 @@
 #foreach generators
 #iftrue (evint == 1)
 #iftrue (channel == 0) | (channel == 1) | (channel == 2) | (channel == 3)
-#isr CH%channel% EVSYS_%channel%_IRQn EVSYS_%channel%_Handler
+#nvic CH%channel% EVSYS_%channel%_IRQn EVSYS_%channel%_Handler
 #otherwise
-#isr %eventname% EVSYS_4_IRQn EVSYS_4_Handler
+#nvic %eventname% EVSYS_4_IRQn EVSYS_4_Handler
 #fi
 #fi
 #endfor

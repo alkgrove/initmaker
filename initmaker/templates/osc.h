@@ -1,10 +1,10 @@
 #defmacro xosc
-/* XOSC%unit% %frequency(out_frequency)% External Oscillator */
-#define XOSC%unit%_FREQUENCY %out_frequency%
+/* XOSC%unit% %frequency(ext_frequency)% External Oscillator */
+#define XOSC%unit%_FREQUENCY %ext_frequency%
 #endmacro
 #defmacro xosc32k
-/* XOSC32K %frequency(out_frequency)% External Oscillator */
-#define XOSC32K_FREQUENCY %out_frequency%
+/* XOSC32K %frequency(ext_frequency)% External Oscillator */
+#define XOSC32K_FREQUENCY %ext_frequency%
 #endmacro
 #defmacro dpll
 /* DPLL%unit% Frequency %frequency(out_frequency)% */

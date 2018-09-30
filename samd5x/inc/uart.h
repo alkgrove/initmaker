@@ -1,6 +1,6 @@
 /**
  * @file usart.h
- * @brief SAM USART
+ * @brief SAM UART
  * 
  * @note Copyright © Alkgrove 2018
  * @author Robert Alkire 
@@ -23,10 +23,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  **/
 
-#ifndef __USART_H__
-#define __USART_H__
+#ifndef __UART_H__
+#define __UART_H__
 
-#define UART_CRLF
+// Define UART_WINDOWS if using CR/LF (/r/n) for end of line
+#define UART_WINDOWS
+// Define UART_ECHO if incoming characters are echoed
 #define UART_ECHO
 
 #include "sam.h"

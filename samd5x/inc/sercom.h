@@ -83,13 +83,16 @@
 #define I2CM_BUSSTATE_IDLE 	  1
 #define I2CM_BUSSTATE_OWNER   2
 #define I2CM_BUSSTATE_BUSY    3
-// Control B Register CMD
-#define I2CM_CMD_NOP	0
-#define I2CM_CMD_RS		1
-#define I2CM_CMD_RDACK	2
-#define I2CM_CMD_STOP	3
+// Control B Register CMD & ACK/NACK
+#define SERCOM_I2CM_ACK   (0x1UL << SERCOM_I2CM_CTRLB_ACKACT_Pos)
+#define SERCOM_I2CM_NACK  (0x0UL << SERCOM_I2CM_CTRLB_ACKACT_Pos)
+#define I2CM_CMD_NOP	  (0x00UL << SERCOM_I2CM_CTRLB_CMD_Pos)
+#define I2CM_CMD_RS		  (0x01UL << SERCOM_I2CM_CTRLB_CMD_Pos)
+#define I2CM_CMD_RDACK	  (0x02UL << SERCOM_I2CM_CTRLB_CMD_Pos)
+#define I2CM_CMD_STOP	  (0x03UL << SERCOM_I2CM_CTRLB_CMD_Pos)
 // ADDR register
 #define I2CM_RD			1
+#define I2CM_WR			0
 
 /**
  * @brief spin while I2C Master Sync Bit masked by reg become not busy
@@ -921,23 +924,50 @@ static inline void i2cm_set_ENABLE(SERCOM_t *pSERCOM)
 }
 
 /**
- * @brief set the ACKACT bit in control B register to indicate NACK
+ * @brief set I2C Master Control B Command with synchronization
  *
  * @param[in] pSERCOM - SERCOM_t*
+ * @param[in] reg - uint32_t ACK or NACK
+ *  +    SERCOM_I2CM_ACK - set ACK
+ *  +    SERCOM_I2CM_NACK - set NACK
  */
-static inline void i2cm_set_ACKACT(SERCOM_t *pSERCOM)
-{
-	pSERCOM->I2CM.CTRLB.reg |= SERCOM_I2CM_CTRLB_ACKACT;
-}
 
 /**
  * @brief clear the ACKACT bit in control B register to indicate ACK
  *
  * @param[in] pSERCOM - SERCOM_t*
  */
-static inline void i2cm_clear_ACKACT(SERCOM_t *pSERCOM)
+static inline void i2cm_set_ACK(SERCOM_t *pSERCOM)
 {
 	pSERCOM->I2CM.CTRLB.reg &= ~SERCOM_I2CM_CTRLB_ACKACT;
+}
+
+/**
+ * @brief set the ACKACT bit in control B register to indicate NACK
+ *
+ * @param[in] pSERCOM - SERCOM_t*
+ */
+static inline void i2cm_set_NACK(SERCOM_t *pSERCOM)
+{
+	pSERCOM->I2CM.CTRLB.reg |= SERCOM_I2CM_CTRLB_ACKACT;
+}
+
+/**
+ * @brief set I2C Master Control B Command with synchronization
+ *
+ * @param[in] pSERCOM - SERCOM_t*
+ * @param[in] reg - uint32_t 2 bit command
+ *  +    I2CM_CMD_NOP = no operation
+ *  +    I2CM_CMD_RS = Execute acknowledge action succeeded by repeated Start
+ *  +    I2CM_CMD_RDACK (Read) Execute acknowledge action succeeded by a byte read operation (Write is no operation)
+ *  +    I2CM_CMD_STOP Execute acknowledge action succeeded by issuing a stop condition
+ * @note call i2cm_wait_for_sync(pSERCOM, SERCOM_I2CM_SYNCBUSY_SYSOP);
+ * @note the CMD bits are read as zero and do not need to be masked
+ */
+
+static inline void i2cm_set_CMD(SERCOM_t *pSERCOM, uint32_t reg)
+{
+	pSERCOM->I2CM.CTRLB.reg |= (reg & SERCOM_I2CM_CTRLB_CMD_Msk);
 }
 
 /**
@@ -1015,23 +1045,6 @@ static inline uint32_t i2cm_read_CTRLA(SERCOM_t *pSERCOM)
 	return pSERCOM->I2CM.CTRLA.reg;
 }
 
-/**
- * @brief set I2C Master Control B Command with synchronization
- *
- * @param[in] pSERCOM - SERCOM_t*
- * @param[in] reg - uint32_t 2 bit command
- *  +    0 = no operation
- *  +    1 = Execute acknowledge action succeeded by repeated Start
- *  +    2 (Write) No operation
- *  +    2 (Read) Execute acknowledge action succeeded by a byte read operation
- *  +    3 Execute acknowledge action succeeded by issuing a stop condition
- * @note call i2cm_wait_for_sync(pSERCOM, SERCOM_I2CM_SYNCBUSY_SYSOP);
- * control B CMD
- */
-static inline void i2cm_set_CMD(SERCOM_t *pSERCOM, uint32_t reg)
-{
-	pSERCOM->I2CM.CTRLB.reg |= SERCOM_I2CM_CTRLB_CMD(reg);
-}
 
 /**
  * @brief write I2C Master Control B

@@ -101,6 +101,7 @@
 #include "gclk.h"
 #include "hmatrixb.h"
 #include "i2s.h"
+#include "i2cm.h"
 #include "icm.h"
 #include "mclk.h"
 #include "nvmctrl.h"

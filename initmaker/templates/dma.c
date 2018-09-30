@@ -52,9 +52,9 @@
 >>>);
 #ifdefined interrupt
 #iftrue (unit == 0) | (unit == 1) | (unit == 2) | (unit == 3)
-#isr DMAC_CHANNEL%unit% DMAC_%unit%_IRQn DMAC_%unit%_Handler
+#nvic DMAC_CHANNEL%unit% DMAC_%unit%_IRQn DMAC_%unit%_Handler
 #otherwise
-#isr DMAC_CHANNEL4 DMAC_4_IRQn DMAC_4_Handler
+#nvic DMAC_CHANNEL4 DMAC_4_IRQn DMAC_4_Handler
 #fi
 #fi
 #ifdefined generator

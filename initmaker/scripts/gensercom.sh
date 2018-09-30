@@ -30,6 +30,7 @@ dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
 templatearr=("${INITMAKER}/templates/sercom.c" "${INITMAKER}/templates/sercom.h")
+nvictmp="${boardtmp}_nvic.tmp"
 isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 today=`date +%D`
@@ -41,7 +42,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" '@include "functions.awk"
+awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}"  -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -369,8 +370,10 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${v
   				}
   			}
   			for (i in outline) {
-			    if(outline[i] ~ /^#isr/) {
-					print gensub(/^#isr\s+/,"",1,outline[i]) >> isrtmp;
+			    if(outline[i] ~ /^#nvic/) {
+					print gensub(/^#nvic\s+/,"",1,outline[i]) >> nvictmp;
+			    } else if(outline[i] ~ /^#isr/) {
+					print gensub(/^#isr[ \t]/,"",1,outline[i]) >> isrtmp;
 			    } else if (outline[i] ~ /^var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else {

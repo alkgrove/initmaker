@@ -82,16 +82,16 @@
 	port_set_pin_function(%cts%, MUX_%cts_port%%cts_mux%_%cts_pad%);
 #fi
 #ifdefined dre_irq
-#isr SERCOM%unit%_UART_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
+#nvic SERCOM%unit%_UART_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
 #fi
 #ifdefined txc_irq
-#isr SERCOM%unit%_UART_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler
+#nvic SERCOM%unit%_UART_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler
 #fi
 #ifdefined rxc_irq
-#isr SERCOM%unit%_UART_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler
+#nvic SERCOM%unit%_UART_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler
 #fi
 #ifdefined err_irq
-#isr SERCOM%unit%_UART_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
+#nvic SERCOM%unit%_UART_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
 #fi
 #fi
 #iftrue type == "spim"
@@ -170,16 +170,16 @@
 	port_set_pin_function(%ss%, MUX_%ss_port%%ss_mux%_%ss_pad%);
 #fi
 #ifdefined dre_irq
-#isr SERCOM%unit%_SPIM_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
+#nvic SERCOM%unit%_SPIM_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
 #fi
 #ifdefined txc_irq
-#isr SERCOM%unit%_SPIM_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler
+#nvic SERCOM%unit%_SPIM_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler
 #fi
 #ifdefined rxc_irq
-#isr SERCOM%unit%_SPIM_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler
+#nvic SERCOM%unit%_SPIM_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler
 #fi
 #ifdefined err_irq
-#isr SERCOM%unit%_SPIM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
+#nvic SERCOM%unit%_SPIM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
 #fi
 #fi
 #iftrue type == "i2cm"
@@ -196,14 +196,88 @@
 
 	port_set_pin_function(%sda%, MUX_%sda_port%%sda_mux%_%sda_pad%);
 	port_set_pin_function(%scl%, MUX_%scl_port%%scl_mux%_%scl_pad%);
-#ifdefined mb_irq
-#isr SERCOM%unit%_I2CM_MB SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
+#ifdefined isr
+#isr volatile i2cm_msg_t i2cm%unit%_msg = {
+#isr 	.dev = SERCOM%unit%,
+#isr 	.sda = %sda%,
+#isr 	.scl = %scl%,
+#isr 	.txbuf = NULL,
+#isr 	.rxbuf = NULL,
+#isr 	.txlen = 0,
+#isr 	.rxlen = 0,
+#isr 	.address = 0,
+#isr 	.status = 0 };
+#isr volatile i2cm_msg_t *i2cm%unit%_get_msg(void)
+#isr {
+#isr 	return (volatile i2cm_msg_t *) &i2cm%unit%_msg;
+#isr }
+#isr /* Interrupt Service Routine for SERCOM%unit% master on bus */
+#isr void SERCOM%unit%_0_Handler(void)
+#isr {
+#isr 	uint16_t status;
+#isr 	status = i2cm_read_STATUS(SERCOM%unit%);
+#isr 	// bus error check
+#isr 	if (status & (SERCOM_I2CM_STATUS_ARBLOST | SERCOM_I2CM_STATUS_BUSERR)) {
+#isr 		i2cm%unit%_msg.status |= I2CM_FAIL;
+#isr 		i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr 		i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_MB);
+#isr 	// check for NACK from slave
+#isr 	} else if (status & SERCOM_I2CM_STATUS_RXNACK) {
+#isr 			i2cm%unit%_msg.status |= I2CM_NACK;
+#isr 			i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
+#isr 			i2cm_set_CMD(SERCOM%unit%, I2CM_CMD_STOP); // clears MB and issues stop
+#isr 	// data write check
+#isr 	} else if (i2cm%unit%_msg.txlen > 0) {
+#isr  		i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
+#isr 		i2cm_write_DATA(SERCOM%unit%,*i2cm%unit%_msg.txbuf++);
+#isr 		i2cm%unit%_msg.txlen--;
+#isr 	// data read check
+#isr 	} else {
+#isr 		// data read check
+#isr  		if (i2cm%unit%_msg.rxlen > 0) {
+#isr  			// send ACK to slave while rxlen > 0
+#isr  			i2cm_set_ACK(SERCOM%unit%);
+#isr 			// force repeated start by sending address, clears MB int flag
+#isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
+#isr 			i2cm_write_ADDR(SERCOM%unit%, SERCOM_I2CM_ADDR_ADDR((i2cm%unit%_msg.address << 1) | I2CM_RD));
+#isr 		// data read complete, issue stop
+#isr 		} else { 
+#isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
+#isr  			i2cm_set_CMD(SERCOM%unit%, I2CM_CMD_STOP);
+#isr 			i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr 		}
+#isr 	}
+#isr }
+#isr /* Interrupt Service Routine for SERCOM%unit% slave on bus */
+#isr void SERCOM%unit%_1_Handler(void)
+#isr {
+#isr    if (i2cm%unit%_msg.rxlen > 0) {
+#isr 		i2cm%unit%_msg.rxlen--;
+#isr        if (i2cm%unit%_msg.rxlen == 0) {
+#isr 			// send NACK and STOP for final byte
+#isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
+#isr  			i2cm_set_NACK(SERCOM%unit%);
+#isr  			i2cm_set_CMD(SERCOM%unit%, I2CM_CMD_STOP);
+#isr 			i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr 		}
+#isr 		// read data
+#isr 		*i2cm%unit%_msg.rxbuf++ = i2cm_read_DATA(SERCOM%unit%); // clears SB
+#isr 	} 
+#isr 	i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_SB);
+#isr }
+#isr /* Interrupt Service Routine for SERCOM%unit% error */
+#isr void SERCOM%unit%_3_Handler(void)
+#isr {
+#isr 	i2cm%unit%_msg.status |=  I2CM_FAIL;
+#isr 	i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr 	i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_ERROR);
+#isr }
 #fi
-#ifdefined sb_irq
-#isr SERCOM%unit%_I2CM_SB SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler
-#fi
-#ifdefined err_irq
-#isr SERCOM%unit%_I2CM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
+#ifdefined irq
+#nvic SERCOM%unit%_I2CM_MB SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
+#nvic SERCOM%unit%_I2CM_SB SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler
+#nvic SERCOM%unit%_I2CM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
 #fi
 #fi
 #endmacro

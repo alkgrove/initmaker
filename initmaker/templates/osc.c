@@ -18,7 +18,7 @@
 
 #defmacro xosc
 
-	/** XOSC%unit% External Oscillator %frequency(out_frequency)% **/
+	/** XOSC%unit% External Oscillator %frequency(ext_frequency)% **/
 	oscctrl_write_XOSCCTRL(%unit%, OSCCTRL_XOSCCTRL_ENABLE
  		| OSCCTRL_XOSCCTRL_XTALEN
 #iftrue runstdby
@@ -131,7 +131,7 @@
 	port_set_pin_function(%out%, MUX_%port%%mux%_%io%);
 #fi
 #ifdefined in
-	/** Set pin %in% as clock input (%frequency(out_frequency)%) */
+	/** Set pin %in% as clock input (%frequency(ext_frequency)%) */
 	port_set_pin_function(%in%, MUX_%port%%mux%_%io%);
 #fi
 #endmacro

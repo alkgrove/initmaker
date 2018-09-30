@@ -29,7 +29,7 @@ dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
 templatearr=("${INITMAKER}/templates/osc.c" "${INITMAKER}/templates/osc.h")
-isrtmp="${boardtmp}_isr.tmp"
+nvictmp="${boardtmp}_nvic.tmp"
 vartmp="${boardtmp}_var.tmp"
 evttmp="${boardtmp}_evt.tmp"
 cfgtmp="${boardtmp}_cfg.tmp"
@@ -43,7 +43,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" -v cfgtmp="${cfgtmp}" '@include "functions.awk"
+awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" -v cfgtmp="${cfgtmp}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -75,8 +75,8 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
     	prop["dfll:fstep"] = 1;
     	prop["dfll:cstep"] = 1;
     	prop["dfll:mode"] = 1;
-		prop["osculp32k:out_frequency"]=32768
-		prop["xosc32k:out_frequency"]=32768
+		prop["osculp32k:ext_frequency"]=32768
+		prop["xosc32k:ext_frequency"]=32768
     	initpins();
 	}
 	(NR == FNR) && /^[#;]/ {
@@ -195,7 +195,8 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
 		for (j = 0; j < unitmax["gclk"]; j++) {
 			key = "gclk" j ":ref_source";
 			if (key in prop) {
-				indkey = prop[key] ":out_frequency";
+				refsrc = prop[key];
+				indkey = refsrc ((refsrc ~ /^(dpll[01])|(dfll)$/) ?  ":out_frequency" :  ":ext_frequency");
 				if (indkey in prop) {
 					fout = prop[indkey];
 					prop["gclk" j ":ref_frequency"] = fout;
@@ -288,17 +289,23 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
     			key = "dpll" j ":ref_source";
     			if (key in prop) {
     				src = prop[key];
-    				outkey = src ":out_frequency";
-     				if (!(outkey in prop)) {
-    					errprint("out_frequency not defined for " src);
-    					break;
-    				}
-    				ref = prop[outkey];
     				prop["dpll" j ":divisor"] = 0;
     				if (src ~ /xosc32k/) {
+        				extkey = src ":ext_frequency";
+         				if (!(extkey in prop)) {
+        					errprint("ext_frequency not defined for " src);
+        					break;
+        				}
+        				ref = prop[extkey];
    						prop["dpll" j ":ref_name"] = "xosc32";
     					prop["dpll" j ":ref_frequency"] = ref;
    					} else if (src ~ /gclk[0-9]+/) {
+    					outkey = src ":out_frequency";
+     					if (!(outkey in prop)) {
+    						errprint("out_frequency not defined for " src);
+    						break;
+    					}
+    					ref = prop[outkey];
     					prop["dpll" j ":ref_name"] = "gclk";
     					prop["dpll" j ":ref_frequency"] = ref;
     					for (k = gclk_start; k < gclk_count; k++) {
@@ -310,6 +317,12 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
     						}
     					} 
     				} else if (src ~ /xosc[01]/) {
+        				extkey = src ":ext_frequency";
+         				if (!(extkey in prop)) {
+        					errprint("ext_frequency not defined for " src);
+        					break;
+        				}
+        				ref = prop[extkey];
     					prop["dpll" j ":ref_name"] = src;
     					divkey = "dpll" j ":div";
   						div = (prop[divkey] / 2) - 1;
@@ -459,8 +472,8 @@ awk -i "${processor}" -v script="${script}" -v isrtmp="${isrtmp}" -v evttmp="${e
   				}
   			}
   			for (i in outline) {
-			    if(outline[i] ~ /^#isr/) {
-					print gensub(/^#isr\s+/,"",1,outline[i]) >> isrtmp;
+			    if(outline[i] ~ /^#nvic/) {
+					print gensub(/^#nvic\s+/,"",1,outline[i]) >> nvictmp;
 			    } else if (outline[i] ~/^#var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else if (outline[i] ~ /^#evt/) {

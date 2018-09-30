@@ -10,5 +10,9 @@
 #warning SERCOM%unit% I2C Baudrate is too high - math error
 #endif
 #define SERCOM%unit%_BAUDRATE I2CM_BAUD(SERCOM%unit%_BAUDLOW)
+#ifdefined isr
+/** get pointer to SERCOM%unit% message **/
+volatile i2cm_msg_t *i2cm%unit%_get_msg(void);
+#fi
 #fi
 #endmacro

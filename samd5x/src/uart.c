@@ -1,6 +1,6 @@
 /*
- * usart.c
- * basic blocking USART driver for SAMD51
+ * uart.c
+ * basic blocking UART driver for SAMD51
  * 
  * Copyright © Alkgrove 2018
  *
@@ -29,7 +29,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-#include "usart.h"
+#include "uart.h"
 #include "sam.h"
 
 const FILE __COM[] = {
@@ -87,7 +87,9 @@ int __wrap_fputs (const char* str, FILE *fp)
 	while(*str != '\0') {
 		__wrap_putc(*str++, fp);
 	}
+#ifdef UART_WINDOWS
 	__wrap_putc('\r', fp);
+#endif
 	__wrap_putc('\n', fp);
 	return 1;
 }
@@ -120,34 +122,35 @@ int __wrap_getc(FILE *fp)
  * note because of potential buffer overflow, gets is not implemented
  */
  
+ 
+/* linux and cygwin fgets 
+ * reading stdin from a terminal puts the EOL character as linefeed even if return is hit
+ * when reading a windows text file, it puts CRLF at the end of the line.
+ * if the buffer overflows at length - 1, it returns without a EOL character but 
+ * always null terminates the string. 
+ * Also using either ctrl-j or ctrl-m, both terminate the line and puts LF as EOL
+ * since fgets in this context is only used for serial IO, an EOL will be LF
+ */
+
+
 char *__wrap_fgets(char* str, size_t len, FILE *fp) 
 {
-	int ch;
+	int ch = 0;
 	int i = 0;
-	while(i < len) {
+	len--;
+	while((i < len) && (ch != '\n')) {
 		ch = __wrap_getc(fp);
-		if (ch >= 0) {
+		if (ch < 0) return NULL;
 #ifdef UART_ECHO
-			__wrap_putc(ch, fp);
+		__wrap_putc(ch, fp);
 #endif
-			if (ch == '\r') {
-#ifdef UART_ECHO
-#ifdef UART_CRLF
-				__wrap_putc('\n', fp);
-#endif
-#endif
-			    break;
-			}
-            if (i > 0 && ch == '\b') {
-				i--;
-#ifdef UART_ECHO
-				__wrap_putc('\b', fp);
-				__wrap_putc(' ', fp);
-				__wrap_putc('\b', fp);
-#endif
-			} else {
-				str[i++] = ch;
-			}
+		if (ch == '\r') {
+			ch = '\n';
+		}
+		if ((ch == '\b') || (ch == 0x7F)) {
+			if (i > 0) i--;
+		} else {
+		    str[i++] = ch;
 		}
 	}
 	str[i] = '\0';

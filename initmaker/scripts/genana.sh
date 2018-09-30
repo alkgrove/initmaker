@@ -28,7 +28,7 @@ boardtmp="${boardsrc%.c}"
 dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
-isrtmp="${boardtmp}_isr.tmp"
+nvictmp="${boardtmp}_nvic.tmp"
 vartmp="${boardtmp}_var.tmp"
 evttmp="${boardtmp}_evt.tmp"
 templatearr=("${INITMAKER}/templates/analog.c" "${INITMAKER}/templates/analog.h")
@@ -41,7 +41,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
+awk -v script="${script}" -v nvictmp="${nvictmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -249,8 +249,8 @@ awk -v script="${script}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp=
   				}
   			}
   			for (i in outline) {
-			    if(outline[i] ~ /^#isr/) {
-					print gensub(/^#isr\s+/,"",1,outline[i]) >> isrtmp;
+			    if(outline[i] ~ /^#nvic/) {
+					print gensub(/^#nvic\s+/,"",1,outline[i]) >> nvictmp;
 			    } else if (outline[i] ~ /^#var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else if (outline[i] ~ /^#evt/) {

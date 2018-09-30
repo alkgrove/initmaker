@@ -75,4 +75,10 @@ void SystemInit(void)
  *  @{ **/
 /** @} **/
 } /* SystemInit */
+
+/** @addtogroup ISR
+ *  @ingroup SystemInit
+ *  @{ **/
+/** @} **/
+
 #endmacro

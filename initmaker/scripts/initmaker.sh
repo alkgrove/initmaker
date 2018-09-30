@@ -44,9 +44,11 @@ errfile="02.000"
 boardtmp="${boardsrc%.c}"
 extctmp="ext_tmp.c"
 exthtmp="ext_tmp.h"
+nvictmp="${boardtmp}_nvic.tmp"
 isrtmp="${boardtmp}_isr.tmp"
 evttmp="${boardtmp}_evt.tmp"
 cfgtmp="${boardtmp}_cfg.tmp"
+rm -f ${nvictmp}
 rm -f ${isrtmp}
 if [[ -f "${errfile}" ]]; then
    rm -f "${errfile}"
@@ -70,7 +72,7 @@ if [[ ! -f "${boardinc}" ]]; then
 	exit 1
 fi
 
-rm -f ${isrtmp}
+rm -f ${nvictmp}
 rm -f ${vartmp}
 rm -f ${evttmp}
 rm -f ${cfgtmp}
@@ -113,7 +115,7 @@ rm -f "${exthtmp}"
 fi
 
 if [ "${debug}" == 0 ]; then
-rm -f ${isrtmp} ${vartmp} ${evttmp} ${cfgtmp}
+rm -f ${nvictmp} ${vartmp} ${evttmp} ${cfgtmp} ${isrtmp}
 fi
 unset INITMAKER
 

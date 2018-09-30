@@ -25,13 +25,14 @@ errfile="02.000"
 boardtmp="${boardsrc%.c}"
 tmp="${boardtmp}.002"
 srctmp="${boardtmp}.004"
+nvictmp="${boardtmp}_nvic.tmp"
 isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 template="${INITMAKER}/templates/nvic.c"
 today=`date +%D`
 
-if [[ -f ${isrtmp} ]]; then
-awk -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "functions.awk"
+if [[ -f ${nvictmp} ]]; then
+awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -185,7 +186,7 @@ awk -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "fun
     	if (sp != 1) {
     		errprint("iftrue/fi unbalanced at end of file");
 		}
-   }' ${isrtmp} ${template} > ${tmp}
+   }' ${nvictmp} ${template} > ${tmp}
 else
 touch $tmp
 fi

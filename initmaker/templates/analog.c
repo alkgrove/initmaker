@@ -143,13 +143,13 @@
 #fi
 >>>);
 #ifdefined overrun_irq
-#isr ADC%unit%_OVERRUN ADC%unit%_0_IRQn ADC%unit%_0_Handler
+#nvic ADC%unit%_OVERRUN ADC%unit%_0_IRQn ADC%unit%_0_Handler
 #fi
 #ifdefined winmon_irq
-#isr ADC%unit%_WINMON ADC%unit%_0_IRQn ADC%unit%_0_Handler
+#nvic ADC%unit%_WINMON ADC%unit%_0_IRQn ADC%unit%_0_Handler
 #fi
 #ifdefined resrdy_irq
-#isr ADC%unit%_RESRDY ADC%unit%_1_IRQn ADC%unit%_1_Handler
+#nvic ADC%unit%_RESRDY ADC%unit%_1_IRQn ADC%unit%_1_Handler
 #fi
 
 #endmacro

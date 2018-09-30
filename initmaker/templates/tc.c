@@ -102,16 +102,16 @@
 >>>;
 #fi
 #ifdefined int_ovf
-#isr TC%unit%_OVF TC%unit%_IRQn TC%unit%_Handler
+#nvic TC%unit%_OVF TC%unit%_IRQn TC%unit%_Handler
 #fi
 #ifdefined int_err
-#isr TC%unit%_ERR TC%unit%_IRQn TC%unit%_Handler
+#nvic TC%unit%_ERR TC%unit%_IRQn TC%unit%_Handler
 #fi
 #ifdefined int_mc0
-#isr TC%unit%_MC0 TC%unit%_IRQn TC%unit%_Handler
+#nvic TC%unit%_MC0 TC%unit%_IRQn TC%unit%_Handler
 #fi
 #ifdefined int_mc1
-#isr TC%unit%_MC1 TC%unit%_IRQn TC%unit%_Handler
+#nvic TC%unit%_MC1 TC%unit%_IRQn TC%unit%_Handler
 #fi
 #ifdefined gen_ovf
 #evt gen %gen_ovf% TC%unit%_OVF %toupper(path_ovf)% %edge_ovf% %touppper(sync_source_ovf)% %evint_ovf%
@@ -673,52 +673,52 @@
 #evt swgen %swgen%
 #fi
 #ifdefined int_ovf
-#isr TCC%unit%_OVF TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_OVF TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_trg
-#isr TCC%unit%_TRG TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_TRG TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_cnt
-#isr TCC%unit%_CNT TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_CNT TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_err
-#isr TCC%unit%_ERR TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_ERR TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_ufs
-#isr TCC%unit%_UFS TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_UFS TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_dfs
-#isr TCC%unit%_DFS TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_DFS TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_faulta
-#isr TCC%unit%_FAULTA TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_FAULTA TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_faultb
-#isr TCC%unit%_FAULTB TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_FAULTB TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_fault0
-#isr TCC%unit%_FAULT0 TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_FAULT0 TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_fault1
-#isr TCC%unit%_FAULT1 TCC%unit%_0_IRQn TCC%unit%_0_Handler
+#nvic TCC%unit%_FAULT1 TCC%unit%_0_IRQn TCC%unit%_0_Handler
 #fi
 #ifdefined int_mc0
-#isr TCC%unit%_MC0 TCC%unit%_1_IRQn TCC%unit%_1_Handler
+#nvic TCC%unit%_MC0 TCC%unit%_1_IRQn TCC%unit%_1_Handler
 #fi
 #ifdefined int_mc1
-#isr TCC%unit%_MC1 TCC%unit%_2_IRQn TCC%unit%_2_Handler
+#nvic TCC%unit%_MC1 TCC%unit%_2_IRQn TCC%unit%_2_Handler
 #fi
 #ifdefined int_mc2
-#isr TCC%unit%_MC2 TCC%unit%_3_IRQn TCC%unit%_3_Handler
+#nvic TCC%unit%_MC2 TCC%unit%_3_IRQn TCC%unit%_3_Handler
 #fi
 #ifdefined int_mc3
-#isr TCC%unit%_MC3 TCC%unit%_4_IRQn TCC%unit%_4_Handler
+#nvic TCC%unit%_MC3 TCC%unit%_4_IRQn TCC%unit%_4_Handler
 #fi
 #ifdefined int_mc4
-#isr TCC%unit%_MC4 TCC%unit%_5_IRQn TCC%unit%_5_Handler
+#nvic TCC%unit%_MC4 TCC%unit%_5_IRQn TCC%unit%_5_Handler
 #fi
 #ifdefined int_mc5
-#isr TCC%unit%_MC5 TCC%unit%_6_IRQn TCC%unit%_6_Handler
+#nvic TCC%unit%_MC5 TCC%unit%_6_IRQn TCC%unit%_6_Handler
 #fi
 	tcc_set_ENABLE(TCC%unit%);
 	tcc_wait_for_sync(TCC%unit%, TCC_SYNCBUSY_ENABLE);
@@ -727,6 +727,13 @@
 #defmacro systick
 	/** System Tick (defined in CMSIS) */
 	SysTick_Config((CPU_FREQUENCY/1000)*SYSTICK_PERIOD);
-#isr systick NA SysTick_Handler
+#nvic systick NA SysTick_Handler
+#ifdefined isr
+#isr volatile uint32_t tick = 0;
+#isr void SysTick_Handler(void)
+#isr {
+#isr     tick++;
+#isr }
+#fi
 #endmacro
 
