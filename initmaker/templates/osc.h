@@ -9,8 +9,8 @@
 #defmacro dpll
 /* DPLL%unit% Frequency %frequency(out_frequency)% */
 #define DPLL%unit%_FREQUENCY %out_frequency%
-/* DPLL%unit% Reference  %frequency(ref_frequency)% */
-#define DPLL%unit%_REFERENCE %ref_frequency%
+/* DPLL%unit% Reference %frequency(src_frequency)% */
+#define DPLL%unit%_REFERENCE %src_frequency%
 #endmacro
 #defmacro gclk
 #iftrue (unit == 0)

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# gengpio.sh <config file>.cfg <target>.c <target>.h {-v}
+# gengpio.sh <config file>.cfg <target>.c <target>.h {-v} {-s}
 # modifies sercom section
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
@@ -29,7 +29,7 @@ boardtmp="${boardsrc%.c}"
 dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
-nvictmp="${boardtmp}_nvic.tmp"
+rsrctmp="${boardtmp}_rsrc.tmp"
 vartmp="${boardtmp}_var.tmp"
 evttmp="${boardtmp}_evt.tmp"
 templatearr=("${INITMAKER}/templates/gpio.c" "${INITMAKER}/templates/gpio.h")
@@ -42,13 +42,15 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" '@include "functions.awk"
+
+awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
     	in_macro=0;
     	in_section=0;
     	gpio_count=3;
+    	nmi = 0;
      	initpins();
 	}
 	(NR == FNR) && /^[#;]/ {
@@ -134,10 +136,6 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
 			if (key in prop) {
 				prop[instance ":port"] = pinport[prop[key]];
 			}
-			actkey = instance ":action";
-			if (actkey in prop) {
-				prop[actkey] = wordtranslate("out set clear toggle", "OUT SET CLR TGL", prop[actkey], toupper(prop[actkey]));
-			}
 			key = instance ":pin";
 			if (key in prop) {
 				altkey = instance ":function";
@@ -170,6 +168,7 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
 					prop[instance ":eic_mux"] = muxcnv(a[1]);
 					if ((a[2] ~ /NMI/) && (sensekey in prop)) {					
 						prop[instance ":nmi"] = wordtranslate("high low rising falling both", "HIGH LOW RISE FALL BOTH", prop[sensekey], "NONE");
+						nmi = 1;
 					} else {
 						prop[instance ":eic_pin"] = a[2];
 						match(a[2], /([0-9]+)$/, arr);
@@ -237,6 +236,11 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
 				}
 			}
 		}
+		eiclistkey = "eic:list";
+		if (nmi) { prop[eiclistkey] = "NMI"; }
+		for (i in eicpin) {
+			prop[eiclistkey] = (length(prop[eiclistkey]) > 0) ? (prop[eiclistkey] ", " i) : i;
+		}
 		sp = 0;
 		stack[++sp] = 1;
 		for (widx in devices) {
@@ -245,6 +249,13 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
   			olp = 1;
   			if (instance ~ /eic/) {
   				checkfreq(instance, 100000000);
+  				refkey = instance ":ref_source";
+  				if (refkey in prop) {
+  					freqkey = "freq:" tolower(prop[refkey]);
+  					if (freqkey in prop) {
+  						prop[instance ":ref_frequency"] = prop[freqkey];
+  					}
+  				}
   			}
   			for (i = beginmacro[name]; i < endmacro[name]; i++) {
   				line = macro[i];
@@ -356,18 +367,19 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
   				}
   			}
   			for (i in outline) {
-			    if(outline[i] ~ /^#nvic/) {
-					print gensub(/^#nvic\s+/,"",1,outline[i]) >> nvictmp;
+			    if(outline[i] ~ /^#(nvic|port|mod)/) {
+					print outline[i] >> rsrctmp;
 			    } else if (outline[i] ~ /^#var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else if (outline[i] ~ /^#evt/) {
-					print gensub(/^#evt/,"",1,outline[i]) >> evttmp;
-			    } else {
+					print outline[i] >> evttmp;
+			    } else { 
   					print outline[i];
 			    }
   			}
   			delete outline;
     	}
+
     	if (sp != 1) {
     		errprint(" At end of file and iftrue/fi unbalanced");
 		}

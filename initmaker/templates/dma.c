@@ -29,6 +29,7 @@
     dmac_set_CHCTRLA(CHANNEL%unit%, DMAC_CHCTRLA_SWRST);
     while(dmac_get_CHCTRLA(CHANNEL%unit%, DMAC_CHCTRLA_SWRST)) {};
 
+#mod DMA%unit% Trigger %trigsrc%(%trigact%)
     dmac_write_CHCTRLA(CHANNEL%unit%, DMAC_CHCTRLA_TRIGACT_%toupper(trigact)%
                     | DMAC_CHCTRLA_BURSTLEN_%burstlen%
                     | DMAC_CHCTRLA_THRESHOLD_%threshold%

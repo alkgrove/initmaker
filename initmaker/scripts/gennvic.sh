@@ -25,14 +25,14 @@ errfile="02.000"
 boardtmp="${boardsrc%.c}"
 tmp="${boardtmp}.002"
 srctmp="${boardtmp}.004"
-nvictmp="${boardtmp}_nvic.tmp"
+rsrctmp="${boardtmp}_rsrc.tmp"
 isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 template="${INITMAKER}/templates/nvic.c"
 today=`date +%D`
 
-if [[ -f ${nvictmp} ]]; then
-awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -i "${processor}" '@include "functions.awk"
+if [[ -f ${rsrctmp} ]]; then
+awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -v rsrctmp="${rsrctmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -44,12 +44,12 @@ awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -i "${proc
         isr_count = isr_start;
         devices[isr_count] = "nvic";
 	}
-	(NR == FNR) {
-		if (($2 !~ "NA") && !($2 in nviclist)) {
-			nviclist[isr_count++] = $2;
+	(NR == FNR) && /^#nvic/ {
+		if (($3 !~ "NA") && !($3 in nviclist)) {
+			nviclist[isr_count++] = $3;
 			prop["nvic:nvic"] = 1;
 		}
-		isrlist[$1] = gensub(/\s+/,"","g",$3);
+		isrlist[$2] = gensub(/\s+/,"","g",$4);
 		prop["nvic:isr"] = 1;
 		next;
 	}
@@ -186,7 +186,7 @@ awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -i "${proc
     	if (sp != 1) {
     		errprint("iftrue/fi unbalanced at end of file");
 		}
-   }' ${nvictmp} ${template} > ${tmp}
+   }' ${rsrctmp} ${template} > ${tmp}
 else
 touch $tmp
 fi

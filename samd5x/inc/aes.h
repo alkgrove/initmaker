@@ -464,29 +464,6 @@ static inline uint8_t aes_read_CTRLB(void)
 }
 
 /**
- * @brief aes set DATABUFPTR register
- *
- * @param[in] mask uint8_t 
- * - AES_DATABUFPTR_INDATAPTR(value) Input Data Pointer
- **/
-static inline void aes_set_DATABUFPTR(uint8_t mask)
-{
-	AES->DATABUFPTR.reg |= mask;
-}
-
-/**
- * @brief aes get DATABUFPTR register
- *
- * @param[in] mask uint8_t 
- * @return uint8_t
- * - AES_DATABUFPTR_INDATAPTR(value) Input Data Pointer
- **/
-static inline uint8_t aes_get_DATABUFPTR(uint8_t mask)
-{
-    return AES->DATABUFPTR.reg & mask;
-}
-
-/**
  * @brief aes write DATABUFPTR register
  *
  * @param[in] data uint8_t 
@@ -495,17 +472,6 @@ static inline uint8_t aes_get_DATABUFPTR(uint8_t mask)
 static inline void aes_write_DATABUFPTR(uint8_t data)
 {
 	AES->DATABUFPTR.reg = data;
-}
-
-/**
- * @brief aes clear DATABUFPTR register
- *
- * @param[in] mask uint8_t 
- * - AES_DATABUFPTR_INDATAPTR(value) Input Data Pointer
- **/
-static inline void aes_clear_DATABUFPTR(uint8_t mask)
-{
-	AES->DATABUFPTR.reg &= ~mask;
 }
 
 /**
@@ -576,27 +542,6 @@ static inline uint8_t aes_read_DBGCTRL(void)
 }
 
 /**
- * @brief aes set INDATA register
- *
- * @param[in] mask uint32_t 
- **/
-static inline void aes_set_INDATA(uint32_t mask)
-{
-	AES->INDATA.reg |= mask;
-}
-
-/**
- * @brief aes get INDATA register
- *
- * @param[in] mask uint32_t 
- * @return uint32_t
- **/
-static inline uint32_t aes_get_INDATA(uint32_t mask)
-{
-    return AES->INDATA.reg & mask;
-}
-
-/**
  * @brief aes write INDATA register
  *
  * @param[in] data uint32_t 
@@ -604,16 +549,6 @@ static inline uint32_t aes_get_INDATA(uint32_t mask)
 static inline void aes_write_INDATA(uint32_t data)
 {
 	AES->INDATA.reg = data;
-}
-
-/**
- * @brief aes clear INDATA register
- *
- * @param[in] mask uint32_t 
- **/
-static inline void aes_clear_INDATA(uint32_t mask)
-{
-	AES->INDATA.reg &= ~mask;
 }
 
 /**

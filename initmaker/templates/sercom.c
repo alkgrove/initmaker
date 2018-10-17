@@ -8,6 +8,7 @@
 	mclk_set_%apbmask%(%apb%);
 #iftrue type == "uart"
 
+#mod SERCOM%unit% UART (%toupper(ref_source)% %frequency(ref_source)%) %baudrate% baud
 	// Initialize SERCOM%unit% as UART
 	usart_clear_ENABLE(SERCOM%unit%);
 	usart_wait_for_sync(SERCOM%unit%, SERCOM_USART_SYNCBUSY_ENABLE);
@@ -71,15 +72,19 @@
 	
 #ifdefined txd
 	port_set_pin_function(%txd%, MUX_%txd_port%%txd_mux%_%txd_pad%);
+#port %txd_port% UART TXD (SERCOM%unit%/PAD%unitof(txd_pad)%) 
 #fi
 #ifdefined rxd
 	port_set_pin_function(%rxd%, MUX_%rxd_port%%rxd_mux%_%rxd_pad%);
+#port %rxd_port% UART RXD (SERCOM%unit%/PAD%unitof(rxd_pad)%)
 #fi
 #ifdefined rts
 	port_set_pin_function(%rts%, MUX_%rts_port%%rts_mux%_%rts_pad%);
+#port %rts_port% UART RTS (SERCOM%unit%/PAD%unitof(rts_pad)%)
 #fi
 #ifdefined cts
 	port_set_pin_function(%cts%, MUX_%cts_port%%cts_mux%_%cts_pad%);
+#port %cts_port% UART CTS (SERCOM%unit%/PAD%unitof(cts_pad)%)
 #fi
 #ifdefined dre_irq
 #nvic SERCOM%unit%_UART_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
@@ -96,6 +101,7 @@
 #fi
 #iftrue type == "spim"
 
+#mod SERCOM%unit% SPI Master (%toupper(ref_source)% %frequency(ref_source)%) %baudrate% baud
 	// Initialize SERCOM%unit% as SPI Master
 	spi_wait_for_sync(SERCOM%unit%, SERCOM_SPI_SYNCBUSY_SWRST | SERCOM_SPI_SYNCBUSY_ENABLE);
 	spi_set_SWRST(SERCOM%unit%);
@@ -162,12 +168,16 @@
 	spi_set_ENABLE(SERCOM%unit%);
 
 	port_set_pin_function(%mosi%, MUX_%mosi_port%%mosi_mux%_%mosi_pad%);
+#port %mosi_port% SPI Master MOSI (SERCOM%unit%/PAD%unitof(mosi_pad)%)
 #ifdefined miso
 	port_set_pin_function(%miso%, MUX_%miso_port%%miso_mux%_%miso_pad%);
+#port %miso_port% SPI Master MISO (SERCOM%unit%/PAD%unitof(miso_pad)%) 
 #fi
 	port_set_pin_function(%sck%, MUX_%sck_port%%sck_mux%_%sck_pad%);
+#port %sck_port% SPI Master SCLK (SERCOM%unit%/PAD%unitof(sck_pad)%) 
 #ifdefined ss
 	port_set_pin_function(%ss%, MUX_%ss_port%%ss_mux%_%ss_pad%);
+#port %ss_port% SPI Master CSn (SERCOM%unit%/PAD%unitof(ss_pad)%)
 #fi
 #ifdefined dre_irq
 #nvic SERCOM%unit%_SPIM_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
@@ -184,6 +194,7 @@
 #fi
 #iftrue type == "i2cm"
 
+#mod SERCOM%unit% I2C Master (%toupper(ref_source)% %frequency(ref_source)%) %baudrate% baud
 	// initialize SERCOM2 as I2C
 	i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SWRST);
 	i2cm_set_SWRST(SERCOM%unit%);
@@ -196,6 +207,9 @@
 
 	port_set_pin_function(%sda%, MUX_%sda_port%%sda_mux%_%sda_pad%);
 	port_set_pin_function(%scl%, MUX_%scl_port%%scl_mux%_%scl_pad%);
+#port %sda_port% I2C Master SDA (SERCOM%unit%/PAD%unitof(sda_pad)%)
+#port %scl_port% I2C Master SCL (SERCOM%unit%/PAD%unitof(scl_pad)%)
+
 #ifdefined isr
 #isr volatile i2cm_msg_t i2cm%unit%_msg = {
 #isr 	.dev = SERCOM%unit%,

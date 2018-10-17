@@ -9,7 +9,7 @@ scriptpath="${INITMAKER}/scripts"
 export AWKPATH="${scriptpath}"
 
 if [[ $# -lt 2 ]]; then
-	echo "Usage: genosc.sh <config file>.ini <board src>.c <board inc>.h processor 1|0"
+	echo "Usage: genosc.sh <config file>.ini <board src>.c <board inc>.h processor verbose"
 	exit 1
 fi
 if [[ ! -f $1 ]]; then
@@ -29,10 +29,10 @@ dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
 templatearr=("${INITMAKER}/templates/osc.c" "${INITMAKER}/templates/osc.h")
-nvictmp="${boardtmp}_nvic.tmp"
+rsrctmp="${boardtmp}_rsrc.tmp"
 vartmp="${boardtmp}_var.tmp"
 evttmp="${boardtmp}_evt.tmp"
-cfgtmp="${boardtmp}_cfg.tmp"
+cfgtmp="${cfg%.cfg}.tmp"
 
 today=`date +%D`
 
@@ -43,7 +43,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" -v cfgtmp="${cfgtmp}" '@include "functions.awk"
+awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" -v cfgtmp="${cfgtmp}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -58,10 +58,12 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
     	dpll_gclk_count = dpll_gclk_start;
     	dpll_gclk_sync_count = 30;
     	dfll_count = 40;
-    	dpll_count = 42;
+    	dpll_start = 42
+    	dpll_count = dpll_start;
     	gclk_start = 50;
     	gclk_count = gclk_start;
     	gclk_sync_count = 80;
+    	nvic_count = 200;
     	
     	devices[nvmctrl_count] = "nvmctrl";
     	prop["nvmctrl:macroname"] = "nvmctrl";
@@ -126,6 +128,10 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
 				devices[dpll_count++] = section; 
 				prop[key ":macroname"] = "dpll";								
 				setunit = 1;
+			break;
+			case /nvic/:
+				devices[nvic_count] = section;
+				prop[key ":macroname"] = "nvic";
 			break;
 			default: in_section = 0; section = ""; break;
 		}
@@ -268,6 +274,7 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
     				errprint("out_frequency not defined for " src);
     			} else {
     				ref = prop[outkey];
+    				prop["dfll:ref_frequency"] = ref;
     				prop["dfll:mul"] = int((prop["dfll:out_frequency"]/ref) + 0.5);
  					if (src ~ /gclk[0-9]+/) {
     					for (k = gclk_start; k < gclk_count; k++) {
@@ -299,6 +306,7 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
         				ref = prop[extkey];
    						prop["dpll" j ":ref_name"] = "xosc32";
     					prop["dpll" j ":ref_frequency"] = ref;
+    					prop["dpll" j ":src_frequency"] = ref;
    					} else if (src ~ /gclk[0-9]+/) {
     					outkey = src ":out_frequency";
      					if (!(outkey in prop)) {
@@ -308,6 +316,7 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
     					ref = prop[outkey];
     					prop["dpll" j ":ref_name"] = "gclk";
     					prop["dpll" j ":ref_frequency"] = ref;
+    					prop["dpll" j ":src_frequency"] = ref;
     					for (k = gclk_start; k < gclk_count; k++) {
     						if ((k in devices) && (devices[k] ~ src)) {
     							delete devices[k];
@@ -327,8 +336,8 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
     					divkey = "dpll" j ":div";
   						div = (prop[divkey] / 2) - 1;
   						prop["dpll" j ":divisor"] = div;
-  						ref = (ref / ((div + 1) * 2));
    						prop["dpll" j ":ref_frequency"] = ref;
+   						prop["dpll" j ":src_frequency"] = (ref / ((div + 1) * 2));
 					}
     			} else {
     				errprint("no ref_source for dpll" j);
@@ -337,6 +346,7 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
     			if (key in prop) {
     				fout = prop[key];
     				intref = "dpll" j ":integeronly";
+    				ref = int(prop["dpll" j ":src_frequency"]);
     				if (ref > 0) {		
     					prop["dpll" j ":ldr"] = int(fout/ref) - 1;
     					prop["dpll" j ":ldrfrac"] = ((intref in prop) ? 0 : (int(((fout/ref) - int(fout/ref)) * 32)));
@@ -356,7 +366,7 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
 			key = instance ":macroname";
 			name = prop[instance ":macroname"];
     		if (name ~ "^dpll$") {
-     			key = instance ":ref_frequency";
+     			key = instance ":src_frequency";
     			if (key in prop) {
     				ref = prop[key] + 0.0;
     				if ((ref > 3200000.0) || (ref < 32000.0)) {
@@ -472,12 +482,12 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}" -v evttmp="$
   				}
   			}
   			for (i in outline) {
-			    if(outline[i] ~ /^#nvic/) {
-					print gensub(/^#nvic\s+/,"",1,outline[i]) >> nvictmp;
+			    if(outline[i] ~ /^#(nvic|port|clk|mod)/) {
+					print outline[i] >> rsrctmp;
 			    } else if (outline[i] ~/^#var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else if (outline[i] ~ /^#evt/) {
-					print gensub(/^#evt/,"",1,outline[i]) >> evttmp;
+					print outline[i] >> evttmp;
 			    } else {
   					print outline[i];
 			    }

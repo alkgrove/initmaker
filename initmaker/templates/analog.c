@@ -3,6 +3,7 @@
     /* Clock ADC%unit% with %toupper(ref_source)% (%frequency(ref_source)%) */
     gclk_write_PCHCTRL(ADC%unit%_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
 
+#mod ADC%unit% (%toupper(ref_source)% %frequency(ref_source)%) Reference %toupper(refsel)%
     adc_wait_for_sync(ADC%unit%, ADC_SYNCBUSY_SWRST | ADC_SYNCBUSY_ENABLE);
     adc_set_CTRLA(ADC%unit%, ADC_CTRLA_SWRST);
     adc_wait_for_sync(ADC%unit%, ADC_SYNCBUSY_SWRST);
@@ -35,23 +36,8 @@
 #ifdefined refcomp
 			| ADC_REFCTRL_REFCOMP
 #fi
-#iftrue refsel == "intref"
-			| ADC_REFCTRL_REFSEL_INTREF
-#fi
-#iftrue refsel == "intvcc0"
-			| ADC_REFCTRL_REFSEL_INTVCC0
-#fi
-#iftrue refsel == "intvcc1"
-			| ADC_REFCTRL_REFSEL_INTVCC1
-#fi
-#iftrue refsel == "arefa"
-			| ADC_REFCTRL_REFSEL_AREFA
-#fi
-#iftrue refsel == "arefb"
-			| ADC_REFCTRL_REFSEL_AREFB
-#fi
-#iftrue refsel == "arefc"
-			| ADC_REFCTRL_REFSEL_AREFC
+#ifdefined refsel
+			| ADC_REFCTRL_REFSEL_%toupper(refsel)%
 #fi
 >>>);
     adc_write_EVCTRL(ADC%unit%, <<<
@@ -158,6 +144,7 @@
     mclk_set_%apbmask%(%apb%);
     /* Clock DAC with %toupper(ref_source)% (%frequency(ref_source)%) */
     gclk_write_PCHCTRL(DAC_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
+#mod DAC (%toupper(ref_source)% %frequency(ref_source)%) Reference %toupper(refsel)%
 
 	dac_write_CTRLA(DAC_CTRLA_SWRST);
 	dac_wait_for_sync(DAC_SYNCBUSY_SWRST);
@@ -165,7 +152,7 @@
 #warning ERRATA NOTICE: DAC does not work with VDDANA
 #fi
 	dac_write_CTRLB(<<<
-				    | DAC_CTRLB_REFSEL_%refsel%
+				    | DAC_CTRLB_REFSEL_%toupper(refsel)%
 #ifdefined diff
 				    | DAC_CTRLB_DIFF
 #fi

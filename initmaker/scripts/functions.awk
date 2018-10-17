@@ -11,10 +11,11 @@ function wordtranslate(fromlist, tolist, x, def)
 
 function tofreq(frequency)
 {
-      	if (frequency >= 1000000) {
-      		return (frequency/1000000.0) "MHz"; 
-      	} else if (frequency >= 1000) {
-      		return (frequency/1000.0) "KHz";
+	frq = int(frequency) + 0.0;
+      	if (frq >= 1000000) {
+      		return (frq/1000000.0) "MHz"; 
+      	} else if (frq >= 1000) {
+      		return (frq/1000.0) "KHz";
       	}
       	return frequency "Hz";
 }

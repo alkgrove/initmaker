@@ -14,6 +14,7 @@
 #var    uint16_t cal = 0;
 	cal = (osc32kctrl_read_OSCULP32K() & OSC32KCTRL_OSCULP32K_CALIB_Msk) >> OSC32KCTRL_OSCULP32K_CALIB_Pos; // get calibration value
 	osc32kctrl_write_OSCULP32K(OSC32KCTRL_OSCULP32K_CALIB(cal));
+#clk osculp32k Internal 32.768KHz Oscillator
 #endmacro
 
 #defmacro xosc
@@ -32,6 +33,15 @@
  		| OSCCTRL_XOSCCTRL_CFDPRESC(XOSC_CFDPRESC(XOSC%unit%_FREQUENCY)));
  	/* wait for oscillator to come online */
  	while ((oscctrl_read_STATUS() & OSCCTRL_STATUS_XOSCRDY%unit%) == 0){};
+#clk xosc%unit% External %frequency(ext_frequency)% Crystal
+#iftrue unit == 0
+#port PA14 XOSC0 Crystal In
+#port PA15 XOSC0 Crystal Out
+#fi
+#iftrue unit == 1
+#port PB22 XOSC1 Crystal In
+#port PB23 XOSC1 Crystal Out
+#fi
 #endmacro
 #defmacro xosc32k
 
@@ -46,9 +56,11 @@
 #fi // osc32K_on_demand
 #ifdefined en32k
          | OSC32KCTRL_XOSC32K_EN32K
+#clk xosc32k External 32.768KHz Crystal
 #fi
 #ifdefined en1k
          | OSC32KCTRL_XOSC32K_EN1K
+#clk xosc32k 1.024KHz = External 32.768KHz Crystal / 32
 #fi
          | OSC32KCTRL_XOSC32K_STARTUP(%startup%)
 #iftrue hs
@@ -58,6 +70,8 @@
 #fi
  	/* wait for oscillator to come online */
  	while ((osc32kctrl_read_STATUS() & OSC32KCTRL_STATUS_XOSC32KRDY) == 0){};
+#port PA00 External 32KHz Crystal In
+#port PA01 External 32KHz Crystal Out
 #endmacro
 
 #defmacro dpll
@@ -69,10 +83,23 @@
 	/** Digital Phase Lock Loop DPLL%unit% **/
 	dpll_wait_for_sync(DPLL%unit%, OSCCTRL_DPLLSYNCBUSY_ENABLE);
     dpll_clear_ENABLE(DPLL%unit%);
-	/* set DPLL%unit% ratio to %ldr% so that %frequency(ref_frequency)% * (%ldr%+1) = %frequency(out_frequency)% */
-#iftrue !(ldrfrac == 0)
-	/* DPLL will jitter more with non-zero fraction */
+#iftrue (ldrfrac == 0)
+	/* set DPLL%unit% ratio to %ldr% so that %frequency(out_frequency)% = %frequency(src_frequency)% * (%ldr%+1) */
+#iftrue ref_name == "gclk"
+#clk DPLL%unit% %frequency(out_frequency)% Source %toupper(ref_source)% (%frequency(ref_frequency)% * (%ldr%+1))
+#otherwise
+#clk DPLL%unit% %frequency(out_frequency)% Source %toupper(ref_source)% ((%frequency(ref_frequency)%/%div%) * (%ldr%+1))
 #fi
+#otherwise
+	/* set DPLL%unit% ratio to %ldr% so that %frequency(out_frequency)% = %frequency(src_frequency)% * ((%ldr%+1) + (%ldrfrac/32)) */
+	/* DPLL will jitter more with non-zero fraction */
+#iftrue ref_name == "gclk"
+#clk DPLL%unit% %frequency(out_frequency)% Source %toupper(ref_source)% (%frequency(ref_frequency)% * (%ldr%+1) + (%ldrfrac%/32))
+#otherwise
+#clk DPLL%unit% %frequency(out_frequency)% Source %toupper(ref_source)% ((%frequency(ref_frequency)%/%div%) * ((%ldr%+1) + (%ldrfrac%/32))
+#fi
+#fi
+
 	dpll_wait_for_sync(DPLL%unit%,OSCCTRL_DPLLSYNCBUSY_DPLLRATIO);
 	oscctrl_write_DPLLRATIO(DPLL%unit%, OSCCTRL_DPLLRATIO_LDR(%ldr%)
 								 | OSCCTRL_DPLLRATIO_LDRFRAC(%ldrfrac%));
@@ -107,6 +134,7 @@
 #defmacro gclk
 
 	/** GCLK%unit% %frequency(ref_frequency)%/%div% -> %frequency(out_frequency)% **/
+#clk GCLK%unit% %frequency(out_frequency)% Source %toupper(ref_source)%  (%frequency(ref_frequency)%/%div%)
  	gclk_write_GENCTRL(GCLK%unit%, GCLK_GENCTRL_GENEN
 #ifdefined in
  						| GCLK_GENCTRL_SRC_GCLKIN
@@ -129,10 +157,12 @@
 #ifdefined out
 	/** Set pin %out% as clock output (%frequency(out_frequency)%) */
 	port_set_pin_function(%out%, MUX_%port%%mux%_%io%);
+#port %port% GCLK%unit% CLOCK OUTPUT
 #fi
 #ifdefined in
 	/** Set pin %in% as clock input (%frequency(ext_frequency)%) */
 	port_set_pin_function(%in%, MUX_%port%%mux%_%io%);
+#port %port% GCLK%unit% CLOCK INPUT
 #fi
 #endmacro
 #defmacro gclk_sync
@@ -145,6 +175,9 @@
 >>>);
 #endmacro
 
+#defmacro nvic
+#nvic %name% %id% %handler%
+#endmacro
 
 #defmacro dpll_gclk_sync
 
@@ -159,6 +192,7 @@
 
 #defmacro dfll
 
+#clk DFLL %frequency(out_frequency)% Source %toupper(ref_source)% (%frequency(ref_frequency)% * %mul%)
 	/* DFLL */
 	/* DFLL is used on reset as default source, make the source 32K temporarily */
 	gclk_set_GENCTRL_SRC(GCLK0, GCLK_GENCTRL_SRC_OSCULP32K); 						

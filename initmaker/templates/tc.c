@@ -1,12 +1,25 @@
 #defmacro tc
+
+#iftrue (mode == 0)
+#mod TC%unit% 16Bit Counter (%toupper(ref_source)% %frequency(ref_source)%/%prescaler%)
+#otherwise
+#iftrue (mode == 1)
+#mod TC%unit% 8Bit Counter (%toupper(ref_source)% %frequency(ref_source)%/%prescaler%)
+#otherwise
+#mod TC%unit% 32Bit Counter (TC%unit%:TC%slaveunit%) (%toupper(ref_source)% %frequency(ref_source)%/%prescaler%)
+#fi
+#fi
 	mclk_set_%apbmask%(%apb%);
 #ifdefined apbslave
 	mclk_set_%apbslavemask%(%apbslave%);
 #fi
 	/* Clock TC%unit% with %toupper(ref_source)% (%frequency(ref_source)%) */
 	gclk_write_PCHCTRL(TC%unit%_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
-	/** TC%unit% 32 bit counter */
-	tc_wait_for_sync(TC%unit%, TC_SYNCBUSY_SWRST);
+#ifdefined slaveunit
+	/** TC%unit% + TC%slaveunit% - 32 bit counter */
+	tc_set_SWRST(TC%slaveunit%);
+	tc_wait_for_sync(TC%slaveunit%, TC_SYNCBUSY_SWRST);
+#fi
 	tc_set_SWRST(TC%unit%);
 	tc_wait_for_sync(TC%unit%, TC_SYNCBUSY_SWRST);
 	
@@ -137,6 +150,7 @@
 	mclk_set_%apbmask%(%apb%);
 	/* Clock TCC%unit% with %toupper(ref_source)% (%frequency(ref_source)%) */
 	gclk_write_PCHCTRL(TCC%unit%_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
+#mod TCC%unit% (%toupper(ref_source)% %frequency(ref_source)%/%prescaler%)
 	/* Reset TCC%unit% */
 	tcc_wait_for_sync(TCC%unit%, TCC_SYNCBUSY_SWRST);
 	tcc_set_SWRST(TCC%unit%);

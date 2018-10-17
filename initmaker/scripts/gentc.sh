@@ -28,7 +28,7 @@ boardtmp="${boardsrc%.c}"
 dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
-nvictmp="${boardtmp}_nvic.tmp"
+rsrctmp="${boardtmp}_rsrc.tmp"
 isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 evttmp="${boardtmp}_evt.tmp"
@@ -42,7 +42,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -v script="${script}" -v nvictmp="${nvictmp}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
+awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -175,6 +175,7 @@ awk -v script="${script}" -v nvictmp="${nvictmp}" -v isrtmp="${isrtmp}" -v vartm
 					if ((i % 2) == 0) {
 						apbmaster = "tc" i;
 						apbslave = "tc" (i + 1);
+						prop["tc" i ":slaveunit"] = i + 1;
 						if (apbslave in mclk) {
 							prop[apbmaster ":apbslave"] = mclk[apbslave];
 							match(mclk[apbslave], /^MCLK_([^_]+)/, arr);
@@ -291,14 +292,14 @@ awk -v script="${script}" -v nvictmp="${nvictmp}" -v isrtmp="${isrtmp}" -v vartm
   				}
   			}
   			for (i in outline) {
-			    if(outline[i] ~ /^#nvic/) {
-					print gensub(/^#nvic\s+/,"",1,outline[i]) >> nvictmp;
+			    if(outline[i] ~ /^#(nvic|port|mod)/) {
+					print outline[i] >> rsrctmp;
 			    } else if(outline[i] ~ /^#isr/) {
 					print gensub(/^#isr[ \t]/,"",1,outline[i]) >> isrtmp;
 			    } else if (outline[i] ~ /^#var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else if (outline[i] ~ /^#evt/) {
-					print gensub(/^#evt/,"",1,outline[i]) >> evttmp;
+					print outline[i] >> evttmp;
 			    } else {
   					print outline[i];
 			    }

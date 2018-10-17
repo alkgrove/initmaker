@@ -305,6 +305,7 @@ function initpins()
    pins["PA19:AC"] = "12 AC_CMP1";
    pins["PB22:GCLK"] = "12 GCLK_IO0";
    pins["PB23:GCLK"] = "12 GCLK_IO1";
+   pins["PA27:GCLK"] = "12 GCLK_IO1";
    pins["PA30:GCLK"] = "12 GCLK_IO0";
    pins["PB08:CCL"] = "13 CCL_IN8";
    pins["PB09:CCL"] = "13 CCL_OUT2";

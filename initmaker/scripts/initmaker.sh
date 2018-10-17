@@ -17,6 +17,7 @@ if [[ $# -lt 3 ]]; then
 	echo "Usage: initmaker.sh <config file>.cfg <target>.c <target>.h <options>"
 	echo "       options -v|--verbose"
 	echo "       options -x|--extended <filename>"
+	echo "       options -s|--summary"
 	exit 1
 fi
 if [[ ! -f $1 ]]; then
@@ -32,10 +33,11 @@ shift;
 verbose=0
 debug=0
 idx=0
-
+summary=0
 while [[ "$#" > 0 ]]; do case $1 in
   -v|--verbose) verbose=1;;
   --debug) debug=1;;
+  -s|--summary) summary=1;;
   -x|--extended) shift; filelist[$idx]=$1; ((idx++));;
   *) echo "Unknown parameter passed: $1"; exit 1;;
 esac; shift; done
@@ -44,11 +46,12 @@ errfile="02.000"
 boardtmp="${boardsrc%.c}"
 extctmp="ext_tmp.c"
 exthtmp="ext_tmp.h"
-nvictmp="${boardtmp}_nvic.tmp"
+rsrctmp="${boardtmp}_rsrc.tmp"
 isrtmp="${boardtmp}_isr.tmp"
 evttmp="${boardtmp}_evt.tmp"
-cfgtmp="${boardtmp}_cfg.tmp"
-rm -f ${nvictmp}
+cfgtmp="${cfg%.cfg}.tmp"
+
+rm -f ${rsrctmp}
 rm -f ${isrtmp}
 if [[ -f "${errfile}" ]]; then
    rm -f "${errfile}"
@@ -61,7 +64,7 @@ if [ "$(basename ${processor})" == "unknown.awk" ] || [ ! -f ${processor} ]; the
 fi
 
 if [[ ! -f "${boardsrc}" ]]; then
-	${scriptpath}/genboard.sh "${cfg}" "${boardsrc}" "${boardinc}" "${verbose}" 
+	${scriptpath}/genboard.sh "${cfg}" "${boardsrc}" "${boardinc}" "${verbose}"
 fi
 if [[ ! -f "${boardsrc}" ]]; then
 	echo "Failed to create ${boardsrc}"
@@ -72,7 +75,7 @@ if [[ ! -f "${boardinc}" ]]; then
 	exit 1
 fi
 
-rm -f ${nvictmp}
+rm -f ${rsrctmp}
 rm -f ${vartmp}
 rm -f ${evttmp}
 rm -f ${cfgtmp}
@@ -86,6 +89,9 @@ ${scriptpath}/gendma.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "
 ${scriptpath}/genana.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/genevent.sh "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/gennvic.sh "${boardsrc}" "${processor}" "${verbose}"
+if [[ ${summary} == "1" ]]; then
+${scriptpath}/gensum.sh "${cfgtmp}" "${boardsrc}" "${processor}" "${verbose}" 
+fi
 ${scriptpath}/genvar.sh "${boardsrc}" "${verbose}"
 
 rm -f ${extctmp} ${exthtmp}
@@ -115,7 +121,7 @@ rm -f "${exthtmp}"
 fi
 
 if [ "${debug}" == 0 ]; then
-rm -f ${nvictmp} ${vartmp} ${evttmp} ${cfgtmp} ${isrtmp}
+rm -f ${rsrctmp} ${vartmp} ${evttmp} ${cfgtmp} ${isrtmp}
 fi
 unset INITMAKER
 

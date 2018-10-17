@@ -40,7 +40,7 @@ i2cm_err_t i2cm_transfer(volatile i2cm_msg_t *msg, uint8_t address,
 	uint8_t *rdbuf, uint8_t rdlen)
 {
 	SERCOM_t *dev = (SERCOM_t *) msg->dev;
-	int32_t timeout = 65535;
+	volatile int32_t timeout = 65535;
 	int sdahigh;
 	volatile int i;
 	int j;
@@ -70,16 +70,17 @@ i2cm_err_t i2cm_transfer(volatile i2cm_msg_t *msg, uint8_t address,
 				} else {
 					sdahigh = 0;
 				}
-				gpio_set_out_low(msg->scl);
+				// drive the clock low, then release (open drain)
+				gpio_set_wand(msg->scl, false);
 				for (i = 0; i < 300; i++);
-				gpio_set_out_high(msg->scl);
+				gpio_set_wand(msg->scl, true);
 				for (i = 0; i < 300; i++);
 			}
 			port_set_pin_function(msg->sda, sdapf);
 			port_set_pin_function(msg->scl, sclpf);
 			i2cm_wait_for_sync(dev, SERCOM_I2CM_SYNCBUSY_ENABLE);
 			i2cm_set_ENABLE(dev);
-			
+
 			i2cm_wait_for_sync(dev, SERCOM_I2CM_SYNCBUSY_SYSOP);
 			i2cm_write_STATUS(dev, SERCOM_I2CM_STATUS_BUSSTATE(I2CM_BUSSTATE_IDLE));
 			if(i2cm_get_BUSSTATE(dev) != I2CM_BUSSTATE_IDLE) return I2CM_BUSFAULT;
@@ -115,7 +116,7 @@ i2cm_err_t writeI2C(volatile i2cm_msg_t *msg, uint8_t address, uint8_t *wrbuf, u
 	if(stat != I2CM_OK) return stat;
 	count = get_timer();
 	while(msg->status & I2CM_BUSY) {
-		if ((get_timer() - count) > I2CM_TIMEOUT) return I2CM_TIMEOUT;
+		if ((get_timer() - count) > I2CMTO) return I2CM_TIMEOUT;
 	}
 	if (msg->status & I2CM_FAIL) return I2CM_BUSFAULT;
 	if (msg->status & I2CM_NACK) return I2CM_NO_ACK;
@@ -130,7 +131,7 @@ i2cm_err_t readI2C(volatile i2cm_msg_t *msg, uint8_t address, uint8_t *wrbuf, ui
 	if(stat != I2CM_OK) return stat;
 	count = get_timer();
 	while(msg->status & I2CM_BUSY) {
-		if ((get_timer() - count) > I2CM_TIMEOUT) return I2CM_TIMEOUT;
+		if ((get_timer() - count) > I2CMTO) return I2CM_TIMEOUT;
 	}
 	if (msg->status & I2CM_FAIL) return I2CM_BUSFAULT;
 	if (msg->status & I2CM_NACK) return I2CM_NO_ACK;

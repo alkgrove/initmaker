@@ -25,7 +25,7 @@ verbose="$4"
 errfile="02.000"
 boardtmp="${boardsrc%.c}"
 evttmp="${boardtmp}_evt.tmp"
-nvictmp="${boardtmp}_nvic.tmp"
+rsrctmp="${boardtmp}_rsrc.tmp"
 dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
@@ -41,7 +41,7 @@ newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
  
 if [[ -f ${evttmp} ]]; then
-awk -v script="${script}" -v evttmp="${evttmp}" -v nvictmp="${nvictmp}" -i "${processor}" '@include "functions.awk"
+awk -v script="${script}" -v evttmp="${evttmp}" -v rsrctmp="${rsrctmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -57,36 +57,36 @@ awk -v script="${script}" -v evttmp="${evttmp}" -v nvictmp="${nvictmp}" -i "${pr
         out_count = out_start;
         devices[evt_count] = "evsys";
 	}
-	(NR == FNR) {
+	(NR == FNR) && /^#evt/ {
 		gsub(/[\r\n]/, "");
-		if ($1 ~ /swgen/) {
-			eventlist[$2] = 0;
-			swgenlist[async_count++] = $2;
+		if ($2 ~ /swgen/) {
+			eventlist[$3] = 0;
+			swgenlist[async_count++] = $3;
 			prop["evsys:swgenerators"] = 1;
-		} else if ($1 ~ /gen/) {
-			if (tolower($4) ~ /asynchronous/) {
-				eventlist[$2] = 0;
-				genidlist[async_count] = $3;
-				pathlist[async_count] = $4;
-				edgelist[async_count] = $5;
-				eventname[async_count++] = $2;
+		} else if ($2 ~ /gen/) {
+			if (tolower($5) ~ /asynchronous/) {
+				eventlist[$3] = 0;
+				genidlist[async_count] = $4;
+				pathlist[async_count] = $5;
+				edgelist[async_count] = $6;
+				eventname[async_count++] = $3;
 			} else {
-				eventlist[$2] = 0;
-				genidlist[sync_count] = $3;
-				pathlist[sync_count] = $4;
-				edgelist[sync_count] = $5;
-				clocklist[sync_count] = $6;
-				evintlist[sync_count] = $7;
+				eventlist[$3] = 0;
+				genidlist[sync_count] = $4;
+				pathlist[sync_count] = $5;
+				edgelist[sync_count] = $6;
+				clocklist[sync_count] = $7;
+				evintlist[sync_count] = $8;
 				prop["evsys:clocks"] = 1;
-				eventname[sync_count++] = $2;
+				eventname[sync_count++] = $3;
 				if (sync_count >= async_start) {
 					errprint("Too many synchronous event channels");
 				}
 			}
 			prop["evsys:generators"] = 1;
-		} else if ($1 ~ /event/) {
-			username[out_count] = $2;
-			userid[out_count++] = $3;
+		} else if ($2 ~ /event/) {
+			username[out_count] = $3;
+			userid[out_count++] = $4;
 		}
 		next;
 	}
@@ -257,7 +257,7 @@ awk -v script="${script}" -v evttmp="${evttmp}" -v nvictmp="${nvictmp}" -i "${pr
           	}
           	for (i in outline) {
 			    if(outline[i] ~ /^#nvic/) {
-					print gensub(/^#nvic\s+/,"",1,outline[i]) >> nvictmp;
+					print outline[i] >> rsrctmp;
 			    } else if (outline[i] ~ /^#var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else {

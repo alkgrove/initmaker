@@ -22,7 +22,7 @@ boardsrc="$2"
 boardinc="$3"
 processor="$4"
 verbose="$5"
-#"APBA APBA APBB APBB APBD APBD APBD APBD";
+
 
 errfile="02.000"
 boardtmp="${boardsrc%.c}"
@@ -30,7 +30,7 @@ dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
 templatearr=("${INITMAKER}/templates/sercom.c" "${INITMAKER}/templates/sercom.h")
-nvictmp="${boardtmp}_nvic.tmp"
+rsrctmp="${boardtmp}_rsrc.tmp"
 isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 today=`date +%D`
@@ -42,7 +42,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}"  -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" '@include "functions.awk"
+awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -370,8 +370,8 @@ awk -i "${processor}" -v script="${script}" -v nvictmp="${nvictmp}"  -v isrtmp="
   				}
   			}
   			for (i in outline) {
-			    if(outline[i] ~ /^#nvic/) {
-					print gensub(/^#nvic\s+/,"",1,outline[i]) >> nvictmp;
+			    if(outline[i] ~ /^#(nvic|port|mod)/) {
+					print outline[i] >> rsrctmp;
 			    } else if(outline[i] ~ /^#isr/) {
 					print gensub(/^#isr[ \t]/,"",1,outline[i]) >> isrtmp;
 			    } else if (outline[i] ~ /^var/) {
