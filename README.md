@@ -3,6 +3,7 @@
 This is a simplified driver set for the ATSAMD5x processor and SystemInit creator scripts for the Microchip (Atmel) ATSAMD5x chips. 
 This is intended for developers of the Microchip ATSAMD5x processor programming in C using arm-none-eabi-gcc. For more information, see www.alkgrove.com. It needs a bash shell environment and Gnu awk. 
 ## Updates
+Added initialization for QSPI, RTC. Added tags (#define macros) for SERCOM, DMAC and TC/TCC
 Added an option (-s) to build a summary file of the system init. This generates <cfg>.txt.  
 Fixed the I2CM recovery of bad bus faults. 
 Various bug fixes. 
