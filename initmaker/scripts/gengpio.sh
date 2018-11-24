@@ -180,11 +180,11 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 							errprint("EIC" num " (" sig ") is assigned to " genevent[num]);
 						} else {
 							intkey = instance ":interrupt";
+							eicpin[num] = sig;
+							prop["eic:eic_pin"] = 1;
 							if (intkey in prop) {
 								eicinterrupt[num] = sig;
-								eicpin[num] = sig;
 								prop["eic:eic_interrupt"] = 1;
-								prop["eic:eic_pin"] = 1;
 							}
 							dkey = instance ":debounce";
 							if (dkey in prop) {
@@ -342,7 +342,7 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
   						delete a;
   						value = dofunction(txtsub);
   						if (value ~ "Unknown") {
-  							errprint("Unknown property " txtsub " in macro " name "+" i);
+  							errprint("Unknown property \"" txtsub "\" in macro " name "+" i);
   							break;
   						} else {
 							line = gensub(repl, value, "g", line);

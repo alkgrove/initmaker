@@ -62,6 +62,10 @@ void SystemInit(void)
  *  @ingroup SystemInit
  *  @{ **/
 /** @} **/
+/** @addtogroup MISC
+ *  @ingroup SystemInit
+ *  @{ **/
+/** @} **/
 /** @addtogroup ExtendedInit
  *  @ingroup SystemInit
  *  @{ **/
@@ -75,7 +79,6 @@ void SystemInit(void)
  *  @{ **/
 /** @} **/
 } /* SystemInit */
-
 /** @addtogroup ISR
  *  @ingroup SystemInit
  *  @{ **/

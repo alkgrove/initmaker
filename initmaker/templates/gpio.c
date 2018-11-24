@@ -64,8 +64,9 @@
 	/* Clock EIC with %toupper(ref_source)% (%frequency(ref_frequency)%) */
 	gclk_write_PCHCTRL(EIC_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
 #fi
+#ifdefined list
 #mod EIC External Interrupt Control (%toupper(ref_source)% %frequency(ref_frequency)%) EIC Channels: %list%
-
+#fi
 	// enable APB Clock EIC
 	mclk_set_APBAMASK(MCLK_APBAMASK_EIC);
 

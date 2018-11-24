@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# genana.sh <config file>.cfg <target>.c <target>.h {-v}
-# modifies analog section
+# genmisc.sh <config file>.cfg <target>.c <target>.h {-v}
+# modifies miscellaneous section
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
@@ -9,7 +9,7 @@
 #export AWKPATH="${scriptpath}"
 
 if [[ $# -le 3 ]]; then
-	echo "Usage: genana.sh <config file>.cfg <target>.c <target>.h {-v}"
+	echo "Usage: genmisc.sh <config file>.cfg <target>.c <target>.h {-v}"
 	exit 1
 fi
 if [[ ! -f $1 ]]; then
@@ -29,37 +29,33 @@ dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
 rsrctmp="${boardtmp}_rsrc.tmp"
+isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 evttmp="${boardtmp}_evt.tmp"
-templatearr=("${INITMAKER}/templates/analog.c" "${INITMAKER}/templates/analog.h")
+templatearr=("${INITMAKER}/templates/misc.c" "${INITMAKER}/templates/misc.h")
 today=`date +%D`
 
-for i in 0
+for i in 0 1
 do
 dst="${dstarr[i]}"
 tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
+awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
     	in_macro=0;
     	in_section=0;
-    	supc_count = 10;
-		adc_count = 20;
-		dac_count = 100;
-     	initpins();
+		count = 1;
+		prop["icm:macroname"] = "icm";
+		prop["sdo:macroname"] = "sdo";
+		prop["sdhc:macroname"] = "sdhc";
+		prop["sdo:frequency"] = "60000000";
+		prop["sdo:print_port"] = 1;
+    	initpins();
      	initmclk();
-     	for (i = 0; i < unitmax["adc"]; i++) {
-			prop["adc" i ":samplenum"] = 1;
-			prop["adc" i ":adjres"] = 0;
-			prop["adc" i ":samplen"] = 0;			
-			prop["adc" i ":prescaler"] = "div2";
-		}
-		prop["dac:dacctrl0_osr"] = 1;
-		prop["dacctrl0_refresh"] = 0;
 	}
 	(NR == FNR) && /^[#;]/ {
 		next;
@@ -68,30 +64,11 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttm
 		gsub(/[\[\]\r\n\ \t]/,"");
 		key = tolower($0);
 		in_section = 0;
-		if (key ~ /adc[0-9]+/) {
+		macrokey = key ":macroname";
+		if (macrokey in prop) {
   			in_section = 1;
   			section = key;
- 			if (match(section, /([0-9]{1,2}$)/, a)) {
- 				key = section ":unit";
- 				if (key in prop) {
- 					errprint(toupper(section) " defined more than once");
- 				} else {
-					prop[key] = a[1];
-				}
-			}
-			delete a;
- 			devices[adc_count++] = section;
-  			prop[section ":macroname"] = "adc";
-  		} else if (key ~ /dac/) {
-  			in_section = 1;
-  			section = key;
-  			devices[dac_count] = section;
-  			prop[section ":macroname"] = "dac";
-  		} else if (key ~ /supc/) {
-  			in_section = 1;
-  			section = key;
-  			devices[supc_count] = section;
-  			prop[section ":macroname"] = "supc";
+ 			devices[count++] = section;
   		}  else if (key ~ /freq/) {
   			in_section = 1;
   			section = key;
@@ -143,28 +120,6 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttm
 				prop[instance ":apbmask"] = arr[1];
 				delete arr;
 			}
-			checkfreq(instance, 100000000);
-			if (!("dac:cctrl" in prop)) {
-				keyclk = "dac:ref_source";
-				if (keyclk in prop) {
-					keyfreq = "freq:" prop[keyclk];
-					if (keyfreq in prop) {
-						value = int(prop[keyfreq]);
-						if (value <= 1200000) {
-							prop["dac:cctrl"] = "CC100K";
-						} else if (value <= 6000000) {
-							prop["dac:cctrl"] = "CC1M";
-						} else {
-							prop["dac:cctrl"] = "CC12M";
-						} 						
-					}
-				}
-			}
-			refselkey = instance ":refsel";
-			if (refselkey in prop) {
-				prop[refselkey] = wordtranslate("vrefau vddana vrefab intref", "VREFPU VDDANA VREFPB INTREF", prop[refselkey], toupper(prop[refselkey]));
-			}
-			prop[instance ":vref"] = (("supc:sel" in prop) ? gensub(/V/, ".", 1, prop["supc:sel"]) "V" : "");
 			key = instance ":macroname";
 			name = prop[instance ":macroname"];
   			olp = 1;
@@ -252,6 +207,8 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttm
   			for (i in outline) {
 			    if(outline[i] ~ /^#(nvic|port|mod)/) {
 					print outline[i] >> rsrctmp;
+			    } else if(outline[i] ~ /^#isr/) {
+					print gensub(/^#isr[ \t]/,"",1,outline[i]) >> isrtmp;
 			    } else if (outline[i] ~ /^#var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else if (outline[i] ~ /^#evt/) {
@@ -270,8 +227,8 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttm
 awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
-	/\/\**\s*@addtogroup Analog/ {
-           print "/** @addtogroup Analog";
+	/\/\**\s*@addtogroup MISC/ {
+           print "/** @addtogroup MISC";
            print " *  @ingroup SystemInit";
            print " *  Updated: " date;
            print " *  @{ **/";
@@ -294,12 +251,12 @@ rm -f $tmp
 if [[ -f "${errfile}" ]]; then
    rm -f "${errfile}"
    if [[ ${verbose} == 1 ]]; then
-   	   echo "${dst} analog failed"
+   	   echo "${dst} misc failed"
    fi
 else
    mv -f $newdst $dst
 	if [[ ${verbose} == 1 ]]; then
-   		echo "${dst} analog done"
+   		echo "${dst} misc done"
 	fi
 fi
 done

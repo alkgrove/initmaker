@@ -33,6 +33,19 @@
 #include "sam.h"
 #include "i2cm.h"
 #include "delay.h"
+const char *i2cm_err_msg[] = {
+	"OK",
+	"Bus Busy",
+	"Bus Fault",
+	"Arbitration Lost",
+	"No Acknowledge",
+	"Bad Message",
+	"Timeout"};
+
+const char *i2cm_err_str(int err)
+{
+	return i2cm_err_msg[err];
+}
 
 #define I2CMTO 500000
 i2cm_err_t i2cm_transfer(volatile i2cm_msg_t *msg, uint8_t address, 

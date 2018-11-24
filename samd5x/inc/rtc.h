@@ -44,6 +44,19 @@
  * @brief rtcmode0 wait for sync
  *
  * @param[in] reg uint32_t 
+ * RTC_MODE0_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE0_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE0_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE0_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE0_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE0_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE0_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE0_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE0_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP	General Purpose x Register Busy 
  **/
 static inline void rtcmode0_wait_for_sync(uint32_t reg)
 {
@@ -66,6 +79,19 @@ static inline bool rtcmode0_is_syncing(uint32_t reg)
  * @brief rtcmode1 wait for sync
  *
  * @param[in] reg uint32_t 
+ * RTC_MODE1_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE1_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE1_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE1_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE1_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE1_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE1_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE1_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE1_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP	General Purpose x Register Busy 
  **/
 static inline void rtcmode1_wait_for_sync(uint32_t reg)
 {
@@ -88,6 +114,19 @@ static inline bool rtcmode1_is_syncing(uint32_t reg)
  * @brief rtcmode2 wait for sync
  *
  * @param[in] reg uint32_t 
+ * RTC_MODE2_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE2_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE2_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE2_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE2_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE2_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP	General Purpose x Register Busy 
  **/
 static inline void rtcmode2_wait_for_sync(uint32_t reg)
 {
@@ -99,6 +138,19 @@ static inline void rtcmode2_wait_for_sync(uint32_t reg)
  * @brief rtcmode2 is syncing
  *
  * @param[in] reg uint32_t 
+ * RTC_MODE2_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE2_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE2_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE2_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE2_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE2_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP	General Purpose x Register Busy 
  * @return bool
  **/
 static inline bool rtcmode2_is_syncing(uint32_t reg)
@@ -1810,7 +1862,19 @@ static inline uint32_t rtcmode2_read_BKUP(uint8_t index)
  *
  * @param[in] mask uint32_t 
  * @return uint32_t
- * -
+ * RTC_MODE2_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE2_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE2_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE2_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE2_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE2_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP	General Purpose x Register Busy 
  **/
 static inline uint32_t rtcmode2_get_SYNCBUSY(uint32_t mask)
 {
@@ -1821,7 +1885,19 @@ static inline uint32_t rtcmode2_get_SYNCBUSY(uint32_t mask)
  * @brief rtcmode2 read SYNCBUSY register
  *
  * @return uint32_t
- * -
+ * RTC_MODE2_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE2_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE2_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE2_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE2_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE2_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE2_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE2_SYNCBUSY_GP	General Purpose x Register Busy 
  **/
 static inline uint32_t rtcmode2_read_SYNCBUSY(void)
 {
@@ -2167,30 +2243,30 @@ static inline void rtcmode0_write_CTRLA(uint16_t data)
  * @brief rtcmode0 clear CTRLA register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_CTRLA_SWRST Software Reset
- * - RTC_MODE2_CTRLA_ENABLE Enable
- * - RTC_MODE2_CTRLA_MODE(value) Operating Mode
- *  +      RTC_MODE2_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
- * - RTC_MODE2_CTRLA_CLKREP Clock Representation
- * - RTC_MODE2_CTRLA_MATCHCLR Clear on Match
- * - RTC_MODE2_CTRLA_PRESCALER(value) Prescaler
- *  +      RTC_MODE2_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
- * - RTC_MODE2_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_GPTRST GP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
+ * - RTC_MODE0_CTRLA_SWRST Software Reset
+ * - RTC_MODE0_CTRLA_ENABLE Enable
+ * - RTC_MODE0_CTRLA_MODE(value) Operating Mode
+ *  +      RTC_MODE0_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
+ *  +      RTC_MODE0_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
+ *  +      RTC_MODE0_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
+ * - RTC_MODE0_CTRLA_CLKREP Clock Representation
+ * - RTC_MODE0_CTRLA_MATCHCLR Clear on Match
+ * - RTC_MODE0_CTRLA_PRESCALER(value) Prescaler
+ *  +      RTC_MODE0_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
+ * - RTC_MODE0_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
+ * - RTC_MODE0_CTRLA_GPTRST GP Registers Reset On Tamper Enable
+ * - RTC_MODE0_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
  **/
 static inline void rtcmode0_clear_CTRLA(uint16_t mask)
 {
@@ -2201,30 +2277,30 @@ static inline void rtcmode0_clear_CTRLA(uint16_t mask)
  * @brief rtcmode0 read CTRLA register
  *
  * @return uint16_t
- * - RTC_MODE2_CTRLA_SWRST Software Reset
- * - RTC_MODE2_CTRLA_ENABLE Enable
- * - RTC_MODE2_CTRLA_MODE(value) Operating Mode
- *  +      RTC_MODE2_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
- * - RTC_MODE2_CTRLA_CLKREP Clock Representation
- * - RTC_MODE2_CTRLA_MATCHCLR Clear on Match
- * - RTC_MODE2_CTRLA_PRESCALER(value) Prescaler
- *  +      RTC_MODE2_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
- * - RTC_MODE2_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_GPTRST GP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
+ * - RTC_MODE0_CTRLA_SWRST Software Reset
+ * - RTC_MODE0_CTRLA_ENABLE Enable
+ * - RTC_MODE0_CTRLA_MODE(value) Operating Mode
+ *  +      RTC_MODE0_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
+ *  +      RTC_MODE0_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
+ *  +      RTC_MODE0_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
+ * - RTC_MODE0_CTRLA_CLKREP Clock Representation
+ * - RTC_MODE0_CTRLA_MATCHCLR Clear on Match
+ * - RTC_MODE0_CTRLA_PRESCALER(value) Prescaler
+ *  +      RTC_MODE0_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
+ *  +      RTC_MODE0_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
+ * - RTC_MODE0_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
+ * - RTC_MODE0_CTRLA_GPTRST GP Registers Reset On Tamper Enable
+ * - RTC_MODE0_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
  **/
 static inline uint16_t rtcmode0_read_CTRLA(void)
 {
@@ -2235,30 +2311,30 @@ static inline uint16_t rtcmode0_read_CTRLA(void)
  * @brief rtcmode0 set CTRLB register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE0_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE0_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE0_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE0_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE0_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE0_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline void rtcmode0_set_CTRLB(uint16_t mask)
 {
@@ -2270,30 +2346,30 @@ static inline void rtcmode0_set_CTRLB(uint16_t mask)
  *
  * @param[in] mask uint16_t 
  * @return uint16_t
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE0_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE0_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE0_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE0_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE0_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE0_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline uint16_t rtcmode0_get_CTRLB(uint16_t mask)
 {
@@ -2304,30 +2380,30 @@ static inline uint16_t rtcmode0_get_CTRLB(uint16_t mask)
  * @brief rtcmode0 write CTRLB register
  *
  * @param[in] data uint16_t 
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE0_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE0_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE0_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE0_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE0_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE0_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline void rtcmode0_write_CTRLB(uint16_t data)
 {
@@ -2338,30 +2414,30 @@ static inline void rtcmode0_write_CTRLB(uint16_t data)
  * @brief rtcmode0 clear CTRLB register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE0_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE0_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE0_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE0_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE0_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE0_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline void rtcmode0_clear_CTRLB(uint16_t mask)
 {
@@ -2372,30 +2448,30 @@ static inline void rtcmode0_clear_CTRLB(uint16_t mask)
  * @brief rtcmode0 read CTRLB register
  *
  * @return uint16_t
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE0_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE0_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE0_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE0_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE0_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE0_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE0_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE0_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline uint16_t rtcmode0_read_CTRLB(void)
 {
@@ -2406,21 +2482,21 @@ static inline uint16_t rtcmode0_read_CTRLB(void)
  * @brief rtcmode0 set EVCTRL register
  *
  * @param[in] mask uint32_t 
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE0_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE0_EVCTRL_CMPEO0 Compare 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_CMPEO1 Compare 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE0_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline void rtcmode0_set_EVCTRL(uint32_t mask)
 {
@@ -2432,21 +2508,21 @@ static inline void rtcmode0_set_EVCTRL(uint32_t mask)
  *
  * @param[in] mask uint32_t 
  * @return uint32_t
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE0_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE0_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE0_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline uint32_t rtcmode0_get_EVCTRL(uint32_t mask)
 {
@@ -2457,21 +2533,21 @@ static inline uint32_t rtcmode0_get_EVCTRL(uint32_t mask)
  * @brief rtcmode0 write EVCTRL register
  *
  * @param[in] data uint32_t 
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE0_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE0_EVCTRL_CMPEO0 Compare 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_CMPEO1 Compare 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE0_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline void rtcmode0_write_EVCTRL(uint32_t data)
 {
@@ -2482,21 +2558,21 @@ static inline void rtcmode0_write_EVCTRL(uint32_t data)
  * @brief rtcmode0 clear EVCTRL register
  *
  * @param[in] mask uint32_t 
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE0_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE0_EVCTRL_CMPEO0 Compare 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_CMPEO1 Compare 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE0_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline void rtcmode0_clear_EVCTRL(uint32_t mask)
 {
@@ -2507,21 +2583,21 @@ static inline void rtcmode0_clear_EVCTRL(uint32_t mask)
  * @brief rtcmode0 read EVCTRL register
  *
  * @return uint32_t
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE0_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE0_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE0_EVCTRL_CMPEO0 Compare 0 Event Output Enable
+ * - RTC_MODE0_EVCTRL_CMPEO1 Compare 1 Event Output Enable
+ * - RTC_MODE0_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE0_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE0_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline uint32_t rtcmode0_read_EVCTRL(void)
 {
@@ -2645,23 +2721,13 @@ static inline uint8_t rtcmode0_read_FREQCORR(void)
 	return RTC->MODE0.FREQCORR.reg;
 }
 
-/**
- * @brief rtcmode0 set COUNT register
- *
- * @param[in] mask uint32_t 
- * - RTC_MODE1_COUNT_COUNT(value) Counter Value
- **/
-static inline void rtcmode0_set_COUNT(uint32_t mask)
-{
-	RTC->MODE0.COUNT.reg |= mask;
-}
 
 /**
  * @brief rtcmode0 get COUNT register
  *
  * @param[in] mask uint32_t 
  * @return uint32_t
- * - RTC_MODE1_COUNT_COUNT(value) Counter Value
+ * - RTC_MODE0_COUNT_COUNT(value) Counter Value
  **/
 static inline uint32_t rtcmode0_get_COUNT(uint32_t mask)
 {
@@ -2672,29 +2738,19 @@ static inline uint32_t rtcmode0_get_COUNT(uint32_t mask)
  * @brief rtcmode0 write COUNT register
  *
  * @param[in] data uint32_t 
- * - RTC_MODE1_COUNT_COUNT(value) Counter Value
+ * - RTC_MODE0_COUNT_COUNT(value) Counter Value
  **/
 static inline void rtcmode0_write_COUNT(uint32_t data)
 {
 	RTC->MODE0.COUNT.reg = data;
 }
 
-/**
- * @brief rtcmode0 clear COUNT register
- *
- * @param[in] mask uint32_t 
- * - RTC_MODE1_COUNT_COUNT(value) Counter Value
- **/
-static inline void rtcmode0_clear_COUNT(uint32_t mask)
-{
-	RTC->MODE0.COUNT.reg &= ~mask;
-}
 
 /**
  * @brief rtcmode0 read COUNT register
  *
  * @return uint32_t
- * - RTC_MODE1_COUNT_COUNT(value) Counter Value
+ * - RTC_MODE0_COUNT_COUNT(value) Counter Value
  **/
 static inline uint32_t rtcmode0_read_COUNT(void)
 {
@@ -2706,7 +2762,7 @@ static inline uint32_t rtcmode0_read_COUNT(void)
  *
  * @param[in] index uint8_t 
  * @param[in] mask uint32_t 
- * - RTC_MODE1_COMP_COMP(value) Compare Value
+ * - RTC_MODE0_COMP_COMP(value) Compare Value
  **/
 static inline void rtcmode0_set_COMP(uint8_t index, uint32_t mask)
 {
@@ -2719,7 +2775,7 @@ static inline void rtcmode0_set_COMP(uint8_t index, uint32_t mask)
  * @param[in] index uint8_t 
  * @param[in] mask uint32_t 
  * @return uint32_t
- * - RTC_MODE1_COMP_COMP(value) Compare Value
+ * - RTC_MODE0_COMP_COMP(value) Compare Value
  **/
 static inline uint32_t rtcmode0_get_COMP(uint8_t index, uint32_t mask)
 {
@@ -2731,7 +2787,7 @@ static inline uint32_t rtcmode0_get_COMP(uint8_t index, uint32_t mask)
  *
  * @param[in] index uint8_t 
  * @param[in] data uint32_t 
- * - RTC_MODE1_COMP_COMP(value) Compare Value
+ * - RTC_MODE0_COMP_COMP(value) Compare Value
  **/
 static inline void rtcmode0_write_COMP(uint8_t index, uint32_t data)
 {
@@ -2739,23 +2795,11 @@ static inline void rtcmode0_write_COMP(uint8_t index, uint32_t data)
 }
 
 /**
- * @brief rtcmode0 clear COMP register
- *
- * @param[in] index uint8_t 
- * @param[in] mask uint32_t 
- * - RTC_MODE1_COMP_COMP(value) Compare Value
- **/
-static inline void rtcmode0_clear_COMP(uint8_t index, uint32_t mask)
-{
-	RTC->MODE0.COMP[index].reg &= ~mask;
-}
-
-/**
  * @brief rtcmode0 read COMP register
  *
  * @param[in] index uint8_t 
  * @return uint32_t
- * - RTC_MODE1_COMP_COMP(value) Compare Value
+ * - RTC_MODE0_COMP_COMP(value) Compare Value
  **/
 static inline uint32_t rtcmode0_read_COMP(uint8_t index)
 {
@@ -2797,18 +2841,6 @@ static inline uint32_t rtcmode0_get_GP(uint8_t index, uint32_t mask)
 static inline void rtcmode0_write_GP(uint8_t index, uint32_t data)
 {
 	RTC->MODE0.GP[index].reg = data;
-}
-
-/**
- * @brief rtcmode0 clear GP register
- *
- * @param[in] index uint8_t 
- * @param[in] mask uint32_t 
- * - RTC_GP_GP(value) General Purpose
- **/
-static inline void rtcmode0_clear_GP(uint8_t index, uint32_t mask)
-{
-	RTC->MODE0.GP[index].reg &= ~mask;
 }
 
 /**
@@ -3211,7 +3243,19 @@ static inline uint32_t rtcmode0_read_BKUP(uint8_t index)
  *
  * @param[in] mask uint32_t 
  * @return uint32_t
- * -
+ * RTC_MODE0_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE0_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE0_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE0_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE0_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE0_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE0_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE0_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE0_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP	General Purpose x Register Busy 
  **/
 static inline uint32_t rtcmode0_get_SYNCBUSY(uint32_t mask)
 {
@@ -3222,6 +3266,19 @@ static inline uint32_t rtcmode0_get_SYNCBUSY(uint32_t mask)
  * @brief rtcmode0 read SYNCBUSY register
  *
  * @return uint32_t
+ * RTC_MODE0_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE0_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE0_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE0_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE0_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE0_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE0_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE0_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE0_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE0_SYNCBUSY_GP	General Purpose x Register Busy 
  * -
  **/
 static inline uint32_t rtcmode0_read_SYNCBUSY(void)
@@ -3234,14 +3291,14 @@ static inline uint32_t rtcmode0_read_SYNCBUSY(void)
  *
  * @param[in] mask uint32_t 
  * @return uint32_t
- * - RTC_MODE2_TIMESTAMP_SECOND(value) Second Timestamp Value
- * - RTC_MODE2_TIMESTAMP_MINUTE(value) Minute Timestamp Value
- * - RTC_MODE2_TIMESTAMP_HOUR(value) Hour Timestamp Value
- *  +      RTC_MODE2_TIMESTAMP_HOUR_AM AM when CLKREP in 12-hour
- *  +      RTC_MODE2_TIMESTAMP_HOUR_PM PM when CLKREP in 12-hour
- * - RTC_MODE2_TIMESTAMP_DAY(value) Day Timestamp Value
- * - RTC_MODE2_TIMESTAMP_MONTH(value) Month Timestamp Value
- * - RTC_MODE2_TIMESTAMP_YEAR(value) Year Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_SECOND(value) Second Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_MINUTE(value) Minute Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_HOUR(value) Hour Timestamp Value
+ *  +      RTC_MODE0_TIMESTAMP_HOUR_AM AM when CLKREP in 12-hour
+ *  +      RTC_MODE0_TIMESTAMP_HOUR_PM PM when CLKREP in 12-hour
+ * - RTC_MODE0_TIMESTAMP_DAY(value) Day Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_MONTH(value) Month Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_YEAR(value) Year Timestamp Value
  **/
 static inline uint32_t rtcmode0_get_TIMESTAMP(uint32_t mask)
 {
@@ -3252,14 +3309,14 @@ static inline uint32_t rtcmode0_get_TIMESTAMP(uint32_t mask)
  * @brief rtcmode0 read TIMESTAMP register
  *
  * @return uint32_t
- * - RTC_MODE2_TIMESTAMP_SECOND(value) Second Timestamp Value
- * - RTC_MODE2_TIMESTAMP_MINUTE(value) Minute Timestamp Value
- * - RTC_MODE2_TIMESTAMP_HOUR(value) Hour Timestamp Value
- *  +      RTC_MODE2_TIMESTAMP_HOUR_AM AM when CLKREP in 12-hour
- *  +      RTC_MODE2_TIMESTAMP_HOUR_PM PM when CLKREP in 12-hour
- * - RTC_MODE2_TIMESTAMP_DAY(value) Day Timestamp Value
- * - RTC_MODE2_TIMESTAMP_MONTH(value) Month Timestamp Value
- * - RTC_MODE2_TIMESTAMP_YEAR(value) Year Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_SECOND(value) Second Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_MINUTE(value) Minute Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_HOUR(value) Hour Timestamp Value
+ *  +      RTC_MODE0_TIMESTAMP_HOUR_AM AM when CLKREP in 12-hour
+ *  +      RTC_MODE0_TIMESTAMP_HOUR_PM PM when CLKREP in 12-hour
+ * - RTC_MODE0_TIMESTAMP_DAY(value) Day Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_MONTH(value) Month Timestamp Value
+ * - RTC_MODE0_TIMESTAMP_YEAR(value) Year Timestamp Value
  **/
 static inline uint32_t rtcmode0_read_TIMESTAMP(void)
 {
@@ -3270,20 +3327,20 @@ static inline uint32_t rtcmode0_read_TIMESTAMP(void)
  * @brief rtcmode1 set INTEN register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_INTENSET_PER0 Periodic Interval 0 Enable
- * - RTC_MODE2_INTENSET_PER1 Periodic Interval 1 Enable
- * - RTC_MODE2_INTENSET_PER2 Periodic Interval 2 Enable
- * - RTC_MODE2_INTENSET_PER3 Periodic Interval 3 Enable
- * - RTC_MODE2_INTENSET_PER4 Periodic Interval 4 Enable
- * - RTC_MODE2_INTENSET_PER5 Periodic Interval 5 Enable
- * - RTC_MODE2_INTENSET_PER6 Periodic Interval 6 Enable
- * - RTC_MODE2_INTENSET_PER7 Periodic Interval 7 Enable
- * - RTC_MODE2_INTENSET_PER(value) Periodic Interval x Enable
- * - RTC_MODE2_INTENSET_ALARM0 Alarm 0 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM1 Alarm 1 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM(value) Alarm x Interrupt Enable
- * - RTC_MODE2_INTENSET_TAMPER Tamper Enable
- * - RTC_MODE2_INTENSET_OVF Overflow Interrupt Enable
+ * - RTC_MODE1_INTENSET_PER0 Periodic Interval 0 Enable
+ * - RTC_MODE1_INTENSET_PER1 Periodic Interval 1 Enable
+ * - RTC_MODE1_INTENSET_PER2 Periodic Interval 2 Enable
+ * - RTC_MODE1_INTENSET_PER3 Periodic Interval 3 Enable
+ * - RTC_MODE1_INTENSET_PER4 Periodic Interval 4 Enable
+ * - RTC_MODE1_INTENSET_PER5 Periodic Interval 5 Enable
+ * - RTC_MODE1_INTENSET_PER6 Periodic Interval 6 Enable
+ * - RTC_MODE1_INTENSET_PER7 Periodic Interval 7 Enable
+ * - RTC_MODE1_INTENSET_PER(value) Periodic Interval x Enable
+ * - RTC_MODE1_INTENSET_ALARM0 Alarm 0 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM1 Alarm 1 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM(value) Alarm x Interrupt Enable
+ * - RTC_MODE1_INTENSET_TAMPER Tamper Enable
+ * - RTC_MODE1_INTENSET_OVF Overflow Interrupt Enable
  **/
 static inline void rtcmode1_set_INTEN(uint16_t mask)
 {
@@ -3295,20 +3352,20 @@ static inline void rtcmode1_set_INTEN(uint16_t mask)
  *
  * @param[in] mask uint16_t 
  * @return uint16_t
- * - RTC_MODE2_INTENSET_PER0 Periodic Interval 0 Enable
- * - RTC_MODE2_INTENSET_PER1 Periodic Interval 1 Enable
- * - RTC_MODE2_INTENSET_PER2 Periodic Interval 2 Enable
- * - RTC_MODE2_INTENSET_PER3 Periodic Interval 3 Enable
- * - RTC_MODE2_INTENSET_PER4 Periodic Interval 4 Enable
- * - RTC_MODE2_INTENSET_PER5 Periodic Interval 5 Enable
- * - RTC_MODE2_INTENSET_PER6 Periodic Interval 6 Enable
- * - RTC_MODE2_INTENSET_PER7 Periodic Interval 7 Enable
- * - RTC_MODE2_INTENSET_PER(value) Periodic Interval x Enable
- * - RTC_MODE2_INTENSET_ALARM0 Alarm 0 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM1 Alarm 1 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM(value) Alarm x Interrupt Enable
- * - RTC_MODE2_INTENSET_TAMPER Tamper Enable
- * - RTC_MODE2_INTENSET_OVF Overflow Interrupt Enable
+ * - RTC_MODE1_INTENSET_PER0 Periodic Interval 0 Enable
+ * - RTC_MODE1_INTENSET_PER1 Periodic Interval 1 Enable
+ * - RTC_MODE1_INTENSET_PER2 Periodic Interval 2 Enable
+ * - RTC_MODE1_INTENSET_PER3 Periodic Interval 3 Enable
+ * - RTC_MODE1_INTENSET_PER4 Periodic Interval 4 Enable
+ * - RTC_MODE1_INTENSET_PER5 Periodic Interval 5 Enable
+ * - RTC_MODE1_INTENSET_PER6 Periodic Interval 6 Enable
+ * - RTC_MODE1_INTENSET_PER7 Periodic Interval 7 Enable
+ * - RTC_MODE1_INTENSET_PER(value) Periodic Interval x Enable
+ * - RTC_MODE1_INTENSET_ALARM0 Alarm 0 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM1 Alarm 1 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM(value) Alarm x Interrupt Enable
+ * - RTC_MODE1_INTENSET_TAMPER Tamper Enable
+ * - RTC_MODE1_INTENSET_OVF Overflow Interrupt Enable
  **/
 static inline uint16_t rtcmode1_get_INTEN(uint16_t mask)
 {
@@ -3319,20 +3376,20 @@ static inline uint16_t rtcmode1_get_INTEN(uint16_t mask)
  * @brief rtcmode1 read INTEN register
  *
  * @return uint16_t
- * - RTC_MODE2_INTENSET_PER0 Periodic Interval 0 Enable
- * - RTC_MODE2_INTENSET_PER1 Periodic Interval 1 Enable
- * - RTC_MODE2_INTENSET_PER2 Periodic Interval 2 Enable
- * - RTC_MODE2_INTENSET_PER3 Periodic Interval 3 Enable
- * - RTC_MODE2_INTENSET_PER4 Periodic Interval 4 Enable
- * - RTC_MODE2_INTENSET_PER5 Periodic Interval 5 Enable
- * - RTC_MODE2_INTENSET_PER6 Periodic Interval 6 Enable
- * - RTC_MODE2_INTENSET_PER7 Periodic Interval 7 Enable
- * - RTC_MODE2_INTENSET_PER(value) Periodic Interval x Enable
- * - RTC_MODE2_INTENSET_ALARM0 Alarm 0 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM1 Alarm 1 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM(value) Alarm x Interrupt Enable
- * - RTC_MODE2_INTENSET_TAMPER Tamper Enable
- * - RTC_MODE2_INTENSET_OVF Overflow Interrupt Enable
+ * - RTC_MODE1_INTENSET_PER0 Periodic Interval 0 Enable
+ * - RTC_MODE1_INTENSET_PER1 Periodic Interval 1 Enable
+ * - RTC_MODE1_INTENSET_PER2 Periodic Interval 2 Enable
+ * - RTC_MODE1_INTENSET_PER3 Periodic Interval 3 Enable
+ * - RTC_MODE1_INTENSET_PER4 Periodic Interval 4 Enable
+ * - RTC_MODE1_INTENSET_PER5 Periodic Interval 5 Enable
+ * - RTC_MODE1_INTENSET_PER6 Periodic Interval 6 Enable
+ * - RTC_MODE1_INTENSET_PER7 Periodic Interval 7 Enable
+ * - RTC_MODE1_INTENSET_PER(value) Periodic Interval x Enable
+ * - RTC_MODE1_INTENSET_ALARM0 Alarm 0 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM1 Alarm 1 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM(value) Alarm x Interrupt Enable
+ * - RTC_MODE1_INTENSET_TAMPER Tamper Enable
+ * - RTC_MODE1_INTENSET_OVF Overflow Interrupt Enable
  **/
 static inline uint16_t rtcmode1_read_INTEN(void)
 {
@@ -3343,20 +3400,20 @@ static inline uint16_t rtcmode1_read_INTEN(void)
  * @brief rtcmode1 write INTEN register
  *
  * @param[in] data uint16_t 
- * - RTC_MODE2_INTENSET_PER0 Periodic Interval 0 Enable
- * - RTC_MODE2_INTENSET_PER1 Periodic Interval 1 Enable
- * - RTC_MODE2_INTENSET_PER2 Periodic Interval 2 Enable
- * - RTC_MODE2_INTENSET_PER3 Periodic Interval 3 Enable
- * - RTC_MODE2_INTENSET_PER4 Periodic Interval 4 Enable
- * - RTC_MODE2_INTENSET_PER5 Periodic Interval 5 Enable
- * - RTC_MODE2_INTENSET_PER6 Periodic Interval 6 Enable
- * - RTC_MODE2_INTENSET_PER7 Periodic Interval 7 Enable
- * - RTC_MODE2_INTENSET_PER(value) Periodic Interval x Enable
- * - RTC_MODE2_INTENSET_ALARM0 Alarm 0 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM1 Alarm 1 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM(value) Alarm x Interrupt Enable
- * - RTC_MODE2_INTENSET_TAMPER Tamper Enable
- * - RTC_MODE2_INTENSET_OVF Overflow Interrupt Enable
+ * - RTC_MODE1_INTENSET_PER0 Periodic Interval 0 Enable
+ * - RTC_MODE1_INTENSET_PER1 Periodic Interval 1 Enable
+ * - RTC_MODE1_INTENSET_PER2 Periodic Interval 2 Enable
+ * - RTC_MODE1_INTENSET_PER3 Periodic Interval 3 Enable
+ * - RTC_MODE1_INTENSET_PER4 Periodic Interval 4 Enable
+ * - RTC_MODE1_INTENSET_PER5 Periodic Interval 5 Enable
+ * - RTC_MODE1_INTENSET_PER6 Periodic Interval 6 Enable
+ * - RTC_MODE1_INTENSET_PER7 Periodic Interval 7 Enable
+ * - RTC_MODE1_INTENSET_PER(value) Periodic Interval x Enable
+ * - RTC_MODE1_INTENSET_ALARM0 Alarm 0 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM1 Alarm 1 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM(value) Alarm x Interrupt Enable
+ * - RTC_MODE1_INTENSET_TAMPER Tamper Enable
+ * - RTC_MODE1_INTENSET_OVF Overflow Interrupt Enable
  **/
 static inline void rtcmode1_write_INTEN(uint16_t data)
 {
@@ -3368,20 +3425,20 @@ static inline void rtcmode1_write_INTEN(uint16_t data)
  * @brief rtcmode1 clear INTEN register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_INTENSET_PER0 Periodic Interval 0 Enable
- * - RTC_MODE2_INTENSET_PER1 Periodic Interval 1 Enable
- * - RTC_MODE2_INTENSET_PER2 Periodic Interval 2 Enable
- * - RTC_MODE2_INTENSET_PER3 Periodic Interval 3 Enable
- * - RTC_MODE2_INTENSET_PER4 Periodic Interval 4 Enable
- * - RTC_MODE2_INTENSET_PER5 Periodic Interval 5 Enable
- * - RTC_MODE2_INTENSET_PER6 Periodic Interval 6 Enable
- * - RTC_MODE2_INTENSET_PER7 Periodic Interval 7 Enable
- * - RTC_MODE2_INTENSET_PER(value) Periodic Interval x Enable
- * - RTC_MODE2_INTENSET_ALARM0 Alarm 0 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM1 Alarm 1 Interrupt Enable
- * - RTC_MODE2_INTENSET_ALARM(value) Alarm x Interrupt Enable
- * - RTC_MODE2_INTENSET_TAMPER Tamper Enable
- * - RTC_MODE2_INTENSET_OVF Overflow Interrupt Enable
+ * - RTC_MODE1_INTENSET_PER0 Periodic Interval 0 Enable
+ * - RTC_MODE1_INTENSET_PER1 Periodic Interval 1 Enable
+ * - RTC_MODE1_INTENSET_PER2 Periodic Interval 2 Enable
+ * - RTC_MODE1_INTENSET_PER3 Periodic Interval 3 Enable
+ * - RTC_MODE1_INTENSET_PER4 Periodic Interval 4 Enable
+ * - RTC_MODE1_INTENSET_PER5 Periodic Interval 5 Enable
+ * - RTC_MODE1_INTENSET_PER6 Periodic Interval 6 Enable
+ * - RTC_MODE1_INTENSET_PER7 Periodic Interval 7 Enable
+ * - RTC_MODE1_INTENSET_PER(value) Periodic Interval x Enable
+ * - RTC_MODE1_INTENSET_ALARM0 Alarm 0 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM1 Alarm 1 Interrupt Enable
+ * - RTC_MODE1_INTENSET_ALARM(value) Alarm x Interrupt Enable
+ * - RTC_MODE1_INTENSET_TAMPER Tamper Enable
+ * - RTC_MODE1_INTENSET_OVF Overflow Interrupt Enable
  **/
 static inline void rtcmode1_clear_INTEN(uint16_t mask)
 {
@@ -3393,20 +3450,20 @@ static inline void rtcmode1_clear_INTEN(uint16_t mask)
  *
  * @param[in] mask uint16_t 
  * @return uint16_t
- * - RTC_MODE2_INTFLAG_PER0 Periodic Interval 0
- * - RTC_MODE2_INTFLAG_PER1 Periodic Interval 1
- * - RTC_MODE2_INTFLAG_PER2 Periodic Interval 2
- * - RTC_MODE2_INTFLAG_PER3 Periodic Interval 3
- * - RTC_MODE2_INTFLAG_PER4 Periodic Interval 4
- * - RTC_MODE2_INTFLAG_PER5 Periodic Interval 5
- * - RTC_MODE2_INTFLAG_PER6 Periodic Interval 6
- * - RTC_MODE2_INTFLAG_PER7 Periodic Interval 7
- * - RTC_MODE2_INTFLAG_PER(value) Periodic Interval x
- * - RTC_MODE2_INTFLAG_ALARM0 Alarm 0
- * - RTC_MODE2_INTFLAG_ALARM1 Alarm 1
- * - RTC_MODE2_INTFLAG_ALARM(value) Alarm x
- * - RTC_MODE2_INTFLAG_TAMPER Tamper
- * - RTC_MODE2_INTFLAG_OVF Overflow
+ * - RTC_MODE1_INTFLAG_PER0 Periodic Interval 0
+ * - RTC_MODE1_INTFLAG_PER1 Periodic Interval 1
+ * - RTC_MODE1_INTFLAG_PER2 Periodic Interval 2
+ * - RTC_MODE1_INTFLAG_PER3 Periodic Interval 3
+ * - RTC_MODE1_INTFLAG_PER4 Periodic Interval 4
+ * - RTC_MODE1_INTFLAG_PER5 Periodic Interval 5
+ * - RTC_MODE1_INTFLAG_PER6 Periodic Interval 6
+ * - RTC_MODE1_INTFLAG_PER7 Periodic Interval 7
+ * - RTC_MODE1_INTFLAG_PER(value) Periodic Interval x
+ * - RTC_MODE1_INTFLAG_ALARM0 Alarm 0
+ * - RTC_MODE1_INTFLAG_ALARM1 Alarm 1
+ * - RTC_MODE1_INTFLAG_ALARM(value) Alarm x
+ * - RTC_MODE1_INTFLAG_TAMPER Tamper
+ * - RTC_MODE1_INTFLAG_OVF Overflow
  **/
 static inline uint16_t rtcmode1_get_INTFLAG(uint16_t mask)
 {
@@ -3417,20 +3474,20 @@ static inline uint16_t rtcmode1_get_INTFLAG(uint16_t mask)
  * @brief rtcmode1 read INTFLAG register
  *
  * @return uint16_t
- * - RTC_MODE2_INTFLAG_PER0 Periodic Interval 0
- * - RTC_MODE2_INTFLAG_PER1 Periodic Interval 1
- * - RTC_MODE2_INTFLAG_PER2 Periodic Interval 2
- * - RTC_MODE2_INTFLAG_PER3 Periodic Interval 3
- * - RTC_MODE2_INTFLAG_PER4 Periodic Interval 4
- * - RTC_MODE2_INTFLAG_PER5 Periodic Interval 5
- * - RTC_MODE2_INTFLAG_PER6 Periodic Interval 6
- * - RTC_MODE2_INTFLAG_PER7 Periodic Interval 7
- * - RTC_MODE2_INTFLAG_PER(value) Periodic Interval x
- * - RTC_MODE2_INTFLAG_ALARM0 Alarm 0
- * - RTC_MODE2_INTFLAG_ALARM1 Alarm 1
- * - RTC_MODE2_INTFLAG_ALARM(value) Alarm x
- * - RTC_MODE2_INTFLAG_TAMPER Tamper
- * - RTC_MODE2_INTFLAG_OVF Overflow
+ * - RTC_MODE1_INTFLAG_PER0 Periodic Interval 0
+ * - RTC_MODE1_INTFLAG_PER1 Periodic Interval 1
+ * - RTC_MODE1_INTFLAG_PER2 Periodic Interval 2
+ * - RTC_MODE1_INTFLAG_PER3 Periodic Interval 3
+ * - RTC_MODE1_INTFLAG_PER4 Periodic Interval 4
+ * - RTC_MODE1_INTFLAG_PER5 Periodic Interval 5
+ * - RTC_MODE1_INTFLAG_PER6 Periodic Interval 6
+ * - RTC_MODE1_INTFLAG_PER7 Periodic Interval 7
+ * - RTC_MODE1_INTFLAG_PER(value) Periodic Interval x
+ * - RTC_MODE1_INTFLAG_ALARM0 Alarm 0
+ * - RTC_MODE1_INTFLAG_ALARM1 Alarm 1
+ * - RTC_MODE1_INTFLAG_ALARM(value) Alarm x
+ * - RTC_MODE1_INTFLAG_TAMPER Tamper
+ * - RTC_MODE1_INTFLAG_OVF Overflow
  **/
 static inline uint16_t rtcmode1_read_INTFLAG(void)
 {
@@ -3441,20 +3498,20 @@ static inline uint16_t rtcmode1_read_INTFLAG(void)
  * @brief rtcmode1 clear INTFLAG register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_INTFLAG_PER0 Periodic Interval 0
- * - RTC_MODE2_INTFLAG_PER1 Periodic Interval 1
- * - RTC_MODE2_INTFLAG_PER2 Periodic Interval 2
- * - RTC_MODE2_INTFLAG_PER3 Periodic Interval 3
- * - RTC_MODE2_INTFLAG_PER4 Periodic Interval 4
- * - RTC_MODE2_INTFLAG_PER5 Periodic Interval 5
- * - RTC_MODE2_INTFLAG_PER6 Periodic Interval 6
- * - RTC_MODE2_INTFLAG_PER7 Periodic Interval 7
- * - RTC_MODE2_INTFLAG_PER(value) Periodic Interval x
- * - RTC_MODE2_INTFLAG_ALARM0 Alarm 0
- * - RTC_MODE2_INTFLAG_ALARM1 Alarm 1
- * - RTC_MODE2_INTFLAG_ALARM(value) Alarm x
- * - RTC_MODE2_INTFLAG_TAMPER Tamper
- * - RTC_MODE2_INTFLAG_OVF Overflow
+ * - RTC_MODE1_INTFLAG_PER0 Periodic Interval 0
+ * - RTC_MODE1_INTFLAG_PER1 Periodic Interval 1
+ * - RTC_MODE1_INTFLAG_PER2 Periodic Interval 2
+ * - RTC_MODE1_INTFLAG_PER3 Periodic Interval 3
+ * - RTC_MODE1_INTFLAG_PER4 Periodic Interval 4
+ * - RTC_MODE1_INTFLAG_PER5 Periodic Interval 5
+ * - RTC_MODE1_INTFLAG_PER6 Periodic Interval 6
+ * - RTC_MODE1_INTFLAG_PER7 Periodic Interval 7
+ * - RTC_MODE1_INTFLAG_PER(value) Periodic Interval x
+ * - RTC_MODE1_INTFLAG_ALARM0 Alarm 0
+ * - RTC_MODE1_INTFLAG_ALARM1 Alarm 1
+ * - RTC_MODE1_INTFLAG_ALARM(value) Alarm x
+ * - RTC_MODE1_INTFLAG_TAMPER Tamper
+ * - RTC_MODE1_INTFLAG_OVF Overflow
  **/
 static inline void rtcmode1_clear_INTFLAG(uint16_t mask)
 {
@@ -3465,30 +3522,30 @@ static inline void rtcmode1_clear_INTFLAG(uint16_t mask)
  * @brief rtcmode1 set CTRLA register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_CTRLA_SWRST Software Reset
- * - RTC_MODE2_CTRLA_ENABLE Enable
- * - RTC_MODE2_CTRLA_MODE(value) Operating Mode
- *  +      RTC_MODE2_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
- * - RTC_MODE2_CTRLA_CLKREP Clock Representation
- * - RTC_MODE2_CTRLA_MATCHCLR Clear on Match
- * - RTC_MODE2_CTRLA_PRESCALER(value) Prescaler
- *  +      RTC_MODE2_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
- * - RTC_MODE2_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_GPTRST GP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
+ * - RTC_MODE1_CTRLA_SWRST Software Reset
+ * - RTC_MODE1_CTRLA_ENABLE Enable
+ * - RTC_MODE1_CTRLA_MODE(value) Operating Mode
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
+ * - RTC_MODE1_CTRLA_CLKREP Clock Representation
+ * - RTC_MODE1_CTRLA_MATCHCLR Clear on Match
+ * - RTC_MODE1_CTRLA_PRESCALER(value) Prescaler
+ *  +      RTC_MODE1_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
+ * - RTC_MODE1_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_GPTRST GP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
  **/
 static inline void rtcmode1_set_CTRLA(uint16_t mask)
 {
@@ -3500,30 +3557,30 @@ static inline void rtcmode1_set_CTRLA(uint16_t mask)
  *
  * @param[in] mask uint16_t 
  * @return uint16_t
- * - RTC_MODE2_CTRLA_SWRST Software Reset
- * - RTC_MODE2_CTRLA_ENABLE Enable
- * - RTC_MODE2_CTRLA_MODE(value) Operating Mode
- *  +      RTC_MODE2_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
- * - RTC_MODE2_CTRLA_CLKREP Clock Representation
- * - RTC_MODE2_CTRLA_MATCHCLR Clear on Match
- * - RTC_MODE2_CTRLA_PRESCALER(value) Prescaler
- *  +      RTC_MODE2_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
- * - RTC_MODE2_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_GPTRST GP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
+ * - RTC_MODE1_CTRLA_SWRST Software Reset
+ * - RTC_MODE1_CTRLA_ENABLE Enable
+ * - RTC_MODE1_CTRLA_MODE(value) Operating Mode
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
+ * - RTC_MODE1_CTRLA_CLKREP Clock Representation
+ * - RTC_MODE1_CTRLA_MATCHCLR Clear on Match
+ * - RTC_MODE1_CTRLA_PRESCALER(value) Prescaler
+ *  +      RTC_MODE1_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
+ * - RTC_MODE1_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_GPTRST GP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
  **/
 static inline uint16_t rtcmode1_get_CTRLA(uint16_t mask)
 {
@@ -3534,30 +3591,30 @@ static inline uint16_t rtcmode1_get_CTRLA(uint16_t mask)
  * @brief rtcmode1 write CTRLA register
  *
  * @param[in] data uint16_t 
- * - RTC_MODE2_CTRLA_SWRST Software Reset
- * - RTC_MODE2_CTRLA_ENABLE Enable
- * - RTC_MODE2_CTRLA_MODE(value) Operating Mode
- *  +      RTC_MODE2_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
- * - RTC_MODE2_CTRLA_CLKREP Clock Representation
- * - RTC_MODE2_CTRLA_MATCHCLR Clear on Match
- * - RTC_MODE2_CTRLA_PRESCALER(value) Prescaler
- *  +      RTC_MODE2_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
- * - RTC_MODE2_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_GPTRST GP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
+ * - RTC_MODE1_CTRLA_SWRST Software Reset
+ * - RTC_MODE1_CTRLA_ENABLE Enable
+ * - RTC_MODE1_CTRLA_MODE(value) Operating Mode
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
+ * - RTC_MODE1_CTRLA_CLKREP Clock Representation
+ * - RTC_MODE1_CTRLA_MATCHCLR Clear on Match
+ * - RTC_MODE1_CTRLA_PRESCALER(value) Prescaler
+ *  +      RTC_MODE1_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
+ * - RTC_MODE1_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_GPTRST GP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
  **/
 static inline void rtcmode1_write_CTRLA(uint16_t data)
 {
@@ -3568,30 +3625,30 @@ static inline void rtcmode1_write_CTRLA(uint16_t data)
  * @brief rtcmode1 clear CTRLA register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_CTRLA_SWRST Software Reset
- * - RTC_MODE2_CTRLA_ENABLE Enable
- * - RTC_MODE2_CTRLA_MODE(value) Operating Mode
- *  +      RTC_MODE2_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
- * - RTC_MODE2_CTRLA_CLKREP Clock Representation
- * - RTC_MODE2_CTRLA_MATCHCLR Clear on Match
- * - RTC_MODE2_CTRLA_PRESCALER(value) Prescaler
- *  +      RTC_MODE2_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
- * - RTC_MODE2_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_GPTRST GP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
+ * - RTC_MODE1_CTRLA_SWRST Software Reset
+ * - RTC_MODE1_CTRLA_ENABLE Enable
+ * - RTC_MODE1_CTRLA_MODE(value) Operating Mode
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
+ * - RTC_MODE1_CTRLA_CLKREP Clock Representation
+ * - RTC_MODE1_CTRLA_MATCHCLR Clear on Match
+ * - RTC_MODE1_CTRLA_PRESCALER(value) Prescaler
+ *  +      RTC_MODE1_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
+ * - RTC_MODE1_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_GPTRST GP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
  **/
 static inline void rtcmode1_clear_CTRLA(uint16_t mask)
 {
@@ -3602,30 +3659,30 @@ static inline void rtcmode1_clear_CTRLA(uint16_t mask)
  * @brief rtcmode1 read CTRLA register
  *
  * @return uint16_t
- * - RTC_MODE2_CTRLA_SWRST Software Reset
- * - RTC_MODE2_CTRLA_ENABLE Enable
- * - RTC_MODE2_CTRLA_MODE(value) Operating Mode
- *  +      RTC_MODE2_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
- *  +      RTC_MODE2_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
- * - RTC_MODE2_CTRLA_CLKREP Clock Representation
- * - RTC_MODE2_CTRLA_MATCHCLR Clear on Match
- * - RTC_MODE2_CTRLA_PRESCALER(value) Prescaler
- *  +      RTC_MODE2_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
- *  +      RTC_MODE2_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
- * - RTC_MODE2_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_GPTRST GP Registers Reset On Tamper Enable
- * - RTC_MODE2_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
+ * - RTC_MODE1_CTRLA_SWRST Software Reset
+ * - RTC_MODE1_CTRLA_ENABLE Enable
+ * - RTC_MODE1_CTRLA_MODE(value) Operating Mode
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT32 Mode 0: 32-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_COUNT16 Mode 1: 16-bit Counter
+ *  +      RTC_MODE1_CTRLA_MODE_CLOCK Mode 2: Clock/Calendar
+ * - RTC_MODE1_CTRLA_CLKREP Clock Representation
+ * - RTC_MODE1_CTRLA_MATCHCLR Clear on Match
+ * - RTC_MODE1_CTRLA_PRESCALER(value) Prescaler
+ *  +      RTC_MODE1_CTRLA_PRESCALER_OFF CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1 CLK_RTC_CNT = GCLK_RTC/1
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV2 CLK_RTC_CNT = GCLK_RTC/2
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV4 CLK_RTC_CNT = GCLK_RTC/4
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV8 CLK_RTC_CNT = GCLK_RTC/8
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV16 CLK_RTC_CNT = GCLK_RTC/16
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV32 CLK_RTC_CNT = GCLK_RTC/32
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV64 CLK_RTC_CNT = GCLK_RTC/64
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV128 CLK_RTC_CNT = GCLK_RTC/128
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV256 CLK_RTC_CNT = GCLK_RTC/256
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV512 CLK_RTC_CNT = GCLK_RTC/512
+ *  +      RTC_MODE1_CTRLA_PRESCALER_DIV1024 CLK_RTC_CNT = GCLK_RTC/1024
+ * - RTC_MODE1_CTRLA_BKTRST BKUP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_GPTRST GP Registers Reset On Tamper Enable
+ * - RTC_MODE1_CTRLA_CLOCKSYNC Clock Read Synchronization Enable
  **/
 static inline uint16_t rtcmode1_read_CTRLA(void)
 {
@@ -3636,30 +3693,30 @@ static inline uint16_t rtcmode1_read_CTRLA(void)
  * @brief rtcmode1 set CTRLB register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE1_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE1_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE1_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE1_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE1_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE1_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline void rtcmode1_set_CTRLB(uint16_t mask)
 {
@@ -3671,30 +3728,30 @@ static inline void rtcmode1_set_CTRLB(uint16_t mask)
  *
  * @param[in] mask uint16_t 
  * @return uint16_t
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE1_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE1_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE1_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE1_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE1_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE1_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline uint16_t rtcmode1_get_CTRLB(uint16_t mask)
 {
@@ -3705,30 +3762,30 @@ static inline uint16_t rtcmode1_get_CTRLB(uint16_t mask)
  * @brief rtcmode1 write CTRLB register
  *
  * @param[in] data uint16_t 
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE1_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE1_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE1_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE1_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE1_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE1_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline void rtcmode1_write_CTRLB(uint16_t data)
 {
@@ -3739,30 +3796,30 @@ static inline void rtcmode1_write_CTRLB(uint16_t data)
  * @brief rtcmode1 clear CTRLB register
  *
  * @param[in] mask uint16_t 
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE1_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE1_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE1_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE1_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE1_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE1_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline void rtcmode1_clear_CTRLB(uint16_t mask)
 {
@@ -3773,30 +3830,30 @@ static inline void rtcmode1_clear_CTRLB(uint16_t mask)
  * @brief rtcmode1 read CTRLB register
  *
  * @return uint16_t
- * - RTC_MODE2_CTRLB_GP0EN General Purpose 0 Enable
- * - RTC_MODE2_CTRLB_GP2EN General Purpose 2 Enable
- * - RTC_MODE2_CTRLB_DEBMAJ Debouncer Majority Enable
- * - RTC_MODE2_CTRLB_DEBASYNC Debouncer Asynchronous Enable
- * - RTC_MODE2_CTRLB_RTCOUT RTC Output Enable
- * - RTC_MODE2_CTRLB_DMAEN DMA Enable
- * - RTC_MODE2_CTRLB_DEBF(value) Debounce Freqnuency
- *  +      RTC_MODE2_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
- * - RTC_MODE2_CTRLB_ACTF(value) Active Layer Freqnuency
- *  +      RTC_MODE2_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
- *  +      RTC_MODE2_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
- *  +      RTC_MODE2_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
- *  +      RTC_MODE2_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
- *  +      RTC_MODE2_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
- *  +      RTC_MODE2_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
- *  +      RTC_MODE2_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
- *  +      RTC_MODE2_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_GP0EN General Purpose 0 Enable
+ * - RTC_MODE1_CTRLB_GP2EN General Purpose 2 Enable
+ * - RTC_MODE1_CTRLB_DEBMAJ Debouncer Majority Enable
+ * - RTC_MODE1_CTRLB_DEBASYNC Debouncer Asynchronous Enable
+ * - RTC_MODE1_CTRLB_RTCOUT RTC Output Enable
+ * - RTC_MODE1_CTRLB_DMAEN DMA Enable
+ * - RTC_MODE1_CTRLB_DEBF(value) Debounce Freqnuency
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV2 CLK_RTC_DEB = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV4 CLK_RTC_DEB = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV8 CLK_RTC_DEB = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV16 CLK_RTC_DEB = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV32 CLK_RTC_DEB = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV64 CLK_RTC_DEB = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV128 CLK_RTC_DEB = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_DEBF_DIV256 CLK_RTC_DEB = CLK_RTC/256
+ * - RTC_MODE1_CTRLB_ACTF(value) Active Layer Freqnuency
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV2 CLK_RTC_OUT = CLK_RTC/2
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV4 CLK_RTC_OUT = CLK_RTC/4
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV8 CLK_RTC_OUT = CLK_RTC/8
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV16 CLK_RTC_OUT = CLK_RTC/16
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV32 CLK_RTC_OUT = CLK_RTC/32
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV64 CLK_RTC_OUT = CLK_RTC/64
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV128 CLK_RTC_OUT = CLK_RTC/128
+ *  +      RTC_MODE1_CTRLB_ACTF_DIV256 CLK_RTC_OUT = CLK_RTC/256
  **/
 static inline uint16_t rtcmode1_read_CTRLB(void)
 {
@@ -3807,21 +3864,21 @@ static inline uint16_t rtcmode1_read_CTRLB(void)
  * @brief rtcmode1 set EVCTRL register
  *
  * @param[in] mask uint32_t 
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE1_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE1_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline void rtcmode1_set_EVCTRL(uint32_t mask)
 {
@@ -3833,21 +3890,21 @@ static inline void rtcmode1_set_EVCTRL(uint32_t mask)
  *
  * @param[in] mask uint32_t 
  * @return uint32_t
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE1_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE1_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline uint32_t rtcmode1_get_EVCTRL(uint32_t mask)
 {
@@ -3858,21 +3915,21 @@ static inline uint32_t rtcmode1_get_EVCTRL(uint32_t mask)
  * @brief rtcmode1 write EVCTRL register
  *
  * @param[in] data uint32_t 
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE1_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE1_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline void rtcmode1_write_EVCTRL(uint32_t data)
 {
@@ -3883,21 +3940,24 @@ static inline void rtcmode1_write_EVCTRL(uint32_t data)
  * @brief rtcmode1 clear EVCTRL register
  *
  * @param[in] mask uint32_t 
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE1_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE1_EVCTRL_CMPEO0 Compare 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_CMPEO1 Compare 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_CMPEO2 Compare 2 Event Output Enable
+ * - RTC_MODE1_EVCTRL_CMPEO3 Compare 3 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE1_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline void rtcmode1_clear_EVCTRL(uint32_t mask)
 {
@@ -3908,21 +3968,21 @@ static inline void rtcmode1_clear_EVCTRL(uint32_t mask)
  * @brief rtcmode1 read EVCTRL register
  *
  * @return uint32_t
- * - RTC_MODE2_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
- * - RTC_MODE2_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
- * - RTC_MODE2_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEREO Tamper Event Output Enable
- * - RTC_MODE2_EVCTRL_OVFEO Overflow Event Output Enable
- * - RTC_MODE2_EVCTRL_TAMPEVEI Tamper Event Input Enable
+ * - RTC_MODE1_EVCTRL_PEREO0 Periodic Interval 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO1 Periodic Interval 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO2 Periodic Interval 2 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO3 Periodic Interval 3 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO4 Periodic Interval 4 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO5 Periodic Interval 5 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO6 Periodic Interval 6 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO7 Periodic Interval 7 Event Output Enable
+ * - RTC_MODE1_EVCTRL_PEREO(value) Periodic Interval x Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO0 Alarm 0 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO1 Alarm 1 Event Output Enable
+ * - RTC_MODE1_EVCTRL_ALARMEO(value) Alarm x Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEREO Tamper Event Output Enable
+ * - RTC_MODE1_EVCTRL_OVFEO Overflow Event Output Enable
+ * - RTC_MODE1_EVCTRL_TAMPEVEI Tamper Event Input Enable
  **/
 static inline uint32_t rtcmode1_read_EVCTRL(void)
 {
@@ -4668,7 +4728,19 @@ static inline uint32_t rtcmode1_read_BKUP(uint8_t index)
  *
  * @param[in] mask uint32_t 
  * @return uint32_t
- * -
+ * RTC_MODE1_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE1_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE1_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE1_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE1_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE1_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE1_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE1_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE1_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP	General Purpose x Register Busy 
  **/
 static inline uint32_t rtcmode1_get_SYNCBUSY(uint32_t mask)
 {
@@ -4679,7 +4751,19 @@ static inline uint32_t rtcmode1_get_SYNCBUSY(uint32_t mask)
  * @brief rtcmode1 read SYNCBUSY register
  *
  * @return uint32_t
- * -
+ * RTC_MODE1_SYNCBUSY_SWRST	Software Reset Busy 
+ * RTC_MODE1_SYNCBUSY_ENABLE	Enable Bit Busy 
+ * RTC_MODE1_SYNCBUSY_FREQCORR	FREQCORR Register Busy 
+ * RTC_MODE1_SYNCBUSY_COUNT	COUNT Register Busy 
+ * RTC_MODE1_SYNCBUSY_COMP0	COMP 0 Register Busy 
+ * RTC_MODE1_SYNCBUSY_COMP1	COMP 1 Register Busy 
+ * RTC_MODE1_SYNCBUSY_COMP	COMP x Register Busy 
+ * RTC_MODE1_SYNCBUSY_COUNTSYNC	Count Synchronization Enable Bit Busy 
+ * RTC_MODE1_SYNCBUSY_GP0	General Purpose 0 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP1	General Purpose 1 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP2	General Purpose 2 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP3	General Purpose 3 Register Busy 
+ * RTC_MODE1_SYNCBUSY_GP	General Purpose x Register Busy 
  **/
 static inline uint32_t rtcmode1_read_SYNCBUSY(void)
 {
@@ -4691,14 +4775,14 @@ static inline uint32_t rtcmode1_read_SYNCBUSY(void)
  *
  * @param[in] mask uint32_t 
  * @return uint32_t
- * - RTC_MODE2_TIMESTAMP_SECOND(value) Second Timestamp Value
- * - RTC_MODE2_TIMESTAMP_MINUTE(value) Minute Timestamp Value
- * - RTC_MODE2_TIMESTAMP_HOUR(value) Hour Timestamp Value
- *  +      RTC_MODE2_TIMESTAMP_HOUR_AM AM when CLKREP in 12-hour
- *  +      RTC_MODE2_TIMESTAMP_HOUR_PM PM when CLKREP in 12-hour
- * - RTC_MODE2_TIMESTAMP_DAY(value) Day Timestamp Value
- * - RTC_MODE2_TIMESTAMP_MONTH(value) Month Timestamp Value
- * - RTC_MODE2_TIMESTAMP_YEAR(value) Year Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_SECOND(value) Second Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_MINUTE(value) Minute Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_HOUR(value) Hour Timestamp Value
+ *  +      RTC_MODE1_TIMESTAMP_HOUR_AM AM when CLKREP in 12-hour
+ *  +      RTC_MODE1_TIMESTAMP_HOUR_PM PM when CLKREP in 12-hour
+ * - RTC_MODE1_TIMESTAMP_DAY(value) Day Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_MONTH(value) Month Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_YEAR(value) Year Timestamp Value
  **/
 static inline uint32_t rtcmode1_get_TIMESTAMP(uint32_t mask)
 {
@@ -4709,14 +4793,14 @@ static inline uint32_t rtcmode1_get_TIMESTAMP(uint32_t mask)
  * @brief rtcmode1 read TIMESTAMP register
  *
  * @return uint32_t
- * - RTC_MODE2_TIMESTAMP_SECOND(value) Second Timestamp Value
- * - RTC_MODE2_TIMESTAMP_MINUTE(value) Minute Timestamp Value
- * - RTC_MODE2_TIMESTAMP_HOUR(value) Hour Timestamp Value
- *  +      RTC_MODE2_TIMESTAMP_HOUR_AM AM when CLKREP in 12-hour
- *  +      RTC_MODE2_TIMESTAMP_HOUR_PM PM when CLKREP in 12-hour
- * - RTC_MODE2_TIMESTAMP_DAY(value) Day Timestamp Value
- * - RTC_MODE2_TIMESTAMP_MONTH(value) Month Timestamp Value
- * - RTC_MODE2_TIMESTAMP_YEAR(value) Year Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_SECOND(value) Second Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_MINUTE(value) Minute Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_HOUR(value) Hour Timestamp Value
+ *  +      RTC_MODE1_TIMESTAMP_HOUR_AM AM when CLKREP in 12-hour
+ *  +      RTC_MODE1_TIMESTAMP_HOUR_PM PM when CLKREP in 12-hour
+ * - RTC_MODE1_TIMESTAMP_DAY(value) Day Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_MONTH(value) Month Timestamp Value
+ * - RTC_MODE1_TIMESTAMP_YEAR(value) Year Timestamp Value
  **/
 static inline uint32_t rtcmode1_read_TIMESTAMP(void)
 {

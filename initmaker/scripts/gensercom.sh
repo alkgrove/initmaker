@@ -23,7 +23,6 @@ boardinc="$3"
 processor="$4"
 verbose="$5"
 
-
 errfile="02.000"
 boardtmp="${boardsrc%.c}"
 dstarr=("${boardsrc}" "${boardinc}")
@@ -48,8 +47,8 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
     	linecount=1;
     	in_macro=0;
     	in_section=0;
-    	sercom_start = 1;
-    	sercom_count = sercom_start;
+    	serial_start = 1;
+    	serial_count = serial_start;
     	for (i = 0; i < 8; i++) {
     		prop["sercom" i ":interrupt"] = 0;
     	}
@@ -75,11 +74,17 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
  					errprint(toupper(section) " defined more than once");
  				} else {
 					prop[key] = a[1];
+					prop[section ":messagename"] = "sercom" a[1] "_message";
 				}
 			}
 			delete a;
-			devices[sercom_count++] = section;
+			devices[serial_count++] = section;
 			prop[section ":macroname"] = "sercom";
+		} else if (key ~ /qspi/) {
+			in_section = 1;
+			section = key;
+			devices[serial_count++] = section;
+			prop[section ":macroname"] = "qspi";
 		}  else if (key ~ /freq/) {
   			in_section = 1;
   			section = key;
@@ -127,19 +132,21 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
 		linecount++;
 	}		
 	END {
-    	for (j = sercom_start; j < sercom_count; j++) {
+    	for (j = serial_start; j < serial_count; j++) {
     		instance = devices[j];
     		if (instance ~ /sercom[0-9]+/) {
     			checkfreq(instance, 100000000);
+   				key = instance ":type";
+    			if (key in prop) {
+					type = prop[key];
+				} else {
+					errprint("Expected property \"type\" in " toupper(instance));
+					break;
+				}
+    		} else if (instance ~ /qspi/) {
+    			type = "qspi";
     		}
-    		key = instance ":type";
-    		if (key in prop) {
-				type = prop[instance ":type"];
-			} else {
-				errprint("Expected property \"type\" in " toupper(instance));
-				break;
-			}
-			switch (type) {
+ 			switch (type) {
 		 		case /i2cm/: 
 		 			split("sda scl", arr, " ");
 		 			split("0 0", opt, " ");
@@ -157,6 +164,10 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
 		 			prop[instance ":dipo"] = 3;
 					prop[instance ":dopo"] = 0;
 
+		 		break;
+		 		case /qspi/:
+		 			split("data0 data1 data2 data3 sck cs",arr, " ");
+		 			split("0 0 1 1 0 0", opt, " ");
 		 		break;
 				default: break;
 			}
@@ -267,11 +278,23 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
     				}  
     				prop[instance ":charsize"] = chsize - 8;
 				break;
+				case /qspi/:
+					key = instance ":datalen";
+    				if (!(key in prop)) {
+    					prop[key] = 8;
+    				}
+     				chsize = int(prop[key]);
+    				if ((chsize < 8) || (chsize > 16)) {
+    					errprint("property datalen needs to be between 8 or 16");
+    					break;
+    				} 
+    				prop["qspi:baud"] =(prop["freq:gclk0"] / prop["qspi:baudrate"]) - 1;
+    			break;
 				default: 
 				break;
 			}
  		}
-		sp = 0;
+ 		sp = 0;
 		stack[++sp] = 1; 
 		for (widx in devices) {
 			instance = devices[widx];

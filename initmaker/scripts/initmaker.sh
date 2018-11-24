@@ -87,6 +87,7 @@ ${scriptpath}/gensercom.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}
 ${scriptpath}/gentc.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/gendma.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/genana.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
+${scriptpath}/genmisc.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/genevent.sh "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/gennvic.sh "${boardsrc}" "${processor}" "${verbose}"
 if [[ ${summary} == "1" ]]; then

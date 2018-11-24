@@ -270,3 +270,137 @@
 #fi
 #endmacro
 	
+#defmacro rtc
+
+	/* Real Time Clock %toupper(mode)% Mode */
+	mclk_set_%apbmask%(%apb%);
+	osc32kctrl_write_RTCCTRL(OSC32KCTRL_RTCCTRL_RTCSEL_%toupper(rtcsel)%);
+
+	rtcmode%modenum%_set_CTRLA(RTC_MODE0_CTRLA_SWRST);
+	rtcmode%modenum%_wait_for_sync(RTC_MODE0_CTRLA_SWRST);
+	
+	rtcmode%modenum%_write_CTRLA(<<<
+		| RTC_MODE%modenum%_CTRLA_MODE_%toupper(mode)%
+		| RTC_MODE%modenum%_CTRLA_PRESCALER_DIV%prescaler%
+#iftrue mode == clock
+#ifdefined clocksync
+		| RTC_MODE%modenum%_CTRLA_CLOCKSYNC
+#fi
+#fi
+#iftrue (mode == count32) | (mode == count16)
+#ifdefined countsync
+		| RTC_MODE%modenum%_CTRLA_COUNTSYNC
+#fi
+#fi
+#ifdefined gptrst
+		| RTC_MODE%modenum%_CTRLA_GPTRST
+#fi
+#iftrue mode != "count32"
+#ifdefined matchclr
+		| RTC_MODE%modenum%_CTRLA_MATCHCLR
+#fi
+#fi
+#iftrue mode == "clock"
+#ifdefined clkrep
+		| RTC_MODE2_CTRLA_CLKREP
+#fi
+#fi
+>>>);
+	rtcmode%modenum%_set_CTRLB(<<<
+#ifdefined gp0en
+		| RTC_MODE%modenum%_CTRLB_GP0EN
+#fi
+#ifdefined gp2en
+		| RTC_MODE%modenum%_CTRLB_GP2EN
+#fi
+#ifdefined actf
+		| RTC_MODE%modenum%_CTRLB_ACTF_DIV%actf%
+#fi
+#ifdefined debf
+		| RTC_MODE%modenum%_CTRLB_DEBF_DIV%debf%
+#fi
+#ifdefined dmaen
+		| RTC_MODE%modenum%_CTRLB_DMAEN
+#fi
+#ifdefined rtcout
+		| RTC_MODE%modenum%_CTRLB_RTCOUT
+#fi
+#ifdefined debasync
+		| RTC_MODE%modenum%_CTRLB_DEBASYNC
+#fi
+#ifdefined debmaj
+		| RTC_MODE%modenum%_CTRLB_DEBMAJ
+#fi
+>>>);
+	rtcmode%modenum%_write_EVCTRL(<<<
+#ifdefined tampevei
+		| RTC_MODE%modenum%_EVCTRL_TAMPEVEI
+#fi
+#ifdefined ovfeo
+		| RTC_MODE%modenum%_EVCTRL_OVFEO
+#fi
+#ifdefined tampereo
+		| RTC_MODE%modenum%_EVCTRL_TAMPEREO
+#fi
+#iftrue mode == "clock"
+#ifdefined alarmeo0
+		| RTC_MODE%modenum%_EVCTRL_ALARMEO0
+#fi
+#ifdefined alarmeo1
+		| RTC_MODE%modenum%_EVCTRL_ALARMEO1
+#fi
+#fi
+#iftrue mode == "count32"
+#ifdefined cmpeo0
+		| RTC_MODE%modenum%_EVCTRL_CMPEO0
+#fi
+#ifdefined cmpeo1
+		| RTC_MODE%modenum%_EVCTRL_CMPEO1
+#fi
+#fi
+#iftrue mode == "count16"
+#ifdefined cmpeo0
+		| RTC_MODE%modenum%_EVCTRL_CMPEO0
+#fi
+#ifdefined cmpeo1
+		| RTC_MODE%modenum%_EVCTRL_CMPEO1
+#fi
+#ifdefined cmpeo2
+		| RTC_MODE%modenum%_EVCTRL_CMPEO2
+#fi
+#ifdefined cmpeo3
+		| RTC_MODE%modenum%_EVCTRL_CMPEO3
+#fi
+#fi
+#ifdefined pereo0
+		| RTC_MODE%modenum%_EVCTRL_PEREO0
+#fi
+#ifdefined pereo1
+		| RTC_MODE%modenum%_EVCTRL_PEREO1
+#fi
+#ifdefined pereo2
+		| RTC_MODE%modenum%_EVCTRL_PEREO2
+#fi
+#ifdefined pereo3
+		| RTC_MODE%modenum%_EVCTRL_PEREO3
+#fi
+#ifdefined pereo4
+		| RTC_MODE%modenum%_EVCTRL_PEREO4
+#fi
+#ifdefined pereo5
+		| RTC_MODE%modenum%_EVCTRL_PEREO5
+#fi
+#ifdefined pereo6
+		| RTC_MODE%modenum%_EVCTRL_PEREO6
+#fi
+#ifdefined pereo7
+		| RTC_MODE%modenum%_EVCTRL_PEREO7
+#fi
+>>>);
+	rtcmode0_set_CTRLA(RTC_MODE2_CTRLA_ENABLE);
+	rtcmode0_wait_for_sync(RTC_MODE2_CTRLA_ENABLE);
+#mod RTC Real Time Clock %toupper(mode)%
+#ifdefined interrupt
+#nvic RTC RTC_IRQn RTC_Handler
+#fi
+#endmacro

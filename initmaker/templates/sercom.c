@@ -211,7 +211,7 @@
 #port %scl_port% I2C Master SCL (SERCOM%unit%/PAD%unitof(scl_pad)%)
 
 #ifdefined isr
-#isr volatile i2cm_msg_t i2cm%unit%_msg = {
+#isr volatile i2cm_msg_t %messagename% = {
 #isr 	.dev = SERCOM%unit%,
 #isr 	.sda = %sda%,
 #isr 	.scl = %scl%,
@@ -221,10 +221,6 @@
 #isr 	.rxlen = 0,
 #isr 	.address = 0,
 #isr 	.status = 0 };
-#isr volatile i2cm_msg_t *i2cm%unit%_get_msg(void)
-#isr {
-#isr 	return (volatile i2cm_msg_t *) &i2cm%unit%_msg;
-#isr }
 #isr /* Interrupt Service Routine for SERCOM%unit% master on bus */
 #isr void SERCOM%unit%_0_Handler(void)
 #isr {
@@ -232,59 +228,59 @@
 #isr 	status = i2cm_read_STATUS(SERCOM%unit%);
 #isr 	// bus error check
 #isr 	if (status & (SERCOM_I2CM_STATUS_ARBLOST | SERCOM_I2CM_STATUS_BUSERR)) {
-#isr 		i2cm%unit%_msg.status |= I2CM_FAIL;
-#isr 		i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr 		%messagename%.status |= I2CM_FAIL;
+#isr 		%messagename%.status &= ~I2CM_BUSY;
 #isr 		i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_MB);
 #isr 	// check for NACK from slave
 #isr 	} else if (status & SERCOM_I2CM_STATUS_RXNACK) {
-#isr 			i2cm%unit%_msg.status |= I2CM_NACK;
-#isr 			i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr 			%messagename%.status |= I2CM_NACK;
+#isr 			%messagename%.status &= ~I2CM_BUSY;
 #isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
 #isr 			i2cm_set_CMD(SERCOM%unit%, I2CM_CMD_STOP); // clears MB and issues stop
 #isr 	// data write check
-#isr 	} else if (i2cm%unit%_msg.txlen > 0) {
+#isr 	} else if (%messagename%.txlen > 0) {
 #isr  		i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
-#isr 		i2cm_write_DATA(SERCOM%unit%,*i2cm%unit%_msg.txbuf++);
-#isr 		i2cm%unit%_msg.txlen--;
+#isr 		i2cm_write_DATA(SERCOM%unit%,*%messagename%.txbuf++);
+#isr 		%messagename%.txlen--;
 #isr 	// data read check
 #isr 	} else {
 #isr 		// data read check
-#isr  		if (i2cm%unit%_msg.rxlen > 0) {
+#isr  		if (%messagename%.rxlen > 0) {
 #isr  			// send ACK to slave while rxlen > 0
 #isr  			i2cm_set_ACK(SERCOM%unit%);
 #isr 			// force repeated start by sending address, clears MB int flag
 #isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
-#isr 			i2cm_write_ADDR(SERCOM%unit%, SERCOM_I2CM_ADDR_ADDR((i2cm%unit%_msg.address << 1) | I2CM_RD));
+#isr 			i2cm_write_ADDR(SERCOM%unit%, SERCOM_I2CM_ADDR_ADDR((%messagename%.address << 1) | I2CM_RD));
 #isr 		// data read complete, issue stop
 #isr 		} else { 
 #isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
 #isr  			i2cm_set_CMD(SERCOM%unit%, I2CM_CMD_STOP);
-#isr 			i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr 			%messagename%.status &= ~I2CM_BUSY;
 #isr 		}
 #isr 	}
 #isr }
 #isr /* Interrupt Service Routine for SERCOM%unit% slave on bus */
 #isr void SERCOM%unit%_1_Handler(void)
 #isr {
-#isr    if (i2cm%unit%_msg.rxlen > 0) {
-#isr 		i2cm%unit%_msg.rxlen--;
-#isr        if (i2cm%unit%_msg.rxlen == 0) {
+#isr    if (%messagename%.rxlen > 0) {
+#isr 		%messagename%.rxlen--;
+#isr        if (%messagename%.rxlen == 0) {
 #isr 			// send NACK and STOP for final byte
 #isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
 #isr  			i2cm_set_NACK(SERCOM%unit%);
 #isr  			i2cm_set_CMD(SERCOM%unit%, I2CM_CMD_STOP);
-#isr 			i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr 			%messagename%.status &= ~I2CM_BUSY;
 #isr 		}
 #isr 		// read data
-#isr 		*i2cm%unit%_msg.rxbuf++ = i2cm_read_DATA(SERCOM%unit%); // clears SB
+#isr 		*%messagename%.rxbuf++ = i2cm_read_DATA(SERCOM%unit%); // clears SB
 #isr 	} 
 #isr 	i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_SB);
 #isr }
 #isr /* Interrupt Service Routine for SERCOM%unit% error */
 #isr void SERCOM%unit%_3_Handler(void)
 #isr {
-#isr 	i2cm%unit%_msg.status |=  I2CM_FAIL;
-#isr 	i2cm%unit%_msg.status &= ~I2CM_BUSY;
+#isr 	%messagename%.status |=  I2CM_FAIL;
+#isr 	%messagename%.status &= ~I2CM_BUSY;
 #isr 	i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_ERROR);
 #isr }
 #fi
@@ -294,4 +290,72 @@
 #nvic SERCOM%unit%_I2CM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
 #fi
 #fi
+#endmacro
+
+#defmacro qspi
+
+	/** QSPI Initialization **/
+	mclk_set_AHBMASK(MCLK_AHBMASK_QSPI);
+	mclk_set_AHBMASK(MCLK_AHBMASK_QSPI_2X);
+	mclk_set_%apbmask%(%apb%);
+	qspi_set_CTRLA(QSPI_CTRLA_SWRST); // Reset QSPI module
+	qspi_write_CTRLB(<<<
+#ifdefined mode
+                 | QSPI_CTRLB_MODE_%toupper(mode)%
+#fi
+#ifdefined loopen
+	             | QSPI_CTRLB_LOOPEN
+#fi
+#ifdefined wdrbt
+	             | QSPI_CTRLB_WDRBT
+#fi
+#ifdefined smemreg
+	             | QSPI_CTRLB_SMEMREG
+#fi
+#ifdefined csmode
+				 | QSPI_CTRLB_CSMODE_%toupper(csmode)%
+#fi
+#ifdefined datalen
+	             | QSPI_CTRLB_DATALEN_%datalen%BITS
+#fi
+#ifdefined dlybct
+	             | QSPI_CTRLB_DLYBCT(%dlybct%)
+#fi
+#ifdefined dlycs
+				 | QSPI_CTRLB_DLYCS(%dlycs%)
+#fi
+>>>);
+	qspi_write_BAUD(<<<
+#ifdefined cpol
+				 | QSPI_BAUD_CPOL
+#fi
+#ifdefined cpha
+				 | QSPI_BAUD_CPHA
+#fi
+				 | QSPI_BAUD_BAUD(QSPI_BAUD(QSPI_BAUDRATE, CPU_FREQUENCY))
+#ifdefined dlybs
+				 | QSPI_BAUD_DLYBS(%dlybs%)
+#fi
+>>>);
+	qspi_set_CTRLA(QSPI_CTRLA_ENABLE);
+	port_set_pin_function(%data0%, MUX_%data0_port%%data0_mux%_%data0_pad%);
+#port %data0_port% QSPI Data 0 (MOSI)
+	port_set_pin_function(%data1%, MUX_%data1_port%%data1_mux%_%data1_pad%);
+#port %data1_port% QSPI Data 1 (MISO)
+#ifdefined data2
+	port_set_pin_function(%data2%, MUX_%data2_port%%data2_mux%_%data2_pad%);
+#port %data2_port% QSPI Data 2
+#fi
+#ifdefined data3
+	port_set_pin_function(%data3%, MUX_%data3_port%%data3_mux%_%data3_pad%);
+#port %data3_port% QSPI Data 3
+#fi
+	port_set_pin_function(%sck%, MUX_%sck_port%%sck_mux%_%sck_pad%);
+#port %sck_port% QSPI Clock
+	port_set_pin_function(%cs%, MUX_%cs_port%%cs_mux%_%cs_pad%);
+#port %sck_port% QSPI Chip Select
+#mod QSPI QSPI %frequency(baudrate)% baud (%baud%)
+#ifdefined interrupt
+#nvic QSPI QSPI_IRQn QSPI_Handler
+#fi	             
 #endmacro

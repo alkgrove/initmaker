@@ -40,28 +40,6 @@
 
 #include <stdbool.h>
 
-/**
- * @brief icmdescriptor set RADDR register
- *
- * @param[in] pICMdesc IcmDescriptor_t *
- * @param[in] mask uint32_t 
- **/
-static inline void icmdescriptor_set_RADDR(IcmDescriptor_t *pICMdesc, uint32_t mask)
-{
-	pICMdesc->RADDR.reg |= mask;
-}
-
-/**
- * @brief icmdescriptor get RADDR register
- *
- * @param[in] pICMdesc IcmDescriptor_t *
- * @param[in] mask uint32_t 
- * @return uint32_t
- **/
-static inline uint32_t icmdescriptor_get_RADDR(IcmDescriptor_t *pICMdesc, uint32_t mask)
-{
-    return pICMdesc->RADDR.reg & mask;
-}
 
 /**
  * @brief icmdescriptor write RADDR register
@@ -72,17 +50,6 @@ static inline uint32_t icmdescriptor_get_RADDR(IcmDescriptor_t *pICMdesc, uint32
 static inline void icmdescriptor_write_RADDR(IcmDescriptor_t *pICMdesc, uint32_t data)
 {
 	pICMdesc->RADDR.reg = data;
-}
-
-/**
- * @brief icmdescriptor clear RADDR register
- *
- * @param[in] pICMdesc IcmDescriptor_t *
- * @param[in] mask uint32_t 
- **/
-static inline void icmdescriptor_clear_RADDR(IcmDescriptor_t *pICMdesc, uint32_t mask)
-{
-	pICMdesc->RADDR.reg &= ~mask;
 }
 
 /**
@@ -313,31 +280,6 @@ static inline uint32_t icmdescriptor_read_RCFG(IcmDescriptor_t *pICMdesc)
 }
 
 /**
- * @brief icmdescriptor set RCTRL register
- *
- * @param[in] pICMdesc IcmDescriptor_t *
- * @param[in] mask uint32_t 
- * - ICM_RCTRL_TRSIZE(value) Transfer Size
- **/
-static inline void icmdescriptor_set_RCTRL(IcmDescriptor_t *pICMdesc, uint32_t mask)
-{
-	pICMdesc->RCTRL.reg |= mask;
-}
-
-/**
- * @brief icmdescriptor get RCTRL register
- *
- * @param[in] pICMdesc IcmDescriptor_t *
- * @param[in] mask uint32_t 
- * @return uint32_t
- * - ICM_RCTRL_TRSIZE(value) Transfer Size
- **/
-static inline uint32_t icmdescriptor_get_RCTRL(IcmDescriptor_t *pICMdesc, uint32_t mask)
-{
-    return pICMdesc->RCTRL.reg & mask;
-}
-
-/**
  * @brief icmdescriptor write RCTRL register
  *
  * @param[in] pICMdesc IcmDescriptor_t *
@@ -349,17 +291,6 @@ static inline void icmdescriptor_write_RCTRL(IcmDescriptor_t *pICMdesc, uint32_t
 	pICMdesc->RCTRL.reg = data;
 }
 
-/**
- * @brief icmdescriptor clear RCTRL register
- *
- * @param[in] pICMdesc IcmDescriptor_t *
- * @param[in] mask uint32_t 
- * - ICM_RCTRL_TRSIZE(value) Transfer Size
- **/
-static inline void icmdescriptor_clear_RCTRL(IcmDescriptor_t *pICMdesc, uint32_t mask)
-{
-	pICMdesc->RCTRL.reg &= ~mask;
-}
 
 /**
  * @brief icmdescriptor read RCTRL register
@@ -374,29 +305,6 @@ static inline uint32_t icmdescriptor_read_RCTRL(IcmDescriptor_t *pICMdesc)
 }
 
 /**
- * @brief icmdescriptor set RNEXT register
- *
- * @param[in] pICMdesc IcmDescriptor_t *
- * @param[in] mask uint32_t 
- **/
-static inline void icmdescriptor_set_RNEXT(IcmDescriptor_t *pICMdesc, uint32_t mask)
-{
-	pICMdesc->RNEXT.reg |= mask;
-}
-
-/**
- * @brief icmdescriptor get RNEXT register
- *
- * @param[in] pICMdesc IcmDescriptor_t *
- * @param[in] mask uint32_t 
- * @return uint32_t
- **/
-static inline uint32_t icmdescriptor_get_RNEXT(IcmDescriptor_t *pICMdesc, uint32_t mask)
-{
-    return pICMdesc->RNEXT.reg & mask;
-}
-
-/**
  * @brief icmdescriptor write RNEXT register
  *
  * @param[in] pICMdesc IcmDescriptor_t *
@@ -405,17 +313,6 @@ static inline uint32_t icmdescriptor_get_RNEXT(IcmDescriptor_t *pICMdesc, uint32
 static inline void icmdescriptor_write_RNEXT(IcmDescriptor_t *pICMdesc, uint32_t data)
 {
 	pICMdesc->RNEXT.reg = data;
-}
-
-/**
- * @brief icmdescriptor clear RNEXT register
- *
- * @param[in] pICMdesc IcmDescriptor_t *
- * @param[in] mask uint32_t 
- **/
-static inline void icmdescriptor_clear_RNEXT(IcmDescriptor_t *pICMdesc, uint32_t mask)
-{
-	pICMdesc->RNEXT.reg &= ~mask;
 }
 
 /**
@@ -661,29 +558,6 @@ static inline uint32_t icm_read_CFG(void)
 }
 
 /**
- * @brief icm set DSCR register
- *
- * @param[in] mask uint32_t 
- * - ICM_DSCR_DASA(value) Descriptor Area Start Address
- **/
-static inline void icm_set_DSCR(uint32_t mask)
-{
-	ICM->DSCR.reg |= mask;
-}
-
-/**
- * @brief icm get DSCR register
- *
- * @param[in] mask uint32_t 
- * @return uint32_t
- * - ICM_DSCR_DASA(value) Descriptor Area Start Address
- **/
-static inline uint32_t icm_get_DSCR(uint32_t mask)
-{
-    return ICM->DSCR.reg & mask;
-}
-
-/**
  * @brief icm write DSCR register
  *
  * @param[in] data uint32_t 
@@ -694,16 +568,6 @@ static inline void icm_write_DSCR(uint32_t data)
 	ICM->DSCR.reg = data;
 }
 
-/**
- * @brief icm clear DSCR register
- *
- * @param[in] mask uint32_t 
- * - ICM_DSCR_DASA(value) Descriptor Area Start Address
- **/
-static inline void icm_clear_DSCR(uint32_t mask)
-{
-	ICM->DSCR.reg &= ~mask;
-}
 
 /**
  * @brief icm read DSCR register
@@ -717,29 +581,6 @@ static inline uint32_t icm_read_DSCR(void)
 }
 
 /**
- * @brief icm set HASH register
- *
- * @param[in] mask uint32_t 
- * - ICM_HASH_HASA(value) Hash Area Start Address
- **/
-static inline void icm_set_HASH(uint32_t mask)
-{
-	ICM->HASH.reg |= mask;
-}
-
-/**
- * @brief icm get HASH register
- *
- * @param[in] mask uint32_t 
- * @return uint32_t
- * - ICM_HASH_HASA(value) Hash Area Start Address
- **/
-static inline uint32_t icm_get_HASH(uint32_t mask)
-{
-    return ICM->HASH.reg & mask;
-}
-
-/**
  * @brief icm write HASH register
  *
  * @param[in] data uint32_t 
@@ -748,17 +589,6 @@ static inline uint32_t icm_get_HASH(uint32_t mask)
 static inline void icm_write_HASH(uint32_t data)
 {
 	ICM->HASH.reg = data;
-}
-
-/**
- * @brief icm clear HASH register
- *
- * @param[in] mask uint32_t 
- * - ICM_HASH_HASA(value) Hash Area Start Address
- **/
-static inline void icm_clear_HASH(uint32_t mask)
-{
-	ICM->HASH.reg &= ~mask;
 }
 
 /**

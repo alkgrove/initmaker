@@ -39,6 +39,11 @@
 #define _QSPI_H_
 
 #include <stdbool.h>
+/*
+ * @note QSPI Baudrate calculation given baudrate ie 115200 and core
+ * frequency of SERCOMn port. 
+ */
+#define QSPI_BAUD(baudrate, freq)  (((freq)/(baudrate))-1)
 
 /**
  * @brief qspi set INTEN register

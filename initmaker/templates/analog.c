@@ -3,7 +3,7 @@
     /* Clock ADC%unit% with %toupper(ref_source)% (%frequency(ref_source)%) */
     gclk_write_PCHCTRL(ADC%unit%_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
 
-#mod ADC%unit% (%toupper(ref_source)% %frequency(ref_source)%) Reference %toupper(refsel)%
+#mod ADC%unit% (%toupper(ref_source)% %frequency(ref_source)%) Reference %toupper(refsel)% %vref%
     adc_wait_for_sync(ADC%unit%, ADC_SYNCBUSY_SWRST | ADC_SYNCBUSY_ENABLE);
     adc_set_CTRLA(ADC%unit%, ADC_CTRLA_SWRST);
     adc_wait_for_sync(ADC%unit%, ADC_SYNCBUSY_SWRST);
@@ -96,6 +96,10 @@
 #ifdefined winlt
     adc_write_WINLT(ADC%unit%, %winlt%);
 #fi
+	/* Get ADC%unit% Calibration from user NVM and update registers */
+	adc_write_CALIB(ADC%unit%, (((*((uint16_t *) ADC%unit%_FUSES_BIASCOMP_ADDR) & ADC%unit%_FUSES_BIASCOMP_Msk) >> ADC%unit%_FUSES_BIASCOMP_Pos) << ADC_CALIB_BIASCOMP_Pos)
+		| (((*((uint16_t *) ADC%unit%_FUSES_BIASR2R_ADDR) & ADC%unit%_FUSES_BIASR2R_Msk) >> ADC%unit%_FUSES_BIASR2R_Pos) << ADC_CALIB_BIASR2R_Pos)
+		| (((*((uint16_t *) ADC%unit%_FUSES_BIASREFBUF_ADDR) & ADC%unit%_FUSES_BIASREFBUF_Msk) >> ADC%unit%_FUSES_BIASREFBUF_Pos) << ADC_CALIB_BIASREFBUF_Pos));
 #ifdefined gaincorr
     adc_write_GAINCORR(ADC%unit%, %gaincorr%);
 #fi
@@ -144,7 +148,7 @@
     mclk_set_%apbmask%(%apb%);
     /* Clock DAC with %toupper(ref_source)% (%frequency(ref_source)%) */
     gclk_write_PCHCTRL(DAC_GCLK_ID, GCLK_PCHCTRL_GEN_%toupper(ref_source)% | GCLK_PCHCTRL_CHEN);
-#mod DAC (%toupper(ref_source)% %frequency(ref_source)%) Reference %toupper(refsel)%
+#mod DAC (%toupper(ref_source)% %frequency(ref_source)%) Reference %toupper(refsel)% %vref%
 
 	dac_write_CTRLA(DAC_CTRLA_SWRST);
 	dac_wait_for_sync(DAC_SYNCBUSY_SWRST);

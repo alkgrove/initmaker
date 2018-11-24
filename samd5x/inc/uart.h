@@ -36,6 +36,12 @@
 #include "core_cm4.h"
 
 extern const FILE __COM[];
+// Replacements for stdin, stdout and stderr. 
+// This is to avoid RAM bloat from reent. 
+extern FILE *serout;
+extern FILE *serin;
+extern FILE *sererr;
+
 #define COM0 ((FILE * const)&__COM[0])
 #define COM1 ((FILE * const)&__COM[1])
 #define COM2 ((FILE * const)&__COM[2])
@@ -53,16 +59,6 @@ extern const FILE __COM[];
 #define SWO6 ((FILE * const)&__COM[14])
 #define SWO7 ((FILE * const)&__COM[15])
 
-/**
- * initSerial() sets stdin, stdout, and stderr to default FILE stream 
- *
- */
-static inline void initSerial(void)
-{
-	stdin = (FILE *) COM0;
-	stdout = (FILE *) COM0;
-	stderr = (FILE *) COM0;
-}
 
 /**
  * @brief UART_putc
@@ -122,5 +118,6 @@ static inline bool getc_ready(FILE *fp)
 {
 	return (usart_read_INTFLAG(fp->dev) & SERCOM_USART_INTFLAG_RXC) != 0;
 }
+
 
 #endif /* __USART_H__ */

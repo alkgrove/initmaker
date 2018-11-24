@@ -78,6 +78,7 @@
 #define CHANNEL30	30
 #define CHANNEL31	31
 
+#define DMAC_INTSTATUS(CHANNEL) (1UL << (CHANNEL))
 /**
  * @brief Trigger Source
  *
@@ -187,10 +188,10 @@ DmacDescriptor_t *get_base_DMA_writeback_descriptor(uint8_t channel);
 /**
  * @brief a debug print of descriptor
  * @param[in] channel DMA Channel number 
- * @param[in] length number of descriptors to print or 0 to rely on NULL
+ * @param[in] count number of descriptors to print or 0 to rely on NULL
  *
  */
-void print_descriptor(int channel, int length);
+void print_descriptor(DmacDescriptor_t *descriptor, int count);
 #endif
 /**
  * @brief set DBG control Debug Run bit

@@ -94,4 +94,5 @@ i2cm_err_t probeI2C(volatile i2cm_msg_t *msg, uint8_t address);
  */
 i2cm_err_t i2cm_transfer(volatile i2cm_msg_t *msg, uint8_t address, uint8_t *wrbuf, uint8_t wrlen, uint8_t *rdbuf, uint8_t rdlen);
 
+const char *i2cm_err_str(int err);
 #endif /* __I2CM_H__ */

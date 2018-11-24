@@ -7,7 +7,7 @@
 
 #defmacro eic
 #ifdefined eic_pin
-/* External Interrupt Definitions */
+/* EIC Definitions */
 #foreach eic_pin
 #define EIC_%pinname%_Pos	EIC%eicnumber%_Pos
 #define	EIC_%pinname%		(1UL << EIC_%pinname%_Pos)

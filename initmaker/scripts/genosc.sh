@@ -63,6 +63,7 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
     	gclk_start = 50;
     	gclk_count = gclk_start;
     	gclk_sync_count = 80;
+    	rtc_count = 100;
     	nvic_count = 200;
     	
     	devices[nvmctrl_count] = "nvmctrl";
@@ -80,6 +81,7 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 		prop["osculp32k:ext_frequency"]=32768
 		prop["xosc32k:ext_frequency"]=32768
     	initpins();
+    	initmclk();
 	}
 	(NR == FNR) && /^[#;]/ {
 		next;
@@ -109,6 +111,10 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 			case /xosc32k/: 
 				devices[xosc32k_count] = section; 
 				prop["xosc32k:macroname"] = "xosc32k";
+			break;
+			case /rtc/: 
+				devices[rtc_count] = section; 
+				prop["rtc:macroname"] = "rtc";
 			break;
 			case /mclk/: 
 				devices[mclk_count] = section;
@@ -190,6 +196,10 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 		linecount++;
 	}		
 	END {
+		key = "rtc:mode"
+		if (key in prop) {
+			prop["rtc:modenum"] = wordtranslate("count32 count16 clock", "0 1 2", prop[key], "0");
+		}
 		key = "mclk:div";
 		if (key in prop) {
 			div = prop[key];
@@ -363,6 +373,12 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 		stack[sp] = 1; 
 		for (widx in devices) {
 			instance = devices[widx];
+			if (instance in mclk) {
+				prop[instance ":apb"] = mclk[instance];
+				match(mclk[instance], /^MCLK_([^_]+)/, arr);
+				prop[instance ":apbmask"] = arr[1];
+				delete arr;
+			}
 			key = instance ":macroname";
 			name = prop[instance ":macroname"];
     		if (name ~ "^dpll$") {

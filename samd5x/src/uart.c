@@ -51,7 +51,9 @@ const FILE __COM[] = {
     {.type=SWO_COM, .io=7}
 };
 
-
+FILE *serout = ((FILE * const)&__COM[0]);
+FILE *serin = ((FILE * const)&__COM[0]);
+FILE *sererr = ((FILE * const)&__COM[0]);
 /*
  * Wrapper for putc
  * requires to be linked with the option -Wl,wrap=putc
@@ -75,7 +77,7 @@ int __wrap_putc(int c, FILE *fp)
 
 int __wrap_putchar(int c)
 {
-	return __wrap_putc(c, stdout);
+	return __wrap_putc(c, serout);
 }
 /*
  * Wrapper for fputs
@@ -101,7 +103,7 @@ int __wrap_fputs (const char* str, FILE *fp)
 
 int __wrap_puts(const char* str) 
 {
-	return __wrap_fputs(str, stdout);
+	return __wrap_fputs(str, serout);
 }
 /*
  * Wrapper for getc
