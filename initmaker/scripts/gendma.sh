@@ -50,6 +50,9 @@ awk -v script="${script}" -i "${processor}" -v rsrctmp="${rsrctmp}" -v evttmp="$
     	in_section=0;
     	dma_start=10;
     	dma_count=dma_start;
+	for (i = 0; i < 31; i++) {
+		prop["dma" i ":priority"] = -1;
+	}
      	initpins();
 	}
 	(NR == FNR) && /^[#;]/ {
@@ -268,7 +271,8 @@ awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' $dst > $newdst
 
 rm -f $tmp

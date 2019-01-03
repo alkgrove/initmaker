@@ -64,7 +64,8 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
     	gclk_count = gclk_start;
     	gclk_sync_count = 80;
     	rtc_count = 100;
-    	nvic_count = 200;
+    	nvic_start = 200;
+    	nvic_count = nvic_start;
     	
     	devices[nvmctrl_count] = "nvmctrl";
     	prop["nvmctrl:macroname"] = "nvmctrl";
@@ -78,6 +79,7 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
     	prop["dfll:fstep"] = 1;
     	prop["dfll:cstep"] = 1;
     	prop["dfll:mode"] = 1;
+		prop["rtc:priority"] = -1;
 		prop["osculp32k:ext_frequency"]=32768
 		prop["xosc32k:ext_frequency"]=32768
     	initpins();
@@ -136,8 +138,10 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 				setunit = 1;
 			break;
 			case /nvic/:
-				devices[nvic_count] = section;
-				prop[key ":macroname"] = "nvic";
+				section = key nvic_count;
+				devices[nvic_count++] = section;
+				prop[section ":priority"] = -1;
+				prop[section ":macroname"] = "nvic";
 			break;
 			default: in_section = 0; section = ""; break;
 		}
@@ -206,6 +210,21 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 			if ((bitcount(div) != 1) || (div > 128)) {
 				errprint("Invalid divisor value in mclk" j);
 			}
+		}
+		for (j = nvic_start; j < nvic_count; j++) {
+			nvickey = "nvic" j ":name";
+			if (nvickey in prop) {
+				nvicname = toupper(prop[nvickey]) "_";
+				idkey = "nvic" j ":id";
+				if (idkey in prop) {
+					nvicname = nvicname prop[idkey] "_";
+				}
+			} else {
+				errprint("name property missing from NVIC");
+				nvicname = "UNKNOWN";
+			}
+			prop["nvic" j ":irqn"] = nvicname "IRQn";
+			prop["nvic" j ":handler"] = nvicname "Handler";
 		}
 		firstgclk = 1;
 		for (j = 0; j < unitmax["gclk"]; j++) {
@@ -535,7 +554,8 @@ awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' ${dst} > ${newdst}
 
 rm -f $tmp

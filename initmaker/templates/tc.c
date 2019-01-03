@@ -98,33 +98,9 @@
 	                  | TC_EVCTRL_MCEO1
 #fi	
 >>>);
-#ifdefined use_inten
-	tc_write_INTEN(TC%unit%, <<<
-#ifdefined int_ovf
-                      | TC_INTENSET_OVF
-#fi
-#ifdefined int_err
-                      | TC_INTENSET_ERR
-#fi
-#ifdefined int_mc0
-                      | TC_INTENSET_MC0
-#fi
-#ifdefined int_mc1
-                      | TC_INTENSET_MC1
-#fi
->>>;
-#fi
-#ifdefined int_ovf
-#nvic TC%unit%_OVF TC%unit%_IRQn TC%unit%_Handler
-#fi
-#ifdefined int_err
-#nvic TC%unit%_ERR TC%unit%_IRQn TC%unit%_Handler
-#fi
-#ifdefined int_mc0
-#nvic TC%unit%_MC0 TC%unit%_IRQn TC%unit%_Handler
-#fi
-#ifdefined int_mc1
-#nvic TC%unit%_MC1 TC%unit%_IRQn TC%unit%_Handler
+
+#ifdefined interrupt
+#nvic TC%unit%_INT TC%unit%_IRQn TC%unit%_Handler %priority%
 #fi
 #ifdefined gen_ovf
 #evt gen %gen_ovf% TC%unit%_OVF %toupper(path_ovf)% %edge_ovf% %touppper(sync_source_ovf)% %evint_ovf%
@@ -580,58 +556,7 @@
                       | TCC_EVCTRL_MCEO5
 #fi
 >>>);
-#ifdefined use_inten
-	tcc_write_INTEN(TCC%unit%, <<<
-#ifdefined int_ovf
-                      | TCC_INTENSET_OVF
-#fi
-#ifdefined int_trg
-                      | TCC_INTENSET_TRG
-#fi
-#ifdefined int_cnt
-                      | TCC_INTENSET_CNT
-#fi
-#ifdefined int_err
-                      | TCC_INTENSET_ERR
-#fi
-#ifdefined int_ufs
-                      | TCC_INTENSET_UFS
-#fi
-#ifdefined int_dfs
-                      | TCC_INTENSET_DFS
-#fi
-#ifdefined int_faulta
-                      | TCC_INTENSET_FAULTA
-#fi
-#ifdefined int_faultb
-                      | TCC_INTENSET_FAULTB
-#fi
-#ifdefined int_fault0
-                      | TCC_INTENSET_FAULT0
-#fi
-#ifdefined int_fault1
-                      | TCC_INTENSET_FAULT1
-#fi
-#ifdefined int_mc0
-                      | TCC_INTENSET_MC0
-#fi
-#ifdefined int_mc1
-                      | TCC_INTENSET_MC1
-#fi
-#ifdefined int_mc2
-                      | TCC_INTENSET_MC2
-#fi
-#ifdefined int_mc3
-                      | TCC_INTENSET_MC3
-#fi
-#ifdefined int_mc4
-                      | TCC_INTENSET_MC4
-#fi
-#ifdefined int_mc5
-                      | TCC_INTENSET_MC5
-#fi
->>>);
-#fi
+
 #ifdefined event0
 #evt event %event0% TCC%unit%_EV_0
 #fi
@@ -686,53 +611,8 @@
 #ifdefined swgen
 #evt swgen %swgen%
 #fi
-#ifdefined int_ovf
-#nvic TCC%unit%_OVF TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_trg
-#nvic TCC%unit%_TRG TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_cnt
-#nvic TCC%unit%_CNT TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_err
-#nvic TCC%unit%_ERR TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_ufs
-#nvic TCC%unit%_UFS TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_dfs
-#nvic TCC%unit%_DFS TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_faulta
-#nvic TCC%unit%_FAULTA TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_faultb
-#nvic TCC%unit%_FAULTB TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_fault0
-#nvic TCC%unit%_FAULT0 TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_fault1
-#nvic TCC%unit%_FAULT1 TCC%unit%_0_IRQn TCC%unit%_0_Handler
-#fi
-#ifdefined int_mc0
-#nvic TCC%unit%_MC0 TCC%unit%_1_IRQn TCC%unit%_1_Handler
-#fi
-#ifdefined int_mc1
-#nvic TCC%unit%_MC1 TCC%unit%_2_IRQn TCC%unit%_2_Handler
-#fi
-#ifdefined int_mc2
-#nvic TCC%unit%_MC2 TCC%unit%_3_IRQn TCC%unit%_3_Handler
-#fi
-#ifdefined int_mc3
-#nvic TCC%unit%_MC3 TCC%unit%_4_IRQn TCC%unit%_4_Handler
-#fi
-#ifdefined int_mc4
-#nvic TCC%unit%_MC4 TCC%unit%_5_IRQn TCC%unit%_5_Handler
-#fi
-#ifdefined int_mc5
-#nvic TCC%unit%_MC5 TCC%unit%_6_IRQn TCC%unit%_6_Handler
+#ifdefined interrupt
+#nvic TCC%unit%_IRQ TCC%unit%_0_IRQn TCC%unit%_0_Handler %priority%
 #fi
 	tcc_set_ENABLE(TCC%unit%);
 	tcc_wait_for_sync(TCC%unit%, TCC_SYNCBUSY_ENABLE);
@@ -741,7 +621,7 @@
 #defmacro systick
 	/** System Tick (defined in CMSIS) */
 	SysTick_Config((CPU_FREQUENCY/1000)*SYSTICK_PERIOD);
-#nvic systick NA SysTick_Handler
+#nvic systick NA SysTick_Handler -1
 #ifdefined isr
 #isr volatile uint32_t tick = 0;
 #isr void SysTick_Handler(void)

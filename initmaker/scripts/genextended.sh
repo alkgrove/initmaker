@@ -45,7 +45,8 @@ awk -v extended="$(<$extendedsrc)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' ${boardsrc} > ${tmpsrc}
 
 if [[ -f "${errfile}" ]]; then

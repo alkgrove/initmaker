@@ -50,7 +50,8 @@ awk -v vars="$(<$vartmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' ${boardsrc} > ${tmpsrc}
 
 rm -f $vartmp
@@ -86,7 +87,8 @@ awk -v isrtmp="$(<$isrtmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' ${boardsrc} > ${tmpsrc}
 
 rm -f $isrtmp

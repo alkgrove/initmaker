@@ -49,9 +49,16 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
     	in_section=0;
     	serial_start = 1;
     	serial_count = serial_start;
+		i2cslave_start = 50;
+		i2cslave_count = i2cslave_start;
     	for (i = 0; i < 8; i++) {
-    		prop["sercom" i ":interrupt"] = 0;
+			prop["sercom" i ":priority"] = -1;
+			prop["sercom" i ":dre_priority"] = -1;
+			prop["sercom" i ":rxc_priority"] = -1;
+			prop["sercom" i ":txc_priority"] = -1;
+			prop["sercom" i ":err_priority"] = -1;
     	}
+    	prop["qspi:priority"] = -1;
     	initpins();
     	initmclk();
 	}
@@ -85,6 +92,11 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
 			section = key;
 			devices[serial_count++] = section;
 			prop[section ":macroname"] = "qspi";
+		} else if (key ~ /i2c_slave/) {
+			in_section = 1;
+			section = key i2cslave_count;
+			devices[i2cslave_count++] = section;
+			prop[section ":macroname"] = "i2c_slave";
 		}  else if (key ~ /freq/) {
   			in_section = 1;
   			section = key;
@@ -407,7 +419,7 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
     	}
     	if (sp != 1) {
     		errprint("iftrue/fi unbalanced at end of file");
-		}
+	}
    }' $cfg $template > $tmp
 
 awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
@@ -430,7 +442,8 @@ awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' $dst > $newdst
 
 rm -f $tmp

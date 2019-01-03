@@ -244,7 +244,8 @@ awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' $dst > $newdst
 
 rm -f $tmp

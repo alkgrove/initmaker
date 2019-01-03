@@ -32,7 +32,7 @@ template="${INITMAKER}/templates/nvic.c"
 today=`date +%D`
 
 if [[ -f ${rsrctmp} ]]; then
-awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -v rsrctmp="${rsrctmp}" -i "${processor}" '@include "functions.awk"
+awk -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -46,6 +46,7 @@ awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -v rsrctmp
 	}
 	(NR == FNR) && /^#nvic/ {
 		if (($3 !~ "NA") && !($3 in nviclist)) {
+			nvicpriolist[isr_count] = gensub(/\s+/,"","g",$5);
 			nviclist[isr_count++] = $3;
 			prop["nvic:nvic"] = 1;
 		}
@@ -93,7 +94,7 @@ awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -v rsrctmp
           			if (match(line, /^#foreach\s+([a-zA-Z0-9_]+)/, a)) {
     				switch (a[1]) {
     					case /nvic/:
-    						for (j in nviclist) { keys[idx] = j; values[idx++] = nviclist[j]; } 
+    						for (j in nviclist) { keys[idx] = j; values[idx] = nviclist[j]; value2[idx++] = nvicpriolist[j]} 
     					break;
           				case /isr/:
     						for (j in isrlist) { keys[idx] = j; values[idx++] = isrlist[j]; }
@@ -110,6 +111,7 @@ awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -v rsrctmp
         			idx = 1;  								
           			prop[name ":key"] = keys[idx];
           			prop[name ":value"] = values[idx];
+          			prop[name ":priority"] = value2[idx];
           			line = macro[i];
           			loopstart = i;
           		} else if (line ~ /#endfor/) {
@@ -117,10 +119,12 @@ awk -v script="${script}" -v vartmp="${vartmp}" -v isrtmp="${isrtmp}" -v rsrctmp
           				i = loopstart;
           				prop[name ":key"] = keys[idx];
           				prop[name ":value"] = values[idx];
+          				prop[name ":priority"] = value2[idx];
           			} else {
    						--sp;
         				delete keys;
           				delete values;
+          				delete value2;
           				continue;
           			}
           			line = macro[i];
@@ -210,7 +214,8 @@ awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' ${boardsrc} > ${srctmp}
 
 rm -f $tmp

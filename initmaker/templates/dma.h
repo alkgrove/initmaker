@@ -5,6 +5,6 @@
 #define DMA_CH%unit%_EVOSEL DMAC_BTCTRL_EVOSEL_DISABLE
 #fi
 #ifdefined name
-#define %name% CHANNEL%unit%
+#define %toupper(name)% CHANNEL%unit%
 #fi
 #endmacro

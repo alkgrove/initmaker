@@ -29,8 +29,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include "uart.h"
 #include "sam.h"
+
 
 const FILE __COM[] = {
 	{.type=SERIAL_COM, .dev=SERCOM0},
@@ -119,21 +121,11 @@ int __wrap_getc(FILE *fp)
 }
 
 /*
- * Wrapper for fgets
+ * Wrapper for polling fgets (linux and cygwin single threaded)
  * requires to be linked with the option -Wl,wrap=fgets
  * note because of potential buffer overflow, gets is not implemented
+ * always null terminates the string, EOL is linefeed
  */
- 
- 
-/* linux and cygwin fgets 
- * reading stdin from a terminal puts the EOL character as linefeed even if return is hit
- * when reading a windows text file, it puts CRLF at the end of the line.
- * if the buffer overflows at length - 1, it returns without a EOL character but 
- * always null terminates the string. 
- * Also using either ctrl-j or ctrl-m, both terminate the line and puts LF as EOL
- * since fgets in this context is only used for serial IO, an EOL will be LF
- */
-
 
 char *__wrap_fgets(char* str, size_t len, FILE *fp) 
 {
@@ -144,7 +136,7 @@ char *__wrap_fgets(char* str, size_t len, FILE *fp)
 		ch = __wrap_getc(fp);
 		if (ch < 0) return NULL;
 #ifdef UART_ECHO
-		__wrap_putc(ch, fp);
+		__wrap_putc(ch, serout);
 #endif
 		if (ch == '\r') {
 			ch = '\n';
@@ -159,3 +151,72 @@ char *__wrap_fgets(char* str, size_t len, FILE *fp)
 	return str;
 }
 
+/**
+ * The following defines the gets function for FreeRTOS as a non-polling 
+ * block on semaphore routine.
+ * It is only for the console and should be used by only one task.
+ * it must be initialized with initTaskConsoleGet()
+ * it will wait for a semaphore to be given indicating end of line
+ * and copy the string to a string buffer up to length or EOL which ever is smallest string.
+ * the interrupt for CONSOLE_PORT must be enabled for RXC and priority set
+ *
+ **/
+#ifdef USE_FREERTOS
+
+static consoleInput_t consoleInput;
+
+void SERCOM0_2_Handler(void) /* ISR for SERCOM0_UART_RXC priority 7  */
+{
+	char ch; 
+	BaseType_t higherPriorityTaskWoken = pdFALSE;
+	usart_clear_INTFLAG(CONSOLE_PORT, SERCOM_USART_INTFLAG_RXC);
+	ch = (char) usart_read_DATA(CONSOLE_PORT);
+	if (consoleInput.index < CONSOLE_INPUTBUFFER_SIZE-1) {
+#ifdef UART_ECHO
+		UART_putc(ch, CONSOLE_PORT);
+#endif
+		if ((ch == '\r') || (ch == '\n')) {
+			ch = '\0';
+		}
+		if ((ch == '\b') || (ch == 0x7F)) {
+			if (consoleInput.index > 0) consoleInput.index--;
+		} else {
+		    consoleInput.buffer[consoleInput.index++] = ch;
+		}
+	} else {
+		ch = '\0';
+		consoleInput.buffer[CONSOLE_INPUTBUFFER_SIZE-1] = '\0';
+	}
+	if (ch == '\0') {
+ 		usart_clear_INTEN(CONSOLE_PORT, SERCOM_USART_INTENCLR_RXC);
+		xSemaphoreGiveFromISR(consoleInput.handle, &higherPriorityTaskWoken);
+	}
+	portYIELD_FROM_ISR(higherPriorityTaskWoken);	
+}
+
+void initTaskConsoleGet(void)
+{
+	consoleInput.index = 0;
+	consoleInput.buffer[0] = '\0';
+	consoleInput.handle = xSemaphoreCreateBinaryStatic(&consoleInput.semaphoreBuffer);
+ 	configASSERT( consoleInput.handle );
+ 	/* Start listening for a line to be sent */
+ 	usart_clear_INTFLAG(CONSOLE_PORT, SERCOM_USART_INTFLAG_RXC);
+ 	usart_set_INTEN(CONSOLE_PORT, SERCOM_USART_INTENSET_RXC);
+ 	/* semaphore comes up taken, so it will wait until it is given by eol from isr */
+}
+	
+
+char *taskConsoleGets(char* str, size_t len, TickType_t timeToWait) 
+{
+	if (xSemaphoreTake(consoleInput.handle, timeToWait) == pdTRUE) {
+		memcpy(str, consoleInput.buffer, MIN(len, consoleInput.index));
+		consoleInput.index = 0;
+		consoleInput.buffer[0] = '\0';
+ 		usart_set_INTEN(CONSOLE_PORT, SERCOM_USART_INTENSET_RXC);
+		return str;
+	} else {
+		return NULL;
+	}
+}
+#endif

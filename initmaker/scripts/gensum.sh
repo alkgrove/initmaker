@@ -88,7 +88,9 @@ awk -i "${processor}" -v script="${script}" '@include "functions.awk"
 		next;
 	}
 	(NR != FNR) && /^#nvic/ {
-		nvic[nvic_count++] = "void " gensub(/\s+$/,"",1,$4) "(void) /* ISR for " $2 " */"
+		priority = "";
+		if ($5 >= 0) { priority = " priority " gensub(/\s+$/,"",1,$5) " "; }
+		nvic[nvic_count++] = "void " gensub(/\s+$/,"",1,$4) "(void) /* ISR for " toupper($2) priority " */"
 		next;
 	}
 	(NR != FNR) && /^#clk/ {
@@ -148,7 +150,8 @@ awk -i "${processor}" -v script="${script}" '@include "functions.awk"
 	if (length(str) > 0) {
 		print str;
 	}
-	print "\nPin Alias List";
+	print "";
+	print "Pin Alias List";
 	for (i in pinport) {
 		key = pinport[i];
 		portpin[key] = (key in portpin) ? (portpin[key] ", " i) : i;
@@ -169,7 +172,8 @@ awk -i "${processor}" -v script="${script}" '@include "functions.awk"
 		}
 	}
 	delete sorted;
-	print "\nPort List";
+	print "";
+	print "Port List";
 	n=asorti(pinport, sorted)
 	for (i=1; i<=n; i++) {
 		portitem = pinport[sorted[i]];
@@ -184,14 +188,16 @@ awk -i "${processor}" -v script="${script}" '@include "functions.awk"
 		print str;
 	}
 	delete sorted;
-	print "\nClocks";
+	print "";
+	print "Clocks";
 	for (i in clock_ol) {
 		key = clock_ol[i];
 		print toupper(key) " " clocks[key];
 	}
 	n = asorti(mod, sorted);
 	if (n > 0) {
-		print "\nPeripherals";
+		print "";
+		print "Peripherals";
 		for (i=1; i <= n; i++) {
 			periph = sorted[i];
 			print periph ": " mod[periph];
@@ -199,13 +205,15 @@ awk -i "${processor}" -v script="${script}" '@include "functions.awk"
 	}
 	delete sorted;
 	if (nvic_count > 1) {
-		print "\nInterrupt Service Routines";
+		print "";
+		print "Interrupt Service Routines";
 		for (i in nvic) {
 			print nvic[i];
 		}
 	}
 	if (length(gen) > 0) {
-        print "\nEvent Generators";
+		print "";
+        print "Event Generators";
         for (i in gen) {
         	$0 = gensub(/\s+$/, "", "g", gen[i]);
         	eicport = ($2 ~ /^EIC_EXTINT_/) ? ("(" $7 ")") : "";
@@ -221,7 +229,8 @@ awk -i "${processor}" -v script="${script}" '@include "functions.awk"
         		print $1 ": " $2 eicport " " edge (($3 ~ /ASYNCHRONOUS/) ? (" Asynchronous") : (" Synchronous(" toupper($5) " " freq[tolower($5)] ")"));
         	}
         }
-        print "\nEvent Users";
+		print "";
+        print "Event Users";
         for (i in evt) {
         	$0 = gensub(/\s+$/, "", "g", evt[i]);
         	print $1 ": " $2 (($2 ~ /^PORT_EV/) ? ("(" $3 " " $4 ")") : "");

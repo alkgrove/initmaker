@@ -42,6 +42,28 @@ extern FILE *serout;
 extern FILE *serin;
 extern FILE *sererr;
 
+#ifdef USE_FREERTOS
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "semphr.h"
+#ifndef CONSOLE_PORT
+#define CONSOLE_PORT SERCOM0
+#endif
+#define CONSOLE_INPUTBUFFER_SIZE 80
+typedef struct consoleInput_s {
+	uint8_t index;
+	char buffer[CONSOLE_INPUTBUFFER_SIZE];
+	SemaphoreHandle_t handle;
+	StaticSemaphore_t semaphoreBuffer;
+} consoleInput_t;
+
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+
+char *taskConsoleGets(char* str, size_t len, TickType_t timeToWait);
+void initTaskConsoleGet(void);
+
+#endif
+
 #define COM0 ((FILE * const)&__COM[0])
 #define COM1 ((FILE * const)&__COM[1])
 #define COM2 ((FILE * const)&__COM[2])
@@ -59,6 +81,7 @@ extern FILE *sererr;
 #define SWO6 ((FILE * const)&__COM[14])
 #define SWO7 ((FILE * const)&__COM[15])
 
+#define printk(...) fprintf(SWO0, __VA_ARGS__)
 
 /**
  * @brief UART_putc
@@ -80,6 +103,7 @@ static inline void UART_putc(int ch, SERCOM_t *dev)
  * @param[in] ch - char 	character to send over serial
  * @param[in] int channel	SWO Channel - must be enabled
  */
+/* unfortunately PORT is popular name, so we push away so it plays well with CMSIS */
 #pragma push_macro("PORT")
 #undef PORT
 static inline int SWO_putc(int ch, int channel)

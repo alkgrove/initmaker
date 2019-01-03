@@ -176,7 +176,7 @@
 #endmacro
 
 #defmacro nvic
-#nvic %name% %id% %handler%
+#nvic %name% %irqn% %handler% %priority%
 #endmacro
 
 #defmacro dpll_gclk_sync
@@ -401,6 +401,6 @@
 	rtcmode0_wait_for_sync(RTC_MODE2_CTRLA_ENABLE);
 #mod RTC Real Time Clock %toupper(mode)%
 #ifdefined interrupt
-#nvic RTC RTC_IRQn RTC_Handler
+#nvic RTC RTC_IRQn RTC_Handler %priority%
 #fi
 #endmacro

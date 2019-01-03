@@ -37,6 +37,11 @@
   */
 void SystemInit(void);
  
+typedef struct {
+	IRQn_Type irq;
+	int32_t priority;
+} NVICList_t;
+
 /** @addtogroup GPIO
  *  @ingroup SystemInit
  *  @{ **/

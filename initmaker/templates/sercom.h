@@ -1,6 +1,6 @@
 #defmacro sercom
 #ifdefined name
-#define %name% SERCOM%unit%
+#define %toupper(name)% SERCOM%unit%
 #fi
 #define SERCOM%unit%_CORE_FREQ %toupper(ref_source)%_FREQUENCY
 #define SERCOM%unit%_BAUD %baudrate%
@@ -39,4 +39,9 @@ extern volatile i2cm_msg_t %messagename%;
 #define QPI_DUMMY_CLOCK_LEN 8
 #endif
 
+#endmacro
+#defmacro i2c_slave
+// I2C Device %name% slave address
+#define %toupper(name)%_ADDRESS %address%
+#mod I2C External I2C Slave Device %name% (%address%)
 #endmacro

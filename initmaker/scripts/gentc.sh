@@ -60,6 +60,7 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartm
 			prop["tc" i ":evint_ovf"] = 0;
 			prop["tc" i ":evint_mc0"] = 0;
 			prop["tc" i ":evint_mc1"] = 0;
+			prop["tc" i ":priority"] = -1;
 		}
 		for (i = 0; i < unitmax["tcc"]; i++) {
 			prop["tcc" i ":count"] = 0;
@@ -77,6 +78,7 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartm
 			prop["tcc" i ":evint_mc3"] = 0;
 			prop["tcc" i ":evint_mc4"] = 0;
 			prop["tcc" i ":evint_mc5"] = 0;
+			prop["tcc" i ":priority"] = -1;
 		}
 	}
 	(NR == FNR) && /^[#;]/ {
@@ -331,7 +333,8 @@ awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' $dst > $newdst
 
 rm -f $tmp

@@ -122,6 +122,6 @@
 	eic_set_ENABLE();
 	eic_wait_for_sync(EIC_SYNCBUSY_ENABLE);
 #foreach eic_interrupt
-#nvic %pinname% EIC_%eicnumber%_IRQn EIC_%eicnumber%_Handler
+#nvic %pinname% EIC_%eicnumber%_IRQn EIC_%eicnumber%_Handler %priority%
 #endfor
 #endmacro

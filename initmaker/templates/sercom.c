@@ -86,17 +86,17 @@
 	port_set_pin_function(%cts%, MUX_%cts_port%%cts_mux%_%cts_pad%);
 #port %cts_port% UART CTS (SERCOM%unit%/PAD%unitof(cts_pad)%)
 #fi
-#ifdefined dre_irq
-#nvic SERCOM%unit%_UART_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
+#ifdefined dre_interrupt
+#nvic SERCOM%unit%_UART_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler %dre_priority%
 #fi
-#ifdefined txc_irq
-#nvic SERCOM%unit%_UART_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler
+#ifdefined txc_interrupt
+#nvic SERCOM%unit%_UART_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler %txc_priority%
 #fi
-#ifdefined rxc_irq
-#nvic SERCOM%unit%_UART_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler
+#ifdefined rxc_interrupt
+#nvic SERCOM%unit%_UART_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler %rxc_priority%
 #fi
-#ifdefined err_irq
-#nvic SERCOM%unit%_UART_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
+#ifdefined err_interrupt
+#nvic SERCOM%unit%_UART_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler %err_priority%
 #fi
 #fi
 #iftrue type == "spim"
@@ -179,17 +179,17 @@
 	port_set_pin_function(%ss%, MUX_%ss_port%%ss_mux%_%ss_pad%);
 #port %ss_port% SPI Master CSn (SERCOM%unit%/PAD%unitof(ss_pad)%)
 #fi
-#ifdefined dre_irq
-#nvic SERCOM%unit%_SPIM_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
+#ifdefined dre_interrupt
+#nvic SERCOM%unit%_SPIM_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler %dre_priority%
 #fi
-#ifdefined txc_irq
-#nvic SERCOM%unit%_SPIM_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler
+#ifdefined txc_interrupt
+#nvic SERCOM%unit%_SPIM_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler %txc_priority%
 #fi
-#ifdefined rxc_irq
-#nvic SERCOM%unit%_SPIM_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler
+#ifdefined rxc_interrupt
+#nvic SERCOM%unit%_SPIM_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler %rxc_priority%
 #fi
-#ifdefined err_irq
-#nvic SERCOM%unit%_SPIM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
+#ifdefined err_interrupt
+#nvic SERCOM%unit%_SPIM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler %err_priority%
 #fi
 #fi
 #iftrue type == "i2cm"
@@ -284,10 +284,10 @@
 #isr 	i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_ERROR);
 #isr }
 #fi
-#ifdefined irq
-#nvic SERCOM%unit%_I2CM_MB SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler
-#nvic SERCOM%unit%_I2CM_SB SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler
-#nvic SERCOM%unit%_I2CM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler
+#ifdefined interrupt
+#nvic SERCOM%unit%_I2CM_MB SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler %priority%
+#nvic SERCOM%unit%_I2CM_SB SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler %priority%
+#nvic SERCOM%unit%_I2CM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler %priority%
 #fi
 #fi
 #endmacro
@@ -356,6 +356,6 @@
 #port %sck_port% QSPI Chip Select
 #mod QSPI QSPI %frequency(baudrate)% baud (%baud%)
 #ifdefined interrupt
-#nvic QSPI QSPI_IRQn QSPI_Handler
+#nvic QSPI QSPI_IRQn QSPI_Handler %priority%
 #fi	             
 #endmacro

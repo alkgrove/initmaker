@@ -132,14 +132,14 @@
                               | ADC_CTRLA_R2R
 #fi
 >>>);
-#ifdefined overrun_irq
-#nvic ADC%unit%_OVERRUN ADC%unit%_0_IRQn ADC%unit%_0_Handler
+#ifdefined overrun_interrupt
+#nvic ADC%unit%_OVERRUN ADC%unit%_0_IRQn ADC%unit%_0_Handler %overrun_priority%
 #fi
-#ifdefined winmon_irq
-#nvic ADC%unit%_WINMON ADC%unit%_0_IRQn ADC%unit%_0_Handler
+#ifdefined winmon_interrupt
+#nvic ADC%unit%_WINMON ADC%unit%_0_IRQn ADC%unit%_0_Handler %winmon_priority%
 #fi
-#ifdefined resrdy_irq
-#nvic ADC%unit%_RESRDY ADC%unit%_1_IRQn ADC%unit%_1_Handler
+#ifdefined resrdy_interrupt
+#nvic ADC%unit%_RESRDY ADC%unit%_1_IRQn ADC%unit%_1_Handler %resrdy_priority%
 #fi
 
 #endmacro

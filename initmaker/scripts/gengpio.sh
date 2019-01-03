@@ -185,6 +185,11 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 							if (intkey in prop) {
 								eicinterrupt[num] = sig;
 								prop["eic:eic_interrupt"] = 1;
+								priokey = instance ":priority";
+								eicpriority[num] = -1;
+								if (priokey in prop) {
+									eicpriority[num] = prop[priokey];
+								} 
 							}
 							dkey = instance ":debounce";
 							if (dkey in prop) {
@@ -269,8 +274,8 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
      							keyname = "pinname"; valuename = "portname";
     						break;
    							case /eic_interrupt/:
-    							for (j in eicinterrupt) { keys[idx] = j; values[idx++] = eicinterrupt[j]; }
-    							keyname = "eicnumber"; valuename = "pinname";    							
+    							for (j in eicinterrupt) { keys[idx] = j; values[idx] = eicinterrupt[j]; value2[idx++] = eicpriority[j]; }
+    							keyname = "eicnumber"; valuename = "pinname"; value2name = "priority";    							
  							break;
    							case /gen_event/:
         						for (j in genevent) { keys[idx] = j; values[idx++] = genevent[j]; }
@@ -303,6 +308,7 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 					idx = 1;  								
   					prop[name ":" keyname] = keys[idx];
   					prop[name ":" valuename] = values[idx];
+  					prop[name ":" value2name] = value2[idx];
   					line = macro[i];
   					loopstart = i;
    				} else if (line ~ /#endfor/) {
@@ -310,10 +316,12 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
   						i = loopstart;
  						prop[name ":" keyname] = keys[idx];
   						prop[name ":" valuename] = values[idx];
+  						prop[name ":" value2name] = value2[idx];
    					} else {
    						--sp;
  						delete keys;
   						delete values;
+  						delete value2;
  						continue;
   					}
   					line = macro[i];
@@ -405,7 +413,8 @@ awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' $dst > $newdst
 
 rm -f $tmp

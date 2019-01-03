@@ -7,12 +7,12 @@
 
 #defmacro tc
 #ifdefined name
-#define %name% TC%unit%
+#define %toupper(name)% TC%unit%
 #fi
 #endmacro
 
 #defmacro tcc
 #ifdefined name
-#define %name% TCC%unit%
+#define %toupper(name)% TCC%unit%
 #fi
 #endmacro

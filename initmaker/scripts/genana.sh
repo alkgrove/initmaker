@@ -57,6 +57,9 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttm
 			prop["adc" i ":adjres"] = 0;
 			prop["adc" i ":samplen"] = 0;			
 			prop["adc" i ":prescaler"] = "div2";
+			prop["adc" i ":overrun_priority"] = -1;
+			prop["adc" i ":winmon_priority"] = -1;
+			prop["adc" i ":resrdy_priority"] = -1;
 		}
 		prop["dac:dacctrl0_osr"] = 1;
 		prop["dacctrl0_refresh"] = 0;
@@ -287,7 +290,8 @@ awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	END {
 	   if (skip == 1) {
 		print "" > errfile;
-           }
+		print "Malformed doxygen tags" | "cat 1>&2";
+	}
 	}' $dst > $newdst
 
 rm -f $tmp

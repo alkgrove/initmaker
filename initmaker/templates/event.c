@@ -23,9 +23,17 @@
 #foreach generators
 #iftrue (evint == 1)
 #iftrue (channel == 0) | (channel == 1) | (channel == 2) | (channel == 3)
-#nvic CH%channel% EVSYS_%channel%_IRQn EVSYS_%channel%_Handler
+#ifdefined priority
+#nvic CH%channel% EVSYS_%channel%_IRQn EVSYS_%channel%_Handler %priority%
 #otherwise
-#nvic %eventname% EVSYS_4_IRQn EVSYS_4_Handler
+#nvic CH%channel% EVSYS_%channel%_IRQn EVSYS_%channel%_Handler -1
+#fi
+#otherwise
+#ifdefined priority
+#nvic %eventname% EVSYS_4_IRQn EVSYS_4_Handler %priority%
+#otherwise
+#nvic %eventname% EVSYS_4_IRQn EVSYS_4_Handler -1
+#fi
 #fi
 #fi
 #endfor
