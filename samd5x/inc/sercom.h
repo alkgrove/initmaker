@@ -39,6 +39,20 @@
 #define _SERCOM_H_
 
 #include <stdbool.h>
+/* @note Errata for Sercom UART 
+ * TXINV and RXINV are swapped in the datasheet and in the component/sercom.h
+ * The following macros correct that 
+ */
+#undef SERCOM_USART_CTRLA_TXINV_Pos
+#define SERCOM_USART_CTRLA_TXINV_Pos 10            /**< \brief (SERCOM_USART_CTRLA) Transmit Data Invert */
+#undef SERCOM_USART_CTRLA_TXINV
+#define SERCOM_USART_CTRLA_TXINV    (_U_(0x1) << SERCOM_USART_CTRLA_TXINV_Pos)
+#undef SERCOM_USART_CTRLA_RXINV_Pos
+#define SERCOM_USART_CTRLA_RXINV_Pos 9            /**< \brief (SERCOM_USART_CTRLA) Receive Data Invert */
+#undef SERCOM_USART_CTRLA_RXINV
+#define SERCOM_USART_CTRLA_RXINV    (_U_(0x1) << SERCOM_USART_CTRLA_RXINV_Pos)
+
+
 /* @note General Notes
  * Enable protected means that a register can only be written
  * when the peripheral is disabled

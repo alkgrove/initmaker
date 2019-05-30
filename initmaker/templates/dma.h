@@ -7,4 +7,7 @@
 #ifdefined name
 #define %toupper(name)% CHANNEL%unit%
 #fi
+#ifdefined handler
+#define %toupper(handler)% DMA%unit%_Handler
+#fi
 #endmacro

@@ -61,6 +61,15 @@
 #ifdefined rxd
 							 | SERCOM_USART_CTRLB_RXEN
 #fi
+#ifdefined enc
+							 | SERCOM_USART_CTRLB_ENC
+#fi
+#ifdefined sfde
+							 | SERCOM_USART_CTRLB_SFDE
+#fi
+#ifdefined colden
+							 | SERCOM_USART_CTRLB_COLDEN
+#fi
 							 | SERCOM_USART_CTRLB_LINCMD(0)
 >>>);
 	usart_wait_for_sync(SERCOM%unit%, SERCOM_USART_SYNCBUSY_CTRLB);

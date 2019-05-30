@@ -30,6 +30,15 @@
 #ifndef __QSPI_FLASH_H__
 #define __QSPI_FLASH_H__
 
+#define W25Q128JV
+#ifdef W25Q128JV
+#define PAGE_SIZE 256
+#define SECTOR_ERASE_SIZE (PAGE_SIZE * 16)
+#define BLOCK_ERASE_SIZE (PAGE_SIZE * 128)
+#define LARGEBLOCK_ERASE_SIZE (PAGE_SIZE * 256)
+#define CHIP_SIZE (PAGE_SIZE * 65536)
+#endif
+
 /* Quad Flash Commands */
 #define CMD_WRITE_ENABLE 0x06
 #define CMD_VOLATILE_SR_WRITE_ENABLE 0x50

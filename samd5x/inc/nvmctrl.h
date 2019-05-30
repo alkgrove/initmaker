@@ -719,5 +719,13 @@ static inline uint32_t nvmctrl_read_SEESTAT(void)
 {
 	return NVMCTRL->SEESTAT.reg;
 }
+/**
+ * @brief nvmctrl wait for ready
+ *
+ **/
+static inline void nvm_wait_ready(void)
+{
+	while(nvmctrl_get_STATUS(NVMCTRL_STATUS_READY) == 0);
+}
 
 #endif /* _NVMCTRL_H */
