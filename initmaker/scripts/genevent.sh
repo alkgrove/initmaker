@@ -241,7 +241,7 @@ awk -v script="${script}" -v evttmp="${evttmp}" -v rsrctmp="${rsrctmp}" -i "${pr
           	}    				
           	for (i = 1; i < olp; i++) {
           		if (outline[i] ~ /<<</) {
-          		 	outline[i] = gensub(/[\r\n]/,"","g",outline[i]) gensub(/\s*[\|\&]?\s*/,"",1, outline[i+1]);
+          		 	outline[i] = gensub(/[\r\n]/,"","g",outline[i]) gensub(/\s*[\|&]?\s*/,"",1, outline[i+1]);
           			delete outline[i+1];
         			outline[i] = gensub(/<<<\s*>>>/,"0",1,outline[i]);
         			outline[i] = gensub(/<<</,"",1,outline[i]);

@@ -59,7 +59,7 @@ awk -v script="${script}" -i "${processor}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 		next;
 	}
 	(NR == FNR) && /\[[^\]]+\]/ {
-		gsub(/[\[\]\r\n\ \t]/,"");
+		gsub(/[\[\]\r\n \t]/,"");
 		key = tolower($0);
 		in_section = 0;
 		if (key ~ /dma[0-9]+/) {
@@ -220,7 +220,7 @@ awk -v script="${script}" -i "${processor}" -v rsrctmp="${rsrctmp}" -v evttmp="$
   			}    				
   			for (i = 1; i < olp; i++) {
   				if (outline[i] ~ /<<</) {
-  				 	outline[i] = gensub(/[\r\n]/,"","g",outline[i]) gensub(/\s*[\|\&]?\s*/,"",1, outline[i+1]);
+  				 	outline[i] = gensub(/[\r\n]/,"","g",outline[i]) gensub(/\s*[\|&]?\s*/,"",1, outline[i+1]);
   					delete outline[i+1];
 					outline[i] = gensub(/<<<\s*>>>/,"0",1,outline[i]);
 					outline[i] = gensub(/<<</,"",1,outline[i]);

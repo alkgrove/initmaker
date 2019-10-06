@@ -103,18 +103,18 @@ function evaldefined(inst, expression) {
 
 function evalexp(inst, expression)
 {
-  	params = gensub(/\&/, " \\& ", "g", expression);
+  	params = gensub(/&/, " \\& ", "g", expression);
     params = gensub(/\|/, " | ", "g", params);
-    params = gensub(/\=\=/, " = ", "g", params);
-    params = gensub(/\!/, " ! ", "g", params);
+    params = gensub(/==/, " = ", "g", params);
+    params = gensub(/!/, " ! ", "g", params);
     params = gensub(/\(/, " ( ", "g", params);
     params = gensub(/\)/, " ) ", "g", params);
   	params = gensub(/\s+/, " ", "g", params);
   	params = tolower(params);
   	split(params, args, " ");
   	for (k in args) {
-  		if (args[k] ~ /\"[^\"]*\"/) {
-  			args[k] = gensub(/\"/, "", "g", args[k]);
+  		if (args[k] ~ /"[^"]*"/) {
+  			args[k] = gensub(/"/, "", "g", args[k]);
   		} else if (args[k] ~ /[a-z][a-z0-9_]*/) {
   			key = inst ":" args[k];
   			if (key in prop) {
@@ -128,10 +128,10 @@ function evalexp(inst, expression)
     qp = 0;
     idx = 1;
     while(idx <= length(args)) {
-        if (args[idx] ~ /[\!\(]/) {
+        if (args[idx] ~ /[!\(]/) {
             estack[esp++] = args[idx++];
-    	} else if (args[idx] ~ /[\&\|\=]/) {
-    		while((esp > 0) && (estack[esp-1] ~ /\!/)) {
+    	} else if (args[idx] ~ /[&\|=]/) {
+    		while((esp > 0) && (estack[esp-1] ~ /!/)) {
         		queue[qp++] = estack[--esp];
     	}
     	estack[esp++] = args[idx++];
@@ -154,10 +154,10 @@ function evalexp(inst, expression)
     }
     for (idx = 0; idx < length(queue); idx++) {
 	switch (queue[idx]) {
-		case /\&/: estack[esp-2] = and(estack[esp-1], estack[esp-2]); esp--; break;
+		case /&/: estack[esp-2] = and(estack[esp-1], estack[esp-2]); esp--; break;
 		case /\|/: estack[esp-2] = or(estack[esp-1], estack[esp-2]); esp--; break;
-		case /\=/: estack[esp-2] = (tolower(estack[esp-1]) == tolower(estack[esp-2])); esp--; break;
-		case /\!/: estack[esp-1] = !estack[esp-1]; break;
+		case /=/: estack[esp-2] = (tolower(estack[esp-1]) == tolower(estack[esp-2])); esp--; break;
+		case /!/: estack[esp-1] = !estack[esp-1]; break;
 		default: estack[esp++] = queue[idx]; break;
 	}
     }

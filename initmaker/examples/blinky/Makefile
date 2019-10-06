@@ -75,7 +75,6 @@ all: ${OBJDIR} ${OBJDIR}${TARGET}.uf2 ${OBJDIR}${TARGET}.lss ${OBJDIR}${TARGET}.
 config: 
 	@test -d ${INCDIR} || mkdir ${INCDIR}
 	${IM} ${CFG}.cfg ${SRCDIR}${INIT}.c ${INCDIR}${INIT}.h -v 
-# -x ../../extsource/sdo.c -x ../../extsource/sdo.h
 
 distclean: 
 	${RM} ${OBJDIR} ${wildcard *~} ${SRCDIR}${INIT}.c ${INCDIR}${INIT}.h

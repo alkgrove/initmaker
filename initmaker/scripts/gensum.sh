@@ -50,7 +50,7 @@ awk -i "${processor}" -v script="${script}" '@include "functions.awk"
 		next;
 	}
 	(NR == FNR) && /\[[^\]]+\]/ {
-		gsub(/[\[\]\r\n\ \t]/,"");
+		gsub(/[\[\]\r\n \t]/,"");
 		key = tolower($0);
 		section = key;
 		in_section = 0;
