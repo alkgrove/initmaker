@@ -32,7 +32,7 @@ initmaker -> templates ; source code with markup language for initmaker
 For development, you will also need [CMSIS](https://developer.arm.com/embedded/cmsis)
 
 ## Notes
-In updating my software, I see some busy body changed old software. This broke a lot of code by generating warnings. Doesn't actually change the behavior of the code but the warnings hide real errors and so I fixed the cosmetic issues to avoid the warnings. I thought using a program as old as awk, that we could avoid this meddling but apparently its not in their nature to leave well enough alone. 
+In updating my software, I see some busy body changed awk. This broke a lot of code by generating warnings that were not there before. Doesn't actually change the behavior of the code but the warnings hide real errors and so I fixed the cosmetic issues to avoid the warnings. I thought using a program as old as awk, that we could avoid this meddling but apparently its not in the programmers nature to leave well enough alone. 
 
 
 
