@@ -133,13 +133,25 @@
 #fi
 >>>);
 #ifdefined overrun_interrupt
+#ifdefined name
+#nvic %toupper(name)%_OVERRUN ADC%unit%_0_IRQn ADC%unit%_0_Handler %overrun_priority%
+#otherwise
 #nvic ADC%unit%_OVERRUN ADC%unit%_0_IRQn ADC%unit%_0_Handler %overrun_priority%
 #fi
+#fi
 #ifdefined winmon_interrupt
+#ifdefined name
+#nvic %toupper(name)%_WINMON ADC%unit%_0_IRQn ADC%unit%_0_Handler %winmon_priority%
+#otherwise
 #nvic ADC%unit%_WINMON ADC%unit%_0_IRQn ADC%unit%_0_Handler %winmon_priority%
 #fi
+#fi
 #ifdefined resrdy_interrupt
+#ifdefined name
+#nvic %toupper(name)%_RESRDY ADC%unit%_1_IRQn ADC%unit%_1_Handler %resrdy_priority%
+#otherwise
 #nvic ADC%unit%_RESRDY ADC%unit%_1_IRQn ADC%unit%_1_Handler %resrdy_priority%
+#fi
 #fi
 
 #endmacro

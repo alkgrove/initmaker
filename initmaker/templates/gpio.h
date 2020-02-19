@@ -3,6 +3,14 @@
 #foreach pins
 #define %pinname%			GPIO(PORT%groupof(portname)%, %unitof(portname)%)		/** %portname% */
 #endfor
+#ifdefined adc
+
+/* ADC Channels */
+#foreach adc_pin
+#define %toupper(pinname)%_CHANNEL	ADC_INPUTCTRL_MUXPOS_%channel%
+#endfor
+
+#fi
 #endmacro
 
 #defmacro eic
@@ -14,3 +22,4 @@
 #endfor
 #fi
 #endmacro
+

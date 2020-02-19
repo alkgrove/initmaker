@@ -5,8 +5,8 @@
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
-scriptpath="${INITMAKER}/scripts"
-export AWKPATH="${scriptpath}"
+#scriptpath="${INITMAKER}/scripts"
+#export AWKPATH="${scriptpath}"
 
 if [[ $# -lt 2 ]]; then
 	echo "Usage: genosc.sh <config file>.ini <board src>.c <board inc>.h processor verbose"
@@ -43,7 +43,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" -v cfgtmp="${cfgtmp}" '@include "functions.awk"
+${AWK} -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" -v cfgtmp="${cfgtmp}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -534,7 +534,7 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 		}
    }' ${cfg} ${template} > ${tmp}
 
-awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
+${AWK} -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\**\s*@addtogroup clocking/ {

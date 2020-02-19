@@ -4,10 +4,9 @@
 # creates board section
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
-
+export INITMAKER=$(dirname $(dirname $0))
 scriptpath="${INITMAKER}/scripts"
-export AWKPATH="${scriptpath}"
-
+initmaker_revision="2.0"
 if [[ $# -le 3 ]]; then
 	echo "Usage: genboard.sh <config file>.cfg <target>.c <target.h> verboseflag"
 	exit 1
@@ -43,7 +42,7 @@ dst="${dstarr[i]}"
 fname=$(basename "${dst}")
 incfile=$(basename "${boardinc}")
 template="${templatearr[i]}"
-awk -v script="${script}" -v date="$today" -v license="$(<$license)" -v file="${fname}" -v includefile="${incfile}" '
+${AWK} -v script="${script}" -v date="$today" -v license="$(<$license)" -v rev=${initmaker_revision} -v file="${fname}" -v includefile="${incfile}" '
 	@include "functions.awk"
 	BEGIN {
     	section="";
@@ -53,6 +52,7 @@ awk -v script="${script}" -v date="$today" -v license="$(<$license)" -v file="${
     	board_count = 1;
   		prop["board:filename"] = file;
 		prop["board:date"] = date;
+		prop["board:initmaker_revision"] = rev;
 		prop["board:legal"] = license;
 		prop["board:macroname"] = "board";
 		prop["board:includefile"] = includefile;

@@ -5,8 +5,8 @@
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
-scriptpath="${INITMAKER}/scripts"
-export AWKPATH="${scriptpath}"
+#scriptpath="${INITMAKER}/scripts"
+#export AWKPATH="${scriptpath}"
 
 if [[ $# -le 2 ]]; then
 	echo "Usage: genevent.sh <target>.c <target>.h <processor>.awk <verbose>"
@@ -41,7 +41,7 @@ newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
  
 if [[ -f ${evttmp} ]]; then
-awk -v script="${script}" -v evttmp="${evttmp}" -v rsrctmp="${rsrctmp}" -i "${processor}" '@include "functions.awk"
+${AWK} -v script="${script}" -v evttmp="${evttmp}" -v rsrctmp="${rsrctmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -273,7 +273,7 @@ awk -v script="${script}" -v evttmp="${evttmp}" -v rsrctmp="${rsrctmp}" -i "${pr
 else
 touch $tmp
 fi
-awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
+${AWK} -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\*+\s+@addtogroup\s+EVSYS/ {

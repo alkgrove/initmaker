@@ -5,8 +5,8 @@
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
-scriptpath="${INITMAKER}/scripts"
-export AWKPATH="${scriptpath}"
+#scriptpath="${INITMAKER}/scripts"
+#export AWKPATH="${scriptpath}"
 
 if [[ $# -le 2 ]]; then
 	echo "Usage: gennvic.sh <target>.c <processor> {-v}"
@@ -18,21 +18,32 @@ if [[ ! -f $1 ]]; then
 fi
 script="$0"
 boardsrc="$1"
-processor="$2"
-verbose="$3"
+boardinc="$2"
+processor="$3"
+verbose="$4"
 
 errfile="02.000"
 boardtmp="${boardsrc%.c}"
-tmp="${boardtmp}.002"
-srctmp="${boardtmp}.004"
+#dstarr=("${boardsrc}" "${boardinc}")
+#tmparr=("${boardtmp}.002" "${boardtmp}.003")
+#newdstarr=("${boardtmp}.000" "${boardtmp}.001")
+dstarr=("${boardinc}")
+tmparr=("${boardtmp}.003")
+newdstarr=("${boardtmp}.001")
 rsrctmp="${boardtmp}_rsrc.tmp"
-isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
-template="${INITMAKER}/templates/nvic.c"
+#templatearr=("${INITMAKER}/templates/nvic.c" "${INITMAKER}/templates/nvic.h")
+templatearr=("${INITMAKER}/templates/nvic.h")
 today=`date +%D`
 
+for i in ${!dstarr[@]}
+do
+dst="${dstarr[i]}"
+tmp="${tmparr[i]}"
+newdst="${newdstarr[i]}"
+template="${templatearr[i]}"
 if [[ -f ${rsrctmp} ]]; then
-awk -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "functions.awk"
+${AWK} -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -47,7 +58,9 @@ awk -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "fun
 	(NR == FNR) && /^#nvic/ {
 		if (($3 !~ "NA") && !($3 in nviclist)) {
 			nvicpriolist[isr_count] = gensub(/\s+/,"","g",$5);
-			nviclist[isr_count++] = $3;
+			nvicname[isr_count] = gensub(/\s+/,"","g",$2);
+			nvichandler[isr_count] = gensub(/\s+/,"","g",$4);
+			nviclist[isr_count++] = gensub(/\s+/,"","g",$3);
 			prop["nvic:nvic"] = 1;
 		}
 		isrlist[$2] = gensub(/\s+/,"","g",$4);
@@ -94,7 +107,13 @@ awk -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "fun
           			if (match(line, /^#foreach\s+([a-zA-Z0-9_]+)/, a)) {
     				switch (a[1]) {
     					case /nvic/:
-    						for (j in nviclist) { keys[idx] = j; values[idx] = nviclist[j]; value2[idx++] = nvicpriolist[j]} 
+    						for (j in nviclist) { 
+							keys[idx] = j; 
+							values[idx] = nviclist[j]; 
+							value2[idx] = nvicpriolist[j]; 
+							value3[idx] = nvicname[j];
+							value4[idx++] = nvichandler[j];
+						} 
     					break;
           				case /isr/:
     						for (j in isrlist) { keys[idx] = j; values[idx++] = isrlist[j]; }
@@ -112,6 +131,9 @@ awk -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "fun
           			prop[name ":key"] = keys[idx];
           			prop[name ":value"] = values[idx];
           			prop[name ":priority"] = value2[idx];
+				if (value2[idx] < 0) delete prop[name ":priority"]
+				prop[name ":name"] = value3[idx];
+          			prop[name ":handler"] = value4[idx];
           			line = macro[i];
           			loopstart = i;
           		} else if (line ~ /#endfor/) {
@@ -120,11 +142,15 @@ awk -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "fun
           				prop[name ":key"] = keys[idx];
           				prop[name ":value"] = values[idx];
           				prop[name ":priority"] = value2[idx];
+					if (value2[idx] < 0) delete prop[name ":priority"]
+					prop[name ":name"] = value3[idx];
+          				prop[name ":handler"] = value4[idx];
           			} else {
-   						--sp;
+   					--sp;
         				delete keys;
           				delete values;
           				delete value2;
+					delete value3;
           				continue;
           			}
           			line = macro[i];
@@ -194,7 +220,7 @@ awk -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "fun
 else
 touch $tmp
 fi
-awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
+${AWK} -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\*+\s+@addtogroup\s+NVIC/ {
@@ -216,18 +242,18 @@ awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 		print "" > errfile;
 		print "Malformed doxygen tags" | "cat 1>&2";
 	}
-	}' ${boardsrc} > ${srctmp}
+	}' ${dst} > ${newdst}
 
 rm -f $tmp
 if [[ -f "${errfile}" ]]; then
    rm -f "${errfile}"
    if [[ ${verbose} == 1 ]]; then
-   	   echo "${boardsrc} NVIC failed"
+   	   echo "${dst} NVIC failed"
    fi
 else
-   mv -f ${srctmp} ${boardsrc}
+   mv -f ${newdst} ${dst}
 	if [[ ${verbose} == 1 ]]; then
-   		echo "${boardsrc} NVIC done"
+   		echo "${dst} NVIC done"
 	fi
 fi
-
+done

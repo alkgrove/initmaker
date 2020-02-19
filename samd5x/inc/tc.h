@@ -1308,5 +1308,165 @@ static inline uint8_t tc_read_STATUS(TC_t *pTC)
 {
 	return pTC->COUNT8.STATUS.reg;
 }
+/**
+ * @brief TIMER_PORT functions
+ * @detail
+ * The following prototypes are available if:
+ * 1) src/tc.c is included in the compiled c files
+ * 2) FEATURE_TIME_DELAY and/or FEATURE_TIME_SCHEDULER are globally defined 
+ *    These can be defined in the arm-none-eabi-gcc makefile line as -DFEATURE_TIME_DELAY or -DFEATURE_TIME_SCHEDULER
+ * 3) Dedicates two timer counters with the follow config definition for initmaker
+ *    Any GCLK can be used and sets the rate. Since the routines require synchronization, slow clocks to the iimer
+ *    will affect the total delay. Execution time is not factored into the delay so not suited for very precise timing. 
+ * 4) if FEATURE_TIME_SCHEDULER is enabled, then call NVIC_ENABLE_TIMER_PORT() in initialization
+ *   [TC0]
+ *   name=TIMER_PORT
+ *   ref_source=gclk1
+ *   mode=32
+ *   prescaler=1
+ *   wavegen=NFRQ
+ *   count = 0
+ *   ; note that interrupt is used only for FEATURE_TIME_SCHEDULER
+ *   interrupt = 1
+ *   priority = 7
+ */
+ 
+ /*
+  * convert ms to timer count for FEATURE_TIME_DELAY and FEATURE_TIME_SCHEDULE
+  */
+  
+#ifdef FEATURE_TIME_DELAY
+/**
+ * @brief usDelay
+ * @detail this was brought over from delay.c. timeDelay can be called directly although macro 
+ * is needed to convert microseconds to count
+ * @param[in] uint32_t us microseconds of delay 
+ */
+void usDelay(uint32_t us);
+/**
+ * @brief msDelay
+ * @detail this was brought over from delay.c. timeDelay can be called directly although macro 
+ * is needed to convert ms to count
+ * @param[in] uint32_t ms milliseconds of delay 
+ */
+ void msDelay(uint32_t ms);
+
+/**
+ * @brief timeDelay(interval) time delay returns after interval count has elapsed
+ * @detail uses TC0 with TC1 slaved configured as a 32 bit timer
+ * with 1MHz GCLK, interval is in 1usec, maximum interval is 1Hr 10min or 4294967295 us
+ * with 10MHz GCLK, interval is in 0.1usec,  maximum interval is 7min 4.9sec or 429496729.6 us
+ * with 100MHz GCLK, interval is in 10nsec,  maximum interval is 42.9s or 42949672960 ns
+ * 
+ * @param[in] uint32_t interval - period in glck ticks for delay
+  */
+void timeDelay(uint32_t interval);
+/**
+ * @brief getTimer - return 32 bit timer incremented at gclk tick
+ * @detail uses two TCn counters in 32 bit mode. Note must syncrhonize to timer and 
+ * if slow gclk will impact execution time. 
+ * for example, a simple busy wait dealy
+ * uint32_t cnt = get_timer();
+ * while(something busy) {
+ * 	   if ((get_timer() - cnt) > timeout) return TIMEOUT_ERROR;
+ * @return 32 bit count
+ */
+uint32_t getTimer(void);
+
+#endif  /* FEATURE_TIME_DELAY */
+#ifdef FEATURE_TIME_SCHEDULER
+/**
+ * @brief timeScheduler_t statically allocated node for a scheduled time
+ * @detail callback is called when timeout period has elapsed
+ * call createTimeSchedule(timeSchedule_t *schedule, void (*callback)(void)) where schedule is the statically allocated
+ * memory for timeSchedule node and callback is the function pointer to be called when timer elapses.
+ * then call setSchedule(timeSchedule_t *schedule, uint32_t period) to set the period. 
+ */
+typedef struct timeScheduler_s {
+    void (*callback)(uint32_t mask); // callback gets called when timer elapsed
+    uint32_t mask;
+    uint32_t match;
+    uint32_t retrigger;
+    bool active;
+    struct timeScheduler_s *next; // linked list
+} timeScheduler_t;
+
+/**
+ * @brief printSchedule - prints the current list of timers - for debug only
+ * @detail if DEBUG is active, this routine can be called. It will print the entire linked list of timers
+ * It will attempt to decode mask as a four character multichar to provide textual reference to a timer. 
+ */
+#ifdef DEBUG
+void printSchedule(void);
+#endif
+/**
+ * @brief attachTimeSchedule - attaches the timer schedule structure to the scheduler and intiializes the callback function
+ * @detail the timeScheduler_t structures are statically allocated for each virtual timer and will call the "callback"
+ * function when timer terminates. attachTimeSchedule is called to add the timer to the scheduler and detachTimeSchedule
+ * to remove it.
+ * @param[in] timeSchedule_t * pointer to static allocated timer schedule structure
+ * @param[in] void (*callback)(void) pointer to function to be called when timeout occurs
+ * @return timeScheduler_t * pointer to the timer schedule structure
+ */
+timeScheduler_t *attachTimeSchedule(timeScheduler_t *node, void (*callback)(uint32_t), uint32_t mask);
+/**
+ * @brief detachTimeSchedule - detaches the timer schedule structure from the scheduler
+ * @detail  detachTimeSchedule removes the virtual timer from the scheduler. It can be reused with 
+ * a subsequent attachTimeSchedule. The timer interrupt has to travers all of the time schedule structs 
+ * which if lengthy can take time. 
+ *
+ * @param[in] timeSchedule_t * pointer to static allocated virtual timer structure
+ * @param[in] void (*callback)(void) pointer to function to be called when timeout occurs
+ * @return timeScheduler_t * pointer to the timer schedule structure
+ */
+timeScheduler_t *detachTimeSchedule(timeScheduler_t *schedule);
+
+/*
+ * genericSetTimer - do not call this directly, us setOneShotTime or setRetriggerTime
+ */
+void genericSetTimer(timeScheduler_t *schedule, uint32_t period, bool retrigger);
+
+/**
+ * @brief setOneShotTime set the elapse time and start the timer for one event
+ * @param[in] timeSchedule_t * pointer to static allocated virtual timer structure 
+ * @param[in] uint32_t period timer elapse time to callback function
+ */
+static inline void setOneShotTime(timeScheduler_t *schedule, uint32_t period)
+{
+    genericSetTimer(schedule, period, false);
+}
+/**
+ * @brief setRetriggerTime set the elapse time and start the timer for repeating events
+ * @param[in] timeSchedule_t * pointer to static allocated virtual timer structure 
+ * @param[in] uint32_t period timer elapse time to callback function
+ */
+static inline void setRetriggerTime(timeScheduler_t *schedule, uint32_t period)
+{
+    genericSetTimer(schedule, period, true);
+}
+/**
+ * @brief clearOneShotTime clears elapse time and stop the timer for single events
+ * @detail note this is the same as setOneShotTime with interval value of 0. Setting time
+ * to zero disables the virtual timer. If the timer was set up with setRettrigerTime, the clearOneShotTime
+ * will stop the the timer but retrigger the timer. This is useful for watchdog like timers which expect
+ * a clearOneShotTime periodically. 
+ * @param[in] timeSchedule_t * pointer to static allocated virtual timer structure 
+ */
+static inline void clearOneShotTime(timeScheduler_t *schedule)
+{
+    genericSetTimer(schedule, 0, false);
+}
+/**
+ * @brief clearRetriggerTime clears elapse time and retrigger value and stops the timer for repeating events
+ * @detail note this is the same as setRetriggerTime with interval value of 0. Setting time
+ * to zero disables the virtual timer
+ * @param[in] timeSchedule_t * pointer to static allocated virtual timer structure 
+ */
+ static inline void clearRetriggerTime(timeScheduler_t *schedule)
+{
+    genericSetTimer(schedule, 0, true);
+}
+
+#endif /* FEATURE_TIME_SCHEDULER */
 
 #endif /* _TC_H */

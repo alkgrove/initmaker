@@ -41,7 +41,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
+${AWK} -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -270,7 +270,7 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttm
 		}
    }' $cfg $template > $tmp
 
-awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
+${AWK} -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\**\s*@addtogroup Analog/ {

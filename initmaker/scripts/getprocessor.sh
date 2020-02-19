@@ -23,7 +23,7 @@ esac; shift; done
 
 dir=$(dirname $0)
 dir=$(dirname $dir)
-awk -v dir="$dir" -v variant="${removevariant}" 'BEGIN {
+${AWK} -v dir="$dir" -v variant="${removevariant}" 'BEGIN {
 	processor="unknown";
 	in_section=0;
 	}

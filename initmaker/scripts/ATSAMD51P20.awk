@@ -253,6 +253,8 @@ function initpins()
    pins["PA31:SERCOM7"] = "2 SERCOM7_PAD3";
    pins["PB30:SERCOM7"] = "2 SERCOM7_PAD0";
    pins["PB31:SERCOM7"] = "2 SERCOM7_PAD1";
+   pins["PA00:SERCOM1"] = "3 SERCOM1_PAD0";
+   pins["PA01:SERCOM1"] = "3 SERCOM1_PAD1";
    pins["PB08:SERCOM4"] = "3 SERCOM4_PAD0";
    pins["PB09:SERCOM4"] = "3 SERCOM4_PAD1";
    pins["PA04:SERCOM0"] = "3 SERCOM0_PAD0";
@@ -319,6 +321,8 @@ function initpins()
    pins["PB01:SERCOM5"] = "3 SERCOM5_PAD3";
    pins["PB02:SERCOM5"] = "3 SERCOM5_PAD0";
    pins["PB03:SERCOM5"] = "3 SERCOM5_PAD1";
+   pins["PA00:TC2"] = "4 TC2_WO0";
+   pins["PA01:TC2"] = "4 TC2_WO1";
    pins["PB08:TC4"] = "4 TC4_WO0";
    pins["PB09:TC4"] = "4 TC4_WO1";
    pins["PA04:TC0"] = "4 TC0_WO0";

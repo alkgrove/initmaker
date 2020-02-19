@@ -6,8 +6,8 @@
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
 
-scriptpath="${INITMAKER}/scripts"
-export AWKPATH="${scriptpath}"
+#scriptpath="${INITMAKER}/scripts"
+#export AWKPATH="${scriptpath}"
 
 if [[ $# -le 3 ]]; then
 	echo "Usage: gendma.sh <config file>.cfg <target>.c <target>.h {-v}"
@@ -42,7 +42,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -v script="${script}" -i "${processor}" -v rsrctmp="${rsrctmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" '@include "functions.awk"
+${AWK} -v script="${script}" -i "${processor}" -v rsrctmp="${rsrctmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -251,7 +251,7 @@ awk -v script="${script}" -i "${processor}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 		}
    }' $cfg $template > $tmp
 
-awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
+${AWK} -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\**\s*@addtogroup DMA/ {

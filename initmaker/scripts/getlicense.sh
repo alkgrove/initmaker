@@ -19,7 +19,7 @@ fi
 src="$1"
 dir=$(dirname $0)
 dir=$(dirname $dir)
-awk -v dir="$dir" 'BEGIN {
+${AWK} -v dir="$dir" 'BEGIN {
 	license="";
 	boardsection=0;
 	}

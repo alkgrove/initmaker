@@ -1404,7 +1404,7 @@ typedef struct {
   __IO DMAC_DESCADDR_Type        DESCADDR;    /**< \brief Offset: 0x0C (R/W 32) Next Descriptor Address */
 } DmacDescriptor_t
 #ifdef __GNUC__
-  __attribute__ ((aligned (8)))
+  __attribute__ ((aligned (16))) /* fixed from ASF4 case reported */
 #endif
 ;
 #endif /* !(defined(__ASSEMBLY__) || defined(__IAR_SYSTEMS_ASM__)) */

@@ -1,6 +1,13 @@
 #defmacro sercom
+
 #ifdefined name
 #define %toupper(name)% SERCOM%unit%
+#fi
+#ifdefined sda
+#define %toupper(name)%_SDA %sda%
+#fi
+#ifdefined scl
+#define %toupper(name)%_SCL %scl%
 #fi
 #define SERCOM%unit%_CORE_FREQ %toupper(ref_source)%_FREQUENCY
 #define SERCOM%unit%_BAUD %baudrate%
@@ -13,17 +20,10 @@
 #warning SERCOM%unit% I2C Baudrate is too high - math error
 #endif
 #define SERCOM%unit%_BAUDRATE I2CM_BAUD(SERCOM%unit%_BAUDLOW)
-#ifdefined isr
-/**
- * %messagename% is global access to the I2C Master ISR message structure
- * it must only be used with the i2cm.c library routines. 
- * This is the only message structure for SERCOM%unit%
- **/
-extern volatile i2cm_msg_t %messagename%;
-#fi
 #fi
 #endmacro
 #defmacro qspi
+
 #define QSPI_BAUDRATE %baudrate%
 #if (QSPI_BAUDRATE <= 50000000)
 #define READ_PARAM_DUMMY_CLOCKS READ_PARAM_CLK2
@@ -41,6 +41,7 @@ extern volatile i2cm_msg_t %messagename%;
 
 #endmacro
 #defmacro i2c_slave
+
 // I2C Device %name% slave address
 #define %toupper(name)%_ADDRESS %address%
 #mod I2C External I2C Slave Device %name% (%address%)

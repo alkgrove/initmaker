@@ -1751,9 +1751,9 @@ static inline void dmac_write_CHINTEN(uint8_t submodule_index, uint8_t data)
  *
  * @param[in] submodule_index uint8_t 
  * @param[in] mask uint8_t 
- * - DMAC_CHINTENSET_TERR Channel Transfer Error Interrupt Enable
- * - DMAC_CHINTENSET_TCMPL Channel Transfer Complete Interrupt Enable
- * - DMAC_CHINTENSET_SUSP Channel Suspend Interrupt Enable
+ * - DMAC_CHINTENCLR_TERR Channel Transfer Error Interrupt Enable
+ * - DMAC_CHINTENCLR_TCMPL Channel Transfer Complete Interrupt Enable
+ * - DMAC_CHINTENCLR_SUSP Channel Suspend Interrupt Enable
  **/
 static inline void dmac_clear_CHINTEN(uint8_t submodule_index, uint8_t mask)
 {

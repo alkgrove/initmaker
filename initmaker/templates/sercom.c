@@ -96,16 +96,32 @@
 #port %cts_port% UART CTS (SERCOM%unit%/PAD%unitof(cts_pad)%)
 #fi
 #ifdefined dre_interrupt
+#ifdefined name
+#nvic %toupper(name)%_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler %dre_priority%
+#otherwise
 #nvic SERCOM%unit%_UART_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler %dre_priority%
 #fi
+#fi
 #ifdefined txc_interrupt
+#ifdefined name
+#nvic %toupper(name)%_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler %txc_priority%
+#otherwise
 #nvic SERCOM%unit%_UART_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler %txc_priority%
 #fi
+#fi
 #ifdefined rxc_interrupt
+#ifdefined name
+#nvic %toupper(name)%_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler %rxc_priority%
+#otherwise
 #nvic SERCOM%unit%_UART_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler %rxc_priority%
 #fi
+#fi
 #ifdefined err_interrupt
+#ifdefined name
+#nvic %toupper(name)%_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler %err_priority%
+#otherwise
 #nvic SERCOM%unit%_UART_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler %err_priority%
+#fi
 #fi
 #fi
 #iftrue type == "spim"
@@ -189,22 +205,38 @@
 #port %ss_port% SPI Master CSn (SERCOM%unit%/PAD%unitof(ss_pad)%)
 #fi
 #ifdefined dre_interrupt
+#ifdefined name
+#nvic %toupper(name)%_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler %dre_priority%
+#otherwise
 #nvic SERCOM%unit%_SPIM_DRE SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler %dre_priority%
 #fi
+#fi
 #ifdefined txc_interrupt
+#ifdefined name
+#nvic %toupper(name)%_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler %txc_priority%
+#otherwise
 #nvic SERCOM%unit%_SPIM_TXC SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler %txc_priority%
 #fi
+#fi
 #ifdefined rxc_interrupt
+#ifdefined name
+#nvic %toupper(name)%_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler %rxc_priority%
+#otherwise
 #nvic SERCOM%unit%_SPIM_RXC SERCOM%unit%_2_IRQn SERCOM%unit%_2_Handler %rxc_priority%
 #fi
+#fi
 #ifdefined err_interrupt
+#ifdefined name
+#nvic %toupper(name)%_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler %err_priority%
+#otherwise
 #nvic SERCOM%unit%_SPIM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler %err_priority%
+#fi
 #fi
 #fi
 #iftrue type == "i2cm"
 
 #mod SERCOM%unit% I2C Master (%toupper(ref_source)% %frequency(ref_source)%) %baudrate% baud
-	// initialize SERCOM2 as I2C
+	// initialize SERCOM%unit% as I2C
 	i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SWRST);
 	i2cm_set_SWRST(SERCOM%unit%);
 	i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SWRST);
@@ -219,84 +251,16 @@
 #port %sda_port% I2C Master SDA (SERCOM%unit%/PAD%unitof(sda_pad)%)
 #port %scl_port% I2C Master SCL (SERCOM%unit%/PAD%unitof(scl_pad)%)
 
-#ifdefined isr
-#isr volatile i2cm_msg_t %messagename% = {
-#isr 	.dev = SERCOM%unit%,
-#isr 	.sda = %sda%,
-#isr 	.scl = %scl%,
-#isr 	.txbuf = NULL,
-#isr 	.rxbuf = NULL,
-#isr 	.txlen = 0,
-#isr 	.rxlen = 0,
-#isr 	.address = 0,
-#isr 	.status = 0 };
-#isr /* Interrupt Service Routine for SERCOM%unit% master on bus */
-#isr void SERCOM%unit%_0_Handler(void)
-#isr {
-#isr 	uint16_t status;
-#isr 	status = i2cm_read_STATUS(SERCOM%unit%);
-#isr 	// bus error check
-#isr 	if (status & (SERCOM_I2CM_STATUS_ARBLOST | SERCOM_I2CM_STATUS_BUSERR)) {
-#isr 		%messagename%.status |= I2CM_FAIL;
-#isr 		%messagename%.status &= ~I2CM_BUSY;
-#isr 		i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_MB);
-#isr 	// check for NACK from slave
-#isr 	} else if (status & SERCOM_I2CM_STATUS_RXNACK) {
-#isr 			%messagename%.status |= I2CM_NACK;
-#isr 			%messagename%.status &= ~I2CM_BUSY;
-#isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
-#isr 			i2cm_set_CMD(SERCOM%unit%, I2CM_CMD_STOP); // clears MB and issues stop
-#isr 	// data write check
-#isr 	} else if (%messagename%.txlen > 0) {
-#isr  		i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
-#isr 		i2cm_write_DATA(SERCOM%unit%,*%messagename%.txbuf++);
-#isr 		%messagename%.txlen--;
-#isr 	// data read check
-#isr 	} else {
-#isr 		// data read check
-#isr  		if (%messagename%.rxlen > 0) {
-#isr  			// send ACK to slave while rxlen > 0
-#isr  			i2cm_set_ACK(SERCOM%unit%);
-#isr 			// force repeated start by sending address, clears MB int flag
-#isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
-#isr 			i2cm_write_ADDR(SERCOM%unit%, SERCOM_I2CM_ADDR_ADDR((%messagename%.address << 1) | I2CM_RD));
-#isr 		// data read complete, issue stop
-#isr 		} else { 
-#isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
-#isr  			i2cm_set_CMD(SERCOM%unit%, I2CM_CMD_STOP);
-#isr 			%messagename%.status &= ~I2CM_BUSY;
-#isr 		}
-#isr 	}
-#isr }
-#isr /* Interrupt Service Routine for SERCOM%unit% slave on bus */
-#isr void SERCOM%unit%_1_Handler(void)
-#isr {
-#isr    if (%messagename%.rxlen > 0) {
-#isr 		%messagename%.rxlen--;
-#isr        if (%messagename%.rxlen == 0) {
-#isr 			// send NACK and STOP for final byte
-#isr  			i2cm_wait_for_sync(SERCOM%unit%, SERCOM_I2CM_SYNCBUSY_SYSOP);
-#isr  			i2cm_set_NACK(SERCOM%unit%);
-#isr  			i2cm_set_CMD(SERCOM%unit%, I2CM_CMD_STOP);
-#isr 			%messagename%.status &= ~I2CM_BUSY;
-#isr 		}
-#isr 		// read data
-#isr 		*%messagename%.rxbuf++ = i2cm_read_DATA(SERCOM%unit%); // clears SB
-#isr 	} 
-#isr 	i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_SB);
-#isr }
-#isr /* Interrupt Service Routine for SERCOM%unit% error */
-#isr void SERCOM%unit%_3_Handler(void)
-#isr {
-#isr 	%messagename%.status |=  I2CM_FAIL;
-#isr 	%messagename%.status &= ~I2CM_BUSY;
-#isr 	i2cm_clear_INTFLAG(SERCOM%unit%, SERCOM_I2CM_INTFLAG_ERROR);
-#isr }
-#fi
 #ifdefined interrupt
+#ifdefined name
+#nvic %toupper(name)%_MB SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler %priority%
+#nvic %toupper(name)%_SB SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler %priority%
+#nvic %toupper(name)%_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler %priority%
+#otherwise
 #nvic SERCOM%unit%_I2CM_MB SERCOM%unit%_0_IRQn SERCOM%unit%_0_Handler %priority%
 #nvic SERCOM%unit%_I2CM_SB SERCOM%unit%_1_IRQn SERCOM%unit%_1_Handler %priority%
 #nvic SERCOM%unit%_I2CM_ERR SERCOM%unit%_3_IRQn SERCOM%unit%_3_Handler %priority%
+#fi
 #fi
 #fi
 #endmacro
@@ -362,7 +326,7 @@
 	port_set_pin_function(%sck%, MUX_%sck_port%%sck_mux%_%sck_pad%);
 #port %sck_port% QSPI Clock
 	port_set_pin_function(%cs%, MUX_%cs_port%%cs_mux%_%cs_pad%);
-#port %sck_port% QSPI Chip Select
+#port %cs_port% QSPI Chip Select
 #mod QSPI QSPI %frequency(baudrate)% baud (%baud%)
 #ifdefined interrupt
 #nvic QSPI QSPI_IRQn QSPI_Handler %priority%

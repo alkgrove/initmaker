@@ -5,8 +5,8 @@
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
-scriptpath="${INITMAKER}/scripts"
-export AWKPATH="${scriptpath}"
+#scriptpath="${INITMAKER}/scripts"
+#export AWKPATH="${scriptpath}"
 
 if [[ $# -lt 2 ]]; then
 	echo "Usage: gensum.sh <config file>.cfg <processor> <srcfile> {-v}"
@@ -34,7 +34,7 @@ else
 cp ${rsrctmp} ${tmp}
 fi
 
-awk -i "${processor}" -v script="${script}" '@include "functions.awk"
+${AWK} -i "${processor}" -v script="${script}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;

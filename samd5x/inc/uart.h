@@ -26,62 +26,21 @@
 #ifndef __UART_H__
 #define __UART_H__
 
-// Define UART_WINDOWS if using CR/LF (/r/n) for end of line
-#define UART_WINDOWS
-// Define UART_ECHO if incoming characters are echoed
-#define UART_ECHO
+#ifdef FEATURE_DBG_PORT
+#define CONSOLE_PORT DBG_PORT
+#else
+#define CONSOLE_PORT COM_PORT
+#endif
+
+// Define EOL_IS_CRLF if using CR/LF (/r/n) for end of line
+// otherwise /n line feed only
+#define EOL_IS_CRLF
+// Define ECHO_CHARACTERS if incoming characters are echoed
+#define ECHO_CHARACTERS
 
 #include "sam.h"
 #include <stdio.h>
 #include "core_cm4.h"
-
-extern const FILE __COM[];
-// Replacements for stdin, stdout and stderr. 
-// This is to avoid RAM bloat from reent. 
-extern FILE *serout;
-extern FILE *serin;
-extern FILE *sererr;
-
-#ifdef USE_FREERTOS
-#include "FreeRTOS.h"
-#include "queue.h"
-#include "semphr.h"
-#ifndef CONSOLE_PORT
-#define CONSOLE_PORT SERCOM0
-#endif
-#define CONSOLE_INPUTBUFFER_SIZE 80
-typedef struct consoleInput_s {
-	uint8_t index;
-	char buffer[CONSOLE_INPUTBUFFER_SIZE];
-	SemaphoreHandle_t handle;
-	StaticSemaphore_t semaphoreBuffer;
-} consoleInput_t;
-
-#define MIN(x, y) (((x) < (y)) ? (x) : (y))
-
-char *taskConsoleGets(char* str, size_t len, TickType_t timeToWait);
-void initTaskConsoleGet(void);
-
-#endif
-
-#define COM0 ((FILE * const)&__COM[0])
-#define COM1 ((FILE * const)&__COM[1])
-#define COM2 ((FILE * const)&__COM[2])
-#define COM3 ((FILE * const)&__COM[3])
-#define COM4 ((FILE * const)&__COM[4])
-#define COM5 ((FILE * const)&__COM[5])
-#define COM6 ((FILE * const)&__COM[6])
-#define COM7 ((FILE * const)&__COM[7])
-#define SWO0 ((FILE * const)&__COM[8])
-#define SWO1 ((FILE * const)&__COM[9])
-#define SWO2 ((FILE * const)&__COM[10])
-#define SWO3 ((FILE * const)&__COM[11])
-#define SWO4 ((FILE * const)&__COM[12])
-#define SWO5 ((FILE * const)&__COM[13])
-#define SWO6 ((FILE * const)&__COM[14])
-#define SWO7 ((FILE * const)&__COM[15])
-
-#define printk(...) fprintf(SWO0, __VA_ARGS__)
 
 /**
  * @brief UART_putc
@@ -130,18 +89,34 @@ static inline uint32_t UART_getc(SERCOM_t *dev)
 	while((usart_read_INTFLAG(dev) & SERCOM_USART_INTFLAG_RXC) == 0); // wait for character
 	return usart_read_DATA(dev);
 }
-
 /**
- * @brief getc_ready
+ * @brief UART_getc_ready
  * returns true if serial has received a character
  *
- * @param[in] FILE *fp 	FILE Pointer to get device
+ * @param[in] SERCOM *dev pointer to sercom data structure
  */
- 
-static inline bool getc_ready(FILE *fp)
+static inline bool UART_getc_ready(SERCOM_t *dev)
 {
-	return (usart_read_INTFLAG(fp->dev) & SERCOM_USART_INTFLAG_RXC) != 0;
+	return ((usart_read_INTFLAG(dev) & SERCOM_USART_INTFLAG_RXC) != 0);
 }
+
+/**
+ * @brief getstring(char* str, size_t len) 
+ * similar to fgets except no file descriptor, everything comes from console
+ *
+ * @param[in] char *str pointer to character buffer to receive from
+ * @param[in] size_t len length in bytes of the character buffer
+ * @return pointer to character buffer
+ */
+char *getstring(char* str, size_t len);
+/**
+ * @brief putstring(const char* str);
+ * similar to fputs except no file descriptor argument
+ *
+ * @param[in] char *str pointer to character buffer to send to console
+ * @return 1 for success
+ */
+int putstring(const char* str);
 
 
 #endif /* __USART_H__ */

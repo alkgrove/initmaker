@@ -6,8 +6,8 @@
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
 
-scriptpath="${INITMAKER}/scripts"
-export AWKPATH="${scriptpath}"
+#scriptpath="${INITMAKER}/scripts"
+#export AWKPATH="${scriptpath}"
 
 if [[ $# -le 3 ]]; then
 	echo "Usage: gengpio.sh <config file>.cfg <target>.c <target>.h {-v}"
@@ -43,7 +43,7 @@ newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
 
-awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" '@include "functions.awk"
+${AWK} -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="${evttmp}" -v vartmp="${vartmp}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -148,6 +148,12 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
      					split(pins[pin], a, " ");
     					prop[instance ":mux"] = muxcnv(a[1]);
     					prop[instance ":muxpin"] = a[2];
+    					if (a[2] ~ /ADC/) {
+    					    prop["pins:adc"] = 1;
+    					    match(a[2], /(AIN[0-9]+)$/, arr);
+						    adc_ch = arr[1];
+						    adcpin[prop[key]] = adc_ch;
+    					}
     					delete a;
     				} else {
     					errprint("Alternate function for " instance " is invalid");
@@ -273,11 +279,11 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
      							for (j in pinport) { keys[idx] = j; values[idx++] = pinport[j]; } 
      							keyname = "pinname"; valuename = "portname";
     						break;
-   							case /eic_interrupt/:
+   						case /eic_interrupt/:
     							for (j in eicinterrupt) { keys[idx] = j; values[idx] = eicinterrupt[j]; value2[idx++] = eicpriority[j]; }
     							keyname = "eicnumber"; valuename = "pinname"; value2name = "priority";    							
- 							break;
-   							case /gen_event/:
+ 						break;
+   						case /gen_event/:
         						for (j in genevent) { keys[idx] = j; values[idx++] = genevent[j]; }
     							keyname = "eicnumber"; valuename = "pinname";    							
       						break;
@@ -297,7 +303,12 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
     							for (j in eicpin) { keys[idx] = j; values[idx++] = eicpin[j]; }
     							keyname = "eicnumber"; valuename = "pinname";    							
     						break;
-  							default: errprint("Bad argument " a[1] " for foreach statement"); break;
+    						case /adc_pin/:
+    							for (j in adcpin) { keys[idx] = j; values[idx++] = adcpin[j]; }
+    							keyname = "pinname"; valuename = "channel";    							
+    						break;
+  						default: errprint("Bad argument " a[1] " for foreach statement"); 
+						break;
   						}
    						delete a;
   					} else {
@@ -393,7 +404,7 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v evttmp="$
 		}
    }' $cfg $template > $tmp
 
-awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
+${AWK} -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\**\s*@addtogroup GPIO/ {

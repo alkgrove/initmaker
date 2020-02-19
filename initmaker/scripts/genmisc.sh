@@ -29,7 +29,6 @@ dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
 rsrctmp="${boardtmp}_rsrc.tmp"
-isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 evttmp="${boardtmp}_evt.tmp"
 templatearr=("${INITMAKER}/templates/misc.c" "${INITMAKER}/templates/misc.h")
@@ -42,7 +41,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
+${AWK} -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -207,8 +206,6 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartm
   			for (i in outline) {
 			    if(outline[i] ~ /^#(nvic|port|mod)/) {
 					print outline[i] >> rsrctmp;
-			    } else if(outline[i] ~ /^#isr/) {
-					print gensub(/^#isr[ \t]/,"",1,outline[i]) >> isrtmp;
 			    } else if (outline[i] ~ /^#var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else if (outline[i] ~ /^#evt/) {
@@ -224,7 +221,7 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartm
 		}
    }' $cfg $template > $tmp
 
-awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
+${AWK} -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\**\s*@addtogroup MISC/ {

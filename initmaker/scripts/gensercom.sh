@@ -5,8 +5,8 @@
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
-scriptpath="${INITMAKER}/scripts"
-export AWKPATH="${scriptpath}"
+#scriptpath="${INITMAKER}/scripts"
+#export AWKPATH="${scriptpath}"
 
 if [[ $# -lt 3 ]]; then
 	echo "Usage: gensercom.sh <config file>.ini <target>.c <target>.h {-v}"
@@ -30,7 +30,6 @@ tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
 templatearr=("${INITMAKER}/templates/sercom.c" "${INITMAKER}/templates/sercom.h")
 rsrctmp="${boardtmp}_rsrc.tmp"
-isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 today=`date +%D`
 
@@ -41,7 +40,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" '@include "functions.awk"
+${AWK} -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -407,8 +406,6 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
   			for (i in outline) {
 			    if(outline[i] ~ /^#(nvic|port|mod)/) {
 					print outline[i] >> rsrctmp;
-			    } else if(outline[i] ~ /^#isr/) {
-					print gensub(/^#isr[ \t]/,"",1,outline[i]) >> isrtmp;
 			    } else if (outline[i] ~ /^var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else {
@@ -422,7 +419,7 @@ awk -i "${processor}" -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="$
 	}
    }' $cfg $template > $tmp
 
-awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
+${AWK} -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\**\s*@addtogroup SERCOM/ {

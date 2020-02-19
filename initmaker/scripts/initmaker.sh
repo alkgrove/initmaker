@@ -6,10 +6,18 @@
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
-export INITMAKER=$(dirname $(dirname $0))
+# it looks like possible changes in cygwin or awk which were fussy about 
+# msdos paths. Cygwin has cygpath app to provide a bandaide fix to cygwins #1 problem
+# if you have difficulty comment out the cygpath check and execution statement. 
+impath=$(dirname $(dirname $0))
+if [ -x "$(command -v cygpath)" ]; then
+impath=`cygpath -u "${impath}"`
+fi
+export INITMAKER="${impath}"
 scriptpath="${INITMAKER}/scripts"
 templatepath="${INITMAKER}/templates"
 export AWKPATH="${scriptpath}"
+export AWK="gawk"
 
 declare -a filelist
 
@@ -47,12 +55,10 @@ boardtmp="${boardsrc%.c}"
 extctmp="ext_tmp.c"
 exthtmp="ext_tmp.h"
 rsrctmp="${boardtmp}_rsrc.tmp"
-isrtmp="${boardtmp}_isr.tmp"
 evttmp="${boardtmp}_evt.tmp"
 cfgtmp="${cfg%.cfg}.tmp"
 
 rm -f ${rsrctmp}
-rm -f ${isrtmp}
 if [[ -f "${errfile}" ]]; then
    rm -f "${errfile}"
 fi
@@ -89,7 +95,7 @@ ${scriptpath}/gendma.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "
 ${scriptpath}/genana.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/genmisc.sh "${cfgtmp}" "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 ${scriptpath}/genevent.sh "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
-${scriptpath}/gennvic.sh "${boardsrc}" "${processor}" "${verbose}"
+${scriptpath}/gennvic.sh "${boardsrc}" "${boardinc}" "${processor}" "${verbose}"
 if [[ ${summary} == "1" ]]; then
 ${scriptpath}/gensum.sh "${cfgtmp}" "${boardsrc}" "${processor}" "${verbose}" 
 fi
@@ -122,7 +128,7 @@ rm -f "${exthtmp}"
 fi
 
 if [ "${debug}" == 0 ]; then
-rm -f ${rsrctmp} ${vartmp} ${evttmp} ${cfgtmp} ${isrtmp}
+rm -f ${rsrctmp} ${vartmp} ${evttmp} ${cfgtmp}
 fi
 unset INITMAKER
 

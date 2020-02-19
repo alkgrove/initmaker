@@ -29,7 +29,6 @@ dstarr=("${boardsrc}" "${boardinc}")
 tmparr=("${boardtmp}.002" "${boardtmp}.003")
 newdstarr=("${boardtmp}.000" "${boardtmp}.001")
 rsrctmp="${boardtmp}_rsrc.tmp"
-isrtmp="${boardtmp}_isr.tmp"
 vartmp="${boardtmp}_var.tmp"
 evttmp="${boardtmp}_evt.tmp"
 templatearr=("${INITMAKER}/templates/tc.c" "${INITMAKER}/templates/tc.h")
@@ -42,7 +41,7 @@ tmp="${tmparr[i]}"
 newdst="${newdstarr[i]}"
 template="${templatearr[i]}"
 
-awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
+${AWK} -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v evttmp="${evttmp}" -i "${processor}" '@include "functions.awk"
 	BEGIN {
     	section="";
     	linecount=1;
@@ -95,27 +94,32 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartm
  				key = section ":unit";
  				if (key in prop) {
  					errprint(toupper(section) " defined more than once");
- 				} else {
+ 				}  else if (a[1] >= unitmax["tcc"]) {
+					errprint("To many TCC, only " unitmax["tcc"] " available");
+				} else {
 					prop[key] = a[1];
+  			        in_section = 1;
+  			        devices[tcc_count++] = section;
+  			        prop[section ":macroname"] = "tcc";
 				}
 			}
 			delete a;
- 			devices[tcc_count++] = section;
-  			prop[section ":macroname"] = "tcc";
   		} else if (key ~ /tc[0-9]+/) {
-  			in_section = 1;
   			section = key;
 			if (match(section, /([0-9]{1,2}$)/, a)) {
  				key = section ":unit";
  				if (key in prop) {
  					errprint(toupper(section) " defined more than once");
- 				} else {
+ 				} else if (a[1] >= unitmax["tc"]) {
+					errprint("To many timer counters, only " unitmax["tc"] " available");
+				} else {
 					prop[key] = a[1];
+  			        in_section = 1;
+  			        devices[tc_count++] = section;
+  			        prop[section ":macroname"] = "tc";
 				}
-			}
+ 			}
 			delete a;
-  			devices[tc_count++] = section;
-  			prop[section ":macroname"] = "tc";
   		} else if (key ~ /systick/) {
   			in_section = 1;
   			section = key;
@@ -296,8 +300,6 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartm
   			for (i in outline) {
 			    if(outline[i] ~ /^#(nvic|port|mod)/) {
 					print outline[i] >> rsrctmp;
-			    } else if(outline[i] ~ /^#isr/) {
-					print gensub(/^#isr[ \t]/,"",1,outline[i]) >> isrtmp;
 			    } else if (outline[i] ~ /^#var/) {
 					print gensub(/^#var/,"",1,outline[i]) >> vartmp;
 			    } else if (outline[i] ~ /^#evt/) {
@@ -313,7 +315,7 @@ awk -v script="${script}" -v rsrctmp="${rsrctmp}" -v isrtmp="${isrtmp}" -v vartm
 		}
    }' $cfg $template > $tmp
 
-awk -v map="$(<$tmp)" -v date="$today" 'BEGIN {
+${AWK} -v map="$(<$tmp)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\**\s*@addtogroup TC/ {

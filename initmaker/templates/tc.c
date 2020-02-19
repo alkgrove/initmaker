@@ -1,9 +1,9 @@
 #defmacro tc
 
-#iftrue (mode == 0)
+#iftrue (mode == 16)
 #mod TC%unit% 16Bit Counter (%toupper(ref_source)% %frequency(ref_source)%/%prescaler%)
 #otherwise
-#iftrue (mode == 1)
+#iftrue (mode == 8)
 #mod TC%unit% 8Bit Counter (%toupper(ref_source)% %frequency(ref_source)%/%prescaler%)
 #otherwise
 #mod TC%unit% 32Bit Counter (TC%unit%:TC%slaveunit%) (%toupper(ref_source)% %frequency(ref_source)%/%prescaler%)
@@ -100,7 +100,11 @@
 >>>);
 
 #ifdefined interrupt
+#ifdefined name
+#nvic %toupper(name)% TC%unit%_IRQn TC%unit%_Handler %priority%
+#otherwise
 #nvic TC%unit%_INT TC%unit%_IRQn TC%unit%_Handler %priority%
+#fi
 #fi
 #ifdefined gen_ovf
 #evt gen %gen_ovf% TC%unit%_OVF %toupper(path_ovf)% %edge_ovf% %touppper(sync_source_ovf)% %evint_ovf%
@@ -612,22 +616,17 @@
 #evt swgen %swgen%
 #fi
 #ifdefined interrupt
+#ifdefined name
+#nvic %toupper(name)% TCC%unit%_0_IRQn TCC%unit%_0_Handler %priority%
+#otherwise
 #nvic TCC%unit%_IRQ TCC%unit%_0_IRQn TCC%unit%_0_Handler %priority%
+#fi
 #fi
 	tcc_set_ENABLE(TCC%unit%);
 	tcc_wait_for_sync(TCC%unit%, TCC_SYNCBUSY_ENABLE);
 #endmacro
 
 #defmacro systick
-	/** System Tick (defined in CMSIS) */
-	SysTick_Config((CPU_FREQUENCY/1000)*SYSTICK_PERIOD);
 #nvic systick NA SysTick_Handler -1
-#ifdefined isr
-#isr volatile uint32_t tick = 0;
-#isr void SysTick_Handler(void)
-#isr {
-#isr     tick++;
-#isr }
-#fi
 #endmacro
 

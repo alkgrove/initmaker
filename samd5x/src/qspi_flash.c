@@ -33,7 +33,6 @@
 #include <string.h>
 #include "sam.h"
 #include "qspi_flash.h"
-#include "delay.h"
 
 void qspi_flash_command(uint8_t cmd)
 {
@@ -326,7 +325,7 @@ void qspi_flash_init_device(void) {
     // issue reset
 	qspi_flash_command(CMD_ENABLE_RESET);
 	qspi_flash_command(CMD_RESET);
-	delay_us(30);
+	usDelay(30);
 	// check if Quad SPI enabled, and enable it if it isn't
     qspi_flash_read_command(CMD_READ_STATUS2, &status, 1);
 

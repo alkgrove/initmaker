@@ -5,8 +5,8 @@
 # Copyright © 2018, Alkgrove
 # BSD 3-clause license - see initmaker/LICENSE.txt for license text
 
-scriptpath="${INITMAKER}/scripts"
-export AWKPATH="${scriptpath}"
+#scriptpath="${INITMAKER}/scripts"
+#export AWKPATH="${scriptpath}"
 
 if [[ $# -le 2 ]]; then
 	echo "Usage: genextended.sh <extended>.c <target>.c {1|0}"
@@ -25,7 +25,7 @@ errfile="02.000"
 tmpsrc="${boardsrc%.c}.000"
 today=`date +%D`
 
-awk -v extended="$(<$extendedsrc)" -v date="$today" 'BEGIN {
+${AWK} -v extended="$(<$extendedsrc)" -v date="$today" 'BEGIN {
 	   skip=0
 	}
 	/\/\*+\s+@addtogroup\s+ExtendedInit/ {
