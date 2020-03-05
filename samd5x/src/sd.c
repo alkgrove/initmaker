@@ -49,7 +49,7 @@ static bool sdhc_test_version(sdhc_state_t *state);
 static bool sdhc_wait_not_busy(sdhc_state_t *state);
 static bool sdhc_test_bus_width(sdhc_state_t *state);
 static bool sdhc_test_high_speed(sdhc_state_t *state);
-static bool sdhc_init_transfer(sdhc_state_t *state, uint32_t cmd, uint32_t arg, uint16_t block_size);
+static bool sdhc_init_transfer(sdhc_state_t *state, uint32_t cmd, uint32_t arg, uint16_t block_size, uint16_t num_blocks);
 static bool sdio_test_type(sdhc_state_t *state);
 
 /** SD/MMC transfer rate unit codes (10K) list */
@@ -377,7 +377,7 @@ static bool sdhc_test_version(sdhc_state_t *state)
 	if (!sdhc_send_cmd(SDMMC_CMD55_APP_CMD, (uint32_t)state->rca << 16)) {
 		return false;
 	}
-	if (!sdhc_init_transfer(state, SD_ACMD51_SEND_SCR, 0, SD_SCR_REG_BSIZE)) {
+	if (!sdhc_init_transfer(state, SD_ACMD51_SEND_SCR, 0, SD_SCR_REG_BSIZE, 1)) {
 		return false;
 	}
 	do {
@@ -428,7 +428,7 @@ static bool sdhc_test_version(sdhc_state_t *state)
 	return true;
 }
 
-static bool sdhc_init_transfer(sdhc_state_t *state, uint32_t cmd, uint32_t arg, uint16_t block_size)
+static bool sdhc_init_transfer(sdhc_state_t *state, uint32_t cmd, uint32_t arg, uint16_t block_size, uint16_t num_blocks)
 {
 	uint32_t tmr;
 	uint32_t command;
@@ -452,14 +452,14 @@ static bool sdhc_init_transfer(sdhc_state_t *state, uint32_t cmd, uint32_t arg, 
 	} else if (cmd & MCI_CMD_SINGLE_BLOCK) {
 		tmr |= SDHC_TMR_MSBSEL_SINGLE;
 	} else if (cmd & MCI_CMD_MULTI_BLOCK) {
-		tmr |= SDHC_TMR_BCEN | SDHC_TMR_MSBSEL_MULTIPLE;
+		tmr |= SDHC_TMR_BCEN | SDHC_TMR_MSBSEL_MULTIPLE | SDHC_TMR_ACMDEN_CMD23;
 	} else {
 		return false;
 	}
 
 	sdhc_write_TMR(SDHC0, tmr);
 	sdhc_write_BSR(SDHC0, SDHC_BSR_BLOCKSIZE(block_size) | SDHC_BSR_BOUNDARY_4K);
-	sdhc_write_BCR(SDHC0, SDHC_BCR_BCNT(1));
+	sdhc_write_BCR(SDHC0, SDHC_BCR_BCNT(num_blocks));
 		
 	command = SDHC_CR_DPSEL_DATA;
 	command |= SDHC_CR_CMDIDX(cmd) | SDHC_CR_CMDTYP_NORMAL;
@@ -478,6 +478,7 @@ static bool sdhc_init_transfer(sdhc_state_t *state, uint32_t cmd, uint32_t arg, 
 		sdhc_clear_MC1R(SDHC0, SDHC_MC1R_OPD);
 	}
 	
+	sdhc_write_SSAR(SDHC0, num_blocks); //Setup block size for Auto CMD23
 	sdhc_write_ARG1R(SDHC0, arg); // setup the argument register
 	sdhc_write_CR(SDHC0, command); // send command
 
@@ -518,6 +519,17 @@ static bool sdhc_init_transfer(sdhc_state_t *state, uint32_t cmd, uint32_t arg, 
  */
 int sdhc_read_block(sdhc_state_t *state, uint32_t address, uint8_t *dst)
 {
+	return sdhc_read_blocks(state, address, dst, 1);
+}
+
+/**
+ *  @brief Start a read blocks transfer on the line
+ *  
+ *  dst must be on 4 byte boundary
+ */
+int sdhc_read_blocks(sdhc_state_t *state, uint32_t address, uint8_t *dst, uint16_t num_blocks)
+{
+	uint32_t cmd;
 	uint32_t arg;
 	uint32_t *p = (uint32_t *) dst;
 	int words;
@@ -540,7 +552,10 @@ int sdhc_read_block(sdhc_state_t *state, uint32_t address, uint8_t *dst)
 	} else {
 		arg = address * SD_MMC_BLOCK_SIZE;
 	}
-	if (!sdhc_init_transfer(state, SDMMC_CMD17_READ_SINGLE_BLOCK, arg, SD_MMC_BLOCK_SIZE)) {
+
+	cmd = ( 1 == num_blocks ) ? SDMMC_CMD17_READ_SINGLE_BLOCK : SDMMC_CMD18_READ_MULTIPLE_BLOCK;
+
+	if (!sdhc_init_transfer(state, cmd, arg, SD_MMC_BLOCK_SIZE, num_blocks)) {
 		return SDHC_ERR_BAD_CARD;
 	}
 	if (sdhc_read_RR(SDHC0,0) & CARD_STATUS_ERR_RD_WR) {
@@ -556,7 +571,9 @@ int sdhc_read_block(sdhc_state_t *state, uint32_t address, uint8_t *dst)
   		}
   	} while (!sdhc_get_NISTR(SDHC0, SDHC_NISTR_BRDRDY)); // until buffer read ready
   	sdhc_set_NISTR(SDHC0, SDHC_NISTR_BRDRDY); // clear the buffer read ready bit
-	for(words = 0; words < (SD_MMC_BLOCK_SIZE/4); words++) {
+	int num_words = (num_blocks * SD_MMC_BLOCK_SIZE)/4;
+	for(words = 0; words < num_words; words++) {
+		while(!sdhc_get_PSR(SDHC0, SDHC_PSR_BUFRDEN));
 		*p++ = sdhc_read_BDPR(SDHC0);
 	}
 	do {
@@ -570,14 +587,25 @@ int sdhc_read_block(sdhc_state_t *state, uint32_t address, uint8_t *dst)
   	sdhc_set_NISTR(SDHC0, SDHC_NISTR_TRFC);
 	return SDHC_OK;
 }
+
 /**
  *  @brief Start a write blocks transfer on the line
  *  Note: The driver will use the DMA available to speed up the transfer. (there is no evidence of that)
  *  src must be on 4 byte boundary
  */
-
-int sdhc_write_block(sdhc_state_t *state, uint32_t address, uint8_t *src)
+int sdhc_write_block(sdhc_state_t *state, uint32_t address, const uint8_t *src)
 {
+	return sdhc_write_blocks(state, address, src, 1);
+}
+
+/**
+ *  @brief Start a write blocks transfer on the line
+ *  Note: The driver will use the DMA available to speed up the transfer. (there is no evidence of that)
+ *  src must be on 4 byte boundary
+ */
+int sdhc_write_blocks(sdhc_state_t *state, uint32_t address, const uint8_t *src, uint16_t num_blocks)
+{
+	uint32_t cmd;
 	uint32_t arg;
 	int words;
 	uint32_t *p = (uint32_t *) src;
@@ -603,7 +631,9 @@ int sdhc_write_block(sdhc_state_t *state, uint32_t address, uint8_t *src)
 		arg = (address * SD_MMC_BLOCK_SIZE);
 	}
 
-	if (!sdhc_init_transfer(state, SDMMC_CMD24_WRITE_BLOCK, arg, SD_MMC_BLOCK_SIZE)) {
+	cmd = ( 1 == num_blocks ) ? SDMMC_CMD24_WRITE_BLOCK : SDMMC_CMD25_WRITE_MULTIPLE_BLOCK;
+
+	if (!sdhc_init_transfer(state, cmd, arg, SD_MMC_BLOCK_SIZE, num_blocks)) {
 		return SDHC_ERR_BAD_CARD;
 	}
 	if (sdhc_read_RR(SDHC0,0) & CARD_STATUS_ERR_RD_WR) {
@@ -620,9 +650,12 @@ int sdhc_write_block(sdhc_state_t *state, uint32_t address, uint8_t *src)
 	} while (!sdhc_get_NISTR(SDHC0, SDHC_NISTR_BWRRDY));
 	sdhc_set_NISTR(SDHC0, SDHC_NISTR_BWRRDY);
     /* Write data */
-    for(words = 0; words < (SD_MMC_BLOCK_SIZE / 4); words++) {
+	int num_words = (num_blocks * SD_MMC_BLOCK_SIZE)/4;
+    for(words = 0; words < num_words; words++) {
+		while(!sdhc_get_PSR(SDHC0, SDHC_PSR_BUFWREN));
     	sdhc_write_BDPR(SDHC0, *p++);
     }
+
     /* Wait end of transfer */
     do {
   		if (sdhc_get_EISTR(SDHC0, (SDHC_EISTR_DATTEO | SDHC_EISTR_DATCRC | SDHC_EISTR_DATEND))) {
@@ -748,7 +781,7 @@ static bool sdhc_test_high_speed(sdhc_state_t *state)
     	                       | SD_CMD6_GRP3_NO_INFLUENCE
     	                       | SD_CMD6_GRP2_DEFAULT
     	                       | SD_CMD6_GRP1_HIGH_SPEED,
-    	                       SD_SW_STATUS_BSIZE)) {
+    	                       SD_SW_STATUS_BSIZE, 1)) {
 
 			return false;
 		}
