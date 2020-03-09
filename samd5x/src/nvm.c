@@ -2,7 +2,7 @@
  * @file nvm.c
  * @brief driver for erasing and writing to nvm flash
  * @detail prototypes in nvmctrl.h file
- * @copyright Copyright © Alkgrove 2020
+ * @copyright Copyright Â© Alkgrove 2020
  * @author Robert Alkire 
  * @date 01/15/2019 update 3/9/2020
  *
@@ -29,7 +29,6 @@
  * THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- **/
 #include <limits.h>
 #include <stdbool.h>
 #include <stdint.h>
