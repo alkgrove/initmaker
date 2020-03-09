@@ -62,7 +62,7 @@ int __wrap_puts(const char* str)
 	while(*str != '\0') {
 		putchar(*str++);
 	}
-#ifdef EOL_IS_CRLF
+#ifdef FEATURE_UART_CRLF
 	putchar('\r');
 #endif
 	putchar('\n');
@@ -87,7 +87,12 @@ int putstring(const char* str)
  
 int __wrap_getchar(void)
 {
-	return UART_getc(CONSOLE_PORT);
+    int ch;
+    ch = UART_getc(CONSOLE_PORT);
+#ifdef FEATURE_UART_ECHO
+    putchar(ch);
+#endif
+	return ch;
 }
 
 /*
@@ -104,9 +109,6 @@ char *getstring(char* str, size_t len)
 	while((i < len) && (ch != '\n')) {
 		ch = getchar();
 		if (ch < 0) return NULL;
-#ifdef UART_ECHO
-		putchar(ch);
-#endif
 		if (ch == '\r') {
 			ch = '\n';
 		}

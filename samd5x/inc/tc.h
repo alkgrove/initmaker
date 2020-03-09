@@ -1313,12 +1313,11 @@ static inline uint8_t tc_read_STATUS(TC_t *pTC)
  * @detail
  * The following prototypes are available if:
  * 1) src/tc.c is included in the compiled c files
- * 2) FEATURE_TIME_DELAY and/or FEATURE_TIME_SCHEDULER are globally defined 
- *    These can be defined in the arm-none-eabi-gcc makefile line as -DFEATURE_TIME_DELAY or -DFEATURE_TIME_SCHEDULER
- * 3) Dedicates two timer counters with the follow config definition for initmaker
+ * 2) TIMER_PORT, TIMER_PORT_FREQUENCY and MIN_TIMEOUT can be defined, they do have defaults of TC0, 10MHz and 1ms respectively
+ * 3) Dedicate two timer counters pair as a 32 bit counter with the follow config definition for initmaker
  *    Any GCLK can be used and sets the rate. Since the routines require synchronization, slow clocks to the iimer
  *    will affect the total delay. Execution time is not factored into the delay so not suited for very precise timing. 
- * 4) if FEATURE_TIME_SCHEDULER is enabled, then call NVIC_ENABLE_TIMER_PORT() in initialization
+ * 4) call NVIC_ENABLE_TIMER_PORT() in initialization
  *   [TC0]
  *   name=TIMER_PORT
  *   ref_source=gclk1
@@ -1326,7 +1325,7 @@ static inline uint8_t tc_read_STATUS(TC_t *pTC)
  *   prescaler=1
  *   wavegen=NFRQ
  *   count = 0
- *   ; note that interrupt is used only for FEATURE_TIME_SCHEDULER
+ *   ; note that interrupt is used only for Time Scheduler
  *   interrupt = 1
  *   priority = 7
  */
@@ -1335,7 +1334,6 @@ static inline uint8_t tc_read_STATUS(TC_t *pTC)
   * convert ms to timer count for FEATURE_TIME_DELAY and FEATURE_TIME_SCHEDULE
   */
   
-#ifdef FEATURE_TIME_DELAY
 /**
  * @brief usDelay
  * @detail this was brought over from delay.c. timeDelay can be called directly although macro 
@@ -1353,7 +1351,8 @@ void usDelay(uint32_t us);
 
 /**
  * @brief timeDelay(interval) time delay returns after interval count has elapsed
- * @detail uses TC0 with TC1 slaved configured as a 32 bit timer
+ * @detail uses a 32bit free running timer counter pair specified by TIMER_PORT default TC0/TC1
+ * frequency specified as TIMER_PORT_FREQUENCY
  * with 1MHz GCLK, interval is in 1usec, maximum interval is 1Hr 10min or 4294967295 us
  * with 10MHz GCLK, interval is in 0.1usec,  maximum interval is 7min 4.9sec or 429496729.6 us
  * with 100MHz GCLK, interval is in 10nsec,  maximum interval is 42.9s or 42949672960 ns
@@ -1373,8 +1372,6 @@ void timeDelay(uint32_t interval);
  */
 uint32_t getTimer(void);
 
-#endif  /* FEATURE_TIME_DELAY */
-#ifdef FEATURE_TIME_SCHEDULER
 /**
  * @brief timeScheduler_t statically allocated node for a scheduled time
  * @detail callback is called when timeout period has elapsed
@@ -1383,7 +1380,7 @@ uint32_t getTimer(void);
  * then call setSchedule(timeSchedule_t *schedule, uint32_t period) to set the period. 
  */
 typedef struct timeScheduler_s {
-    void (*callback)(uint32_t mask); // callback gets called when timer elapsed
+    uint32_t (*callback)(uint32_t mask); // callback gets called when timer elapsed
     uint32_t mask;
     uint32_t match;
     uint32_t retrigger;
@@ -1399,6 +1396,13 @@ typedef struct timeScheduler_s {
 #ifdef DEBUG
 void printSchedule(void);
 #endif
+
+/**
+ * @brief initTimerScheduler - initializes any RTOS variables and enable NVIC interrupt
+ * @detail call before using timer scheduler
+ */
+void initTimerScheduler(void);
+
 /**
  * @brief attachTimeSchedule - attaches the timer schedule structure to the scheduler and intiializes the callback function
  * @detail the timeScheduler_t structures are statically allocated for each virtual timer and will call the "callback"
@@ -1408,7 +1412,7 @@ void printSchedule(void);
  * @param[in] void (*callback)(void) pointer to function to be called when timeout occurs
  * @return timeScheduler_t * pointer to the timer schedule structure
  */
-timeScheduler_t *attachTimeSchedule(timeScheduler_t *node, void (*callback)(uint32_t), uint32_t mask);
+timeScheduler_t *attachTimeSchedule(timeScheduler_t *node, uint32_t (*callback)(uint32_t), uint32_t mask);
 /**
  * @brief detachTimeSchedule - detaches the timer schedule structure from the scheduler
  * @detail  detachTimeSchedule removes the virtual timer from the scheduler. It can be reused with 
@@ -1466,7 +1470,5 @@ static inline void clearOneShotTime(timeScheduler_t *schedule)
 {
     genericSetTimer(schedule, 0, true);
 }
-
-#endif /* FEATURE_TIME_SCHEDULER */
 
 #endif /* _TC_H */

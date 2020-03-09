@@ -1,0 +1,5 @@
+Changes 2.1
+Block transfers added to sd.c
+Added new category [DEFINES] to allow random #define <identifier> in init file
+Add nvm.c and prototypes in nvnctrl.h for erase and writing of flash
+Added tc.c to include delay and time scheduler. The time scheduler usese a single 32 bit counter to call an assigned function after a period of time. This can be continuous or one shot. 

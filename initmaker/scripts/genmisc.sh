@@ -51,6 +51,7 @@ ${AWK} -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v ev
 		prop["icm:macroname"] = "icm";
 		prop["sdo:macroname"] = "sdo";
 		prop["sdhc:macroname"] = "sdhc";
+		prop["defines:macroname"] = "defines";
 		prop["sdo:frequency"] = "60000000";
 		prop["sdo:print_port"] = 1;
     	initpins();
@@ -79,6 +80,9 @@ ${AWK} -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v ev
 			key = section ":" tolower(arr[1]);
 			value = gensub(/[\r\n]+/,"", "g", arr[2]);
 			prop[key] = value;
+			if (section ~ /defines/) {
+				defines[toupper(arr[1])] = value;
+			}
 		}
  	   	next;
 	}
@@ -129,8 +133,12 @@ ${AWK} -v script="${script}" -v rsrctmp="${rsrctmp}" -v vartmp="${vartmp}" -v ev
     				idx=1; 
   					if (match(line, /^#foreach\s+([a-zA-Z0-9_]+)/, a)) {
     					switch (a[1]) {
-  							default: errprint("Bad argument " a[1] " for foreach"); break;
-  						}
+						case /defines/:
+    						for (j in defines) { keys[idx] = j; values[idx++] = defines[j]; } 
+    					break;  
+						default: errprint("Bad argument " a[1] " for foreach"); 
+                        break;
+  					}
    						delete a;
   					} else {
    						errprint("Missing argument for foreach");

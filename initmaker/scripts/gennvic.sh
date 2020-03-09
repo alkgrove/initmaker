@@ -133,6 +133,8 @@ ${AWK} -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "
           			prop[name ":priority"] = value2[idx];
 				if (value2[idx] < 0) delete prop[name ":priority"]
 				prop[name ":name"] = value3[idx];
+				prop[name ":shared"] = 1;
+				if (value3[idx] != "DMAC_CHANNEL4") delete prop[name ":shared"];
           			prop[name ":handler"] = value4[idx];
           			line = macro[i];
           			loopstart = i;
@@ -143,6 +145,8 @@ ${AWK} -v script="${script}" -v vartmp="${vartmp}" -i "${processor}" '@include "
           				prop[name ":value"] = values[idx];
           				prop[name ":priority"] = value2[idx];
 					if (value2[idx] < 0) delete prop[name ":priority"]
+					prop[name ":shared"] = 1;
+					if (value3[idx] != "DMAC_CHANNEL4") delete prop[name ":shared"];
 					prop[name ":name"] = value3[idx];
           				prop[name ":handler"] = value4[idx];
           			} else {
