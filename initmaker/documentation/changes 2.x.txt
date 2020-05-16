@@ -1,3 +1,4 @@
+Changes 2.0
 Added version number to initmaker and starting with revision 2.0, anything prior was revision 1.0.
 
 NVIC is no longer initialized inside of SystemInit rather a series of NVIC_ENABLE_<interrupt name> functions are provided that should be called when initializing if there is a handler available. 
@@ -21,3 +22,12 @@ Added #define <NAME>_FREQUENCY to have an alias for timer/counter source frequen
 Removed delay.c and delay.h and created tc.c. The delay functions are now defined in tc.c/tc.h. To use, add FEATURE_TIME_DELAY to the DEFS in makefile (ie -DFEATURE_TIME_DELAY). Include tc.c instead of delay.c. Redo the config with the latest code to get the TIMER_PORT_FREQUENCY define. Also added a time scheduler. This is a tickless virtual timer which calls a function after a period of timer. The timers are oneshot or retriggerable and can be cleared prior to timing out. This is enabled by compiling with tc.c and adding the global define in the makefile FEATURE_TIME_SCHEDULER.
 
 Added peripherals to PA00 and PA01 that were missing. 
+
+Changes 2.1
+Block transfers added to sd.c
+Added new category [DEFINES] to allow random #define <identifier> in init file
+Add nvm.c and prototypes in nvnctrl.h for erase and writing of flash
+Added tc.c to include delay and time scheduler. The time scheduler usese a single 32 bit counter to call an assigned function after a period of time. This can be continuous or one shot. 
+
+Changes 2.2
+Added API for Factory Signature or serial number
