@@ -35,12 +35,7 @@
 
 #ifdef FEATURE_RTOS
 #include "RTOSconfig.h"
-#else
-#define I2CM_RTOS_INIT
-#define I2CM_RTOS_TAKE
-#define I2CM_RTOS_GIVE
 #endif
-
 
 #ifndef I2CM_PORT
 #error define name of SERCOM to I2CM_PORT in initmaker config or #define I2CM_PORT SERCOMn
@@ -53,7 +48,9 @@ volatile uint8_t txlen = 0;
 volatile uint8_t rxlen = 0;
 volatile uint8_t slaveAddress = 0;
 volatile uint8_t status = 0;
-
+#ifdef I2CM_RTOS_VARIABLES
+I2CM_RTOS_VARIABLES;
+#endif
 const char *i2cm_err_msg[] = {
 	"OK",
 	"Bus Busy",
@@ -70,13 +67,17 @@ const char *i2cm_err_str(int err)
 
 void i2cmInit(void)
 {
+#ifdef I2CM_RTOS_INIT
     I2CM_RTOS_INIT;
+#endif
 	NVIC_ENABLE_I2CM_PORT_MB();
 	NVIC_ENABLE_I2CM_PORT_SB();
 	NVIC_ENABLE_I2CM_PORT_ERR();
 }
 // timeout in ms
+#ifndef I2CMTO
 #define I2CMTO 500
+#endif
 i2cm_err_t i2cm_transfer( uint8_t address, 
 	uint8_t *wrbuf, 
 	uint8_t wrlen, 
@@ -156,7 +157,9 @@ i2cm_err_t writeI2C(uint8_t address, uint8_t *wrbuf, uint8_t wrlen)
 {
 	i2cm_err_t err = I2CM_OK;
 	uint32_t count;
+#ifdef I2CM_RTOS_TAKE
 	I2CM_RTOS_TAKE
+#endif
 		err = i2cm_transfer(address, wrbuf, wrlen, NULL, 0);
 		if (err == I2CM_OK) {
 			count = getTimer();
@@ -169,7 +172,9 @@ i2cm_err_t writeI2C(uint8_t address, uint8_t *wrbuf, uint8_t wrlen)
 			if (status & I2CM_FAIL) err = I2CM_BUSFAULT;
 			if (status & I2CM_NACK) err = I2CM_NO_ACK;
 		}
+#ifdef I2CM_RTOS_GIVE
     I2CM_RTOS_GIVE
+#endif
 	return err;
 }
 
@@ -177,7 +182,9 @@ i2cm_err_t readI2C( uint8_t address, uint8_t *wrbuf, uint8_t wrlen, uint8_t *rdb
 {
 	i2cm_err_t err = I2CM_OK;
 	uint32_t count;
+#ifdef I2CM_RTOS_TAKE
 	I2CM_RTOS_TAKE
+#endif
 		err = i2cm_transfer(address, wrbuf, wrlen, rdbuf, rdlen);
 		if (err == I2CM_OK) {
 			count = getTimer();
@@ -190,7 +197,9 @@ i2cm_err_t readI2C( uint8_t address, uint8_t *wrbuf, uint8_t wrlen, uint8_t *rdb
 			if (status & I2CM_FAIL) err = I2CM_BUSFAULT;
 			if (status & I2CM_NACK) err = I2CM_NO_ACK;
 		}
+#ifdef I2CM_RTOS_GIVE
     I2CM_RTOS_GIVE
+#endif
 	return err;
 }
 
@@ -198,7 +207,9 @@ i2cm_err_t probeI2C(uint8_t address)
 {
 	i2cm_err_t err = I2CM_OK;
 	uint32_t count;
+#ifdef I2CM_RTOS_TAKE
 	I2CM_RTOS_TAKE
+#endif
 		err = i2cm_transfer(address, NULL, 0, NULL, 0);
 		if (err == I2CM_OK) {
 			count = getTimer();
@@ -211,7 +222,9 @@ i2cm_err_t probeI2C(uint8_t address)
 			if (status & I2CM_FAIL) err = I2CM_BUSFAULT;
 			if (status & I2CM_NACK) err = I2CM_NO_ACK;
 		}
+#ifdef I2CM_RTOS_GIVE
     I2CM_RTOS_GIVE
+#endif
 	return err;
 }
 

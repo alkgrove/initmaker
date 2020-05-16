@@ -899,7 +899,7 @@ void SDHC0_Handler               ( void );
 #define NVMCTRL_CBW5                  (0x00800050UL) /**< \brief (NVMCTRL) CBW5 Base Address */
 #define NVMCTRL_CBW6                  (0x00800060UL) /**< \brief (NVMCTRL) CBW6 Base Address */
 #define NVMCTRL_CBW7                  (0x00800070UL) /**< \brief (NVMCTRL) CBW7 Base Address */
-#define NVMCTRL_FS                    (0x00806000UL) /**< \brief (NVMCTRL) FS Base Address */
+#define NVMCTRL_FS     ((NVMCTRL_FS_t*)0x00806000UL) /**< \brief (NVMCTRL) FS Base Address */
 #define NVMCTRL_SW0                   (0x00800080UL) /**< \brief (NVMCTRL) SW0 Base Address */
 #define NVMCTRL_SW1                   (0x00800090UL) /**< \brief (NVMCTRL) SW1 Base Address */
 #define NVMCTRL_SW2                   (0x008000A0UL) /**< \brief (NVMCTRL) SW2 Base Address */

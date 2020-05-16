@@ -133,7 +133,7 @@ ${AWK} -v script="${script}" -i "${processor}" -v rsrctmp="${rsrctmp}" -v evttmp
 				}
 			}
 			key = instance ":channel";
-			if (key in prop) {
+			if (key in prop) {             
 				trigsrc = trigsrc "_" toupper(prop[key]);
 			} else if (trigsrc !~ /SOFTWARE/) {
 				errprint("Unknown Trigger Source for DMA" prop[instance ": b"]);
@@ -166,6 +166,16 @@ ${AWK} -v script="${script}" -i "${processor}" -v rsrctmp="${rsrctmp}" -v evttmp
 					errprint("DMA Events must be on channels 0 through 7 only");
 				}
 			}
+			key = instance ":interrupt";
+            if (key in prop) {
+                unitkey = instance ":unit";
+                if (unitkey in prop) {
+                    if ((prop[unitkey] + 0) >= 4) {
+                        delete prop[key];
+                        prop["dma4:interrupt"] = 1;
+                    }
+                }
+            }
 			key = instance ":generator";
 			if (key in prop) {
 				if (prop[instance ":unit"] > 3) {

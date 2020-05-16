@@ -118,7 +118,7 @@ function evalexp(inst, expression)
   		} else if (args[k] ~ /[a-z][a-z0-9_]*/) {
   			key = inst ":" args[k];
   			if (key in prop) {
-  				args[k] = prop[key];
+ 				args[k] = prop[key];
   			} else {
   				args[k] = 0;
   			}

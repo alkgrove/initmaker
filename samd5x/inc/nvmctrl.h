@@ -39,6 +39,18 @@
 #define _NVMCTRL_H_
 
 #include <stdbool.h>
+#include <stdint.h>
+#define FLASH_BLOCK_WRITE_OK 0
+#define FLASH_PAGE_WRITE_OK 0
+#define FLASH_BAD_BLOCK_ADDRESS -1
+#define FLASH_BAD_PAGE_ADDRESS -1
+
+#ifdef FEATURE_BANK_SWITCH
+#define RECORDBLOCK_ADDR ((FLASH_ADDR + (FLASH_SIZE/2)) - NVMCTRL_BLOCK_SIZE)
+#else
+#define RECORDBLOCK_ADDR ((FLASH_ADDR + FLASH_SIZE) - NVMCTRL_BLOCK_SIZE)
+#endif
+#define RECORD_SIZE 64
 
 /**
  * @brief nvmctrl set INTEN register
@@ -727,5 +739,95 @@ static inline void nvm_wait_ready(void)
 {
 	while(nvmctrl_get_STATUS(NVMCTRL_STATUS_READY) == 0);
 }
+
+
+/**
+ * @brief write quadword
+ * @detail write four 32 bit words to flash. Must add source nvm.c to use
+ * dst must be aligned on 16 byte boundary
+ * @param[in] uint32_t *dst pointer to main flash aligned to 16 bytes
+ * @param[in] uint32_t *src pointer to four 32 bit words to write
+ * @return int error FLASH_BLOCK_WRITE_OK or FLASH_BAD_BLOCK_ADDRESS
+ */
+ int nvm_write_quadword(uint32_t *dst, uint32_t *src);
+
+/**
+ * @brief write_block
+ * @detail must insure erased before using. Must add source nvm.c to use
+ * src must be 32 bit aligned buffer that is NVMCTRL_BLOCK_SIZE big 
+ * dst must be aligned on NVMCTRL_BLOCK_SIZE boundary
+ * @param[in] uint32_t *dst pointer to main flash aligned to NVMCTRL_BLOCK_SIZE
+ * @param[in] uint32_t *src pointer to source buffer 32bit aligned 
+ * @return int error FLASH_BLOCK_WRITE_OK or FLASH_BAD_BLOCK_ADDRESS
+ */
+int nvm_write_block(uint32_t *dst, uint32_t *src);
+
+/**
+ * @brief nvm_verify_block
+ * @detail compare main flash pointed to by dst to sram buffer pointed to by src
+ * @param[in] uint32_t *src
+ * @param[in] uint32_t *dst
+ * @return bool true if match false if not same
+ */
+bool nvm_verify_block(uint32_t *src, uint32_t *dst);
+
+/**
+ * @brief nvm_is_block_erased
+ * @detail scan block to see if it is already erased
+ * @param[in] uint32_t *src pointer to block to test, must be aligned to 8192 byte boundary
+ * @return bool true if erased false if dirty
+ */
+bool nvm_is_block_erased(uint32_t *src);
+
+/**
+ * @brief nvm_erase_block
+ * @detail erase 8192 byte block of memory pointed to by dst.
+ * This must be done to the same dst prior to calling nvm_write_block or nvm_write_quadword
+ * @param[in] uint32_t *dst must be aligned to 8192 byte boundary
+ */
+void nvm_erase_block(uint32_t *dst);
+
+/*
+ * @brief nvm_write_page
+ * @detail must insure erased before using. Must add source nvm.c to use
+ * src mustbe 32 bit aligned buffer that is NVMCTRL_PAGE_SIZE big
+ * dst must be aligned on NVMCTRL_PAGE_SIZE boundary
+ * @param[in] uint32_t *dst pointer to main flash aligned to NVMCTRL_BLOCK_SIZE
+ * @param[in] uint32_t *src pointer to source buffer 32bit aligned 
+ * @return int error FLASH_BLOCK_WRITE_OK or FLASH_BAD_BLOCK_ADDRESS
+ */
+ int nvm_write_page(uint32_t *dst, uint32_t *src);
+
+ /*
+  * @brief nvm_on_block_boundary(uint32_t *src)
+  * @param[in] uint32_t *src pointer to memory
+  * @return bool returns true if on block boundary false otherwise
+  */
+static inline bool nvm_on_block_boundary(uint32_t *src)
+{
+    return (((uint32_t)src & (NVMCTRL_BLOCK_SIZE - 1)) == 0);
+}
+
+/*
+  * @brief nvm_on_page_boundary(uint32_t *src)
+  * @param[in] uint32_t *src pointer to memory
+  * @return bool returns true if on page boundary false otherwise
+  */
+static inline bool nvm_on_page_boundary(uint32_t *src)
+{
+    return (((uint32_t)src & (NVMCTRL_PAGE_SIZE - 1)) == 0);
+}
+/*
+ * @brief getRecord()
+ * @return uint8_t * return pointer to the most current record
+ */
+uint8_t *getRecord(void);
+/*
+  * @brief writeRecord
+  * @detail write's a record to the next available slot, erases the block if no more slots available
+  * @param[in] uint32_t *src pointer to memory to write
+  */
+void writeRecord(uint8_t *src);
+
 
 #endif /* _NVMCTRL_H */

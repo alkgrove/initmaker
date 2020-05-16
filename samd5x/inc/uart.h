@@ -32,11 +32,11 @@
 #define CONSOLE_PORT COM_PORT
 #endif
 
-// Define EOL_IS_CRLF if using CR/LF (/r/n) for end of line
+// Define FEATURE_UART_CRLF if using CR/LF (/r/n) for end of line
 // otherwise /n line feed only
-#define EOL_IS_CRLF
-// Define ECHO_CHARACTERS if incoming characters are echoed
-#define ECHO_CHARACTERS
+// #define FEATURE_UART_CRLF
+// Define FEATURE_UART_ECHO if incoming characters are echoed
+// #define FEATURE_UART_ECHO
 
 #include "sam.h"
 #include <stdio.h>

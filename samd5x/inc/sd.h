@@ -137,7 +137,19 @@ void sdhc_set_hc(sdhc_state_t *state);
 int sdhc_read_block(sdhc_state_t *state, uint32_t address, uint8_t *dst);
 
 /**
- * @brief sdhc_write_blocks 
+ * @brief sdhc_read_blocks
+ * read n 512 byte blocks for block_count blocks from SD/MMC card with address
+ * to filebuffer pointed to by dst
+ * @param[in] state - sdhc_state_t *
+ * @param[in] address - uint32_t 
+ * @param[in] dst - uint8_t *
+ * @param[in] num_blocks - uint16_t number of blocks to read
+ * @return true if success, false if failed 
+ */
+int sdhc_read_blocks(sdhc_state_t *state, uint32_t address, uint8_t *dst, uint16_t num_blocks);
+
+/**
+ * @brief sdhc_write_block
  * writes a 512 byte block file buffer pointed to by src to SD/MMC card with address
  * for block_count blocks
  * @param[in] state - sdhc_state_t *
@@ -145,7 +157,19 @@ int sdhc_read_block(sdhc_state_t *state, uint32_t address, uint8_t *dst);
  * @param[in] src - uint8_t * pointer to memory to write
  * @return true if success, false if failed 
  */
-int sdhc_write_block(sdhc_state_t *state, uint32_t address, uint8_t *src);
+int sdhc_write_block(sdhc_state_t *state, uint32_t address, const uint8_t *src);
+
+/**
+ * @brief sdhc_write_blocks 
+ * writes n 512 byte blocks file buffer pointed to by src to SD/MMC card with address
+ * for block_count blocks
+ * @param[in] state - sdhc_state_t *
+ * @param[in] address - uint32_t  disc byte (or sector) address
+ * @param[in] src - uint8_t * pointer to memory to write
+ * @param[in] num_blocks - uint16_t number of blocks to write
+ * @return true if success, false if failed 
+ */
+int sdhc_write_blocks(sdhc_state_t *state, uint32_t address, const uint8_t *src, uint16_t num_blocks);
 
 #ifdef DEBUG
 void sdhc_print_status(sdhc_state_t *state, char *str);

@@ -15,22 +15,30 @@
 #include <stdio.h>
 #endif
 #include "sam.h"
-#if defined(FEATURE_RTOS) && defined(FEATURE_TIME_SCHEDULER)
-#include "RTOSconfig.h"
-#else
-#define TC_RTOS_NOTIFY_INIT
-#define TC_RTOS_NOTIFY
-#define TC_RTOS_TAKE
-#define TC_RTOS_GIVE
-#endif
 
-#ifdef FEATURE_TIME_DELAY
+#if defined(FEATURE_RTOS)
+#include "RTOSconfig.h"
+#ifdef TC_RTOS_VARIABLES
+TC_RTOS_VARIABLES;
+#endif
+#endif
+/* Default Behavior */
+/* TIMER_PORT is the Timer Counter pair used for Time Scheduler and Delay
+ * TIMER_PORT default is TC0/TC1 pair
+ * TIMER_PORT_FREQUENCY default is 10MHz
+ * MIN_TIMEOUT is how close in clock times before TIMEOUT function is called. This avoids having interrupts that are too close
+ * together. default is 1ms or TIMER_PORT_FREQUENCY/1000
+ */
 #ifndef TIMER_PORT
-#error TIMER_PORT is not defined for FEATURE_TIMER_DELAY. See tc.h for details
+#define TIMER_PORT TC0
 #endif
 #ifndef TIMER_PORT_FREQUENCY
-#error TIMER_PORT_FREQUENCY is not defined for FEATURE_TIMER_DELAY.
+#define TIMER_PORT_FREQUENCY 10000000
 #endif
+#ifndef MIN_TIMEOUT
+#define MIN_TIMEOUT (TIMER_PORT_FREQUENCY/1000)
+#endif
+
 void usDelay(uint32_t us)
 {
     timeDelay((TIMER_PORT_FREQUENCY/1000000)*us);
@@ -62,12 +70,7 @@ void timeDelay(uint32_t interval)
 	} while ((getTimer() - count) < interval);
 }
 
-#endif
 
-#ifdef FEATURE_TIME_SCHEDULER
-#ifndef TIMER_PORT
-#error TIMER_PORT is not defined for FEATURE_TIME_SCHEDULER. See tc.h for details
-#endif
 /* We should have a minimum time period to avoid too short of intervals that 
  * would be hard to catch by interrupt. Default is 1000 or 1ms for a 1MHz clock
  * define MIN_TIMEOUT if different than that. 
@@ -79,14 +82,6 @@ void timeDelay(uint32_t interval)
 static timeScheduler_t *root = NULL;
 static timeScheduler_t *tail = NULL;
 volatile uint32_t matchShadow;  
-/* timeSchedulerEvent ccan be used by the callback to 
- * collect bitwise timeout events. It is always cleared on entry
- * to the timer interrupt. 
- * Inside the callback function, declare extern volatile uint32_t timeSchedulerEvent;
- * set bits depending on mask  timeSchedulerEvent |= (1UL << (mask & 0x1F))
- * this can be used by RTOS which use this value to notify a task
- */
-volatile uint32_t timeSchedulerEvent;
 #ifdef DEBUG
 void printSchedule(void)
 {
@@ -117,11 +112,16 @@ void TIMER_PORT_Handler(void)
     timeScheduler_t *p;
     timeScheduler_t *node;
     uint32_t period;
-    tc_clear_INTFLAG(TIMER_PORT, TC_INTFLAG_MC0); 
-    timeSchedulerEvent = 0;
-    TC_RTOS_NOTIFY_INIT;
+    tc_clear_INTFLAG(TIMER_PORT, TC_INTFLAG_MC0);
+#ifdef TC_RTOS_IRQ_INIT
+    TC_RTOS_IRQ_INIT;
+#endif
     while ((root != NULL) && root->active && ((root->match - matchShadow) <= MIN_TIMEOUT)) {
+#ifdef TC_RTOS_IRQ_UPDATE
+        TC_RTOS_IRQ_UPDATE;
+#else
         (*root->callback)(root->mask); /* we have a timeout here, callback */
+#endif
         period = root->match - matchShadow;
         node = root; /* pop off of the head of list */
         root = root->next;
@@ -156,12 +156,16 @@ void TIMER_PORT_Handler(void)
     } else {
         tc_clear_INTEN(TIMER_PORT, TC_INTENSET_MC0);
     }
-    TC_RTOS_NOTIFY;
+#ifdef TC_RTOS_IRQ_FINAL
+    TC_RTOS_IRQ_FINAL;
+#endif
 }
 
-timeScheduler_t *attachTimeSchedule(timeScheduler_t *node, void (*callback)(uint32_t), uint32_t mask)
+timeScheduler_t *attachTimeSchedule(timeScheduler_t *node, uint32_t (*callback)(uint32_t), uint32_t mask)
 {
+#ifdef TC_RTOS_TAKE
     TC_RTOS_TAKE;
+#endif
     timeScheduler_t *p = root;
     uint8_t inten = tc_get_INTEN(TIMER_PORT, TC_INTENSET_MASK);
     tc_clear_INTEN(TIMER_PORT, TC_INTENSET_MASK);
@@ -180,13 +184,17 @@ timeScheduler_t *attachTimeSchedule(timeScheduler_t *node, void (*callback)(uint
     if (node->next == NULL) tail = node;
     root = node;
     tc_set_INTEN(TIMER_PORT, inten);
+#ifdef TC_RTOS_GIVE
     TC_RTOS_GIVE;
+#endif
     return node;
 }
 
 timeScheduler_t *detachTimeSchedule(timeScheduler_t *node)
 {
+#ifdef TC_RTOS_TAKE
     TC_RTOS_TAKE;
+#endif
     timeScheduler_t *p = root;
     uint8_t inten = tc_get_INTEN(TIMER_PORT, TC_INTENSET_MASK);
     tc_clear_INTEN(TIMER_PORT, TC_INTENSET_MASK);
@@ -203,7 +211,9 @@ timeScheduler_t *detachTimeSchedule(timeScheduler_t *node)
         }
     }
     tc_set_INTEN(TIMER_PORT, inten);
+#ifdef TC_RTOS_GIVE
     TC_RTOS_GIVE;
+#endif    
     return node;
 }
 
@@ -211,7 +221,9 @@ timeScheduler_t *detachTimeSchedule(timeScheduler_t *node)
 void genericSetTimer(timeScheduler_t *node, uint32_t period, bool retrigger)
 {
     uint32_t count; 
+#ifdef TC_RTOS_TAKE
     TC_RTOS_TAKE;
+#endif
     timeScheduler_t *p = root;
     bool intenclr = tc_get_INTEN(TIMER_PORT, TC_INTENSET_MC0) != TC_INTENSET_MC0;
     tc_clear_INTEN(TIMER_PORT, TC_INTENSET_MC0);
@@ -278,6 +290,18 @@ void genericSetTimer(timeScheduler_t *node, uint32_t period, bool retrigger)
         if (intenclr) tc_clear_INTFLAG(TIMER_PORT, TC_INTENSET_MC0);
         tc_set_INTEN(TIMER_PORT, TC_INTENSET_MC0);
     }
+#ifdef TC_RTOS_GIVE
     TC_RTOS_GIVE;
+#endif    
 }
-#endif /* FEATURE_TIME_SCHEDULER */  
+
+
+void initTimerScheduler(void)
+{
+#ifdef TC_RTOS_INIT
+    TC_RTOS_INIT;
+#endif
+#ifdef NVIC_ENABLE_TIMER_PORT
+    NVIC_ENABLE_TIMER_PORT();
+#endif
+}

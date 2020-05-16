@@ -332,7 +332,7 @@ void qspi_flash_init_device(void) {
     if ((status & STAT2_QE) == 0) { // if flash isn't quad enabled, enable it now
     	// QE can be written one time programmable memory if OTP is defined
     	// Do not program SRL, LB1-LP3 as one these are always OTP
-#ifdef OTP
+#ifdef FEATURE_OTP
 #warning This permamently writes status
         qspi_flash_command(CMD_WRITE_ENABLE);
         qspi_flash_write_command(CMD_WRITE_STATUS1, quadenabled, 2);
