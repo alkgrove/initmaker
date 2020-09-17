@@ -25,11 +25,12 @@
 
 #ifndef __UART_H__
 #define __UART_H__
-
-#ifdef FEATURE_DBG_PORT
-#define CONSOLE_PORT DBG_PORT
-#else
-#define CONSOLE_PORT COM_PORT
+/* This sets which UART is used as the serial console
+ * this must be set to SERCOM0..SERCOMn as defined in samd51xyyx.h file
+ */
+ 
+#ifndef CONSOLE_PORT
+#define CONSOLE_PORT SERCOM0
 #endif
 
 // Define FEATURE_UART_CRLF if using CR/LF (/r/n) for end of line
@@ -54,7 +55,19 @@ static inline void UART_putc(int ch, SERCOM_t *dev)
 	while((usart_read_INTFLAG(dev) & SERCOM_USART_INTFLAG_DRE) == 0); // while TX full
 	usart_write_DATA(dev, (uint8_t) ch);
 }
-
+/**
+ * @brief UART_puts
+ * blocking send of a string over the UART identified by port
+ *
+ * @param[in] char *str 	pointer to null terminated string
+ * @param[in] SERCOM_t *dev 	pointer to SERCOM ie SERCOM0, SErCOM1
+ */
+static inline void UART_puts(char *str, SERCOM_t *dev)
+{
+    while (*str != '\0') {
+        UART_putc(*str++, dev);
+    }
+}
 /**
  * @brief SWO_putc
  * blocking send of a single character over the UART identified by port
@@ -99,24 +112,20 @@ static inline bool UART_getc_ready(SERCOM_t *dev)
 {
 	return ((usart_read_INTFLAG(dev) & SERCOM_USART_INTFLAG_RXC) != 0);
 }
-
 /**
- * @brief getstring(char* str, size_t len) 
- * similar to fgets except no file descriptor, everything comes from console
+ * @brief puts_nonl
+ * @param[in] char *str pointer to start of null terminated string to print to console
+ * prints string to console similar to puts but without the added new line character
+ * returns 1 on success 0 otherwise
  *
- * @param[in] char *str pointer to character buffer to receive from
- * @param[in] size_t len length in bytes of the character buffer
- * @return pointer to character buffer
  */
-char *getstring(char* str, size_t len);
+int puts_nonl(const char* str);
 /**
- * @brief putstring(const char* str);
- * similar to fputs except no file descriptor argument
- *
- * @param[in] char *str pointer to character buffer to send to console
- * @return 1 for success
+ * @brief getns similar to gets except expects a length
+ * @param[in] char *dst pointer to character array of size len
+ * returns null terminated string when console sends enter (newline or carriage return)
+ * line is truncated if length is greater than (len-1)
  */
-int putstring(const char* str);
-
+char *getns(char *dst, size_t len);
 
 #endif /* __USART_H__ */

@@ -77,8 +77,6 @@ int nvm_write_block(uint32_t *dst, uint32_t *src)
 	
     	/* then write the page to flash */
     	nvmctrl_write_CTRLB(NVMCTRL_CTRLB_CMDEX_KEY | NVMCTRL_CTRLB_CMD_WP);
-    	
-    	/* datasheet has this but no one uses it */	
 	}
 	return FLASH_BLOCK_WRITE_OK;
 }
@@ -138,7 +136,7 @@ int nvm_write_quadword(uint32_t *dst, uint32_t *src)
 	return FLASH_BLOCK_WRITE_OK;
 }
 
-bool nvm_verify_block(uint32_t *src, uint32_t *dst)
+bool nvm_verify_block(uint32_t *dst, uint32_t *src)
 {
 	for(int i = 0; i < (NVMCTRL_BLOCK_SIZE / sizeof(uint32_t)); i++) {
 		if (*dst++ != *src++) return false;
@@ -146,40 +144,11 @@ bool nvm_verify_block(uint32_t *src, uint32_t *dst)
 	return true;
 }
 
-static bool checkBlankRecord(uint8_t *src)
+bool nvm_verify_page(uint32_t *dst, uint32_t *src)
 {
-    uint32_t *p = (uint32_t *) src;
-    for (int i = 0; i < RECORD_SIZE/sizeof(uint32_t); i++) {
-        if (*p++ != 0xFFFFFFFF) return false;
-    }
-    return true;
+	for(int i = 0; i < (NVMCTRL_PAGE_SIZE / sizeof(uint32_t)); i++) {
+		if (*dst++ != *src++) return false;
+	}
+	return true;
 }
 
-uint8_t *getRecord(void)
-{
-    uint8_t *p = (uint8_t *) RECORDBLOCK_ADDR;
-    uint8_t *lastp = NULL;
-    uint8_t *ep = (uint8_t *) (RECORDBLOCK_ADDR + NVMCTRL_BLOCK_SIZE);
-    while(p < ep) {
-        if (checkBlankRecord(p)) {
-            return lastp;
-        }
-        lastp = p;
-        p += RECORD_SIZE;
-    }
-    return lastp;    
-}
-
-void writeRecord(uint8_t *src)
-{
-    uint8_t *p = getRecord();
-    if (p == (uint8_t *) (RECORDBLOCK_ADDR + NVMCTRL_BLOCK_SIZE)) {
-        nvm_erase_block((uint32_t *) RECORDBLOCK_ADDR);
-        p = NULL;
-    }
-    if (p == NULL) {
-        nvm_write_quadword((uint32_t *) RECORDBLOCK_ADDR, (uint32_t *) src);
-    } else {
-        nvm_write_quadword((uint32_t *) &p[RECORD_SIZE],(uint32_t *) src);
-    }
-}

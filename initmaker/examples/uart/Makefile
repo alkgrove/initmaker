@@ -5,18 +5,24 @@
 #
 
 TARGET = uart
+#USE_METRO=1
 DEBUG_ON=1
 REV="1.00"
 APP="Main"
 STACK_SIZE=8192
-CFG=${TARGET}
+ifeq ($(USE_METRO),1)
+CFG=metro_uart
+CPU=samd51j19a
+else
+CFG=fp_uart
+CPU=samd51j20a
+endif
 INIT=${CFG}_init
 
 CSRC = startup_samd51.c
 CSRC += ${INIT}.c
 CSRC += uart.c
 CSRC += printf-stdarg.c
-CSRC += delay.c
 CSRC += main.c
 CSRC += cli.c
 
@@ -46,35 +52,29 @@ INC += ${SAMD51}/bsp/inc
 INC += ${SAMD51}/samd5x/inc
 INC += ${SAMD51}/CMSIS/Core/Include
 
-ASRC =
-
 VPATH = ./src
 VPATH += ${SAMD51}/bsp/src
 VPATH += ${SAMD51}/samd5x/src
 
-LDSCRIPT=./samd51j19a.ld
+LDSCRIPT=./${CPU}.ld
 
-DEFS = -DDEBUG -D__SAMD51J19A__ -DARM_MATH_CM4 -D__CUSTOM_FILE_IO__
+DEFS = -D__$(shell echo ${CPU} | tr '[:lower:]' '[:upper:]')__ -DARM_MATH_CM4
 DEFS += -D'REV=${REV}' -D'APP=${APP}'
+DEFS += -include feature.h
 DEFS += -include ${INIT}.h
 
 OBJ = $(notdir $(CSRC:.c=.o)) $(notdir $(ASRC:.s=.o))
 
 INCLUDES=${patsubst %,-I%,${INC}}
 
-AFLAGS = -mthumb -DDEBUG -Os -ffunction-sections -mlong-calls -g3 -Wall -c -std=gnu99
-AFLAGS += -D__SAMD51J18A__ -mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16
-AFLAGS += -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" 
-
 CFLAGS = -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb
 # optimization
 #CFLAGS += -O0 -g3 
 CFLAGS +=  -Os -g3
 CFLAGS += -Wall -c -std=gnu99 
-CFLAGS += -isystem ${SAMD51}/gcc
 CFLAGS += -ffunction-sections -mlong-calls  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" 
 LDFLAGS = -Wl,--start-group -lm -Wl,--end-group -mthumb -Wl,--defsym=__stack_size__=${STACK_SIZE} 
-LDFLAGS += -Wl,-wrap=puts -Wl,-wrap=putc -Wl,-wrap=getc -Wl,-wrap=fgets -Wl,-wrap=fputs -Wl,-wrap=putchar
+LDFLAGS += -Wl,-wrap=puts -Wl,-wrap=putc -Wl,-wrap=getc -Wl,-wrap=putchar
 LDFLAGS += -Wl,-Map=$(addprefix ${OBJDIR},$(TARGET).map) --specs=nano.specs -Wl,--gc-sections -mcpu=cortex-m4  
 LDFLAGS += -T$(LDSCRIPT)
 
@@ -102,7 +102,7 @@ INCDIR=inc/
 EXTDIR=${IMPATH}/extended
 
 # dependency rules
-all: ${OBJDIR} ${OBJDIR}${TARGET}.uf2 ${OBJDIR}${TARGET}.lss ${OBJDIR}${TARGET}.sym
+all: ${OBJDIR} ${OBJDIR}${TARGET}.uf2 ${OBJDIR}${TARGET}.bin ${OBJDIR}${TARGET}.lss ${OBJDIR}${TARGET}.sym
 
 ${OBJDIR}:
 	@test -d ${OBJDIR} || mkdir ${OBJDIR}

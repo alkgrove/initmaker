@@ -44,7 +44,7 @@
  * used in OSCCTRL_XOSCCTRL_IPTAT, OSCCTRL_XOSCCTRL_IMULT and OSCCTRL_XOSCCTRL_CFDPRESC
  */
 #define XOSC_IMULT(f) (f>=32000000 ? 7 : (f>=24000000 ? 6 : (f>=16000000 ? 5 : 4)))
-#define XOSC_IPTAT(f) 3
+#define XOSC_IPTAT(f) ((f==8000000) ? 2 : 3)
 #define XOSC_CFDPRESC(f) (f>=32000000 ? 0 : (f>=24000000 ? 1 : (f>=16000000 ? 2 : 3)))
 /*
  * Index for DPLLxxxx 

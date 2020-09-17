@@ -31,3 +31,8 @@ Added tc.c to include delay and time scheduler. The time scheduler usese a singl
 
 Changes 2.2
 Added API for Factory Signature or serial number
+
+Changes 2.3
+Fixed bug with timescheduler in tc.h/tc.c. pointers weren't bad for single timer node
+Made a number of fixes to uart.h/uart.c. dropped the wrapper for fgets and added getns - getns is like gets but requires a buffer limit and added a     FEATURE for an echoed bell if you overflow. Later gcc default is to complain about passing NULL pointer to FILE * and stdin took quite a bit of RAM. gets itself is just a bad idea and fgets really wants a file system.  Also made CONSOLE_PORT have a default otherwise it can be defined prior to including uart.h
+Fixed the serial number reference in component/nvmctrl.h and added a function to copy the serial number to nvmctrl.h. Microchip has no ASF4 support for the serial number, we had to add it. The only reference was the data sheet. On earlier parts the serial number was a fixed length string. On the SAMD51 it is a mix of raw binary and ascii characters. There is a region of OTP flash that Microchip wrote to, it is undocumented. The serial number is from non-contiguous word locations. If the data sheet was well editted with very few errors, I might trust the serial number; however, it's not well editted at all and it is the only reference to the serial number. 

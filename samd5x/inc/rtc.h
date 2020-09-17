@@ -41,6 +41,16 @@
 #include <stdbool.h>
 
 /**
+ * @brief SysTick_Disable
+ * @detail call this to stop systick interrupts, call SysTick_Config to reenable.
+ * this requires CMSIS for SysTick register pointer and SysTick structure to work
+ */
+static inline void SysTick_Disable(void)
+{
+   SysTick->CTRL  = SysTick_CTRL_CLKSOURCE_Msk;                         /* TICKINT and Enable are both zero to disable */
+}
+
+/**
  * @brief rtcmode0 wait for sync
  *
  * @param[in] reg uint32_t 

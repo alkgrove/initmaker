@@ -603,11 +603,15 @@ typedef struct {
 } NVMCTRL_t;
 #endif /* !(defined(__ASSEMBLY__) || defined(__IAR_SYSTEMS_ASM__)) */
 
-/** \brief NVMCTRL factory signature */
+/** \brief NVMCTRL factory signature - added by Bob Alkire 6/19/2020 */
 #if !(defined(__ASSEMBLY__) || defined(__IAR_SYSTEMS_ASM__))
 typedef struct {
-        RoReg8 Reserved[0x1FC];
-    __O uint32_t signature[4];
+    RoReg8 Reserved1[0x10];
+    __O uint32_t W1;
+    __O uint32_t W2;    
+    __O uint32_t W3;
+    RoReg8 Reserved2[0x1E0];
+    __O uint32_t W0;
 } NVMCTRL_FS_t;
 #endif /* !(defined(__ASSEMBLY__) || defined(__IAR_SYSTEMS_ASM__)) */
 

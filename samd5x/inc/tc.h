@@ -103,7 +103,16 @@ static inline void tc_set_SWRST(TC_t *pTC)
  *
  * @param[in] pTC TC_t *
  * @param[in] reg uint32_t 
- **/
+ * - TC_SYNCBUSY_SWRST swrst
+ * - TC_SYNCBUSY_ENABLE enable
+ * - TC_SYNCBUSY_CTRLB CTRLB
+ * - TC_SYNCBUSY_STATUS STATUS
+ * - TC_SYNCBUSY_COUNT Counter
+ * - TC_SYNCBUSY_PER Period
+ * - TC_SYNCBUSY_CC0 Compare Channel 0
+ * - TC_SYNCBUSY_CC1 Compare Channel 1
+ * - TC_SYNCBUSY_CC(value) Compare Channel x
+ */
 static inline void tc_wait_for_sync(TC_t *pTC, uint32_t reg)
 {
 	while (pTC->COUNT8.SYNCBUSY.reg & reg) {
@@ -1397,6 +1406,7 @@ typedef struct timeScheduler_s {
 void printSchedule(void);
 #endif
 
+#define MS_TO_COUNT(ms) ((TIMER_PORT_FREQUENCY/1000) * (ms))
 /**
  * @brief initTimerScheduler - initializes any RTOS variables and enable NVIC interrupt
  * @detail call before using timer scheduler
@@ -1408,6 +1418,10 @@ void initTimerScheduler(void);
  * @detail the timeScheduler_t structures are statically allocated for each virtual timer and will call the "callback"
  * function when timer terminates. attachTimeSchedule is called to add the timer to the scheduler and detachTimeSchedule
  * to remove it.
+ * the call back is called with 32 bit unsigned integer that when called is passed the mask value for that node
+ * that is, the same callback routine can distinquished which scheduler node made the callback through the mask value
+ * The callback returns a 32 bit unsigned integer, which can 'or' events from multiple scheduler
+ * nodes (usually by returning the mask value). Not used by default and should just return 0
  * @param[in] timeSchedule_t * pointer to static allocated timer schedule structure
  * @param[in] void (*callback)(void) pointer to function to be called when timeout occurs
  * @return timeScheduler_t * pointer to the timer schedule structure

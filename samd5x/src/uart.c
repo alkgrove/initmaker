@@ -33,15 +33,6 @@
 #include "uart.h"
 #include "sam.h"
 
-#ifdef FEATURE_DBG_PORT
-#ifndef DBG_PORT
-#error define name of SERCOM to DBG_PORT in initmaker config or #define DBG_PORT SERCOMn
-#endif
-#else
-#ifndef COM_PORT
-#error define name of SERCOM to COM_PORT in initmaker config or #define COM_PORT SERCOMn
-#endif
-#endif
 /*
  * Wrapper for putchar
  * requires to be linked with the option -Wl,wrap=putchar
@@ -60,26 +51,25 @@ int __wrap_putchar(int c)
 int __wrap_puts(const char* str)
 {
 	while(*str != '\0') {
-		putchar(*str++);
+	    UART_putc(*str++, CONSOLE_PORT);
 	}
 #ifdef FEATURE_UART_CRLF
-	putchar('\r');
+	UART_putc('\r', CONSOLE_PORT);
 #endif
-	putchar('\n');
+	UART_putc('\n', CONSOLE_PORT);
 	return 1;
 }
-
 /*
- * similar to fputs except without the file descriptor
+ * it is for situations that do not require CRLF or LF appended
  */
-
-int putstring(const char* str)
+int puts_nonl(const char* str)
 {
 	while(*str != '\0') {
-		putchar(*str++);
+	    UART_putc(*str++, CONSOLE_PORT);
 	}
 	return 1;
 }
+
 /*
  * Wrapper for getchar
  * requires to be linked with the option -Wl,wrap=getchar
@@ -90,34 +80,57 @@ int __wrap_getchar(void)
     int ch;
     ch = UART_getc(CONSOLE_PORT);
 #ifdef FEATURE_UART_ECHO
-    putchar(ch);
+	UART_putc(ch, CONSOLE_PORT);
 #endif
 	return ch;
 }
 
-/*
- * similar to fgets except no file descriptor
- * note because of potential buffer overflow, gets is not implemented
- * always null terminates the string, EOL is linefeed
- */
 
-char *getstring(char* str, size_t len) 
+/* 
+ * getns
+ * similar to gets but requires a length of array for dst
+ * this behaves more like fgets but to console and no FILE *
+ */
+ 
+char *getns(char *dst, size_t len)
 {
 	int ch = 0;
-	int i = 0;
-	len--;
-	while((i < len) && (ch != '\n')) {
-		ch = getchar();
+	size_t i = 0;
+	
+	while(true) {
+        ch = UART_getc(CONSOLE_PORT);
+        if ((ch == '\n') || (ch == '\r')) break;
+#ifdef FEATURE_UART_ECHO
+	    UART_putc(ch, CONSOLE_PORT);
+#endif
 		if (ch < 0) return NULL;
-		if (ch == '\r') {
-			ch = '\n';
-		}
 		if ((ch == '\b') || (ch == 0x7F)) {
-			if (i > 0) i--;
+            if (i > 0) {
+                i--;
+#ifdef FEATURE_UART_ECHO
+                UART_putc('\b', CONSOLE_PORT);
+	            UART_putc(' ', CONSOLE_PORT);
+	            UART_putc('\b', CONSOLE_PORT);
+#endif
+            }
 		} else {
-		    str[i++] = ch;
+		    if (i >= len) {
+#ifdef FEATURE_UART_ECHO
+#ifdef FEATURE_UART_OVERFLOW_BELL
+	            UART_putc('\a', CONSOLE_PORT);
+#endif
+#endif
+                break;
+		    }
+		    dst[i++] = ch;
 		}
 	}
-	str[i] = '\0';
-	return str;
+#ifdef FEATURE_UART_ECHO
+#ifdef FEATURE_UART_CRLF
+	UART_putc('\r', CONSOLE_PORT);
+#endif
+	UART_putc('\n', CONSOLE_PORT);
+#endif
+	dst[i] = '\0';
+	return dst;
 }

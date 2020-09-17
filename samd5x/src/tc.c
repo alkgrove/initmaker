@@ -16,6 +16,9 @@
 #endif
 #include "sam.h"
 
+#if defined(FEATURE_OS)
+#include "OSconfig.h"
+#endif
 #if defined(FEATURE_RTOS)
 #include "RTOSconfig.h"
 #ifdef TC_RTOS_VARIABLES
@@ -28,6 +31,8 @@ TC_RTOS_VARIABLES;
  * TIMER_PORT_FREQUENCY default is 10MHz
  * MIN_TIMEOUT is how close in clock times before TIMEOUT function is called. This avoids having interrupts that are too close
  * together. default is 1ms or TIMER_PORT_FREQUENCY/1000
+ * SAMD Timers run asynchronous to the processor and waste a lot of time doing synchronization
+ * To minimize synchronization time we use reasoably fast timer clock and a larger timer. 
  */
 #ifndef TIMER_PORT
 #define TIMER_PORT TC0
@@ -100,7 +105,7 @@ void printSchedule(void)
             str[4] = '\0';
             nextstr[4] = '\0';
         }
-        printf("%s(%08lX), Match: %08lX, Retrigger: %ld, %s, Next: %s\r\n", str, p->mask, p->match, p->retrigger, 
+        printf("%s(%08lX), Match: %08lX, CB: %08lX, Retrigger: %ld, %s, Next: %s\r\n", str, p->mask, p->match, (uint32_t) p->callback, p->retrigger, 
             p->active ? "Active": "Inactive", (p->next == NULL) ? "NULL" : nextstr);
         p = p->next;
     }
@@ -117,17 +122,23 @@ void TIMER_PORT_Handler(void)
     TC_RTOS_IRQ_INIT;
 #endif
     while ((root != NULL) && root->active && ((root->match - matchShadow) <= MIN_TIMEOUT)) {
+        if (root->callback != NULL) {
 #ifdef TC_RTOS_IRQ_UPDATE
-        TC_RTOS_IRQ_UPDATE;
+            TC_RTOS_IRQ_UPDATE;
 #else
-        (*root->callback)(root->mask); /* we have a timeout here, callback */
+            (*root->callback)(root->mask); /* we have a timeout here, callback */
 #endif
+        }
         period = root->match - matchShadow;
-        node = root; /* pop off of the head of list */
-        root = root->next;
-        node->next = NULL;
+        /* if we have only one item in the list then root->next will be null
+         * don't detach it  */
+        node = root; 
+        if (root->next != NULL) {
+            root = root->next; /* pop off of the head of list */
+            node->next = NULL;
+        }
 
-        if (node->retrigger > 0) { /* retrigger calculates next interval and inserts back into the lsit */
+        if (node->retrigger > 0) { /* retrigger calculates next interval and inserts back into the list */
             period = node->retrigger;
             node->match += period;
             if ((root == NULL) || !root->active || (period <= (root->match - matchShadow))) {
@@ -142,14 +153,16 @@ void TIMER_PORT_Handler(void)
                 p->next = node;
             }
             if (node->next == NULL) tail = node;
-        } else {
+        } else { /* inactive timers go at the end of the list */
             node->active = false; /* inactive timers go at the end of the list */
-            tail->next = node;
-            if (node->next == NULL) tail = node;
+            if (root->next != NULL) { /* if there is only one item on the list, it wasn't removed so don't insert it */
+                tail->next = node;
+                tail = node;
+            }
         } 
     }
     /* if no more timers active, halt interrupts */
-    if (root->active) {
+    if (root != NULL && root->active) {
         matchShadow = root->match;
         tc_wait_for_sync(TIMER_PORT, TC_SYNCBUSY_CC0);
         tccount32_write_CC(TIMER_PORT, 0, matchShadow);
@@ -169,20 +182,22 @@ timeScheduler_t *attachTimeSchedule(timeScheduler_t *node, uint32_t (*callback)(
     timeScheduler_t *p = root;
     uint8_t inten = tc_get_INTEN(TIMER_PORT, TC_INTENSET_MASK);
     tc_clear_INTEN(TIMER_PORT, TC_INTENSET_MASK);
-    /* check if it's in the list already */        
-    while(p != NULL) {
-        if (p == node) return NULL;
+    /* see if it is already in the list, if so don't update the list pointers
+     * but allow everything else to be updated */      
+    while((p != NULL) && (p != node)) {
         p = p->next;
     }
-    if (callback == NULL) return NULL;
     node->callback = callback;
     node->mask = mask;
     node->match = 0;
     node->retrigger = 0;
     node->active = false;
-    node->next = root;
-    if (node->next == NULL) tail = node;
-    root = node;
+    if (p != node) {
+        node->next = root;
+        if (root == NULL) tail = node;
+        root = node;
+    }
+        
     tc_set_INTEN(TIMER_PORT, inten);
 #ifdef TC_RTOS_GIVE
     TC_RTOS_GIVE;
@@ -198,12 +213,17 @@ timeScheduler_t *detachTimeSchedule(timeScheduler_t *node)
     timeScheduler_t *p = root;
     uint8_t inten = tc_get_INTEN(TIMER_PORT, TC_INTENSET_MASK);
     tc_clear_INTEN(TIMER_PORT, TC_INTENSET_MASK);
-    node->callback = NULL;
     if (root == node) {
         root = node->next;
+        if(root == NULL) {
+            tail = NULL;
+        }
     } else {
         while (p != NULL) {
             if (p->next == node) {
+                if (p->next == tail) {
+                    tail = p;
+                }
                 p->next = node->next;
                 break;
             }

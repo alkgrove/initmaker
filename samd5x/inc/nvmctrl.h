@@ -45,12 +45,7 @@
 #define FLASH_BAD_BLOCK_ADDRESS -1
 #define FLASH_BAD_PAGE_ADDRESS -1
 
-#ifdef FEATURE_BANK_SWITCH
-#define RECORDBLOCK_ADDR ((FLASH_ADDR + (FLASH_SIZE/2)) - NVMCTRL_BLOCK_SIZE)
-#else
-#define RECORDBLOCK_ADDR ((FLASH_ADDR + FLASH_SIZE) - NVMCTRL_BLOCK_SIZE)
-#endif
-#define RECORD_SIZE 64
+
 
 /**
  * @brief nvmctrl set INTEN register
@@ -765,11 +760,23 @@ int nvm_write_block(uint32_t *dst, uint32_t *src);
 /**
  * @brief nvm_verify_block
  * @detail compare main flash pointed to by dst to sram buffer pointed to by src
- * @param[in] uint32_t *src
+ * for 8192 bytes (NVMCTRL_BLOCK_SIZE)
  * @param[in] uint32_t *dst
+ * @param[in] uint32_t *src
  * @return bool true if match false if not same
  */
-bool nvm_verify_block(uint32_t *src, uint32_t *dst);
+bool nvm_verify_block(uint32_t *dst, uint32_t *src);
+
+/**
+ * @brief nvm_verify_page
+ * @detail compare main flash pointed to by dst to sram buffer pointed to by src
+ * for 512 bytes (NVMCTRL_PAGE_SIZE)
+ * @param[in] uint32_t *dst
+ * @param[in] uint32_t *src
+ * @return bool true if match false if not same
+ */
+ 
+ bool nvm_verify_page(uint32_t *dst, uint32_t *src);
 
 /**
  * @brief nvm_is_block_erased
@@ -808,6 +815,19 @@ static inline bool nvm_on_block_boundary(uint32_t *src)
     return (((uint32_t)src & (NVMCTRL_BLOCK_SIZE - 1)) == 0);
 }
 
+/* 
+ * @brief nvm_copy_serialnumber(void)
+ * @param[in] uint32_t * dst pointer to 32 bit unsigned int array of four elements uint32_t sn[4]
+ */
+ 
+static inline void nvm_copy_serialnumber(uint32_t *sn)
+{
+    sn[0] = NVMCTRL_FS->W0;
+    sn[1] = NVMCTRL_FS->W1;
+    sn[2] = NVMCTRL_FS->W2;
+    sn[3] = NVMCTRL_FS->W3;
+}
+    
 /*
   * @brief nvm_on_page_boundary(uint32_t *src)
   * @param[in] uint32_t *src pointer to memory
@@ -817,17 +837,7 @@ static inline bool nvm_on_page_boundary(uint32_t *src)
 {
     return (((uint32_t)src & (NVMCTRL_PAGE_SIZE - 1)) == 0);
 }
-/*
- * @brief getRecord()
- * @return uint8_t * return pointer to the most current record
- */
-uint8_t *getRecord(void);
-/*
-  * @brief writeRecord
-  * @detail write's a record to the next available slot, erases the block if no more slots available
-  * @param[in] uint32_t *src pointer to memory to write
-  */
-void writeRecord(uint8_t *src);
+
 
 
 #endif /* _NVMCTRL_H */
